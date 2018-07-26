@@ -11,7 +11,7 @@ public class Tile : Entity
 
     [SerializeField] private Tile[] neighbours;
 
-    [SerializeField] private List<Tile> allNeighbours;
+    [SerializeField] private List<Tile> allNeighbours; // TODO: populate this list
 
     [SerializeField] private float spreadDelay;
 
@@ -144,6 +144,11 @@ public class Tile : Entity
         }
 
         return neighbours[(int)direction];
+    }
+
+    public bool IsWalkable
+    {
+        set { isWalkable = value; }
     }
 
     public List<Tile> Neighbours
@@ -311,7 +316,7 @@ public class Tile : Entity
                 {
                     if (tile != null)
                     {
-                        // DrawArrow.ForGizmo(transform.position, (node.transform.position - transform.position) * 0.8f);
+                        DrawArrow.ForGizmo(transform.position + (tile.transform.position - transform.position) * 0.2f, (tile.transform.position - transform.position) * 0.6f);
                     }
                 }
             }

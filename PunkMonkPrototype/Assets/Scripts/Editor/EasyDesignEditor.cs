@@ -66,7 +66,7 @@ public class EasyDesignEditor : EditorWindow
         {
             string[] mapSize = grid.transform.GetChild(grid.transform.childCount - 1).name.Split(',');
 
-            mapWidth = int.Parse(mapSize[0]) + 1;  
+            mapWidth = int.Parse(mapSize[0]) + 1;
             mapHeight = int.Parse(mapSize[1]) + 1;
         }
     }
@@ -216,12 +216,12 @@ public class EasyDesignEditor : EditorWindow
 
                 EditorGUILayout.Space();
 
-                GUILayout.Label("Nodes:", centeredText);
+                GUILayout.Label("Navigation:", centeredText);
 
                 oldColor = GUI.backgroundColor;
                 GUI.backgroundColor = new Color(0.39f, 0.78f, 0.19f, 1.0f); // green
 
-                EditorGUI.BeginDisabledGroup(mapHasNodes);
+                //EditorGUI.BeginDisabledGroup(mapHasNodes);
 
                 if (GUILayout.Button("Generate nodes for grid"))
                 {
@@ -229,33 +229,35 @@ public class EasyDesignEditor : EditorWindow
 
                     foreach (Tile tile in tiles)
                     {
-                        if (tile.GetComponentInChildren<Tile>() == null)
-                        {
-                            GenerateNode(tile);
-                        }
+                        tile.IsWalkable = true;
+
+                        //if (tile.GetComponentInChildren<Tile>() == null)
+                        //{
+                        //    GenerateNode(tile);
+                        //}
                     }
                 }
 
-                EditorGUI.EndDisabledGroup();
+                //EditorGUI.EndDisabledGroup();
 
                 EditorGUI.BeginDisabledGroup(!hasTileSelected);
 
                 if (GUILayout.Button("Generate nodes on selected tiles"))
                 {
-                    GameObject[] selectedObjects = Selection.gameObjects;
+                    //GameObject[] selectedObjects = Selection.gameObjects;
 
-                    foreach (GameObject obj in selectedObjects)
-                    {
-                        Tile[] tiles = obj.GetComponentsInChildren<Tile>();
+                    //foreach (GameObject obj in selectedObjects)
+                    //{
+                    //    Tile[] tiles = obj.GetComponentsInChildren<Tile>();
 
-                        foreach (Tile tile in tiles)
-                        {
-                            if (tile.GetComponentInChildren<Tile>() == null)
-                            {
-                                GenerateNode(tile);
-                            }
-                        }
-                    }
+                    //    foreach (Tile tile in tiles)
+                    //    {
+                    //        if (tile.GetComponentInChildren<Tile>() == null)
+                    //        {
+                    //            GenerateNode(tile);
+                    //        }
+                    //    }
+                    //}
                 }
 
                 EditorGUI.EndDisabledGroup();
@@ -271,15 +273,15 @@ public class EasyDesignEditor : EditorWindow
 
                 if (GUILayout.Button("Remove nodes from grid"))
                 {
-                    Tile[] tiles = grid.GetComponentsInChildren<Tile>();
+                    //Tile[] tiles = grid.GetComponentsInChildren<Tile>();
 
-                    foreach (Tile tile in tiles)
-                    {
-                        if (tile.transform.Find("NavNode"))
-                        {
-                            DestroyImmediate(tile.transform.Find("NavNode").gameObject);
-                        }
-                    }
+                    //foreach (Tile tile in tiles)
+                    //{
+                    //    if (tile.transform.Find("NavNode"))
+                    //    {
+                    //        DestroyImmediate(tile.transform.Find("NavNode").gameObject);
+                    //    }
+                    //}
                 }
 
                 EditorGUI.EndDisabledGroup();
@@ -288,20 +290,20 @@ public class EasyDesignEditor : EditorWindow
 
                 if (GUILayout.Button("Remove nodes on selected tiles"))
                 {
-                    GameObject[] selectedObjects = Selection.gameObjects;
+                    //GameObject[] selectedObjects = Selection.gameObjects;
 
-                    foreach (GameObject obj in selectedObjects)
-                    {
-                        Tile[] tiles = obj.GetComponentsInChildren<Tile>();
+                    //foreach (GameObject obj in selectedObjects)
+                    //{
+                    //    Tile[] tiles = obj.GetComponentsInChildren<Tile>();
 
-                        foreach (Tile tile in tiles)
-                        {
-                            if (tile.transform.Find("NavNode"))
-                            {
-                                DestroyImmediate(tile.transform.Find("NavNode").gameObject);
-                            }
-                        }
-                    }
+                    //    foreach (Tile tile in tiles)
+                    //    {
+                    //        if (tile.transform.Find("NavNode"))
+                    //        {
+                    //            DestroyImmediate(tile.transform.Find("NavNode").gameObject);
+                    //        }
+                    //    }
+                    //}
                 }
 
                 EditorGUI.EndDisabledGroup();
@@ -366,6 +368,7 @@ public class EasyDesignEditor : EditorWindow
 
 
                 }
+
                 EditorGUI.EndDisabledGroup();
 
                 GUI.backgroundColor = oldColor;
@@ -389,7 +392,7 @@ public class EasyDesignEditor : EditorWindow
 
                 EditorGUILayout.Space();
 
-                GUILayout.Label("Tile Visuals:", centeredText);
+                GUILayout.Label("Visual Settings:", centeredText);
 
                 if (EditorGUILayout.BeginFadeGroup(showNodeVisualSettings.faded))
                 {
@@ -399,6 +402,13 @@ public class EasyDesignEditor : EditorWindow
 
                     showNodes = EditorGUILayout.Toggle("Show Nodes", showNodes);
                     showConnections = EditorGUILayout.Toggle("Show Connections", showConnections);
+
+                    Tile[] tiles = grid.GetComponentsInChildren<Tile>();
+
+                    foreach (Tile tile in tiles)
+                    {
+                        ApplyVisualSettingsToNodes(tile);
+                    }
                 }
 
                 EditorGUILayout.EndFadeGroup();
@@ -414,13 +424,6 @@ public class EasyDesignEditor : EditorWindow
                     else
                     {
                         buttonText = "Show Visual Settings";
-
-                        Tile[] nodes = grid.GetComponentsInChildren<Tile>();
-
-                        foreach (Tile node in nodes)
-                        {
-                            ApplyVisualSettingsToNodes(node);
-                        }
                     }
                 }
             }
@@ -551,11 +554,59 @@ public class EasyDesignEditor : EditorWindow
 
             #endregion
 
+            #region Spawning
+
+            else if (selectedTab == 2)
+            {
+                EditorGUI.BeginDisabledGroup(!hasTileSelected);
+
+                if (GUILayout.Button("Add Spawner To Selected Tiles"))
+                {
+                    GameObject[] selectedObjects = Selection.gameObjects;
+
+                    foreach (GameObject obj in selectedObjects)
+                    {
+                        Tile[] tiles = obj.GetComponentsInChildren<Tile>();
+
+                        foreach (Tile tile in tiles)
+                        {
+                            GameObject spawnerGO = new GameObject("Enemy Spawner");
+                            EnemySpawner spawner = spawnerGO.AddComponent<EnemySpawner>();
+
+                            spawner.transform.parent = tile.transform;
+                            spawner.transform.position = tile.transform.position;
+                            spawner.transform.localEulerAngles = new Vector3(180, 0.0f, 0.0f);
+                            spawner.TurnToSpawn = 2;
+                        }
+                    }
+                }
+
+                if (GUILayout.Button("Remove Spawner From Selected Tiles"))
+                {
+                    GameObject[] selectedObjects = Selection.gameObjects;
+
+                    foreach (GameObject obj in selectedObjects)
+                    {
+                        Tile[] tiles = obj.GetComponentsInChildren<Tile>();
+
+                        foreach (Tile tile in tiles)
+                        {
+                            if (tile.GetComponentInChildren<EnemySpawner>())
+                            {
+                                DestroyImmediate(tile.GetComponentInChildren<EnemySpawner>().gameObject);
+                            }
+                        }
+                    }
+                }
+
+                EditorGUI.EndDisabledGroup();
+            }
+
+            #endregion
 
             GUILayout.FlexibleSpace();
             EditorGUILayout.EndVertical(); // outer box
         }
-
 
         /// End of OnGUI repaint scene and mark it as dirty.
         if (EditorGUI.EndChangeCheck())

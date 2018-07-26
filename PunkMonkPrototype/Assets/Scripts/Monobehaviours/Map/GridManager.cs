@@ -64,7 +64,7 @@ public class GridManager : MonoBehaviour
 
         Vector3 position;
         position.x = (x + y * 0.5f - y / 2) * (Tile.innerRadius * 2f);
-        position.y = 0f;
+        position.y = transform.position.y;
         position.z = y * (Tile.outerRadius * 1.5f);
 
         newHex.transform.position = position;

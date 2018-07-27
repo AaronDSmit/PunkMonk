@@ -2,14 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(TextMesh))]
 public class Spawner : MonoBehaviour
 {
+    [HideInInspector]
     [SerializeField] private int turnToSpawn;
 
-    [SerializeField] private Entity EntityToSpawn;
+    [HideInInspector]
+    [SerializeField] private Entity entityToSpawn = null;
 
-    private TextMesh textM;
+    [HideInInspector]
+    [SerializeField] private Color textColour = Color.white;
+
+    [HideInInspector]
+    [SerializeField] public bool drawText;
 
     private void Awake()
     {
@@ -20,7 +25,7 @@ public class Spawner : MonoBehaviour
     {
         if (newState == Turn_state.start && turnNumber == turnToSpawn)
         {
-            Entity entity = Instantiate(EntityToSpawn, transform.parent.position, Quaternion.identity);
+            Entity entity = Instantiate(entityToSpawn, transform.parent.position, Quaternion.identity);
         }
     }
 
@@ -31,15 +36,19 @@ public class Spawner : MonoBehaviour
         set
         {
             turnToSpawn = value;
-
-            if (!textM)
-            {
-                textM = GetComponent<TextMesh>();
-                textM.anchor = TextAnchor.MiddleCenter;
-                textM.alignment = TextAlignment.Center;
-            }
-
-            textM.text = turnToSpawn.ToString();
         }
     }
+
+    public Entity EntityToSpawn
+    {
+        get { return entityToSpawn; }
+        set { entityToSpawn = value; }
+    }
+
+    public Color TextColour
+    {
+        get { return textColour; }
+        set { textColour = value; }
+    }
+
 }

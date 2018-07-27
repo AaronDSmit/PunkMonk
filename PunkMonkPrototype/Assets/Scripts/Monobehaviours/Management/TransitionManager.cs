@@ -53,6 +53,9 @@ public class TransitionManager : MonoBehaviour
 
             Unit lightning = Instantiate(LightningUnitPrefab, spawnPosLightning.transform.position, Quaternion.identity);
             lightning.Spawn(spawnPosLightning);
+
+
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().Init();
         }
     }
 

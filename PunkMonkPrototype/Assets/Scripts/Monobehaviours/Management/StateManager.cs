@@ -4,19 +4,19 @@ using UnityEngine;
 
 public enum Game_state { mainmenu, overworld, battle }
 public enum Turn_state { start, end }
-public enum Team { player, ai, neutral }
+public enum TEAM { player, ai, neutral }
 
 public class StateManager : MonoBehaviour
 {
-    private Game_state currentState;
+    [SerializeField] private Game_state currentState;
 
-    [SerializeField] private Team startingTeam;
+    [SerializeField] private TEAM startingTeam;
 
-    [SerializeField] private Team currentTeam;
+    [SerializeField] private TEAM currentTeam;
 
     private int turnCount;
 
-    public delegate void TurnStateChanged(Turn_state newState, Team team, int turnNumber);
+    public delegate void TurnStateChanged(Turn_state newState, TEAM team, int turnNumber);
     public static event TurnStateChanged TurnEvent;
 
     private void Start()
@@ -45,7 +45,7 @@ public class StateManager : MonoBehaviour
             TurnEvent(Turn_state.end, currentTeam, turnCount);
         }
 
-        currentTeam = (currentTeam == Team.player) ? Team.ai : Team.player;
+        currentTeam = (currentTeam == TEAM.player) ? TEAM.ai : TEAM.player;
         StartTurn();
     }
 }

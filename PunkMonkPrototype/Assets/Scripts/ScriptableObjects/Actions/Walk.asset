@@ -11,5 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f51c28d4cdd77d46a9eaeb64435a8be, type: 3}
   m_Name: Walk
   m_EditorClassIdentifier: 
+  ruleset: {fileID: 11400000, guid: ab72b45f01b333f4482a09c14e5d816c, type: 2}
   coolDown: 0
   AnimTrigger: 

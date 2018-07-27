@@ -6,15 +6,22 @@ using UnityEditor.SceneManagement;
 using UnityEditor.AnimatedValues;
 #endif
 
+
+public enum Unit_type { earth, lightning, grunt, range }
+
 public class EasyDesignEditor : EditorWindow
 {
+    #region Variables
+
     // general variables
     [SerializeField] private static EditorWindow window;
     [SerializeField] private static Texture icon;
     [SerializeField] private GUISkin skin;
     [SerializeField] private GUIStyle centeredText;
     [SerializeField] private static int selectedTab = 0;
+    [SerializeField] private static int previousSelectedTab = -1;
     [SerializeField] private static bool showInspector;
+    [SerializeField] private static GridManager grid;
 
     // GridManager Generation
     [SerializeField] private static int mapWidth;
@@ -24,27 +31,38 @@ public class EasyDesignEditor : EditorWindow
 
     // Navigation
     [SerializeField] private bool hasTileSelected = false;
+    [SerializeField] private bool hasTransitionSelected = false;
+    [SerializeField] private bool hasSpawnerSelected = false;
+
     [SerializeField] private static bool mapHasNodes = false;
     [SerializeField] private static bool nodesConnected = false;
 
-    [SerializeField] private AnimBool showNodeVisualSettings;
-    [SerializeField] private bool showNodes;
-    [SerializeField] private bool showConnections;
     [SerializeField] private Color walkableColour;
     [SerializeField] private Color notWalkableColour;
     [SerializeField] private Color connectionColour;
-    [SerializeField] private string buttonText = "Show Visual Settings";
+
+    [SerializeField] private Color oldWalkableColour;
+    [SerializeField] private Color oldNotWalkableColour;
+    [SerializeField] private Color oldConnectionColour;
 
     // Tile settings
     [SerializeField] private Status tileStatus;
     [SerializeField] private float stepSize = 1;
     [SerializeField] private int step;
 
+    // GameFlow
+    [SerializeField] private Unit_type spawnUnit;
+    [SerializeField] private int turnToSpawn;
+    [SerializeField] private int loadLevel = 0;
+
     // Settings
     [SerializeField] private bool healthyMode = false;
 
+    #endregion
+
     private void OnEnable()
     {
+        // load custom skin and window icon
         skin = (GUISkin)Resources.Load("EditorSkin");
 
         centeredText = skin.GetStyle("CenteredText");
@@ -52,22 +70,6 @@ public class EasyDesignEditor : EditorWindow
         if (window != null)
         {
             window.titleContent = new GUIContent("Easy Design", icon);
-        }
-
-        showNodeVisualSettings = new AnimBool(true);
-        showNodeVisualSettings.valueChanged.AddListener(Repaint);
-        showNodeVisualSettings.target = false;
-        showNodes = true;
-        showConnections = true;
-
-        GridManager grid = GameObject.FindGameObjectWithTag("Manager").GetComponent<GridManager>();
-
-        if (grid && grid.transform.childCount > 0)
-        {
-            string[] mapSize = grid.transform.GetChild(grid.transform.childCount - 1).name.Split(',');
-
-            mapWidth = int.Parse(mapSize[0]) + 1;
-            mapHeight = int.Parse(mapSize[1]) + 1;
         }
     }
 
@@ -86,7 +88,7 @@ public class EasyDesignEditor : EditorWindow
 
         showInspector = true;
 
-        /// Only show compiling message while Compiling
+        // Only show compiling message while Compiling
         if (EditorApplication.isCompiling)
         {
             EditorGUILayout.HelpBox("Compiling", MessageType.Info);
@@ -94,7 +96,7 @@ public class EasyDesignEditor : EditorWindow
         }
 
 
-        /// disable inspector if working for more than 5 hours
+        // disable inspector if working for more than 5 hours
         if (healthyMode && EditorApplication.timeSinceStartup > 18000)
         {
             EditorGUILayout.Space();
@@ -103,31 +105,79 @@ public class EasyDesignEditor : EditorWindow
             showInspector = false;
         }
 
-        /// Draw Inspector
+        // Draw Inspector
         if (showInspector)
         {
-            GameObject mapGO = GameObject.FindGameObjectWithTag("Manager");
-            GridManager grid = null;
-
-            if (mapGO != null)
-            {
-                grid = GameObject.FindGameObjectWithTag("Manager").GetComponent<GridManager>();
-            }
-
-            if (grid == null || mapGO == null)
+            // If there's no grid manager then don't draw any of the inspector
+            if (grid == null)
             {
                 EditorGUILayout.HelpBox("No GridManager script found!", MessageType.Error);
 
                 return;
             }
 
-            mapHasNodes = grid.GetComponentsInChildren<Tile>().Length > 0;
+
+            // If in play mode then don't draw any of the inspector
+            if (EditorApplication.isPlaying)
+            {
+                EditorGUILayout.HelpBox("You can't use this program during play mode", MessageType.Info);
+
+                return;
+            }
 
             GUI.skin = skin; // use our custom skin
 
             // Create toolbar using custom tab style
-            string[] tabs = { "Grid", "Tiles", "Spawning", "Settings" };
+            string[] tabs = { "Grid", "Tiles", "GameFlow", "Settings" };
             selectedTab = GUILayout.Toolbar(selectedTab, tabs);
+
+            mapHasNodes = grid.GetComponentsInChildren<Tile>().Length > 0;
+
+            // Show nodes and connections on first frame of selecting tab
+            if (selectedTab == 0 && previousSelectedTab != 0)
+            {
+                previousSelectedTab = selectedTab;
+
+                Tile[] tiles = grid.GetComponentsInChildren<Tile>();
+
+                foreach (Tile tile in tiles)
+                {
+                    tile.drawNode = true;
+                    tile.drawConnections = true;
+
+                    if (tile.GetComponentInChildren<Spawner>())
+                    {
+                        tile.GetComponentInChildren<Spawner>().drawText = false;
+                    }
+
+                    if (tile.GetComponentInChildren<TransitionPoint>())
+                    {
+                        tile.GetComponentInChildren<TransitionPoint>().drawText = false;
+                    }
+                }
+            }
+            else if (selectedTab != 0 && previousSelectedTab == 0)
+            {
+                previousSelectedTab = selectedTab;
+
+                Tile[] tiles = grid.GetComponentsInChildren<Tile>();
+
+                foreach (Tile tile in tiles)
+                {
+                    tile.drawNode = false;
+                    tile.drawConnections = false;
+
+                    if (tile.GetComponentInChildren<Spawner>())
+                    {
+                        tile.GetComponentInChildren<Spawner>().drawText = true;
+                    }
+
+                    if (tile.GetComponentInChildren<TransitionPoint>())
+                    {
+                        tile.GetComponentInChildren<TransitionPoint>().drawText = true;
+                    }
+                }
+            }
 
             Color oldColor = GUI.backgroundColor;
             GUI.backgroundColor = new Color(0.5f, 0.5f, 0.5f, 1.0f);
@@ -157,13 +207,6 @@ public class EasyDesignEditor : EditorWindow
 
             if (selectedTab == 0)
             {
-                if (EditorApplication.isPlaying)
-                {
-                    EditorGUILayout.HelpBox("You can't generate a grid during play mode", MessageType.Info);
-
-                    return;
-                }
-
                 GUILayout.Label("Grid Generation:", centeredText);
 
                 mapWidth = EditorGUILayout.IntField("X-Axis Length: ", mapWidth);
@@ -196,7 +239,7 @@ public class EasyDesignEditor : EditorWindow
 
                         if (GUILayout.Button("Generate GridManager"))
                         {
-                            if (grid.GenerateGrid(mapWidth, mapHeight))
+                            if (grid.GenerateGrid(mapWidth, mapHeight, walkableColour, notWalkableColour, connectionColour))
                             {
                                 confirmMapGeneration = false;
                             }
@@ -394,37 +437,19 @@ public class EasyDesignEditor : EditorWindow
 
                 GUILayout.Label("Visual Settings:", centeredText);
 
-                if (EditorGUILayout.BeginFadeGroup(showNodeVisualSettings.faded))
+                walkableColour = EditorGUILayout.ColorField("Can walk", walkableColour);
+                notWalkableColour = EditorGUILayout.ColorField("Can't walk", notWalkableColour);
+                connectionColour = EditorGUILayout.ColorField("Connection", connectionColour);
+
+                bool isDirty = (oldWalkableColour != walkableColour) || (oldNotWalkableColour != notWalkableColour) || (oldConnectionColour != connectionColour);
+
+                if (isDirty)
                 {
-                    walkableColour = EditorGUILayout.ColorField("Can walk", walkableColour);
-                    notWalkableColour = EditorGUILayout.ColorField("Can't walk", notWalkableColour);
-                    connectionColour = EditorGUILayout.ColorField("Connection", connectionColour);
+                    oldWalkableColour = walkableColour;
+                    oldNotWalkableColour = notWalkableColour;
+                    oldConnectionColour = connectionColour;
 
-                    showNodes = EditorGUILayout.Toggle("Show Nodes", showNodes);
-                    showConnections = EditorGUILayout.Toggle("Show Connections", showConnections);
-
-                    Tile[] tiles = grid.GetComponentsInChildren<Tile>();
-
-                    foreach (Tile tile in tiles)
-                    {
-                        ApplyVisualSettingsToNodes(tile);
-                    }
-                }
-
-                EditorGUILayout.EndFadeGroup();
-
-                if (GUILayout.Button(buttonText))
-                {
-                    showNodeVisualSettings.target = !showNodeVisualSettings.target;
-
-                    if (showNodeVisualSettings.target)
-                    {
-                        buttonText = "Apply settings";
-                    }
-                    else
-                    {
-                        buttonText = "Show Visual Settings";
-                    }
+                    ApplyVisualSettingsToTiles();
                 }
             }
 
@@ -554,11 +579,110 @@ public class EasyDesignEditor : EditorWindow
 
             #endregion
 
-            #region Spawning
+            #region GameFlow
 
             else if (selectedTab == 2)
             {
-                EditorGUI.BeginDisabledGroup(!hasTileSelected);
+                #region Player Spawn points 
+
+                GUILayout.Label("Player Spawn Points", centeredText);
+
+                EditorGUI.BeginDisabledGroup(!hasTileSelected || hasSpawnerSelected);
+
+                oldColor = GUI.backgroundColor;
+                GUI.backgroundColor = new Color(0.64f, 0.26f, 0.26f, 1.0f); // brown
+
+                if (GameObject.FindGameObjectWithTag("EarthUnitSpawn") == null)
+                {
+                    if (GUILayout.Button("Add Earth spawner"))
+                    {
+                        Tile tile = Selection.gameObjects[0].GetComponent<Tile>();
+
+                        GameObject spawnerGO = new GameObject("Earth Spawner")
+                        {
+                            tag = "EarthUnitSpawn"
+                        };
+
+                        Spawner spawner = spawnerGO.AddComponent<Spawner>();
+                        spawner.EntityToSpawn = (Entity)Resources.Load("EarthUnit");
+                        spawner.TextColour = new Color(1.0f, 0.2f, 0.2f, 1.0f); // brown
+                        spawner.drawText = true;
+
+                        spawner.transform.parent = tile.transform;
+                        spawner.transform.position = tile.transform.position;
+                        spawner.TurnToSpawn = 0;
+                    }
+                }
+                else
+                {
+                    if (GUILayout.Button("Move Earth spawner"))
+                    {
+                        Tile tile = Selection.gameObjects[0].GetComponent<Tile>();
+                        Spawner spawner = GameObject.FindGameObjectWithTag("EarthUnitSpawn").GetComponent<Spawner>();
+
+                        spawner.transform.parent = tile.transform;
+                        spawner.transform.position = tile.transform.position;
+                        spawner.TurnToSpawn = 0;
+                    }
+                }
+
+                GUI.backgroundColor = oldColor;
+
+                oldColor = GUI.backgroundColor;
+                GUI.backgroundColor = new Color(0.39f, 0.39f, 0.78f, 1.0f); // blue
+
+                if (GameObject.FindGameObjectWithTag("LightningUnitSpawn") == null)
+                {
+                    if (GUILayout.Button("Add Lightning spawner"))
+                    {
+                        Tile tile = Selection.gameObjects[0].GetComponent<Tile>();
+
+                        GameObject spawnerGO = new GameObject("Lightning Spawner")
+                        {
+                            tag = "LightningUnitSpawn"
+                        };
+
+                        Spawner spawner = spawnerGO.AddComponent<Spawner>();
+                        spawner.EntityToSpawn = (Entity)Resources.Load("LightningUnit");
+                        spawner.TextColour = new Color(0.0f, 0.0f, 1.0f, 1.0f); // blue
+                        spawner.drawText = true;
+
+                        spawner.transform.parent = tile.transform;
+                        spawner.transform.position = tile.transform.position;
+                        spawner.TurnToSpawn = 0;
+                    }
+                }
+                else
+                {
+                    if (GUILayout.Button("Move Lightning spawner"))
+                    {
+                        Tile tile = Selection.gameObjects[0].GetComponent<Tile>();
+                        Spawner spawner = GameObject.FindGameObjectWithTag("LightningUnitSpawn").GetComponent<Spawner>();
+
+                        spawner.transform.parent = tile.transform;
+                        spawner.transform.position = tile.transform.position;
+                        spawner.TurnToSpawn = 0;
+                    }
+                }
+
+                GUI.backgroundColor = oldColor;
+
+                EditorGUI.EndDisabledGroup();
+
+                #endregion
+
+                #region Enemy Spawn Points
+
+                EditorGUILayout.Space();
+
+                GUILayout.Label("Enemy Spawn Points", centeredText);
+
+                spawnUnit = (Unit_type)EditorGUILayout.EnumPopup("Unit:", spawnUnit);
+
+                turnToSpawn = EditorGUILayout.IntField("Turn #: ", turnToSpawn);
+
+                oldColor = GUI.backgroundColor;
+                GUI.backgroundColor = new Color(0.39f, 0.78f, 0.19f, 1.0f); // green
 
                 if (GUILayout.Button("Add Spawner To Selected Tiles"))
                 {
@@ -571,7 +695,8 @@ public class EasyDesignEditor : EditorWindow
                         foreach (Tile tile in tiles)
                         {
                             GameObject spawnerGO = new GameObject("Enemy Spawner");
-                            EnemySpawner spawner = spawnerGO.AddComponent<EnemySpawner>();
+                            Spawner spawner = spawnerGO.AddComponent<Spawner>();
+                            spawner.drawText = true;
 
                             spawner.transform.parent = tile.transform;
                             spawner.transform.position = tile.transform.position;
@@ -580,6 +705,15 @@ public class EasyDesignEditor : EditorWindow
                         }
                     }
                 }
+
+                GUI.backgroundColor = oldColor;
+
+
+
+                EditorGUI.BeginDisabledGroup(!hasSpawnerSelected);
+
+                oldColor = GUI.backgroundColor;
+                GUI.backgroundColor = new Color(1.0f, 0.19f, 0.19f, 1.0f); // red
 
                 if (GUILayout.Button("Remove Spawner From Selected Tiles"))
                 {
@@ -591,16 +725,100 @@ public class EasyDesignEditor : EditorWindow
 
                         foreach (Tile tile in tiles)
                         {
-                            if (tile.GetComponentInChildren<EnemySpawner>())
+                            if (tile.GetComponentInChildren<Spawner>())
                             {
-                                DestroyImmediate(tile.GetComponentInChildren<EnemySpawner>().gameObject);
+                                DestroyImmediate(tile.GetComponentInChildren<Spawner>().gameObject);
                             }
                         }
                     }
                 }
 
+                GUI.backgroundColor = oldColor;
+
                 EditorGUI.EndDisabledGroup();
+
+                #endregion
+
+                EditorGUILayout.Space();
+
+                GUILayout.Label("Scene Transition:", centeredText);
+
+                EditorGUI.BeginDisabledGroup(Selection.gameObjects.Length != 1 || !hasTileSelected);
+
+                EditorGUILayout.BeginHorizontal();
+
+                // if the selected tile has a scene transition change it rather than add a new one
+                if (Selection.gameObjects.Length == 1 && Selection.gameObjects[0].GetComponentInChildren<TransitionPoint>())
+                {
+                    oldColor = GUI.backgroundColor;
+                    GUI.backgroundColor = new Color(1.0f, 0.58f, 0.19f, 1.0f); // orange
+
+                    if (GUILayout.Button("Change Transition"))
+                    {
+                        TransitionPoint transition = Selection.gameObjects[0].GetComponentInChildren<TransitionPoint>();
+                        transition.NextLevelIndex = loadLevel;
+                    }
+
+                    GUI.backgroundColor = oldColor;
+                }
+                else
+                {
+                    oldColor = GUI.backgroundColor;
+                    GUI.backgroundColor = new Color(0.39f, 0.78f, 0.19f, 1.0f); // green
+
+                    if (GUILayout.Button("Add Transition"))
+                    {
+                        Tile tile = Selection.gameObjects[0].GetComponent<Tile>();
+
+                        GameObject transitionGO = new GameObject("SceneTransition");
+
+                        TransitionPoint transition = transitionGO.AddComponent<TransitionPoint>();
+                        transition.NextLevelIndex = loadLevel;
+                        transition.drawText = true;
+
+                        transition.transform.parent = tile.transform;
+                        transition.transform.position = tile.transform.position;
+                    }
+
+                    GUI.backgroundColor = oldColor;
+                }
+
+                GUILayout.Label("Load Level :");
+
+                loadLevel = EditorGUILayout.IntField(loadLevel);
+
+                EditorGUILayout.EndHorizontal();
+
+                EditorGUI.EndDisabledGroup();
+
+                oldColor = GUI.backgroundColor;
+                GUI.backgroundColor = new Color(1.0f, 0.19f, 0.19f, 1.0f); // red
+
+                EditorGUI.BeginDisabledGroup(!hasTransitionSelected || !hasTileSelected);
+
+                if (GUILayout.Button("Remove Transition"))
+                {
+                    GameObject[] selectedObjects = Selection.gameObjects;
+
+                    TransitionPoint transition = selectedObjects[0].GetComponentInChildren<TransitionPoint>();
+
+                    DestroyImmediate(transition.gameObject);
+                }
+
+                EditorGUI.EndDisabledGroup();
+
+                if (GUILayout.Button("Remove All Transitions"))
+                {
+                    TransitionPoint[] transitions = grid.GetComponentsInChildren<TransitionPoint>();
+
+                    foreach (TransitionPoint transition in transitions)
+                    {
+                        DestroyImmediate(transition.gameObject);
+                    }
+                }
             }
+
+            GUI.backgroundColor = oldColor;
 
             #endregion
 
@@ -623,38 +841,45 @@ public class EasyDesignEditor : EditorWindow
         {
             hasTileSelected = (Selection.gameObjects[0].GetComponentsInChildren<Tile>().Length > 0);
 
+            hasTransitionSelected = (Selection.gameObjects[0].GetComponentsInChildren<TransitionPoint>().Length > 0);
+
+            hasSpawnerSelected = (Selection.gameObjects[0].GetComponentsInChildren<Spawner>().Length > 0);
+
             Repaint();
         }
         else
         {
             hasTileSelected = false;
+            hasTransitionSelected = false;
+            hasSpawnerSelected = false;
             Repaint();
+        }
+
+        GameObject gridGo = GameObject.FindGameObjectWithTag("Manager");
+
+        if (gridGo && grid == null)
+        {
+            grid = GameObject.FindGameObjectWithTag("Manager").GetComponent<GridManager>();
+
+            if (grid && grid.transform.childCount > 0)
+            {
+                string[] mapSize = grid.transform.GetChild(grid.transform.childCount - 1).name.Split(',');
+
+                mapWidth = int.Parse(mapSize[0]) + 1;
+                mapHeight = int.Parse(mapSize[1]) + 1;
+            }
         }
     }
 
-    private void ApplyVisualSettingsToNodes(Tile tile)
+    private void ApplyVisualSettingsToTiles()
     {
-        tile.walkableColour = walkableColour;
-        tile.notWalkableColour = notWalkableColour;
-        tile.connectionColour = connectionColour;
-        tile.drawNode = showNodes;
-        tile.drawConnections = showConnections;
-    }
+        Tile[] tiles = grid.GetComponentsInChildren<Tile>();
 
-    private void GenerateNode(Tile tile)
-    {
-        GameObject node = new GameObject("NavNode");
-        Tile nav = node.AddComponent<Tile>();
-        node.AddComponent<SphereCollider>();
-        node.layer = LayerMask.NameToLayer("NavNode");
-
-        node.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
-        node.transform.position += Vector3.up * 0.5f;
-
-        node.transform.SetParent(tile.transform, false);
-
-        ApplyVisualSettingsToNodes(node.GetComponent<Tile>());
+        foreach (Tile tile in tiles)
+        {
+            tile.walkableColour = walkableColour;
+            tile.notWalkableColour = notWalkableColour;
+            tile.connectionColour = connectionColour;
+        }
     }
 }
-
-public enum Status { NONE, OIL, FIRE, WATER, FAULTLINE, ABYSS }

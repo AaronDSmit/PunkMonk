@@ -21,7 +21,7 @@ public class Spawner : MonoBehaviour
         StateManager.TurnEvent += TurnEvent;
     }
 
-    private void TurnEvent(Turn_state newState, Team team, int turnNumber)
+    private void TurnEvent(Turn_state newState, TEAM team, int turnNumber)
     {
         if (newState == Turn_state.start && turnNumber == turnToSpawn)
         {
@@ -50,5 +50,4 @@ public class Spawner : MonoBehaviour
         get { return textColour; }
         set { textColour = value; }
     }
-
 }

@@ -19,6 +19,14 @@ public class GridManager : MonoBehaviour
     [HideInInspector]
     [SerializeField] private Dictionary<string, Tile> grid = new Dictionary<string, Tile>();
 
+    private bool generateWithColour = false;
+
+    private Color traversableTileColour;
+
+    private Color blockedTileColour;
+
+    private Color connectionColour;
+
     private void Awake()
     {
         Tile[] tiles = GetComponentsInChildren<Tile>();
@@ -27,6 +35,17 @@ public class GridManager : MonoBehaviour
         {
             grid.Add(tile.ToString(), tile);
         }
+    }
+
+    public bool GenerateGrid(int a_width, int a_height, Color a_walkable, Color a_notWalkable, Color a_connection)
+    {
+        traversableTileColour = a_walkable;
+        blockedTileColour = a_notWalkable;
+        connectionColour = a_connection;
+
+        generateWithColour = true;
+
+        return GenerateGrid(a_width, a_height);
     }
 
     public bool GenerateGrid(int width, int height)
@@ -52,6 +71,8 @@ public class GridManager : MonoBehaviour
                 CreateTile(x, y, i++);
             }
         }
+
+        generateWithColour = false;
 
         return (transform.childCount > 0);
     }
@@ -96,6 +117,14 @@ public class GridManager : MonoBehaviour
                     map[i].SetNeighbour(HexDirection.SE, map[i - mapWidth + 1]);
                 }
             }
+        }
+
+
+        if (generateWithColour)
+        {
+            map[i].walkableColour = traversableTileColour;
+            map[i].notWalkableColour = blockedTileColour;
+            map[i].connectionColour = connectionColour;
         }
     }
 

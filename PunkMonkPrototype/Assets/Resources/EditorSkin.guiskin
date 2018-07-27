@@ -286,7 +286,7 @@ MonoBehaviour:
     m_Padding:
       m_Left: 2
       m_Right: 2
-      m_Top: 1
+      m_Top: 4
       m_Bottom: 2
     m_Overflow:
       m_Left: 0
@@ -368,7 +368,7 @@ MonoBehaviour:
     m_Font: {fileID: 0}
     m_FontSize: 0
     m_FontStyle: 0
-    m_Alignment: 0
+    m_Alignment: 3
     m_WordWrap: 0
     m_RichText: 0
     m_TextClipping: 1

@@ -59,11 +59,9 @@ public class Tile : Entity
 
     private Unit currentUnit;
 
-    private void Awake()
+    private void OnDisable()
     {
-        //movementHighlight = GetComponentsInChildren<SpriteRenderer>()[1];
-
-        //renderer = GetComponentInChildren<Renderer>();
+        GetComponentInChildren<MeshRenderer>().enabled = true;
     }
 
     #region API
@@ -148,6 +146,7 @@ public class Tile : Entity
 
     public bool IsWalkable
     {
+        get { return isWalkable; }
         set { isWalkable = value; }
     }
 

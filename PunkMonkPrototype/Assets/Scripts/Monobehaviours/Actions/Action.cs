@@ -13,7 +13,7 @@ public enum ActionType
 [CreateAssetMenu(fileName = "Action", menuName = "Actions/new action", order = 0)]
 public class Action : ScriptableObject
 {
-    // public InteractionRuleset ruleset;
+    public InteractionRuleset ruleset;
 
     ActionType actionType;
 

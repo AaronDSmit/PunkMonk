@@ -13,11 +13,16 @@ public enum Element { FIRE, EARTH, LIGHTNING, WATER }
 
 public abstract class Entity : MonoBehaviour
 {
-    [SerializeField] protected Team team;
+    [SerializeField] protected TEAM team;
 
     protected Tile currentTile;
 
-    public Team Team { get { return team; } }
+    public TEAM Team { get { return team; } }
+
+    public Tile CurrentTile
+    {
+        get { return currentTile; }
+    }
 
     // damage can be left out if you only want to apply an element.
     public abstract void TakeDamage(Element a_damageType, float a_damageAmount);

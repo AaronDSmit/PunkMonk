@@ -6,9 +6,13 @@ public class Unit : LivingEntity
 {
     #region Inspector Variables
 
+    [SerializeField] protected Action[] actions;
+
     [SerializeField] private int moveRange;
 
     [SerializeField] private int attackRange;
+
+    [SerializeField] protected float turnTime;
 
     [SerializeField] protected float walkSpeed;
 
@@ -18,7 +22,11 @@ public class Unit : LivingEntity
 
     private bool canAttack;
 
+    private bool isSelected;
+
     private System.Action finishedAction;
+
+    private Renderer myRenderer;
 
     // Events
     public delegate void OnVariableChangeDelegate(bool a_newValue);
@@ -29,8 +37,47 @@ public class Unit : LivingEntity
     {
         base.Awake();
 
+        myRenderer = GetComponentInChildren<Renderer>();
+
         canAttack = true;
         canMove = true;
+    }
+
+    public void Highlight(bool a_isHighlited, Color a_outlineColour)
+    {
+        if (a_isHighlited)
+        {
+            myRenderer.material.SetFloat("_UseOutline", 1);
+            myRenderer.material.SetFloat("_OutlineWidth", 0.06f);
+            myRenderer.material.SetColor("_OutlineColour", a_outlineColour);
+        }
+        else
+        {
+            if (isSelected)
+            {
+                myRenderer.material.SetFloat("_OutlineWidth", 0.03f);
+            }
+            else
+            {
+                myRenderer.material.SetInt("_UseOutline", 0);
+            }
+        }
+    }
+
+    public void Select(bool a_isSelected, Color a_outlineColour)
+    {
+        isSelected = a_isSelected;
+
+        if(isSelected)
+        {
+            myRenderer.material.SetFloat("_UseOutline", 1);
+            myRenderer.material.SetFloat("_OutlineWidth", 0.03f);
+            myRenderer.material.SetColor("_OutlineColour", a_outlineColour);
+        }
+        else
+        {
+            myRenderer.material.SetFloat("_UseOutline", 0);
+        }
     }
 
     public int MoveRange

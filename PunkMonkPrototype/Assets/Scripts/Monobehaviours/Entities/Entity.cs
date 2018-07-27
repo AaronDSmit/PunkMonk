@@ -8,21 +8,17 @@
 ///
 /// </summary>
 
-
-public enum TEAM { PLAYER, AI, NEUTRAL }
-
 // used to indicate damage type, even if it deals zero damage
 public enum Element { FIRE, EARTH, LIGHTNING, WATER }
 
 public abstract class Entity : MonoBehaviour
 {
-    [SerializeField]
-    protected TEAM team;
+    [SerializeField] protected Team team;
 
     protected Tile currentTile;
 
-    public TEAM Team { get { return team; } }
+    public Team Team { get { return team; } }
 
     // damage can be left out if you only want to apply an element.
-    public abstract void TakeDamage(Element damageType, float damageAmount);
+    public abstract void TakeDamage(Element a_damageType, float a_damageAmount);
 }

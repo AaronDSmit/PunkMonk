@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Manager
+  - EarthUnit
+  - LightningUnit
+  - EarthUnitSpawn
+  - LightningUnitSpawn
   layers:
   - Default
   - TransparentFX

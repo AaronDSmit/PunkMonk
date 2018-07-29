@@ -27,8 +27,10 @@ public class GridManager : MonoBehaviour
 
     private Color connectionColour;
 
-    private void Awake()
+    private void Start()
     {
+        grid.Clear();
+
         Tile[] tiles = GetComponentsInChildren<Tile>();
 
         foreach (Tile tile in tiles)
@@ -85,6 +87,19 @@ public class GridManager : MonoBehaviour
 
         newHex.Init(x, y);
 
+        //GameObject textGO = new GameObject("Text Display");
+        //TextMesh text = textGO.AddComponent<TextMesh>();
+
+        //text.transform.parent = newHex.transform;
+        //text.transform.position = newHex.transform.position;
+        //text.transform.localEulerAngles = new Vector3(180, 0.0f, 0.0f);
+        //text.transform.localScale = new Vector3(0.5f, 0.5f, 1.0f);
+
+        //text.text = newHex.ToString();
+        //text.characterSize = 0.2f;
+        //text.fontSize = 60;
+        //text.anchor = TextAnchor.MiddleCenter;
+
         Vector3 position;
         position.x = (x + y * 0.5f - y / 2) * (Tile.innerRadius * 2f);
         position.y = transform.position.y;
@@ -121,7 +136,6 @@ public class GridManager : MonoBehaviour
             }
         }
 
-
         if (generateWithColour)
         {
             map[i].walkableColour = traversableTileColour;
@@ -151,6 +165,77 @@ public class GridManager : MonoBehaviour
                 tile.ShowGrid(false);
             }
         }
+    }
+
+    public Tile[] GetTilesWithinDistance(Tile centerTile, int range)
+    {
+        List<Tile> openList = new List<Tile>();
+        List<Tile> returnList = new List<Tile>();
+        Tile currentTile;
+
+        openList.Add(centerTile);
+
+        while (openList.Count != 0)
+        {
+            currentTile = openList[0];
+            openList.Remove(currentTile);
+
+            foreach (Tile neighbour in currentTile.Neighbours)
+            {
+                if (neighbour.IsWalkable && !returnList.Contains(neighbour))
+                {
+                    neighbour.GScore = Tile.Distance(currentTile, neighbour) + currentTile.GScore;
+                    if (neighbour.GScore < range + 1)
+                    {
+                        openList.Add(neighbour);
+                        returnList.Add(neighbour);
+                    }
+                }
+            }
+
+            openList.Sort((x, y) => x.GScore.CompareTo(y.GScore));
+        }
+
+        foreach (Tile hex in returnList)
+        {
+            hex.GScore = 0;
+        }
+
+        return returnList.ToArray();
+    }
+
+    //public Tile[] GetTilesWithinRangeOf(Tile centerTile, int range)
+    //{
+    //    //Return tiles range steps from centre, http://www.redblobgames.com/grids/hexagons/#range
+
+    //    List<Tile> result = new List<Tile>();
+
+    //    for (int dx = -range; dx <= range; dx++)
+    //    {
+    //        for (int dy = Mathf.Max(-range, -dx - range); dy <= Mathf.Min(range, -dx + range); dy++)
+    //        {
+    //            Tile h = GetTileAt(centerTile.Q + dx, centerTile.R + dy);
+
+    //            if (h != null)
+    //            {
+    //                result.Add(h);
+    //            }
+    //        }
+    //    }
+
+    //    return result.ToArray();
+    //}
+
+    public Tile GetTileAt(int x, int z)
+    {
+        string index = string.Format("{0},{1}", x, z);
+
+        if (grid.ContainsKey(index.ToString()))
+        {
+            return grid[index.ToString()];
+        }
+
+        return null;
     }
 
     public int MapWidth

@@ -10,6 +10,7 @@ TagManager:
   - EarthUnitSpawn
   - LightningUnitSpawn
   - UI
+  - Grid
   layers:
   - Default
   - TransparentFX

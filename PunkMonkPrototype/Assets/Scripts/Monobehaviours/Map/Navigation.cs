@@ -4,78 +4,78 @@ using UnityEngine;
 
 public class Navigation : MonoBehaviour
 {
-    //public List<Tile> FindPath(Tile starting, Tile target)
-    //{
-    //    List<NavNode> openSet = new List<NavNode>();
-    //    HashSet<NavNode> closedSet = new HashSet<NavNode>();
+    public List<Tile> FindPath(Tile starting, Tile target)
+    {
+        List<Tile> openSet = new List<Tile>();
+        HashSet<Tile> closedSet = new HashSet<Tile>();
 
-    //    openSet.Add(starting.Node);
+        openSet.Add(starting);
 
-    //    while (openSet.Count > 0)
-    //    {
-    //        NavNode current = openSet[0];
-    //        current.HScore = Tile.Distance(current.Tile, target);
-    //        for (int i = 1; i < openSet.Count; i++)
-    //        {
-    //            if (openSet[i].FScore < current.FScore || (openSet[i].FScore == current.FScore && openSet[i].FScore < current.FScore))
-    //            {
-    //                current = openSet[i];
-    //            }
-    //        }
+        while (openSet.Count > 0)
+        {
+            Tile current = openSet[0];
+            current.HScore = Tile.Distance(current, target);
+            for (int i = 1; i < openSet.Count; i++)
+            {
+                if (openSet[i].FScore < current.FScore || (openSet[i].FScore == current.FScore && openSet[i].FScore < current.FScore))
+                {
+                    current = openSet[i];
+                }
+            }
 
-    //        closedSet.Add(current);
-    //        openSet.Remove(current);
+            closedSet.Add(current);
+            openSet.Remove(current);
 
-    //        if (current.Tile == target)
-    //        {
-    //            foreach (NavNode node in closedSet)
-    //            {
-    //                node.GScore = 0;
-    //            }
+            if (current == target)
+            {
+                foreach (Tile node in closedSet)
+                {
+                    node.GScore = 0;
+                }
 
-    //            return RetracePath(starting, target);
-    //        }
+                return RetracePath(starting, target);
+            }
 
-    //        foreach (NavNode neighbour in current.Neighbours)
-    //        {
-    //            if (!neighbour.IsWalkable || closedSet.Contains(neighbour))
-    //            {
-    //                continue;
-    //            }
+            foreach (Tile neighbour in current.Neighbours)
+            {
+                if (!neighbour.IsWalkable || closedSet.Contains(neighbour))
+                {
+                    continue;
+                }
 
-    //            float newMovemntCostToNeighour = current.GScore + Tile.Distance(current.Tile, neighbour.Tile);
-    //            if (newMovemntCostToNeighour < neighbour.GScore || !openSet.Contains(neighbour))
-    //            {
-    //                neighbour.GScore = newMovemntCostToNeighour;
-    //                neighbour.HScore = Tile.Distance(neighbour.Tile, target);
-    //                neighbour.Parent = current;
+                float newMovemntCostToNeighour = current.GScore + Tile.Distance(current, neighbour);
+                if (newMovemntCostToNeighour < neighbour.GScore || !openSet.Contains(neighbour))
+                {
+                    neighbour.GScore = newMovemntCostToNeighour;
+                    neighbour.HScore = Tile.Distance(neighbour, target);
+                    neighbour.Parent = current;
 
-    //                if (!openSet.Contains(neighbour))
-    //                {
-    //                    openSet.Add(neighbour);
-    //                }
-    //            }
-    //        }
-    //    }
+                    if (!openSet.Contains(neighbour))
+                    {
+                        openSet.Add(neighbour);
+                    }
+                }
+            }
+        }
 
 
 
-    //    return null;
-    //}
+        return null;
+    }
 
-    //private List<Tile> RetracePath(Tile start, Tile end)
-    //{
-    //    List<Tile> path = new List<Tile>();
-    //    NavNode current = end.Node;
+    private List<Tile> RetracePath(Tile start, Tile end)
+    {
+        List<Tile> path = new List<Tile>();
+        Tile current = end;
 
-    //    while (current.Tile != start)
-    //    {
-    //        path.Add(current.Tile);
-    //        current = current.Parent;
-    //    }
+        while (current != start)
+        {
+            path.Add(current);
+            current = current.Parent;
+        }
 
-    //    path.Reverse();
+        path.Reverse();
 
-    //    return path;
-    //}
+        return path;
+    }
 }

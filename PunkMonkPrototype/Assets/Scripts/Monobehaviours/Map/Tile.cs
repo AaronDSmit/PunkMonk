@@ -127,6 +127,9 @@ public class Tile : Entity
     {
         neighbours[(int)direction] = cell;
         cell.neighbours[(int)direction.Opposite()] = this;
+
+        allNeighbours.Add(cell);
+        cell.allNeighbours.Add(this);
     }
 
     public Tile GetNeighbour(HexDirection direction)
@@ -148,6 +151,21 @@ public class Tile : Entity
     {
         get { return isWalkable; }
         set { isWalkable = value; }
+    }
+
+    public float GScore
+    {
+        get { return gScore + terrainDifficulty; }
+        set { gScore = value; }
+    }
+
+    public float HScore { get; set; }
+
+    public Tile Parent { get; set; }
+
+    public float FScore
+    {
+        get { return HScore + gScore + terrainDifficulty; }
     }
 
     public List<Tile> Neighbours
@@ -200,6 +218,15 @@ public class Tile : Entity
     #endregion
 
     // https://answers.unity.com/questions/283271/material-leak-in-editor.html?childToView=322397#answer-322397
+
+    private void Awake()
+    {
+        movementHighlight = transform.GetChild(1).GetComponent<SpriteRenderer>();
+
+        string[] coordText = name.Split(',');
+
+        coord = new OffsetCoord(int.Parse(coordText[0]), int.Parse(coordText[1]));
+    }
 
     private void ChangeColour()
     {
@@ -324,84 +351,37 @@ public class Tile : Entity
 
     #region Hex Data
 
-    public void Init(int q, int r)
+    [SerializeField]
+    public OffsetCoord coord;
+
+    public void Init(int x, int y)
     {
-        this.q = q;
-        this.r = r;
-        s = -(q + r);
+        coord = new OffsetCoord(x, y);
 
         neighbours = new Tile[6];
-    }
-
-    // Q + R + S = 0
-    // S = -(Q + R)
-
-    [SerializeField, HideInInspector]
-    private int q;  // Column
-    [SerializeField, HideInInspector]
-    private int r;  // Row
-    [SerializeField, HideInInspector]
-    private int s;
-
-    static readonly float WIDTH_MULTIPLIER = Mathf.Sqrt(3) / 2;
-
-    private float radius = 1f;
-
-    public int Q
-    {
-        get { return q; }
-    }
-
-    public int R
-    {
-        get { return r; }
-    }
-
-    public int S
-    {
-        get { return s; }
-    }
-
-    public Vector3 WorldPosition()
-    {
-        return new Vector3(
-            HexHorizontalSpacing() * (Q + R / 2f),
-            0,
-            HexVerticalSpacing() * R
-        );
+        allNeighbours = new List<Tile>();
     }
 
     public override string ToString()
     {
-        return q + "," + r;
-    }
-
-    private float HexHeight()
-    {
-        return radius * 2;
-    }
-
-    private float HexWidth()
-    {
-        return WIDTH_MULTIPLIER * HexHeight();
-    }
-
-    private float HexVerticalSpacing()
-    {
-        return HexHeight() * 0.75f;
-    }
-
-    private float HexHorizontalSpacing()
-    {
-        return HexWidth();
+        return coord.x + "," + coord.y;
     }
 
     public static float Distance(Tile a, Tile b)
     {
-        int dQ = Mathf.Abs(a.Q - b.Q);
-        int dR = Mathf.Abs(a.R - b.R);
+        // convert offset coordinate to cube coordinate
+        Cube ac = OffsetToCube(a.coord);
+        Cube bc = OffsetToCube(b.coord);
 
-        return Mathf.Max(dQ, dR, Mathf.Abs(a.S - b.S));
+        return CubeDistance(ac, bc);
+    }
+
+    private static float CubeDistance(Cube a, Cube b)
+    {
+        int dQ = Mathf.Abs(a.q - b.q);
+        int dR = Mathf.Abs(a.r - b.r);
+
+        return Mathf.Max(dQ, dR, Mathf.Abs(a.s - b.s));
     }
 
     public const float outerRadius = 1;
@@ -409,4 +389,51 @@ public class Tile : Entity
     public const float innerRadius = outerRadius * 0.866025404f;
 
     #endregion
+
+    public static OffsetCoord CubeToOffset(Cube h)
+    {
+        int col = h.q + (h.r - (h.r & 1)) / 2;
+        int row = h.r;
+
+        return new OffsetCoord(col, row);
+    }
+
+    public static Cube OffsetToCube(OffsetCoord h)
+    {
+        int q = h.x - (h.y - (h.y & 1)) / 2;
+        int r = h.y;
+        int s = -q - r;
+
+        return new Cube(q, r, s);
+    }
 }
+
+[System.Serializable]
+public struct Cube
+{
+    // Cube storage, cube constructor
+    public readonly int q, r, s;
+
+    public Cube(int _q, int _r, int _s)
+    {
+        q = _q;
+        r = _r;
+        s = _s;
+
+        Debug.Assert(q + r + s == 0);
+    }
+};
+
+[System.Serializable]
+public struct OffsetCoord
+{
+    [SerializeField]
+    public readonly int x, y;
+
+    public OffsetCoord(int _x, int _y)
+    {
+        x = _x;
+        y = _y;
+    }
+};
+

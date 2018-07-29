@@ -13,30 +13,17 @@ public class TransitionManager : MonoBehaviour
 
     #endregion
 
+    private bool isReady;
+
     [HideInInspector]
-    [SerializeField] private List<TransitionPoint> transitionPoints;
+    [SerializeField] private List<SceneTransitionPoint> transitionPoints;
 
-    // Global Manager ref
-    public static TransitionManager instance;
-
-    private void Awake()
+    public void Init()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            //stop the game from having more than one GameStateManager
-            Destroy(gameObject);
-            return;
-        }
-
-        //Don't destroy the GameStateManager in scene
-        DontDestroyOnLoad(gameObject);
+        isReady = true;
     }
 
-    private void Start()
+    private void Awake()
     {
         SceneManager.activeSceneChanged += SceneLoaded;
     }
@@ -54,8 +41,10 @@ public class TransitionManager : MonoBehaviour
             Unit lightning = Instantiate(LightningUnitPrefab, spawnPosLightning.transform.position, Quaternion.identity);
             lightning.Spawn(spawnPosLightning);
 
+            GameObject playerGo = GameObject.FindGameObjectWithTag("Player");
 
-            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().Init();
+            playerGo.GetComponent<PlayerController>().Init();
+            playerGo.GetComponent<OverworldController>().Init();
         }
     }
 
@@ -64,5 +53,16 @@ public class TransitionManager : MonoBehaviour
         Debug.Log("Loading Scene " + a_nextSceneIndex);
 
         SceneManager.LoadScene(a_nextSceneIndex);
+    }
+
+    public bool Ready
+    {
+        get { return isReady; }
+    }
+
+
+    private void OnDisable()
+    {
+        SceneManager.activeSceneChanged -= SceneLoaded;
     }
 }

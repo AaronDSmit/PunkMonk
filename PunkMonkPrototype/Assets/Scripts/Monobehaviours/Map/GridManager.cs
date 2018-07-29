@@ -35,6 +35,8 @@ public class GridManager : MonoBehaviour
         {
             grid.Add(tile.ToString(), tile);
         }
+
+        StateManager.OnGameStateChanged += GameStateChanged;
     }
 
     public bool GenerateGrid(int a_width, int a_height, Color a_walkable, Color a_notWalkable, Color a_connection)
@@ -125,6 +127,29 @@ public class GridManager : MonoBehaviour
             map[i].walkableColour = traversableTileColour;
             map[i].notWalkableColour = blockedTileColour;
             map[i].connectionColour = connectionColour;
+        }
+    }
+
+    private void GameStateChanged(Game_state _oldstate, Game_state _newstate)
+    {
+        // ensure this script knows it's in over-world state
+        if (_newstate == Game_state.battle)
+        {
+            Tile[] tiles = GetComponentsInChildren<Tile>();
+
+            foreach (Tile tile in tiles)
+            {
+                tile.ShowGrid(true);
+            }
+        }
+        else
+        {
+            Tile[] tiles = GetComponentsInChildren<Tile>();
+
+            foreach (Tile tile in tiles)
+            {
+                tile.ShowGrid(false);
+            }
         }
     }
 

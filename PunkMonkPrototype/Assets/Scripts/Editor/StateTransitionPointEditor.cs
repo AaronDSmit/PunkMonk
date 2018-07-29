@@ -6,14 +6,14 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
-[CustomEditor(typeof(SceneTransitionPoint), true)]
+[CustomEditor(typeof(StateTransitionPoint), true)]
 [InitializeOnLoad]
-public class TransitionPointEditor : Editor
+public class StateTransitionPointEditor : Editor
 {
     [DrawGizmo(GizmoType.InSelectionHierarchy | GizmoType.NotInSelectionHierarchy)]
-    static void DrawHandles(SceneTransitionPoint transitionPoint, GizmoType gizmoType)
+    static void DrawHandles(StateTransitionPoint stateTransitionPoint, GizmoType gizmoType)
     {
-        if (transitionPoint.drawText)
+        if (stateTransitionPoint.drawText)
         {
             GUIStyle style = new GUIStyle(); // This is optional
             style.normal.textColor = Color.yellow;
@@ -22,7 +22,7 @@ public class TransitionPointEditor : Editor
 
             style.fontSize = 20;
 
-            Handles.Label(transitionPoint.transform.position, transitionPoint.NextLevelIndex.ToString(), style);
+            Handles.Label(stateTransitionPoint.transform.position, StateManager.StateToString(stateTransitionPoint.TargetState)[0].ToString(), style);
         }
     }
 }

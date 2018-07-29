@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TransitionPoint : MonoBehaviour
+public class SceneTransitionPoint : MonoBehaviour
 {
     [SerializeField] private int nextLevelIndex;
 
@@ -20,12 +20,7 @@ public class TransitionPoint : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        TransitionManager.Transition(nextLevelIndex);
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Manager.instance.StateController.CurrentGameState == Game_state.overworld)
         {
             TransitionManager.Transition(nextLevelIndex);
         }

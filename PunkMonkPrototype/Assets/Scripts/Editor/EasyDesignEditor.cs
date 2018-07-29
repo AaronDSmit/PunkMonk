@@ -713,14 +713,12 @@ public class EasyDesignEditor : EditorWindow
                             spawner.transform.parent = tile.transform;
                             spawner.transform.position = tile.transform.position;
                             spawner.transform.localEulerAngles = new Vector3(180, 0.0f, 0.0f);
-                            spawner.TurnToSpawn = 2;
+                            spawner.TurnToSpawn = turnToSpawn;
                         }
                     }
                 }
 
                 GUI.backgroundColor = oldColor;
-
-
 
                 EditorGUI.BeginDisabledGroup(!hasSpawnerSelected);
 
@@ -961,7 +959,7 @@ public class EasyDesignEditor : EditorWindow
 
         if (gridGo && grid == null)
         {
-            grid = GameObject.FindGameObjectWithTag("Manager").GetComponent<GridManager>();
+            grid = GameObject.FindGameObjectWithTag("Grid").GetComponent<GridManager>();
 
             if (grid && grid.transform.childCount > 0)
             {

@@ -32,14 +32,20 @@ public class TransitionManager : MonoBehaviour
     {
         if (next.buildIndex > 0)
         {
-            Tile spawnPosEarth = GameObject.FindGameObjectWithTag("EarthUnitSpawn").transform.parent.GetComponent<Tile>();
-            Tile spawnPosLightning = GameObject.FindGameObjectWithTag("LightningUnitSpawn").transform.parent.GetComponent<Tile>();
+            Tile spawnTileEarth = GameObject.FindGameObjectWithTag("EarthUnitSpawn").transform.parent.GetComponent<Tile>();
+            Tile spawnTileLightning = GameObject.FindGameObjectWithTag("LightningUnitSpawn").transform.parent.GetComponent<Tile>();
 
-            Unit earth = Instantiate(earthUnitPrefab, spawnPosEarth.transform.position, Quaternion.identity);
-            earth.Spawn(spawnPosEarth);
+            Vector3 spawnPosEarth = spawnTileEarth.transform.position;
+            spawnPosEarth.y = 0.1f;
 
-            Unit lightning = Instantiate(LightningUnitPrefab, spawnPosLightning.transform.position, Quaternion.identity);
-            lightning.Spawn(spawnPosLightning);
+            Vector3 spawnPosLightning = spawnTileLightning.transform.position;
+            spawnPosLightning.y = 0.1f;
+
+            Unit earth = Instantiate(earthUnitPrefab, spawnPosEarth, Quaternion.identity);
+            earth.Spawn(spawnTileEarth);
+
+            Unit lightning = Instantiate(LightningUnitPrefab, spawnPosLightning, Quaternion.identity);
+            lightning.Spawn(spawnTileLightning);
 
             GameObject playerGo = GameObject.FindGameObjectWithTag("Player");
 

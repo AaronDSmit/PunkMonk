@@ -18,6 +18,9 @@ public class StateTransitionPoint : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Manager.instance.StateController.ChangeGame_state(targetState);
+        if (Manager.instance.StateController.CurrentGameState == Game_state.overworld)
+        {
+            Manager.instance.StateController.ChangeGame_state(targetState);
+        }
     }
 }

@@ -9,6 +9,7 @@ TagManager:
   - LightningUnit
   - EarthUnitSpawn
   - LightningUnitSpawn
+  - UI
   layers:
   - Default
   - TransparentFX

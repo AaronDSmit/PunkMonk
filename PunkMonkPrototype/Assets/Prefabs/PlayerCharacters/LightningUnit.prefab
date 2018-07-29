@@ -143,10 +143,11 @@ MonoBehaviour:
   team: 0
   startHealth: 100
   actions: []
-  moveRange: 0
-  attackRange: 0
+  moveRange: 3
+  attackRange: 3
   turnTime: 0
   walkSpeed: 0
+  element: 2
 --- !u!136 &136618911245474124
 CapsuleCollider:
   m_ObjectHideFlags: 1

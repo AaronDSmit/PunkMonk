@@ -16,6 +16,8 @@ public class Unit : LivingEntity
 
     [SerializeField] protected float walkSpeed;
 
+    [SerializeField] protected Element element;
+
     #endregion
 
     private bool canMove;
@@ -23,6 +25,8 @@ public class Unit : LivingEntity
     private bool canAttack;
 
     private bool isSelected;
+
+    protected Navigation navigation;
 
     private System.Action finishedAction;
 
@@ -38,6 +42,8 @@ public class Unit : LivingEntity
         base.Awake();
 
         myRenderer = GetComponentInChildren<Renderer>();
+
+        navigation = GameObject.FindGameObjectWithTag("Grid").GetComponent<Navigation>();
 
         canAttack = true;
         canMove = true;
@@ -68,10 +74,10 @@ public class Unit : LivingEntity
     {
         isSelected = a_isSelected;
 
-        if(isSelected)
+        if (isSelected)
         {
             myRenderer.material.SetFloat("_UseOutline", 1);
-            myRenderer.material.SetFloat("_OutlineWidth", 0.03f);
+            myRenderer.material.SetFloat("_OutlineWidth", 0.04f);
             myRenderer.material.SetColor("_OutlineColour", a_outlineColour);
         }
         else
@@ -80,9 +86,19 @@ public class Unit : LivingEntity
         }
     }
 
+    public Action GetAction(int index)
+    {
+        return actions[index];
+    }
+
     public int MoveRange
     {
         get { return moveRange; }
+    }
+
+    public Element Element
+    {
+        get { return element; }
     }
 
     public int AttackRange
@@ -131,16 +147,53 @@ public class Unit : LivingEntity
     {
         finishedAction = a_finished;
 
-        //List<Tile> path = navigation.FindPath(currentTile, targetTile);
+        List<Tile> path = navigation.FindPath(currentTile, a_targetTile);
 
-        //if (path != null)
-        //{
-        //    StartCoroutine(Walk(path));
-        //}
-        //else
-        //{
-        //    Debug.Log("Couldn't find path");
-        //}
+        if (path != null)
+        {
+            StartCoroutine(Walk(path));
+        }
+        else
+        {
+            Debug.Log("Couldn't find path");
+        }
+    }
+
+    private IEnumerator Walk(List<Tile> path)
+    {
+        int index = 0;
+
+        while (index < path.Count)
+        {
+            Vector3 targetPos = path[index].transform.position;
+            targetPos.y = transform.position.y;
+
+            // yield return StartCoroutine(Turn(targetPos));
+
+            float distance = Vector3.Distance(transform.position, targetPos);
+
+            while (distance > 0.1f)
+            {
+                distance = Vector3.Distance(transform.position, targetPos);
+
+                Vector3 vecBetween = targetPos - transform.position;
+
+                transform.position += vecBetween.normalized * Time.deltaTime * walkSpeed;
+
+                yield return null;
+            }
+
+            transform.position = targetPos;
+
+            currentTile.Exit();
+            currentTile = path[index];
+            currentTile.Enter(this);
+
+            index++;
+        }
+
+        CanMove = false;
+        finishedAction();
     }
 
 

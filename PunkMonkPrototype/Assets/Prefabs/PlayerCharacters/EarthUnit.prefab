@@ -146,10 +146,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2f4429e83ae258647a203d36c3f14919, type: 2}
   - {fileID: 11400000, guid: bf99ef183f7535c4bb59f007aa0e16dd, type: 2}
   - {fileID: 11400000, guid: 069424805bd530f4f8e31aa89c554d72, type: 2}
-  moveRange: 3
+  moveRange: 2
   attackRange: 5
   turnTime: 0.2
   walkSpeed: 5
+  element: 1
 --- !u!136 &136876744524752574
 CapsuleCollider:
   m_ObjectHideFlags: 1

@@ -59,11 +59,6 @@ public class Tile : Entity
 
     private Unit currentUnit;
 
-    private void OnDisable()
-    {
-        GetComponentInChildren<MeshRenderer>().enabled = true;
-    }
-
     #region API
 
     public void IncreaseHeight(float stepSize)
@@ -86,6 +81,11 @@ public class Tile : Entity
         currentStatus = status;
 
         ChangeColour();
+    }
+
+    public void ShowGrid(bool a_show)
+    {
+        GetComponentInChildren<SpriteRenderer>().enabled = a_show;
     }
 
     public Unit CurrentUnit

@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    #region Inspector Variables
+
+    [SerializeField] private InteractionRuleset selectionRuleset;
+
+    #endregion
+
     private bool myTurn = true;
 
-    private bool canInteract = true;
+    private bool canInteract = false;
 
     private Unit selectedUnit;
 
@@ -22,15 +28,19 @@ public class PlayerController : MonoBehaviour
 
     private List<Tile> tilesWithinRange;
 
-    [SerializeField]
-    private InteractionRuleset selectionRuleset;
+    private UIManager UI;
 
     [Header("Debug Info")]
-    [SerializeField]
-    private InteractionRuleset currentRuleset;
+    [SerializeField] private InteractionRuleset currentRuleset;
 
     private void Awake()
     {
+        TurnManager.TurnEvent += TurnEvent;
+
+        StateManager.OnGameStateChanged += GameStateChanged;
+
+        UI = GameObject.FindGameObjectWithTag("UI").GetComponent<UIManager>();
+
         tilesWithinRange = new List<Tile>();
 
         if (selectionRuleset == null)
@@ -41,12 +51,12 @@ public class PlayerController : MonoBehaviour
         {
             currentRuleset = selectionRuleset;
         }
-
-        StateManager.TurnEvent += TurnEvent;
     }
 
     public void Init()
     {
+        canInteract = false;
+
         GameObject earthGO = GameObject.FindGameObjectWithTag("EarthUnit");
 
         if (earthGO)
@@ -69,7 +79,7 @@ public class PlayerController : MonoBehaviour
             Debug.LogError("No lightning unit found!");
         }
 
-        SelectUnit(earthUnit);
+        // SelectUnit(earthUnit);
     }
 
     private void Update()
@@ -183,6 +193,7 @@ public class PlayerController : MonoBehaviour
         if (selectedUnit)
         {
             selectedUnit.Select(false, currentRuleset.ValidHighlightColour);
+            selectedUnit = null;
         }
     }
 
@@ -209,18 +220,45 @@ public class PlayerController : MonoBehaviour
             {
                 myTurn = true;
 
-                // SelectUnit(myUnits[0]);
+                SelectUnit(earthUnit);
 
-                //foreach (Unit unit in myUnits)
-                //{
-                //    unit.Refresh();
-                //}
+                earthUnit.Refresh();
+                lightningUnit.Refresh();
             }
             else if (a_newState == Turn_state.end)
             {
                 myTurn = false;
-                //DeselectUnit();
+                DeselectUnit();
             }
+        }
+    }
+
+    private void GameStateChanged(Game_state _oldstate, Game_state _newstate)
+    {
+        // ensure this script knows it's in over-world state
+        if (_newstate == Game_state.battle)
+        {
+            canInteract = true;
+            SelectUnit(earthUnit);
+        }
+    }
+
+    public void SelectAction(int actionIndex)
+    {
+        RemoveHighlightedTiles();
+
+        // currentRuleset = selectedUnit.GetAction(actionIndex).ruleset;
+
+        // Highlight area in range to walk
+        if (currentRuleset.actionType == ActionType.MOVEMENT)
+        {
+            HighlightTilesInRange(selectedUnit.GetComponent<Unit>().MoveRange);
+        }
+
+        // Highlight area in range to attack
+        if (currentRuleset.actionType == ActionType.ATTACK || currentRuleset.actionType == ActionType.SPELL)
+        {
+            HighlightTilesInRange(selectedUnit.GetComponent<Unit>().AttackRange);
         }
     }
 }

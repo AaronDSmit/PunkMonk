@@ -6,12 +6,12 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
-[CustomEditor(typeof(TransitionPoint), true)]
+[CustomEditor(typeof(SceneTransitionPoint), true)]
 [InitializeOnLoad]
 public class TransitionPointEditor : Editor
 {
     [DrawGizmo(GizmoType.InSelectionHierarchy | GizmoType.NotInSelectionHierarchy)]
-    static void DrawHandles(TransitionPoint transitionPoint, GizmoType gizmoType)
+    static void DrawHandles(SceneTransitionPoint transitionPoint, GizmoType gizmoType)
     {
         if (transitionPoint.drawText)
         {

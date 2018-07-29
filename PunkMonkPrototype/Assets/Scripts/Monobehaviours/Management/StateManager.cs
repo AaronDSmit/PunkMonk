@@ -1,51 +1,112 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public enum Game_state { mainmenu, overworld, battle }
-public enum Turn_state { start, end }
-public enum TEAM { player, ai, neutral }
+public enum Game_state { mainmenu, overworld, battle, loading, cinematic, pausemenu }
 
 public class StateManager : MonoBehaviour
 {
-    [SerializeField] private Game_state currentState;
+    [SerializeField] private Game_state currentState = Game_state.mainmenu;
 
-    [SerializeField] private TEAM startingTeam;
+    [SerializeField] private Game_state previousState = Game_state.pausemenu;
 
-    [SerializeField] private TEAM currentTeam;
+    [SerializeField] private List<Game_state> stateHistory;
 
-    private int turnCount;
+    private bool isReady;
 
-    public delegate void TurnStateChanged(Turn_state newState, TEAM team, int turnNumber);
-    public static event TurnStateChanged TurnEvent;
+    // events
+    public delegate void Game_stateChanged(Game_state _oldState, Game_state _newState);
+    public static event Game_stateChanged OnGameStateChanged;
 
-    private void Start()
+    #region public Functions
+
+    public void Init()
     {
-        currentTeam = startingTeam;
+        stateHistory = new List<Game_state>();
 
-        currentState = Game_state.battle;
+        ChangeGame_state(Game_state.loading);
 
-        StartTurn();
+        isReady = true;
     }
 
-    private void StartTurn()
+    public void StartGame()
     {
-        turnCount++;
+        ChangeGame_state(Game_state.overworld);
+    }
 
-        if (TurnEvent != null)
+    // This function changes the current game state to the target game state and calls the event on any script that is listening
+    public void ChangeGame_state(Game_state a_targetState)
+    {
+        // Don't change to target state if that is already the current state
+        if (currentState != a_targetState)
         {
-            TurnEvent(Turn_state.start, currentTeam, turnCount);
+            previousState = currentState;
+            currentState = a_targetState;
+
+            stateHistory.Add(currentState);
+
+            if (currentState == Game_state.pausemenu)
+            {
+                Time.timeScale = 0.0f;
+            }
+
+            if (previousState == Game_state.pausemenu)
+            {
+                Time.timeScale = 1.0f;
+            }
+
+            if (OnGameStateChanged != null)
+            {
+                OnGameStateChanged(previousState, currentState);
+            }
+
+            Debug.Log(string.Format("Changed from {0} to {1}", StateToString(previousState), StateToString(a_targetState)));
+        }
+        else
+        {
+            Debug.Log(string.Format("Tried to change to {0} but that's already the current state", StateToString(a_targetState)));
         }
     }
 
-    public void EndTurn()
+    // Returns the string version of the state
+    public static string StateToString(Game_state a_state)
     {
-        if (TurnEvent != null)
+        switch (a_state)
         {
-            TurnEvent(Turn_state.end, currentTeam, turnCount);
+            case Game_state.pausemenu:
+                return "pause menu";
+            case Game_state.battle:
+                return "battle";
+            case Game_state.cinematic:
+                return "cinematic";
+            case Game_state.loading:
+                return "loading";
+            case Game_state.mainmenu:
+                return "main menu";
+            case Game_state.overworld:
+                return "over world";
+            default:
+                return "unknown state";
         }
-
-        currentTeam = (currentTeam == TEAM.player) ? TEAM.ai : TEAM.player;
-        StartTurn();
     }
+
+    public bool Ready
+    {
+        get { return isReady; }
+    }
+
+    // Returns previous game state
+    public Game_state PreviousState
+    {
+        get { return previousState; }
+    }
+
+    // Returns current game state
+    public Game_state CurrentGameState
+    {
+        get { return currentState; }
+    }
+
+    #endregion
 }

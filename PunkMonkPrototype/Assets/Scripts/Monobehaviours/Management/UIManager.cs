@@ -17,6 +17,8 @@ public class UIManager : MonoBehaviour
 
     private Text loadingText;
 
+    private ProfileSwitcher profiles;
+
     private PlayerController player;
 
     private Unit selectedUnit;
@@ -33,7 +35,7 @@ public class UIManager : MonoBehaviour
     {
         isReady = true;
 
-        //isLocked = false;
+        isLocked = false;
 
         //GameObject playerGO = GameObject.FindGameObjectWithTag("Player");
 
@@ -66,9 +68,11 @@ public class UIManager : MonoBehaviour
         {
             gameplayUI = canvas.GetChild(0).gameObject;
 
-            move = gameplayUI.transform.GetChild(0).GetComponent<Button>();
-            attack = gameplayUI.transform.GetChild(1).GetComponent<Button>();
-            specialAttack = gameplayUI.transform.GetChild(2).GetComponent<Button>();
+            profiles = gameplayUI.transform.GetChild(0).GetComponent<ProfileSwitcher>();
+
+            move = gameplayUI.transform.Find("Actions").GetChild(0).GetComponent<Button>();
+            attack = gameplayUI.transform.Find("Actions").GetChild(1).GetComponent<Button>();
+            specialAttack = gameplayUI.transform.Find("Actions").GetChild(2).GetComponent<Button>();
 
             fadePlane = canvas.Find("FadePlane").GetComponent<Image>();
             loadingText = fadePlane.transform.GetComponentInChildren<Text>();
@@ -189,5 +193,15 @@ public class UIManager : MonoBehaviour
     public bool Ready
     {
         get { return isReady; }
+    }
+
+    public void UpdateSelectedUnit(Unit a_selectedUnit)
+    {
+        if (selectedUnit != null)
+        {
+            profiles.Switch();
+        }
+
+        selectedUnit = a_selectedUnit;
     }
 }

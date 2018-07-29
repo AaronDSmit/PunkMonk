@@ -30,6 +30,8 @@ public class PlayerController : MonoBehaviour
 
     private UIManager UI;
 
+    private GridManager grid;
+
     [Header("Debug Info")]
     [SerializeField] private InteractionRuleset currentRuleset;
 
@@ -39,7 +41,9 @@ public class PlayerController : MonoBehaviour
 
         StateManager.OnGameStateChanged += GameStateChanged;
 
-        UI = GameObject.FindGameObjectWithTag("UI").GetComponent<UIManager>();
+        UI = GameObject.FindGameObjectWithTag("Manager").GetComponent<UIManager>();
+
+        grid = GameObject.FindGameObjectWithTag("Grid").GetComponent<GridManager>();
 
         tilesWithinRange = new List<Tile>();
 
@@ -78,8 +82,6 @@ public class PlayerController : MonoBehaviour
         {
             Debug.LogError("No lightning unit found!");
         }
-
-        // SelectUnit(earthUnit);
     }
 
     private void Update()
@@ -156,15 +158,41 @@ public class PlayerController : MonoBehaviour
                 unitUnderMouse = null;
             }
 
-            //RemoveHighlight();
+            // RemoveHighlight();
         }
 
         // Left click
-        if (Input.GetMouseButton(0))// && currentRuleset.IsValid)
+        if (Input.GetMouseButton(0) && currentRuleset.IsValid)
         {
-            if (unitUnderMouse)
+            switch (currentRuleset.actionType)
             {
-                SelectUnit(unitUnderMouse);
+                case ActionType.SELECTION:
+
+                    if (unitUnderMouse)
+                    {
+                        SelectUnit(unitUnderMouse);
+                    }
+
+                    break;
+                case ActionType.MOVEMENT:
+
+                    if (tileUnderMouse.IsWalkable)
+                    {
+                        selectedUnit.MoveTo(tileUnderMouse, UnitFinishedAction);
+                        RemoveHighlightedTiles();
+                        currentRuleset = selectionRuleset;
+
+                        canInteract = false;
+                        //UI.ToggleHUDLock();
+                    }
+
+                    break;
+                case ActionType.ATTACK:
+                    break;
+                case ActionType.SPELL:
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -180,10 +208,17 @@ public class PlayerController : MonoBehaviour
     {
         if (selectedUnit)
         {
+            if (selectedUnit == a_newSelectedUnit)
+            {
+                return;
+            }
+
             selectedUnit.Select(false, currentRuleset.ValidHighlightColour);
         }
 
         selectedUnit = a_newSelectedUnit;
+
+        UI.UpdateSelectedUnit(selectedUnit);
 
         selectedUnit.Select(true, currentRuleset.ValidHighlightColour);
     }
@@ -204,12 +239,23 @@ public class PlayerController : MonoBehaviour
 
     private void HighlightTilesInRange(int a_range)
     {
+        Tile[] area = grid.GetTilesWithinDistance(selectedUnit.CurrentTile, a_range);
 
+        foreach (Tile tile in area)
+        {
+            tilesWithinRange.Add(tile);
+            tile.HighlightMovement(true, currentRuleset.ValidHighlightColour);
+        }
     }
 
     private void RemoveHighlightedTiles()
     {
+        foreach (Tile tile in tilesWithinRange)
+        {
+            tile.RemoveHighlight();
+        }
 
+        tilesWithinRange.Clear();
     }
 
     private void TurnEvent(Turn_state a_newState, TEAM a_team, int a_turnNumber)
@@ -247,7 +293,7 @@ public class PlayerController : MonoBehaviour
     {
         RemoveHighlightedTiles();
 
-        // currentRuleset = selectedUnit.GetAction(actionIndex).ruleset;
+        currentRuleset = selectedUnit.GetAction(actionIndex).ruleset;
 
         // Highlight area in range to walk
         if (currentRuleset.actionType == ActionType.MOVEMENT)

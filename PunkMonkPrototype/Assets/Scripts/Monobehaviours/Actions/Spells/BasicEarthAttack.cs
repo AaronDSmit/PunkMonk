@@ -13,18 +13,16 @@ using UnityEngine;
 
 public class BasicEarthAttack : Spell
 {
-    [SerializeField] float damageAmount;
+    [SerializeField] private float damageAmount;
+    [SerializeField] private float Range;
+
+    private Vector3 targetPosition;
 
     protected override void CastSpell(Tile[] a_tile, System.Action a_onStartCB, System.Action a_onFinishCB)
     {
         base.CastSpell(a_tile, a_onStartCB, a_onFinishCB);
-        foreach (Tile hex in a_tile)
-        {
-            if (hex.CurrentUnit != null)
-            {
-                hex.CurrentUnit.TakeDamage(Element.EARTH, damageAmount);
-            }
-        }
+        targetPosition = a_tile[0].transform.position;
+
     }
 
 }

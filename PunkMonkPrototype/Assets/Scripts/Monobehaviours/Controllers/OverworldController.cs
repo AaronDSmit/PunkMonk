@@ -55,8 +55,13 @@ public class OverworldController : MonoBehaviour
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
                 {
                     vecBetween = hit.transform.position - earthUnit.transform.position;
-                    vecBetween.y = transform.position.y;
-                    earthUnit.transform.position += vecBetween.normalized * movementSpeed * Time.deltaTime;
+                    vecBetween.y = 0;
+                    //Debug.DrawLine()
+
+                    if (vecBetween.magnitude > 1)
+                    {
+                        earthUnit.transform.position += vecBetween.normalized * movementSpeed * Time.deltaTime;
+                    }
                 }
             }
         }

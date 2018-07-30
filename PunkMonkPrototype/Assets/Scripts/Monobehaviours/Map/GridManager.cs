@@ -171,7 +171,7 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    public Tile[] GetTilesWithinDistance(Tile centerTile, int range)
+    public Tile[] GetTilesWithinDistance(Tile centerTile, int range, bool ignoreBlockedTiles = false)
     {
         List<Tile> openList = new List<Tile>();
         List<Tile> returnList = new List<Tile>();
@@ -188,7 +188,19 @@ public class GridManager : MonoBehaviour
 
             foreach (Tile neighbour in currentTile.Neighbours)
             {
-                if (neighbour.IsWalkable && !returnList.Contains(neighbour))
+                if (ignoreBlockedTiles)
+                {
+                    if (!returnList.Contains(neighbour))
+                    {
+                        neighbour.GScore = Tile.Distance(currentTile, neighbour) + currentTile.GScore;
+                        if (neighbour.GScore < range + 1)
+                        {
+                            openList.Add(neighbour);
+                            returnList.Add(neighbour);
+                        }
+                    }
+                }
+                else if (neighbour.IsWalkable && !returnList.Contains(neighbour))
                 {
                     neighbour.GScore = Tile.Distance(currentTile, neighbour) + currentTile.GScore;
                     if (neighbour.GScore < range + 1)
@@ -220,7 +232,8 @@ public class GridManager : MonoBehaviour
     //    {
     //        for (int dy = Mathf.Max(-range, -dx - range); dy <= Mathf.Min(range, -dx + range); dy++)
     //        {
-    //            Tile h = GetTileAt(centerTile.Q + dx, centerTile.R + dy);
+    //            Cube cubeCoord = Tile.OffsetToCube(centerTile.coord);
+    //            Tile h = GetTileAt(cubeCoord.q + dx, cubeCoord.r + dy);
 
     //            if (h != null)
     //            {

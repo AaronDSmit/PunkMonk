@@ -72,6 +72,15 @@ public class Unit : LivingEntity
         }
     }
 
+    public void SnapToGrid(Tile a_targetTile)
+    {
+        currentTile.Exit();
+        currentTile = a_targetTile;
+        currentTile.Enter(this);
+
+        transform.position = new Vector3(currentTile.transform.position.x, transform.position.y, currentTile.transform.position.z);
+    }
+
     public void Select(bool a_isSelected, Color a_outlineColour)
     {
         isSelected = a_isSelected;

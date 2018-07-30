@@ -15,16 +15,6 @@ public class Tile : Entity
 
     [SerializeField] private float spreadDelay;
 
-    [SerializeField] private Color oilColour;
-
-    [SerializeField] private Color fireColour;
-
-    [SerializeField] private Color waterColour;
-
-    [SerializeField] private Color faultLineColour;
-
-    [SerializeField] private Color abyssColour;
-
     [SerializeField] private Status currentStatus;
 
     // Node values
@@ -59,36 +49,19 @@ public class Tile : Entity
     [SerializeField]
     public Color connectionColour;
 
+    private Unit currentUnit;
+
     private float gScore;
 
     private SpriteRenderer movementHighlight;
 
     private SpriteRenderer hoverHighlight;
 
-    private Unit currentUnit;
-
     #region API
-
-    public void IncreaseHeight(float stepSize)
-    {
-        transform.position = new Vector3(transform.position.x, transform.position.y + stepSize, transform.position.z);
-    }
-
-    public void DecreaseHeight(float stepSize)
-    {
-        transform.position = new Vector3(transform.position.x, transform.position.y - stepSize, transform.position.z);
-    }
-
-    public void SetHeight(float height)
-    {
-        transform.position = new Vector3(transform.position.x, height, transform.position.z);
-    }
 
     public void SetStatus(Status status)
     {
         currentStatus = status;
-
-        ChangeColour();
     }
 
     public void ShowGrid(bool a_show)
@@ -105,11 +78,6 @@ public class Tile : Entity
     {
         currentUnit = unit;
 
-        if (currentStatus == Status.FIRE)
-        {
-            currentUnit.TakeDamage(Element.FIRE, 25);
-        }
-
         isWalkable = false;
     }
 
@@ -122,7 +90,7 @@ public class Tile : Entity
     public void HighlightMovement(Color colour)
     {
         movementHighlight.enabled = true;
-        colour.a = 0.4f;
+        //colour.a = 0.4f;
         movementHighlight.color = colour;
     }
 
@@ -184,13 +152,29 @@ public class Tile : Entity
     public void MouseEnter(Color highlightColour)
     {
         hoverHighlight.enabled = true;
-        highlightColour.a = 0.4f;
+        //highlightColour.a = 0.4f;
         hoverHighlight.color = highlightColour;
     }
 
     public void MouseExit()
     {
         hoverHighlight.enabled = false;
+    }
+
+    public void AutoBlock()
+    {
+        if (Physics.CheckSphere(transform.position + Vector3.up, 0.3f))
+        {
+            IsWalkable = false;
+        }
+    }
+
+    public void AutoClear()
+    {
+        if (!Physics.CheckSphere(transform.position + Vector3.up, 0.3f))
+        {
+            IsWalkable = true;
+        }
     }
 
     public override void TakeDamage(Element damageType, float damageAmount)
@@ -204,8 +188,6 @@ public class Tile : Entity
                 currentUnit.TakeDamage(damageType, damageAmount);
             }
 
-            ChangeColour();
-
             StartCoroutine(SpreadStatus(Element.FIRE));
         }
 
@@ -218,8 +200,6 @@ public class Tile : Entity
             {
                 // well fuck
             }
-
-            ChangeColour();
 
             StartCoroutine(SpreadStatus(Element.EARTH));
         }
@@ -247,102 +227,6 @@ public class Tile : Entity
         string[] coordText = name.Split(',');
 
         coord = new OffsetCoord(int.Parse(coordText[0]), int.Parse(coordText[1]));
-    }
-
-    private void ChangeColour()
-    {
-        if (Application.isEditor)
-        {
-            Renderer myRenderer = GetComponentInChildren<Renderer>();
-            Material tempMaterial;
-
-            switch (currentStatus)
-            {
-                case Status.NONE:
-
-                    tempMaterial = new Material(myRenderer.sharedMaterial)
-                    {
-                        color = Color.white
-                    };
-
-                    myRenderer.sharedMaterial = tempMaterial;
-                    break;
-                case Status.OIL:
-
-                    tempMaterial = new Material(myRenderer.sharedMaterial)
-                    {
-                        color = oilColour
-                    };
-
-                    myRenderer.sharedMaterial = tempMaterial;
-
-                    break;
-                case Status.FIRE:
-
-                    tempMaterial = new Material(myRenderer.sharedMaterial)
-                    {
-                        color = fireColour
-                    };
-
-                    myRenderer.sharedMaterial = tempMaterial;
-
-                    break;
-                case Status.WATER:
-
-                    tempMaterial = new Material(myRenderer.sharedMaterial)
-                    {
-                        color = waterColour
-                    };
-
-                    myRenderer.sharedMaterial = tempMaterial;
-
-                    break;
-                case Status.FAULTLINE:
-
-                    tempMaterial = new Material(myRenderer.sharedMaterial)
-                    {
-                        color = faultLineColour
-                    };
-
-                    myRenderer.sharedMaterial = tempMaterial;
-
-                    break;
-                case Status.ABYSS:
-
-                    tempMaterial = new Material(myRenderer.sharedMaterial)
-                    {
-                        color = abyssColour
-                    };
-
-                    myRenderer.sharedMaterial = tempMaterial;
-
-                    break;
-            }
-        }
-        else
-        {
-            //switch (currentStatus)
-            //{
-            //    case Status.NONE:
-            //        renderer.material.color = Color.white;
-            //        break;
-            //    case Status.OIL:
-            //        renderer.material.color = oilColour;
-            //        break;
-            //    case Status.FIRE:
-            //        renderer.material.color = fireColour;
-            //        break;
-            //    case Status.WATER:
-            //        renderer.material.color = waterColour;
-            //        break;
-            //    case Status.FAULTLINE:
-            //        renderer.material.color = faultLineColour;
-            //        break;
-            //    case Status.ABYSS:
-            //        renderer.material.color = abyssColour;
-            //        break;
-            //}
-        }
     }
 
     private void OnDrawGizmos()

@@ -110,7 +110,7 @@ public class InteractionRulesetEditor : Editor
 
             GUILayout.EndHorizontal();
 
-            if (distanceType == DistanceCheck.CUSTOM)
+            if (distanceType == DistanceCheck.custom)
             {
                 GUILayout.BeginHorizontal();
 

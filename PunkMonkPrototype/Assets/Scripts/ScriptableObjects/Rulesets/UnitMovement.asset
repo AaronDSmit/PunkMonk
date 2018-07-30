@@ -19,6 +19,6 @@ MonoBehaviour:
   actionType: 1
   useDistanceCheck: 1
   useTeamCheck: 0
-  distanceCheckType: 1
+  distanceCheckType: 2
   minDistance: 0
   targetTeam: 0

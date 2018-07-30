@@ -16,9 +16,9 @@ MonoBehaviour:
     m_Bits: 768
   validHighlightColour: {r: 0.32156864, g: 0.8392157, b: 0.2784314, a: 1}
   invalidHighlightColour: {r: 0.8392157, g: 0.2784314, b: 0.2784314, a: 1}
-  actionType: 1
+  actionType: 2
   useDistanceCheck: 1
   useTeamCheck: 0
-  distanceCheckType: 2
+  distanceCheckType: 0
   minDistance: 1
   targetTeam: 0

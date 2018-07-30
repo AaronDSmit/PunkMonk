@@ -75,22 +75,22 @@ public class CameraController : MonoBehaviour
     private void ProcessKeyboardInput()
     {
 
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetAxis("Vertical") > 0)
         {
             targetPos += transform.forward * cameraSpeed * Time.deltaTime;
         }
 
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetAxis("Horizontal") < 0)
         {
             targetPos += -transform.right * cameraSpeed * Time.deltaTime;
         }
 
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetAxis("Horizontal") > 0)
         {
             targetPos += transform.right * cameraSpeed * Time.deltaTime;
         }
 
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetAxis("Vertical") < 0)
         {
             targetPos += -transform.forward * cameraSpeed * Time.deltaTime;
         }

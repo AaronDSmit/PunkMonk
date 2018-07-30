@@ -16,7 +16,8 @@ public class TransitionManager : MonoBehaviour
     private bool isReady;
 
     [HideInInspector]
-    [SerializeField] private List<SceneTransitionPoint> transitionPoints;
+    [SerializeField]
+    private List<SceneTransitionPoint> transitionPoints;
 
     public void Init()
     {
@@ -51,6 +52,9 @@ public class TransitionManager : MonoBehaviour
 
             playerGo.GetComponent<PlayerController>().Init();
             playerGo.GetComponent<OverworldController>().Init();
+
+            CameraController cameraController = GameObject.FindGameObjectWithTag("CameraRig").GetComponent<CameraController>();
+            cameraController.Init();
         }
     }
 

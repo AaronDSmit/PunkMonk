@@ -10,6 +10,8 @@ public class OverworldController : MonoBehaviour
 
     private bool inOverworld;
 
+    [SerializeField] private float movementSpeed;
+
     private void Awake()
     {
         StateManager.OnGameStateChanged += GameStateChanged;
@@ -40,7 +42,24 @@ public class OverworldController : MonoBehaviour
     // Process Mouse Input
     private void ProcessMouseInput()
     {
+        if (inOverworld)
+        {
+            if (Input.GetMouseButton(0))
+            {
+                Vector3 vecBetween;
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                int layerMask = 0;
+                layerMask |= (1 << LayerMask.NameToLayer("Ground"));
 
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
+                {
+                    vecBetween = hit.transform.position - earthUnit.transform.position;
+                    vecBetween.y = transform.position.y;
+                    earthUnit.transform.position += vecBetween.normalized * movementSpeed * Time.deltaTime;
+                }
+            }
+        }
     }
 
     // Initialisation function called when the scene is ready, sets up unit references

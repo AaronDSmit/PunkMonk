@@ -26,8 +26,10 @@ public class InteractionRuleset : ScriptableObject
     [SerializeField]
     private bool useTeamCheck;
 
+    [SerializeField] private bool useTileOccupationCheck;
+
     [SerializeField]
-    private bool requireClearTile;
+    private TileOccupation targetOccupation;
 
     [SerializeField]
     private DistanceCheck distanceCheckType;
@@ -39,6 +41,13 @@ public class InteractionRuleset : ScriptableObject
     private TargetTeam targetTeam;
 
     public bool IsValid { get; private set; }
+
+    public bool WithinRange { get; private set; }
+
+    public bool CorrectTileOccupation { get; private set; }
+
+    public bool CorrectTeam { get; private set; }
+
 
     public Color HighlightColour
     {
@@ -57,22 +66,34 @@ public class InteractionRuleset : ScriptableObject
 
     public void CheckValidity(Unit a_selectedObject, Tile a_tileUnderMouse)
     {
-        if (useDistanceCheck && requireClearTile)
+        if (useDistanceCheck)
         {
-            IsValid = WithinDistance(a_selectedObject, a_tileUnderMouse) && a_tileUnderMouse.IsWalkable;
-        }
-        else if (useDistanceCheck)
-        {
-            IsValid = WithinDistance(a_selectedObject, a_tileUnderMouse) && !a_tileUnderMouse.IsWalkable;
-        }
-        else if (requireClearTile)
-        {
-            IsValid = a_tileUnderMouse.IsWalkable;
+            WithinRange = WithinDistance(a_selectedObject, a_tileUnderMouse);
         }
         else
         {
-            IsValid = !a_tileUnderMouse.IsWalkable;
+            WithinRange = true;
         }
+
+        if (useTileOccupationCheck)
+        {
+            CorrectTileOccupation = TileOccupationCheck(a_tileUnderMouse);
+        }
+        else
+        {
+            CorrectTileOccupation = true;
+        }
+
+        if (useTeamCheck)
+        {
+            CorrectTeam = TeamCheck(a_tileUnderMouse);
+        }
+        else
+        {
+            CorrectTeam = true;
+        }
+
+        IsValid = WithinRange && CorrectTileOccupation && CorrectTeam;
     }
 
     public void CheckValidity(Unit a_selectedObject, Entity a_entityUnderMouse)
@@ -131,6 +152,18 @@ public class InteractionRuleset : ScriptableObject
             return (a_GO.Team == TEAM.ai || a_GO.Team == TEAM.neutral);
         }
     }
+
+    private bool TileOccupationCheck(Tile a_tile)
+    {
+        if(targetOccupation == TileOccupation.clear)
+        {
+            return a_tile.IsWalkable;
+        }
+        else
+        {
+            return !a_tile.IsWalkable;
+        }
+    }
 }
 
 public enum DistanceCheck
@@ -146,3 +179,9 @@ public enum TargetTeam
     friendly,
     enemy
 };
+
+public enum TileOccupation
+{
+    clear,
+    blocked
+}

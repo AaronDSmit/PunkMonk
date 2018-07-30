@@ -77,6 +77,7 @@ public class Tile : Entity
     public void Enter(Unit unit)
     {
         currentUnit = unit;
+        team = currentUnit.Team;
 
         isWalkable = false;
     }
@@ -85,6 +86,8 @@ public class Tile : Entity
     {
         currentUnit = null;
         isWalkable = true;
+
+        team = TEAM.neutral;
     }
 
     public void HighlightMovement(Color colour)

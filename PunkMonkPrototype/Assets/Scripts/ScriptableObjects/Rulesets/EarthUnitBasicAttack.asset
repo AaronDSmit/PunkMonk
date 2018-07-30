@@ -20,7 +20,8 @@ MonoBehaviour:
   actionType: 2
   useDistanceCheck: 1
   useTeamCheck: 0
-  requireClearTile: 0
+  useTileOccupationCheck: 1
+  targetOccupation: 1
   distanceCheckType: 0
   minDistance: 1
-  targetTeam: 0
+  targetTeam: 1

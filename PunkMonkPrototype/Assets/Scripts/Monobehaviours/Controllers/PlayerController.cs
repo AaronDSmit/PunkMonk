@@ -151,6 +151,16 @@ public class PlayerController : MonoBehaviour
                 previousTileUnderMouse = tileUnderMouse;
             }
 
+            if (unitUnderMouse)
+            {
+                if (previousUnitUnderMouse && previousUnitUnderMouse != unitUnderMouse)
+                {
+                    previousUnitUnderMouse.Highlight(false, Color.green);
+                }
+
+                previousUnitUnderMouse = unitUnderMouse;
+            }
+
             tileUnderMouse = hitInfo.transform.GetComponent<Tile>();
             unitUnderMouse = hitInfo.transform.GetComponent<Unit>();
 
@@ -158,13 +168,13 @@ public class PlayerController : MonoBehaviour
             {
                 currentRuleset.CheckValidity(selectedUnit, tileUnderMouse);
 
-                if (currentRuleset.IsValid && currentRuleset.actionType == ActionType.attack || currentRuleset.actionType == ActionType.specialAttack)
+                if (currentRuleset.WithinRange && currentRuleset.actionType == ActionType.attack || currentRuleset.actionType == ActionType.specialAttack)
                 {
                     ProcessActionHighlighting(tileUnderMouse, hitInfo);
                 }
                 else if (currentRuleset.IsValid && currentRuleset.actionType == ActionType.movement)
                 {
-                    tileUnderMouse.MouseEnter(currentRuleset.ValidHighlightColour);
+                    tileUnderMouse.MouseEnter(currentRuleset.HighlightColour);
 
                     List<Tile> path = FindObjectOfType<Navigation>().FindPath(selectedUnit.CurrentTile, tileUnderMouse);
                     lineRenderer.positionCount = path.Count + 1;
@@ -284,6 +294,11 @@ public class PlayerController : MonoBehaviour
             lineRenderer.positionCount = 0;
             currentRuleset = selectionRuleset;
             RemoveHighlightedTiles();
+
+            if (tileUnderMouse)
+            {
+                tileUnderMouse.MouseExit();
+            }
         }
     }
 
@@ -316,21 +331,21 @@ public class PlayerController : MonoBehaviour
                 return;
             }
 
-            selectedUnit.Select(false, currentRuleset.ValidHighlightColour);
+            selectedUnit.Select(false, currentRuleset.HighlightColour);
         }
 
         selectedUnit = a_newSelectedUnit;
 
         UI.UpdateSelectedUnit(selectedUnit);
 
-        selectedUnit.Select(true, currentRuleset.ValidHighlightColour);
+        selectedUnit.Select(true, currentRuleset.HighlightColour);
     }
 
     private void DeselectUnit()
     {
         if (selectedUnit)
         {
-            selectedUnit.Select(false, currentRuleset.ValidHighlightColour);
+            selectedUnit.Select(false, currentRuleset.HighlightColour);
             selectedUnit = null;
         }
     }
@@ -522,7 +537,7 @@ public class PlayerController : MonoBehaviour
 
         foreach (Tile tile in tilesAffectByAction)
         {
-            tile.MouseEnter(currentRuleset.ValidHighlightColour);
+            tile.MouseEnter(currentRuleset.HighlightColour);
         }
     }
 

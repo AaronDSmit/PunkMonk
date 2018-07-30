@@ -22,6 +22,8 @@ public class InteractionRulesetEditor : Editor
 
     private SerializedProperty useTeamCheck;
 
+    private SerializedProperty useTileOccupation;
+
     private SerializedProperty requireClearTile;
 
     private SerializedProperty distanceCheckType;
@@ -29,6 +31,8 @@ public class InteractionRulesetEditor : Editor
     private SerializedProperty maxDistance;
 
     private SerializedProperty targetTeam;
+
+    private SerializedProperty targetOccupation;
 
     private void OnEnable()
     {
@@ -46,6 +50,8 @@ public class InteractionRulesetEditor : Editor
 
         useTeamCheck = serializedObject.FindProperty("useTeamCheck");
 
+        useTileOccupation = serializedObject.FindProperty("useTileOccupationCheck");
+
         requireClearTile = serializedObject.FindProperty("requireClearTile");
 
         distanceCheckType = serializedObject.FindProperty("distanceCheckType");
@@ -53,6 +59,8 @@ public class InteractionRulesetEditor : Editor
         maxDistance = serializedObject.FindProperty("minDistance");
 
         targetTeam = serializedObject.FindProperty("targetTeam");
+
+        targetOccupation = serializedObject.FindProperty("targetOccupation");
     }
 
     public override void OnInspectorGUI()
@@ -160,21 +168,38 @@ public class InteractionRulesetEditor : Editor
 
             GUILayout.FlexibleSpace();
 
-            TargetTeam team = (TargetTeam)EditorGUILayout.EnumPopup("", (TargetTeam)targetTeam.enumValueIndex);
+            TargetTeam team = (TargetTeam)EditorGUILayout.EnumPopup((TargetTeam)targetTeam.enumValueIndex);
             targetTeam.enumValueIndex = (int)team;
 
             GUILayout.EndHorizontal();
         }
 
-        GUILayout.BeginHorizontal();
+        if (tempMask.value == 32)
+        {
+            GUILayout.BeginHorizontal();
 
-        GUILayout.Label("Require Clear Tile: ");
+            GUILayout.Label("Tile Occupation Check: ");
 
-        GUILayout.FlexibleSpace();
+            GUILayout.FlexibleSpace();
 
-        requireClearTile.boolValue = EditorGUILayout.Toggle(requireClearTile.boolValue);
+            useTileOccupation.boolValue = EditorGUILayout.Toggle(useTileOccupation.boolValue);
 
-        GUILayout.EndHorizontal();
+            GUILayout.EndHorizontal();
+
+            if (useTileOccupation.boolValue == true)
+            {
+                GUILayout.BeginHorizontal();
+
+                GUILayout.Label("Tile state: ");
+
+                GUILayout.FlexibleSpace();
+
+                TileOccupation occupation = (TileOccupation)EditorGUILayout.EnumPopup((TileOccupation)targetOccupation.enumValueIndex);
+                targetOccupation.enumValueIndex = (int)occupation;
+
+                GUILayout.EndHorizontal();
+            }
+        }
 
         serializedObject.ApplyModifiedProperties();
     }

@@ -127,7 +127,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 4
   m_CollisionDetection: 0
 --- !u!114 &114739587211585180
 MonoBehaviour:
@@ -146,8 +146,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2f4429e83ae258647a203d36c3f14919, type: 2}
   - {fileID: 11400000, guid: bf99ef183f7535c4bb59f007aa0e16dd, type: 2}
   - {fileID: 11400000, guid: 069424805bd530f4f8e31aa89c554d72, type: 2}
-  moveRange: 2
-  attackRange: 5
+  moveRange: 3
+  attackRange: 1
+  specialAttackRange: 5
   turnTime: 0.2
   walkSpeed: 5
   element: 1

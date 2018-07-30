@@ -9,6 +9,9 @@ public class InteractionRuleset : ScriptableObject
     public LayerMask interactableLayers;
 
     [SerializeField]
+    private Color withinRangeHighlightColour;
+
+    [SerializeField]
     private Color validHighlightColour;
 
     [SerializeField]
@@ -23,6 +26,11 @@ public class InteractionRuleset : ScriptableObject
     [SerializeField]
     private bool useTeamCheck;
 
+    [SerializeField] private bool useTileOccupationCheck;
+
+    [SerializeField]
+    private TileOccupation targetOccupation;
+
     [SerializeField]
     private DistanceCheck distanceCheckType;
 
@@ -34,6 +42,13 @@ public class InteractionRuleset : ScriptableObject
 
     public bool IsValid { get; private set; }
 
+    public bool WithinRange { get; private set; }
+
+    public bool CorrectTileOccupation { get; private set; }
+
+    public bool CorrectTeam { get; private set; }
+
+
     public Color HighlightColour
     {
         get { return (IsValid == true) ? validHighlightColour : invalidHighlightColour; }
@@ -44,16 +59,41 @@ public class InteractionRuleset : ScriptableObject
         get { return validHighlightColour; }
     }
 
+    public Color InRangeHighlightColour
+    {
+        get { return withinRangeHighlightColour; }
+    }
+
     public void CheckValidity(Unit a_selectedObject, Tile a_tileUnderMouse)
     {
         if (useDistanceCheck)
         {
-            IsValid = WithinDistance(a_selectedObject, a_tileUnderMouse) && a_tileUnderMouse.IsWalkable;
+            WithinRange = WithinDistance(a_selectedObject, a_tileUnderMouse);
         }
         else
         {
-            IsValid = true;
+            WithinRange = true;
         }
+
+        if (useTileOccupationCheck)
+        {
+            CorrectTileOccupation = TileOccupationCheck(a_tileUnderMouse);
+        }
+        else
+        {
+            CorrectTileOccupation = true;
+        }
+
+        if (useTeamCheck)
+        {
+            CorrectTeam = TeamCheck(a_tileUnderMouse);
+        }
+        else
+        {
+            CorrectTeam = true;
+        }
+
+        IsValid = WithinRange && CorrectTileOccupation && CorrectTeam;
     }
 
     public void CheckValidity(Unit a_selectedObject, Entity a_entityUnderMouse)
@@ -82,13 +122,19 @@ public class InteractionRuleset : ScriptableObject
 
         switch (distanceCheckType)
         {
-            case DistanceCheck.ATTACKRANGE:
+            case DistanceCheck.attackRange:
                 distance = a_selectedObject.GetComponent<Unit>().AttackRange;
                 return Tile.Distance(a_selectedObject.CurrentTile, a_tileLocation) <= distance;
-            case DistanceCheck.MOVEMENTRANGE:
+
+            case DistanceCheck.specialAttackRange:
+                distance = a_selectedObject.GetComponent<Unit>().SpecialAttackRange;
+                return Tile.Distance(a_selectedObject.CurrentTile, a_tileLocation) <= distance;
+
+            case DistanceCheck.movementRange:
                 distance = a_selectedObject.GetComponent<Unit>().MoveRange;
                 return Tile.Distance(a_selectedObject.CurrentTile, a_tileLocation) <= distance;
-            case DistanceCheck.CUSTOM:
+
+            case DistanceCheck.custom:
                 return Tile.Distance(a_selectedObject.CurrentTile, a_tileLocation) <= minDistance;
         }
 
@@ -97,7 +143,7 @@ public class InteractionRuleset : ScriptableObject
 
     private bool TeamCheck(Entity a_GO)
     {
-        if (targetTeam == TargetTeam.SAMETEAM)
+        if (targetTeam == TargetTeam.friendly)
         {
             return (a_GO.Team == TEAM.player || a_GO.Team == TEAM.neutral);
         }
@@ -106,17 +152,36 @@ public class InteractionRuleset : ScriptableObject
             return (a_GO.Team == TEAM.ai || a_GO.Team == TEAM.neutral);
         }
     }
+
+    private bool TileOccupationCheck(Tile a_tile)
+    {
+        if(targetOccupation == TileOccupation.clear)
+        {
+            return a_tile.IsWalkable;
+        }
+        else
+        {
+            return !a_tile.IsWalkable;
+        }
+    }
 }
 
 public enum DistanceCheck
 {
-    ATTACKRANGE,
-    MOVEMENTRANGE,
-    CUSTOM
+    attackRange,
+    specialAttackRange,
+    movementRange,
+    custom
 };
 
 public enum TargetTeam
 {
-    SAMETEAM,
-    ENEMYTEAM
+    friendly,
+    enemy
 };
+
+public enum TileOccupation
+{
+    clear,
+    blocked
+}

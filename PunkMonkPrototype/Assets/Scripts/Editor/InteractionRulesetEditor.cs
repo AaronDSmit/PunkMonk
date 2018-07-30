@@ -12,6 +12,8 @@ public class InteractionRulesetEditor : Editor
 
     private SerializedProperty interactableLayers;
 
+    private SerializedProperty WithinRangeHighlightColour;
+
     private SerializedProperty ValidHighlightColour;
 
     private SerializedProperty InvalidHighlightColour;
@@ -20,15 +22,23 @@ public class InteractionRulesetEditor : Editor
 
     private SerializedProperty useTeamCheck;
 
+    private SerializedProperty useTileOccupation;
+
+    private SerializedProperty requireClearTile;
+
     private SerializedProperty distanceCheckType;
 
     private SerializedProperty maxDistance;
 
     private SerializedProperty targetTeam;
 
+    private SerializedProperty targetOccupation;
+
     private void OnEnable()
     {
         interactableLayers = serializedObject.FindProperty("interactableLayers");
+
+        WithinRangeHighlightColour = serializedObject.FindProperty("withinRangeHighlightColour");
 
         ValidHighlightColour = serializedObject.FindProperty("validHighlightColour");
 
@@ -40,11 +50,17 @@ public class InteractionRulesetEditor : Editor
 
         useTeamCheck = serializedObject.FindProperty("useTeamCheck");
 
+        useTileOccupation = serializedObject.FindProperty("useTileOccupationCheck");
+
+        requireClearTile = serializedObject.FindProperty("requireClearTile");
+
         distanceCheckType = serializedObject.FindProperty("distanceCheckType");
 
         maxDistance = serializedObject.FindProperty("minDistance");
 
         targetTeam = serializedObject.FindProperty("targetTeam");
+
+        targetOccupation = serializedObject.FindProperty("targetOccupation");
     }
 
     public override void OnInspectorGUI()
@@ -65,6 +81,16 @@ public class InteractionRulesetEditor : Editor
         GUILayout.Label("Target Layers: ");
         LayerMask tempMask = EditorGUILayout.MaskField(InternalEditorUtility.LayerMaskToConcatenatedLayersMask(interactableLayers.intValue), InternalEditorUtility.layers);
         interactableLayers.intValue = InternalEditorUtility.ConcatenatedLayersMaskToLayerMask(tempMask);
+
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginHorizontal();
+
+        GUILayout.Label("Within Range Colour: ");
+
+        GUILayout.FlexibleSpace();
+
+        WithinRangeHighlightColour.colorValue = EditorGUILayout.ColorField(WithinRangeHighlightColour.colorValue);
 
         GUILayout.EndHorizontal();
 
@@ -110,7 +136,7 @@ public class InteractionRulesetEditor : Editor
 
             GUILayout.EndHorizontal();
 
-            if (distanceType == DistanceCheck.CUSTOM)
+            if (distanceType == DistanceCheck.custom)
             {
                 GUILayout.BeginHorizontal();
 
@@ -142,10 +168,37 @@ public class InteractionRulesetEditor : Editor
 
             GUILayout.FlexibleSpace();
 
-            TargetTeam team = (TargetTeam)EditorGUILayout.EnumPopup("", (TargetTeam)targetTeam.enumValueIndex);
+            TargetTeam team = (TargetTeam)EditorGUILayout.EnumPopup((TargetTeam)targetTeam.enumValueIndex);
             targetTeam.enumValueIndex = (int)team;
 
             GUILayout.EndHorizontal();
+        }
+
+        if (tempMask.value == 32)
+        {
+            GUILayout.BeginHorizontal();
+
+            GUILayout.Label("Tile Occupation Check: ");
+
+            GUILayout.FlexibleSpace();
+
+            useTileOccupation.boolValue = EditorGUILayout.Toggle(useTileOccupation.boolValue);
+
+            GUILayout.EndHorizontal();
+
+            if (useTileOccupation.boolValue == true)
+            {
+                GUILayout.BeginHorizontal();
+
+                GUILayout.Label("Tile state: ");
+
+                GUILayout.FlexibleSpace();
+
+                TileOccupation occupation = (TileOccupation)EditorGUILayout.EnumPopup((TileOccupation)targetOccupation.enumValueIndex);
+                targetOccupation.enumValueIndex = (int)occupation;
+
+                GUILayout.EndHorizontal();
+            }
         }
 
         serializedObject.ApplyModifiedProperties();

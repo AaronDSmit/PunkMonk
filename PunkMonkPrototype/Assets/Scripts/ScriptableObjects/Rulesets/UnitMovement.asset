@@ -14,11 +14,13 @@ MonoBehaviour:
   interactableLayers:
     serializedVersion: 2
     m_Bits: 256
+  withinRangeHighlightColour: {r: 0.10207612, g: 0.5508589, b: 0.86764705, a: 0.678}
   validHighlightColour: {r: 0.32156864, g: 0.8392157, b: 0.2784314, a: 1}
   invalidHighlightColour: {r: 0.8392157, g: 0.2784314, b: 0.2784314, a: 1}
   actionType: 1
   useDistanceCheck: 1
   useTeamCheck: 0
-  distanceCheckType: 1
+  requireClearTile: 1
+  distanceCheckType: 2
   minDistance: 0
   targetTeam: 0

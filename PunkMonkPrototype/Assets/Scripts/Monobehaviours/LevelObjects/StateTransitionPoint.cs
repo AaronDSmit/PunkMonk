@@ -18,9 +18,12 @@ public class StateTransitionPoint : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (Manager.instance.StateController.CurrentGameState == Game_state.overworld)
+        if(other.CompareTag("EarthUnit"))
         {
-            Manager.instance.StateController.ChangeGame_state(targetState);
+            if (Manager.instance.StateController.CurrentGameState == Game_state.overworld)
+            {
+                Manager.instance.StateController.ChangeStateAfterFade(targetState);
+            }
         }
     }
 }

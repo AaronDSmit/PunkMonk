@@ -14,7 +14,6 @@ public class OverworldFollower : MonoBehaviour
     private void Awake()
     {
         StateManager.OnGameStateChanged += GameStateChanged;
-        Init();
     }
 
     public void Init()

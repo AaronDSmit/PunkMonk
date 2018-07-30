@@ -99,14 +99,17 @@ public class UIManager : MonoBehaviour
     private void GameStateChanged(Game_state a_oldstate, Game_state a_newstate)
     {
         // Leaving the loading state
-        if (a_oldstate == Game_state.loading)
+        if (a_oldstate == Game_state.mainmenu)
         {
             StartCoroutine(FadeOutLoading());
         }
-
-        if (a_newstate == Game_state.battle)
+        else if (a_newstate == Game_state.battle)
         {
-            StartCoroutine(FadeIntoBattle());
+            gameplayUI.SetActive(true);
+        }
+        else if (a_newstate == Game_state.loading)
+        {
+            StartCoroutine(FadeIntoState());
         }
         else
         {
@@ -114,13 +117,13 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private IEnumerator FadeIntoBattle()
+    private IEnumerator FadeIntoState()
     {
         StartCoroutine(FadeImage(0, 1, 1.0f));
 
         yield return new WaitForSeconds(1.0f);
 
-        gameplayUI.SetActive(true);
+        Manager.instance.StateController.MidLoad = true;
 
         StartCoroutine(FadeImage(1, 0, 1.0f));
     }

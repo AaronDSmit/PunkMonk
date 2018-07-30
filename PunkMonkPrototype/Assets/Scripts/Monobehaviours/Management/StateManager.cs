@@ -13,6 +13,8 @@ public class StateManager : MonoBehaviour
 
     [SerializeField] private List<Game_state> stateHistory;
 
+    private bool midLoad = false;
+
     private bool isReady;
 
     // events
@@ -25,18 +27,18 @@ public class StateManager : MonoBehaviour
     {
         stateHistory = new List<Game_state>();
 
-        ChangeGame_state(Game_state.loading);
+        ChangeGameState(Game_state.loading);
 
         isReady = true;
     }
 
     public void StartGame()
     {
-        ChangeGame_state(Game_state.overworld);
+        ChangeGameState(Game_state.overworld);
     }
 
     // This function changes the current game state to the target game state and calls the event on any script that is listening
-    public void ChangeGame_state(Game_state a_targetState)
+    public void ChangeGameState(Game_state a_targetState)
     {
         // Don't change to target state if that is already the current state
         if (currentState != a_targetState)
@@ -67,6 +69,25 @@ public class StateManager : MonoBehaviour
         {
             Debug.Log(string.Format("Tried to change to {0} but that's already the current state", StateToString(a_targetState)));
         }
+    }
+
+    public void ChangeStateAfterFade(Game_state a_targetState)
+    {
+        ChangeGameState(Game_state.loading);
+
+        StartCoroutine(ChangeMidLoad(a_targetState));
+    }
+
+    private IEnumerator ChangeMidLoad(Game_state a_targetState)
+    {
+        yield return new WaitUntil(() => midLoad);
+
+        ChangeGameState(a_targetState);
+    }
+
+    public bool MidLoad
+    {
+        set { midLoad = value; }
     }
 
     // Returns the string version of the state

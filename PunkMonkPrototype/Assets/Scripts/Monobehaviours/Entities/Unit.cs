@@ -12,6 +12,8 @@ public class Unit : LivingEntity
 
     [SerializeField] private int attackRange;
 
+    [SerializeField] private int specialAttackRange;
+
     [SerializeField] protected float turnTime;
 
     [SerializeField] protected float walkSpeed;
@@ -70,6 +72,15 @@ public class Unit : LivingEntity
         }
     }
 
+    public void SnapToGrid(Tile a_targetTile)
+    {
+        currentTile.Exit();
+        currentTile = a_targetTile;
+        currentTile.Enter(this);
+
+        transform.position = new Vector3(currentTile.transform.position.x, transform.position.y, currentTile.transform.position.z);
+    }
+
     public void Select(bool a_isSelected, Color a_outlineColour)
     {
         isSelected = a_isSelected;
@@ -84,6 +95,58 @@ public class Unit : LivingEntity
         {
             myRenderer.material.SetFloat("_UseOutline", 0);
         }
+    }
+
+    public void Attack(Tile[] targetTiles, System.Action start, System.Action finished)
+    {
+        finishedAction = finished;
+
+        StartCoroutine(TurnToAttack(targetTiles[0]));
+    }
+
+    private IEnumerator TurnToAttack(Tile targetTile)
+    {
+        yield return StartCoroutine(Turn(targetTile.transform.position));
+
+        // m_Animator.SetTrigger(actions[1].AnimTrigger);
+
+        // m_CurrentClipInfo = m_Animator.GetCurrentAnimatorClipInfo(0);
+
+        // yield return new WaitForSeconds(m_CurrentClipInfo[0].clip.length * 0.8f);
+
+        CanAttack = false;
+
+        finishedAction();
+    }
+
+    protected IEnumerator Turn(Vector3 targetPos)
+    {
+        Vector3 targetDirection = targetPos - transform.position;
+
+        //create the rotation we need to be in to look at the target
+        Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+
+        float currentLerpTime = 0.0f;
+        float t = 0.0f;
+
+        while (t < 1)
+        {
+            currentLerpTime += Time.deltaTime;
+            t = currentLerpTime / turnTime;
+
+            //rotate us over time according to speed until we are in the required rotation
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, t);
+
+            transform.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0f);
+            yield return null;
+        }
+    }
+
+    public void SpecialAttack(Tile[] targetTiles, System.Action start, System.Action finished)
+    {
+        finishedAction = finished;
+
+        // StartCoroutine(TurnToAttack(targetUnit));
     }
 
     public Action GetAction(int index)
@@ -104,6 +167,11 @@ public class Unit : LivingEntity
     public int AttackRange
     {
         get { return attackRange; }
+    }
+
+    public int SpecialAttackRange
+    {
+        get { return specialAttackRange; }
     }
 
     public bool CanMove

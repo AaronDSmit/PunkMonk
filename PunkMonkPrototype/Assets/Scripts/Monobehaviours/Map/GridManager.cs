@@ -8,16 +8,20 @@ public class GridManager : MonoBehaviour
     [SerializeField] private Tile tilePrefab;
 
     [HideInInspector]
-    [SerializeField] private int mapWidth;
+    [SerializeField]
+    private int mapWidth;
 
     [HideInInspector]
-    [SerializeField] private int mapHeight;
+    [SerializeField]
+    private int mapHeight;
 
     [HideInInspector]
-    [SerializeField] private List<Tile> map = new List<Tile>();
+    [SerializeField]
+    private List<Tile> map = new List<Tile>();
 
     [HideInInspector]
-    [SerializeField] private Dictionary<string, Tile> grid = new Dictionary<string, Tile>();
+    [SerializeField]
+    private Dictionary<string, Tile> grid = new Dictionary<string, Tile>();
 
     private bool generateWithColour = false;
 
@@ -167,11 +171,13 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    public Tile[] GetTilesWithinDistance(Tile centerTile, int range)
+    public Tile[] GetTilesWithinDistance(Tile centerTile, int range, bool ignoreBlockedTiles = false)
     {
         List<Tile> openList = new List<Tile>();
         List<Tile> returnList = new List<Tile>();
         Tile currentTile;
+
+        centerTile.GScore = 0;
 
         openList.Add(centerTile);
 
@@ -182,7 +188,19 @@ public class GridManager : MonoBehaviour
 
             foreach (Tile neighbour in currentTile.Neighbours)
             {
-                if (neighbour.IsWalkable && !returnList.Contains(neighbour))
+                if (ignoreBlockedTiles)
+                {
+                    if (!returnList.Contains(neighbour))
+                    {
+                        neighbour.GScore = Tile.Distance(currentTile, neighbour) + currentTile.GScore;
+                        if (neighbour.GScore < range + 1)
+                        {
+                            openList.Add(neighbour);
+                            returnList.Add(neighbour);
+                        }
+                    }
+                }
+                else if (neighbour.IsWalkable && !returnList.Contains(neighbour))
                 {
                     neighbour.GScore = Tile.Distance(currentTile, neighbour) + currentTile.GScore;
                     if (neighbour.GScore < range + 1)
@@ -214,7 +232,8 @@ public class GridManager : MonoBehaviour
     //    {
     //        for (int dy = Mathf.Max(-range, -dx - range); dy <= Mathf.Min(range, -dx + range); dy++)
     //        {
-    //            Tile h = GetTileAt(centerTile.Q + dx, centerTile.R + dy);
+    //            Cube cubeCoord = Tile.OffsetToCube(centerTile.coord);
+    //            Tile h = GetTileAt(cubeCoord.q + dx, cubeCoord.r + dy);
 
     //            if (h != null)
     //            {

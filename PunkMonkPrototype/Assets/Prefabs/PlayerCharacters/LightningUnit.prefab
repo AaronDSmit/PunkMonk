@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 114580003881297600}
   - component: {fileID: 136618911245474124}
   - component: {fileID: 54067651318102236}
-  - component: {fileID: 114962089191148552}
+  - component: {fileID: 114441757422822586}
   m_Layer: 9
   m_Name: LightningUnit
   m_TagString: LightningUnit
@@ -128,8 +128,20 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 4
   m_CollisionDetection: 0
+--- !u!114 &114441757422822586
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1761558808058186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 669535afe2e2ec54b8bd88a575e0a04f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementSpeed: 5
 --- !u!114 &114580003881297600
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -143,24 +155,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   team: 0
   startHealth: 100
-  actions: []
+  actions:
+  - {fileID: 11400000, guid: 2f4429e83ae258647a203d36c3f14919, type: 2}
+  - {fileID: 11400000, guid: bf99ef183f7535c4bb59f007aa0e16dd, type: 2}
+  - {fileID: 11400000, guid: 069424805bd530f4f8e31aa89c554d72, type: 2}
   moveRange: 3
-  attackRange: 3
-  turnTime: 0
-  walkSpeed: 0
-  element: 2
---- !u!114 &114962089191148552
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1761558808058186}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 669535afe2e2ec54b8bd88a575e0a04f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movementSpeed: 3
+  attackRange: 1
+  specialAttackRange: 5
+  turnTime: 0.2
+  walkSpeed: 5
+  element: 1
 --- !u!136 &136618911245474124
 CapsuleCollider:
   m_ObjectHideFlags: 1

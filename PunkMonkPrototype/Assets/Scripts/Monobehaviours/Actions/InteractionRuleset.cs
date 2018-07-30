@@ -82,13 +82,19 @@ public class InteractionRuleset : ScriptableObject
 
         switch (distanceCheckType)
         {
-            case DistanceCheck.ATTACKRANGE:
+            case DistanceCheck.attackRange:
                 distance = a_selectedObject.GetComponent<Unit>().AttackRange;
                 return Tile.Distance(a_selectedObject.CurrentTile, a_tileLocation) <= distance;
-            case DistanceCheck.MOVEMENTRANGE:
+
+            case DistanceCheck.specialAttackRange:
+                distance = a_selectedObject.GetComponent<Unit>().SpecialAttackRange;
+                return Tile.Distance(a_selectedObject.CurrentTile, a_tileLocation) <= distance;
+
+            case DistanceCheck.movementRange:
                 distance = a_selectedObject.GetComponent<Unit>().MoveRange;
                 return Tile.Distance(a_selectedObject.CurrentTile, a_tileLocation) <= distance;
-            case DistanceCheck.CUSTOM:
+
+            case DistanceCheck.custom:
                 return Tile.Distance(a_selectedObject.CurrentTile, a_tileLocation) <= minDistance;
         }
 
@@ -97,7 +103,7 @@ public class InteractionRuleset : ScriptableObject
 
     private bool TeamCheck(Entity a_GO)
     {
-        if (targetTeam == TargetTeam.SAMETEAM)
+        if (targetTeam == TargetTeam.friendly)
         {
             return (a_GO.Team == TEAM.player || a_GO.Team == TEAM.neutral);
         }
@@ -110,13 +116,14 @@ public class InteractionRuleset : ScriptableObject
 
 public enum DistanceCheck
 {
-    ATTACKRANGE,
-    MOVEMENTRANGE,
-    CUSTOM
+    attackRange,
+    specialAttackRange,
+    movementRange,
+    custom
 };
 
 public enum TargetTeam
 {
-    SAMETEAM,
-    ENEMYTEAM
+    friendly,
+    enemy
 };

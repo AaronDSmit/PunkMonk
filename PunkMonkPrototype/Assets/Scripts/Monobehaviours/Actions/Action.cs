@@ -4,10 +4,10 @@ using UnityEngine;
 
 public enum ActionType
 {
-    SELECTION,
-    MOVEMENT,
-    ATTACK,
-    SPELL
+    selection,
+    movement,
+    attack,
+    specialAttack
 };
 
 [CreateAssetMenu(fileName = "Action", menuName = "Actions/new action", order = 0)]

@@ -6,7 +6,7 @@ public class SpecialEarthAttack : Spell {
 
     [SerializeField] private float damageAmount;
 
-    protected override void CastSpell(Tile[] a_tile, System.Action a_onStartCB, System.Action a_onFinishCB)
+    public override void CastSpell(Tile[] a_tile, System.Action a_onStartCB, System.Action a_onFinishCB)
     {
 
         base.CastSpell(a_tile, a_onStartCB, a_onFinishCB);

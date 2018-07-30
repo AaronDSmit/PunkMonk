@@ -15,7 +15,7 @@ using System;
 
 public class Spell : MonoBehaviour
 {
-    protected virtual void CastSpell(Tile[] a_tiles, System.Action a_onStartCB, System.Action a_onFinishCB)
+    public virtual void CastSpell(Tile[] a_tiles, System.Action a_onStartCB, System.Action a_onFinishCB)
     {
         a_onStartCB();
 

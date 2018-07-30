@@ -52,6 +52,7 @@ public class TransitionManager : MonoBehaviour
 
             playerGo.GetComponent<PlayerController>().Init();
             playerGo.GetComponent<OverworldController>().Init();
+            lightning.GetComponent<OverworldFollower>().Init();
 
             CameraController cameraController = GameObject.FindGameObjectWithTag("CameraRig").GetComponent<CameraController>();
             cameraController.Init();

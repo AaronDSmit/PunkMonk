@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PlayerAttack { earthBasic, earthSpecial, lightningBasic, lightningSpecial }
+
 public class PlayerController : MonoBehaviour
 {
     #region Inspector Variables
@@ -10,9 +12,15 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
+    [Header("Debug Info")]
+    [SerializeField]
+    private InteractionRuleset currentRuleset;
+
     private bool myTurn = true;
 
     private bool canInteract = false;
+
+    private PlayerAttack currentAttack;
 
     private Unit selectedUnit;
 
@@ -28,12 +36,12 @@ public class PlayerController : MonoBehaviour
 
     private List<Tile> tilesWithinRange;
 
+    private List<Tile> tilesAffectByAction;
+
     private UIManager UI;
 
     private GridManager grid;
 
-    [Header("Debug Info")]
-    [SerializeField] private InteractionRuleset currentRuleset;
 
     private void Awake()
     {
@@ -46,6 +54,8 @@ public class PlayerController : MonoBehaviour
         grid = GameObject.FindGameObjectWithTag("Grid").GetComponent<GridManager>();
 
         tilesWithinRange = new List<Tile>();
+
+        tilesAffectByAction = new List<Tile>();
 
         if (selectionRuleset == null)
         {
@@ -134,6 +144,23 @@ public class PlayerController : MonoBehaviour
             {
                 currentRuleset.CheckValidity(selectedUnit, tileUnderMouse);
 
+                if (currentRuleset.IsValid && currentRuleset.actionType == ActionType.attack || currentRuleset.actionType == ActionType.specialAttack)
+                {
+                    ProcessActionHighlighting(tileUnderMouse, hitInfo);
+                }
+                else
+                {
+                    if (tilesAffectByAction.Count > 0)
+                    {
+                        foreach (Tile tile in tilesAffectByAction)
+                        {
+                            tile.MouseExit();
+                        }
+
+                        tilesAffectByAction.Clear();
+                    }
+                }
+
                 //HighlightObject(objectUnderMouse);
             }
             else if (unitUnderMouse)
@@ -166,7 +193,7 @@ public class PlayerController : MonoBehaviour
         {
             switch (currentRuleset.actionType)
             {
-                case ActionType.SELECTION:
+                case ActionType.selection:
 
                     if (unitUnderMouse)
                     {
@@ -174,9 +201,10 @@ public class PlayerController : MonoBehaviour
                     }
 
                     break;
-                case ActionType.MOVEMENT:
 
-                    if (tileUnderMouse.IsWalkable)
+                case ActionType.movement:
+
+                    if (tileUnderMouse.IsWalkable) // reduntant check, needs to be valid to reach this point anyway
                     {
                         selectedUnit.MoveTo(tileUnderMouse, UnitFinishedAction);
                         RemoveHighlightedTiles();
@@ -187,11 +215,25 @@ public class PlayerController : MonoBehaviour
                     }
 
                     break;
-                case ActionType.ATTACK:
+
+                case ActionType.attack:
+
+                    selectedUnit.Attack(tilesAffectByAction.ToArray(), AttackStart, AttackEnd);
+                    RemoveHighlightedTiles();
+                    currentRuleset = selectionRuleset;
+
+                    canInteract = false;
+
                     break;
-                case ActionType.SPELL:
-                    break;
-                default:
+
+                case ActionType.specialAttack:
+
+                    selectedUnit.SpecialAttack(tilesAffectByAction.ToArray(), SpecialAttackStart, SpecialAttackEnd);
+                    RemoveHighlightedTiles();
+                    currentRuleset = selectionRuleset;
+
+                    canInteract = false;
+
                     break;
             }
         }
@@ -202,6 +244,26 @@ public class PlayerController : MonoBehaviour
             currentRuleset = selectionRuleset;
             RemoveHighlightedTiles();
         }
+    }
+
+    private void AttackStart()
+    {
+
+    }
+
+    private void AttackEnd()
+    {
+        canInteract = true;
+    }
+
+    private void SpecialAttackStart()
+    {
+
+    }
+
+    private void SpecialAttackEnd()
+    {
+        canInteract = true;
     }
 
     private void SelectUnit(Unit a_newSelectedUnit)
@@ -244,7 +306,7 @@ public class PlayerController : MonoBehaviour
         foreach (Tile tile in area)
         {
             tilesWithinRange.Add(tile);
-            tile.HighlightMovement(true, currentRuleset.ValidHighlightColour);
+            tile.HighlightMovement(currentRuleset.ValidHighlightColour);
         }
     }
 
@@ -256,6 +318,16 @@ public class PlayerController : MonoBehaviour
         }
 
         tilesWithinRange.Clear();
+
+        if (tilesAffectByAction.Count > 0)
+        {
+            foreach (Tile tile in tilesAffectByAction)
+            {
+                tile.MouseExit();
+            }
+
+            tilesAffectByAction.Clear();
+        }
     }
 
     private void TurnEvent(Turn_state a_newState, TEAM a_team, int a_turnNumber)
@@ -295,16 +367,210 @@ public class PlayerController : MonoBehaviour
 
         currentRuleset = selectedUnit.GetAction(actionIndex).ruleset;
 
+        // set the current attack
+        if (selectedUnit == earthUnit)
+        {
+            if (actionIndex == 1)
+            {
+                currentAttack = PlayerAttack.earthBasic;
+            }
+            else if (actionIndex == 2)
+            {
+                currentAttack = PlayerAttack.earthSpecial;
+            }
+        }
+        else if (selectedUnit == lightningUnit)
+        {
+            if (actionIndex == 1)
+            {
+                currentAttack = PlayerAttack.lightningBasic;
+            }
+            else if (actionIndex == 2)
+            {
+                currentAttack = PlayerAttack.lightningSpecial;
+            }
+        }
+
         // Highlight area in range to walk
-        if (currentRuleset.actionType == ActionType.MOVEMENT)
+        if (currentRuleset.actionType == ActionType.movement)
         {
             HighlightTilesInRange(selectedUnit.GetComponent<Unit>().MoveRange);
         }
 
         // Highlight area in range to attack
-        if (currentRuleset.actionType == ActionType.ATTACK || currentRuleset.actionType == ActionType.SPELL)
+        if (currentRuleset.actionType == ActionType.attack)
         {
             HighlightTilesInRange(selectedUnit.GetComponent<Unit>().AttackRange);
+        }
+
+        // Highlight area in range to special attack
+        if (currentRuleset.actionType == ActionType.specialAttack)
+        {
+            HighlightTilesInRange(selectedUnit.GetComponent<Unit>().SpecialAttackRange);
+        }
+    }
+
+    private void ProcessActionHighlighting(Tile a_targetTile, RaycastHit a_hitInfo)
+    {
+        switch (currentAttack)
+        {
+            case PlayerAttack.earthBasic:
+
+                GetTilesAffectByEarthAttack(a_targetTile, a_hitInfo);
+                break;
+            case PlayerAttack.earthSpecial:
+
+                GetTilesAffectByEarthSpecialAttack(a_targetTile);
+                break;
+            case PlayerAttack.lightningBasic:
+
+                break;
+            case PlayerAttack.lightningSpecial:
+
+                break;
+        }
+    }
+
+    [SerializeField] private float angle;
+    [SerializeField] private int snapAngle;
+
+    // returns a tiles within a tilesAffectByAction
+    private void GetTilesAffectByEarthAttack(Tile a_targetTile, RaycastHit a_hitInfo)
+    {
+        foreach (Tile tile in tilesAffectByAction)
+        {
+            tile.MouseExit();
+        }
+
+        tilesAffectByAction.Clear();
+
+        Debug.DrawLine(selectedUnit.CurrentTile.transform.position + Vector3.up * 0.2f, a_hitInfo.point + Vector3.up * 0.2f, Color.yellow);
+
+        // angle = Vector3.SignedAngle(Vector3.forward, a_hitInfo.point - selectedUnit.CurrentTile.transform.position, Vector3.up);
+
+        angle = Vector3.SignedAngle(Vector3.forward, a_targetTile.transform.position - selectedUnit.CurrentTile.transform.position, Vector3.up);
+
+        snapAngle = ((int)Mathf.Round(angle / 30.0f)) * 30;
+
+        if (snapAngle < 0)
+        {
+            snapAngle = 360 + snapAngle;
+        }
+
+        MakeCone(snapAngle, 10);
+
+        Debug.DrawLine(selectedUnit.CurrentTile.transform.position + Vector3.up * 0.2f, selectedUnit.CurrentTile.transform.position + new Vector3(Mathf.Sin(Mathf.Deg2Rad * snapAngle), 0.0f, Mathf.Cos(Mathf.Deg2Rad * snapAngle)) * 2 + Vector3.up * 0.2f, Color.magenta);
+
+        foreach (Tile tile in tilesAffectByAction)
+        {
+            tile.MouseEnter(Color.blue);
+        }
+    }
+
+    // returns a tiles within range of landing tiles
+    private void GetTilesAffectByEarthSpecialAttack(Tile a_targetTile)
+    {
+        foreach (Tile tile in tilesAffectByAction)
+        {
+            tile.MouseExit();
+        }
+
+        tilesAffectByAction.Clear();
+
+        tilesAffectByAction.Add(a_targetTile);
+
+        Tile[] tilesInRange = grid.GetTilesWithinDistance(a_targetTile, 1);
+
+        for (int i = 0; i < tilesInRange.Length; i++)
+        {
+            tilesAffectByAction.Add(tilesInRange[i]);
+        }
+
+        foreach (Tile tile in tilesAffectByAction)
+        {
+            tile.MouseEnter(Color.blue);
+        }
+    }
+
+    int[] snapAngles = { 30, 90, 150, 210, 270, 330 };
+    int[] leftDirIndex = { 4, 5, 0, 1, 2, 3 };
+    int[] rightDirIndex = { 2, 3, 4, 5, 0, 1 };
+
+    private void MakeCone(int angle, int range)
+    {
+        if (range <= 0)
+            return;
+
+        HexDirection mainDir;
+        HexDirection leftDir;
+        HexDirection rightDir;
+
+        for (int a = 0; a < snapAngles.Length; a++)
+        {
+            if (angle == snapAngles[a])
+            {
+                mainDir = (HexDirection)a;
+
+                // the tile that is under the cursor
+                Tile currentTile = selectedUnit.CurrentTile.GetNeighbour(mainDir);
+
+                if (currentTile)
+                {
+                    tilesAffectByAction.Add(currentTile);
+                }
+
+                int sideRange = 1;
+
+                // main Spine of cone
+                for (int i = 0; i < range - 1; i++)
+                {
+                    // add the left 'border line'
+                    if (currentTile)
+                    {
+                        currentTile = currentTile.GetNeighbour(mainDir);
+
+                        if (currentTile)
+                        {
+                            tilesAffectByAction.Add(currentTile);
+                        }
+                    }
+
+                    Tile leftTile = currentTile;
+                    Tile rightTile = currentTile;
+
+                    for (int s = 0; s < sideRange; s++)
+                    {
+                        if (leftTile)
+                        {
+                            leftDir = (HexDirection)leftDirIndex[a];
+                            leftTile = leftTile.GetNeighbour(leftDir);
+
+                            if (leftTile)
+                            {
+                                tilesAffectByAction.Add(leftTile);
+                            }
+                        }
+
+                        if (rightTile)
+                        {
+                            rightDir = (HexDirection)rightDirIndex[a];
+                            rightTile = rightTile.GetNeighbour(rightDir);
+
+                            if (rightTile)
+                            {
+                                tilesAffectByAction.Add(rightTile);
+                            }
+                        }
+                    }
+
+                    if (i % 2 == 1)
+                    {
+                        sideRange++;
+                    }
+                }
+
+                break;
+            }
         }
     }
 }

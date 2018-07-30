@@ -36,26 +36,34 @@ public class Tile : Entity
     #endregion
 
     [HideInInspector]
-    [SerializeField] public bool drawGizmos = true;
+    [SerializeField]
+    public bool drawGizmos = true;
 
     [HideInInspector]
-    [SerializeField] public bool drawNode = true;
+    [SerializeField]
+    public bool drawNode = true;
 
     [HideInInspector]
-    [SerializeField] public bool drawConnections = true;
+    [SerializeField]
+    public bool drawConnections = true;
 
     [HideInInspector]
-    [SerializeField] public Color walkableColour;
+    [SerializeField]
+    public Color walkableColour;
 
     [HideInInspector]
-    [SerializeField] public Color notWalkableColour;
+    [SerializeField]
+    public Color notWalkableColour;
 
     [HideInInspector]
-    [SerializeField] public Color connectionColour;
+    [SerializeField]
+    public Color connectionColour;
 
     private float gScore;
 
     private SpriteRenderer movementHighlight;
+
+    private SpriteRenderer hoverHighlight;
 
     private Unit currentUnit;
 
@@ -111,9 +119,9 @@ public class Tile : Entity
         isWalkable = true;
     }
 
-    public void HighlightMovement(bool highlight, Color colour)
+    public void HighlightMovement(Color colour)
     {
-        movementHighlight.enabled = highlight;
+        movementHighlight.enabled = true;
         colour.a = 0.4f;
         movementHighlight.color = colour;
     }
@@ -173,6 +181,18 @@ public class Tile : Entity
         get { return allNeighbours; }
     }
 
+    public void MouseEnter(Color highlightColour)
+    {
+        hoverHighlight.enabled = true;
+        highlightColour.a = 0.4f;
+        hoverHighlight.color = highlightColour;
+    }
+
+    public void MouseExit()
+    {
+        hoverHighlight.enabled = false;
+    }
+
     public override void TakeDamage(Element damageType, float damageAmount)
     {
         if (currentStatus == Status.OIL && damageType == Element.FIRE)
@@ -221,7 +241,8 @@ public class Tile : Entity
 
     private void Awake()
     {
-        movementHighlight = transform.GetChild(1).GetComponent<SpriteRenderer>();
+        movementHighlight = GetComponentsInChildren<SpriteRenderer>()[1];
+        hoverHighlight = GetComponentsInChildren<SpriteRenderer>()[2];
 
         string[] coordText = name.Split(',');
 

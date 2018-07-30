@@ -8,16 +8,20 @@ public class GridManager : MonoBehaviour
     [SerializeField] private Tile tilePrefab;
 
     [HideInInspector]
-    [SerializeField] private int mapWidth;
+    [SerializeField]
+    private int mapWidth;
 
     [HideInInspector]
-    [SerializeField] private int mapHeight;
+    [SerializeField]
+    private int mapHeight;
 
     [HideInInspector]
-    [SerializeField] private List<Tile> map = new List<Tile>();
+    [SerializeField]
+    private List<Tile> map = new List<Tile>();
 
     [HideInInspector]
-    [SerializeField] private Dictionary<string, Tile> grid = new Dictionary<string, Tile>();
+    [SerializeField]
+    private Dictionary<string, Tile> grid = new Dictionary<string, Tile>();
 
     private bool generateWithColour = false;
 
@@ -172,6 +176,8 @@ public class GridManager : MonoBehaviour
         List<Tile> openList = new List<Tile>();
         List<Tile> returnList = new List<Tile>();
         Tile currentTile;
+
+        centerTile.GScore = 0;
 
         openList.Add(centerTile);
 

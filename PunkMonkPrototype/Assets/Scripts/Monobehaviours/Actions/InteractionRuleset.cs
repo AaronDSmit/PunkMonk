@@ -9,6 +9,9 @@ public class InteractionRuleset : ScriptableObject
     public LayerMask interactableLayers;
 
     [SerializeField]
+    private Color withinRangeHighlightColour;
+
+    [SerializeField]
     private Color validHighlightColour;
 
     [SerializeField]
@@ -22,6 +25,9 @@ public class InteractionRuleset : ScriptableObject
 
     [SerializeField]
     private bool useTeamCheck;
+
+    [SerializeField]
+    private bool requireClearTile;
 
     [SerializeField]
     private DistanceCheck distanceCheckType;
@@ -44,15 +50,28 @@ public class InteractionRuleset : ScriptableObject
         get { return validHighlightColour; }
     }
 
+    public Color InRangeHighlightColour
+    {
+        get { return withinRangeHighlightColour; }
+    }
+
     public void CheckValidity(Unit a_selectedObject, Tile a_tileUnderMouse)
     {
-        if (useDistanceCheck)
+        if (useDistanceCheck && requireClearTile)
         {
             IsValid = WithinDistance(a_selectedObject, a_tileUnderMouse) && a_tileUnderMouse.IsWalkable;
         }
+        else if (useDistanceCheck)
+        {
+            IsValid = WithinDistance(a_selectedObject, a_tileUnderMouse) && !a_tileUnderMouse.IsWalkable;
+        }
+        else if (requireClearTile)
+        {
+            IsValid = a_tileUnderMouse.IsWalkable;
+        }
         else
         {
-            IsValid = true;
+            IsValid = !a_tileUnderMouse.IsWalkable;
         }
     }
 

@@ -12,6 +12,8 @@ public class InteractionRulesetEditor : Editor
 
     private SerializedProperty interactableLayers;
 
+    private SerializedProperty WithinRangeHighlightColour;
+
     private SerializedProperty ValidHighlightColour;
 
     private SerializedProperty InvalidHighlightColour;
@@ -19,6 +21,8 @@ public class InteractionRulesetEditor : Editor
     private SerializedProperty useDistanceCheck;
 
     private SerializedProperty useTeamCheck;
+
+    private SerializedProperty requireClearTile;
 
     private SerializedProperty distanceCheckType;
 
@@ -30,6 +34,8 @@ public class InteractionRulesetEditor : Editor
     {
         interactableLayers = serializedObject.FindProperty("interactableLayers");
 
+        WithinRangeHighlightColour = serializedObject.FindProperty("withinRangeHighlightColour");
+
         ValidHighlightColour = serializedObject.FindProperty("validHighlightColour");
 
         InvalidHighlightColour = serializedObject.FindProperty("invalidHighlightColour");
@@ -39,6 +45,8 @@ public class InteractionRulesetEditor : Editor
         useDistanceCheck = serializedObject.FindProperty("useDistanceCheck");
 
         useTeamCheck = serializedObject.FindProperty("useTeamCheck");
+
+        requireClearTile = serializedObject.FindProperty("requireClearTile");
 
         distanceCheckType = serializedObject.FindProperty("distanceCheckType");
 
@@ -65,6 +73,16 @@ public class InteractionRulesetEditor : Editor
         GUILayout.Label("Target Layers: ");
         LayerMask tempMask = EditorGUILayout.MaskField(InternalEditorUtility.LayerMaskToConcatenatedLayersMask(interactableLayers.intValue), InternalEditorUtility.layers);
         interactableLayers.intValue = InternalEditorUtility.ConcatenatedLayersMaskToLayerMask(tempMask);
+
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginHorizontal();
+
+        GUILayout.Label("Within Range Colour: ");
+
+        GUILayout.FlexibleSpace();
+
+        WithinRangeHighlightColour.colorValue = EditorGUILayout.ColorField(WithinRangeHighlightColour.colorValue);
 
         GUILayout.EndHorizontal();
 
@@ -147,6 +165,16 @@ public class InteractionRulesetEditor : Editor
 
             GUILayout.EndHorizontal();
         }
+
+        GUILayout.BeginHorizontal();
+
+        GUILayout.Label("Require Clear Tile: ");
+
+        GUILayout.FlexibleSpace();
+
+        requireClearTile.boolValue = EditorGUILayout.Toggle(requireClearTile.boolValue);
+
+        GUILayout.EndHorizontal();
 
         serializedObject.ApplyModifiedProperties();
     }

@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
 
     private PlayerAttack currentAttack;
 
+    private LineRenderer lineRenderer;
+
     private Unit selectedUnit;
 
     private Unit earthUnit;
@@ -65,6 +67,8 @@ public class PlayerController : MonoBehaviour
         {
             currentRuleset = selectionRuleset;
         }
+
+        lineRenderer = GetComponent<LineRenderer>();
     }
 
     public void Init()
@@ -137,6 +141,16 @@ public class PlayerController : MonoBehaviour
 
         if (Physics.Raycast(mouseRay, out hitInfo, Mathf.Infinity, currentRuleset.interactableLayers))
         {
+            if (tileUnderMouse)
+            {
+                if (previousTileUnderMouse && previousTileUnderMouse != tileUnderMouse)
+                {
+                    previousTileUnderMouse.MouseExit();
+                }
+
+                previousTileUnderMouse = tileUnderMouse;
+            }
+
             tileUnderMouse = hitInfo.transform.GetComponent<Tile>();
             unitUnderMouse = hitInfo.transform.GetComponent<Unit>();
 
@@ -148,8 +162,24 @@ public class PlayerController : MonoBehaviour
                 {
                     ProcessActionHighlighting(tileUnderMouse, hitInfo);
                 }
+                else if (currentRuleset.IsValid && currentRuleset.actionType == ActionType.movement)
+                {
+                    tileUnderMouse.MouseEnter(currentRuleset.ValidHighlightColour);
+
+                    List<Tile> path = FindObjectOfType<Navigation>().FindPath(selectedUnit.CurrentTile, tileUnderMouse);
+                    lineRenderer.positionCount = path.Count + 1;
+
+                    lineRenderer.SetPosition(0, selectedUnit.CurrentTile.transform.position + Vector3.up * 0.5f);
+
+                    for (int i = 0; i < path.Count; i++)
+                    {
+                        lineRenderer.SetPosition(i + 1, path[i].transform.position + Vector3.up * 0.5f);
+                    }
+                }
                 else
                 {
+                    lineRenderer.positionCount = 0;
+
                     if (tilesAffectByAction.Count > 0)
                     {
                         foreach (Tile tile in tilesAffectByAction)
@@ -165,6 +195,8 @@ public class PlayerController : MonoBehaviour
             }
             else if (unitUnderMouse)
             {
+
+                Debug.Log("Unit under Mouse");
                 currentRuleset.CheckValidity(selectedUnit, unitUnderMouse);
 
                 if (previousUnitUnderMouse != null && previousTileUnderMouse != unitUnderMouse)
@@ -183,6 +215,12 @@ public class PlayerController : MonoBehaviour
             {
                 unitUnderMouse.Highlight(false, currentRuleset.HighlightColour);
                 unitUnderMouse = null;
+            }
+
+            if (previousTileUnderMouse)
+            {
+                previousTileUnderMouse.MouseExit();
+                previousTileUnderMouse = null;
             }
 
             // RemoveHighlight();
@@ -204,12 +242,14 @@ public class PlayerController : MonoBehaviour
 
                 case ActionType.movement:
 
-                    if (tileUnderMouse.IsWalkable) // reduntant check, needs to be valid to reach this point anyway
+                    if (tileUnderMouse.IsWalkable) // redundant check, needs to be valid to reach this point anyway
                     {
                         selectedUnit.MoveTo(tileUnderMouse, UnitFinishedAction);
                         RemoveHighlightedTiles();
                         currentRuleset = selectionRuleset;
 
+                        tileUnderMouse.MouseExit();
+                        lineRenderer.positionCount = 0;
                         canInteract = false;
                         //UI.ToggleHUDLock();
                     }
@@ -241,6 +281,7 @@ public class PlayerController : MonoBehaviour
         // Right click cancels current action
         if (Input.GetMouseButton(1))
         {
+            lineRenderer.positionCount = 0;
             currentRuleset = selectionRuleset;
             RemoveHighlightedTiles();
         }
@@ -301,12 +342,12 @@ public class PlayerController : MonoBehaviour
 
     private void HighlightTilesInRange(int a_range)
     {
-        Tile[] area = grid.GetTilesWithinDistance(selectedUnit.CurrentTile, a_range);
+        Tile[] area = grid.GetTilesWithinDistance(selectedUnit.CurrentTile, a_range, true);
 
         foreach (Tile tile in area)
         {
             tilesWithinRange.Add(tile);
-            tile.HighlightMovement(currentRuleset.ValidHighlightColour);
+            tile.HighlightMovement(currentRuleset.InRangeHighlightColour);
         }
     }
 
@@ -356,6 +397,24 @@ public class PlayerController : MonoBehaviour
         // ensure this script knows it's in over-world state
         if (_newstate == Game_state.battle)
         {
+            Ray earthRay = new Ray(earthUnit.transform.position + Vector3.up * 2, Vector3.down);
+            Ray lightningRay = new Ray(lightningUnit.transform.position + Vector3.up * 2, Vector3.down);
+
+            RaycastHit hitinfo;
+
+            int layerMask = 0;
+            layerMask |= (1 << LayerMask.NameToLayer("Ground"));
+
+            if (Physics.Raycast(earthRay, out hitinfo, Mathf.Infinity, layerMask))
+            {
+                earthUnit.SnapToGrid(hitinfo.transform.GetComponent<Tile>());
+            }
+
+            if (Physics.Raycast(lightningRay, out hitinfo, Mathf.Infinity, layerMask))
+            {
+                lightningUnit.SnapToGrid(hitinfo.transform.GetComponent<Tile>());
+            }
+
             canInteract = true;
             SelectUnit(earthUnit);
         }
@@ -457,13 +516,13 @@ public class PlayerController : MonoBehaviour
             snapAngle = 360 + snapAngle;
         }
 
-        MakeCone(snapAngle, 10);
+        MakeCone(snapAngle, 6);
 
         Debug.DrawLine(selectedUnit.CurrentTile.transform.position + Vector3.up * 0.2f, selectedUnit.CurrentTile.transform.position + new Vector3(Mathf.Sin(Mathf.Deg2Rad * snapAngle), 0.0f, Mathf.Cos(Mathf.Deg2Rad * snapAngle)) * 2 + Vector3.up * 0.2f, Color.magenta);
 
         foreach (Tile tile in tilesAffectByAction)
         {
-            tile.MouseEnter(Color.blue);
+            tile.MouseEnter(currentRuleset.ValidHighlightColour);
         }
     }
 
@@ -479,7 +538,7 @@ public class PlayerController : MonoBehaviour
 
         tilesAffectByAction.Add(a_targetTile);
 
-        Tile[] tilesInRange = grid.GetTilesWithinDistance(a_targetTile, 1);
+        Tile[] tilesInRange = grid.GetTilesWithinDistance(a_targetTile, 1, true);
 
         for (int i = 0; i < tilesInRange.Length; i++)
         {
@@ -488,7 +547,14 @@ public class PlayerController : MonoBehaviour
 
         foreach (Tile tile in tilesAffectByAction)
         {
-            tile.MouseEnter(Color.blue);
+            if (!tile.IsWalkable)
+            {
+                tile.MouseEnter(Color.red);
+            }
+            else
+            {
+                tile.MouseEnter(currentRuleset.HighlightColour);
+            }
         }
     }
 

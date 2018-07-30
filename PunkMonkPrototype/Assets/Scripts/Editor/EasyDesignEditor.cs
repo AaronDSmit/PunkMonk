@@ -7,7 +7,7 @@ using UnityEditor.AnimatedValues;
 #endif
 
 
-public enum Unit_type { earth, lightning, grunt, range }
+public enum Unit_type { grunt, range }
 
 public class EasyDesignEditor : EditorWindow
 {
@@ -34,9 +34,10 @@ public class EasyDesignEditor : EditorWindow
     [SerializeField] private bool hasTransitionSelected = false;
     [SerializeField] private bool hasStateTransitionSelected = false;
     [SerializeField] private bool hasSpawnerSelected = false;
+    [SerializeField] private bool setAllNodesClear = false;
+    [SerializeField] private bool setAllNodesBlocked = false;
 
     [SerializeField] private static bool mapHasNodes = false;
-    [SerializeField] private static bool nodesConnected = false;
 
     [SerializeField] private Color walkableColour;
     [SerializeField] private Color notWalkableColour;
@@ -52,13 +53,14 @@ public class EasyDesignEditor : EditorWindow
     [SerializeField] private int step;
 
     // GameFlow
-    [SerializeField] private Unit_type spawnUnit;
+    [SerializeField] private Unit_type enemyType;
     [SerializeField] private int turnToSpawn;
+    [SerializeField] private int everyXTurns;
     [SerializeField] private int loadLevel = 0;
     [SerializeField] private Game_state state = Game_state.battle;
 
     // Settings
-    [SerializeField] private bool healthyMode = false;
+    [SerializeField] private bool healthyMode = true;
 
     #endregion
 
@@ -130,7 +132,7 @@ public class EasyDesignEditor : EditorWindow
             GUI.skin = skin; // use our custom skin
 
             // Create toolbar using custom tab style
-            string[] tabs = { "Grid", "Tiles", "GameFlow", "Settings" };
+            string[] tabs = { "Grid", "GameFlow", "Settings" };
             selectedTab = GUILayout.Toolbar(selectedTab, tabs);
 
             mapHasNodes = grid.GetComponentsInChildren<Tile>().Length > 0;
@@ -276,46 +278,69 @@ public class EasyDesignEditor : EditorWindow
                 oldColor = GUI.backgroundColor;
                 GUI.backgroundColor = new Color(0.39f, 0.78f, 0.19f, 1.0f); // green
 
-                //EditorGUI.BeginDisabledGroup(mapHasNodes);
+                if (setAllNodesClear)
+                {
+                    GUILayout.Label("Set ALL nodes clear?", centeredText);
 
-                if (GUILayout.Button("Generate nodes for grid"))
+                    EditorGUILayout.BeginHorizontal();
+
+                    if (GUILayout.Button("yes"))
+                    {
+                        Tile[] tiles = grid.GetComponentsInChildren<Tile>();
+
+                        foreach (Tile tile in tiles)
+                        {
+                            tile.IsWalkable = true;
+                        }
+
+                        setAllNodesClear = false;
+                    }
+
+                    oldColor = GUI.backgroundColor;
+                    GUI.backgroundColor = new Color(1.0f, 0.19f, 0.19f, 1.0f); // red
+
+                    if (GUILayout.Button("No"))
+                    {
+                        setAllNodesClear = false;
+                    }
+
+                    GUI.backgroundColor = oldColor;
+
+                    EditorGUILayout.EndHorizontal();
+                }
+                else if (GUILayout.Button("Set all Nodes Clear"))
+                {
+                    setAllNodesClear = true;
+                }
+
+                EditorGUI.BeginDisabledGroup(!hasTileSelected);
+
+                if (GUILayout.Button("Set Selected Tiles Clear"))
+                {
+                    GameObject[] selectedObjects = Selection.gameObjects;
+
+                    foreach (GameObject obj in selectedObjects)
+                    {
+                        Tile[] tiles = obj.GetComponentsInChildren<Tile>();
+
+                        foreach (Tile tile in tiles)
+                        {
+                            tile.IsWalkable = true;
+                        }
+                    }
+                }
+
+                EditorGUI.EndDisabledGroup();
+
+                if (GUILayout.Button("Auto Clear Tiles"))
                 {
                     Tile[] tiles = grid.GetComponentsInChildren<Tile>();
 
                     foreach (Tile tile in tiles)
                     {
-                        tile.IsWalkable = true;
-
-                        //if (tile.GetComponentInChildren<Tile>() == null)
-                        //{
-                        //    GenerateNode(tile);
-                        //}
+                        tile.AutoClear();
                     }
                 }
-
-                //EditorGUI.EndDisabledGroup();
-
-                EditorGUI.BeginDisabledGroup(!hasTileSelected);
-
-                if (GUILayout.Button("Generate nodes on selected tiles"))
-                {
-                    //GameObject[] selectedObjects = Selection.gameObjects;
-
-                    //foreach (GameObject obj in selectedObjects)
-                    //{
-                    //    Tile[] tiles = obj.GetComponentsInChildren<Tile>();
-
-                    //    foreach (Tile tile in tiles)
-                    //    {
-                    //        if (tile.GetComponentInChildren<Tile>() == null)
-                    //        {
-                    //            GenerateNode(tile);
-                    //        }
-                    //    }
-                    //}
-                }
-
-                EditorGUI.EndDisabledGroup();
 
                 GUI.backgroundColor = oldColor;
 
@@ -324,128 +349,105 @@ public class EasyDesignEditor : EditorWindow
                 oldColor = GUI.backgroundColor;
                 GUI.backgroundColor = new Color(1.0f, 0.19f, 0.19f, 1.0f); // red
 
-                EditorGUI.BeginDisabledGroup(!mapHasNodes);
-
-                if (GUILayout.Button("Remove nodes from grid"))
+                if (setAllNodesBlocked)
                 {
-                    //Tile[] tiles = grid.GetComponentsInChildren<Tile>();
+                    GUILayout.Label("Set ALL nodes blocked?", centeredText);
 
-                    //foreach (Tile tile in tiles)
-                    //{
-                    //    if (tile.transform.Find("NavNode"))
-                    //    {
-                    //        DestroyImmediate(tile.transform.Find("NavNode").gameObject);
-                    //    }
-                    //}
+                    EditorGUILayout.BeginHorizontal();
+
+                    oldColor = GUI.backgroundColor;
+                    GUI.backgroundColor = new Color(0.39f, 0.78f, 0.19f, 1.0f); // green
+
+                    if (GUILayout.Button("yes"))
+                    {
+                        Tile[] tiles = grid.GetComponentsInChildren<Tile>();
+
+                        foreach (Tile tile in tiles)
+                        {
+                            tile.IsWalkable = false;
+                        }
+
+                        setAllNodesBlocked = false;
+                    }
+
+                    GUI.backgroundColor = oldColor;
+
+                    if (GUILayout.Button("No"))
+                    {
+                        setAllNodesBlocked = false;
+                    }
+
+                    EditorGUILayout.EndHorizontal();
                 }
-
-                EditorGUI.EndDisabledGroup();
+                else if (GUILayout.Button("Set all Nodes Blocked"))
+                {
+                    setAllNodesBlocked = true;
+                }
 
                 EditorGUI.BeginDisabledGroup(!hasTileSelected);
 
-                if (GUILayout.Button("Remove nodes on selected tiles"))
+                if (GUILayout.Button("Set Selected Tiles Blocked"))
                 {
-                    //GameObject[] selectedObjects = Selection.gameObjects;
+                    GameObject[] selectedObjects = Selection.gameObjects;
 
-                    //foreach (GameObject obj in selectedObjects)
-                    //{
-                    //    Tile[] tiles = obj.GetComponentsInChildren<Tile>();
+                    foreach (GameObject obj in selectedObjects)
+                    {
+                        Tile[] tiles = obj.GetComponentsInChildren<Tile>();
 
-                    //    foreach (Tile tile in tiles)
-                    //    {
-                    //        if (tile.transform.Find("NavNode"))
-                    //        {
-                    //            DestroyImmediate(tile.transform.Find("NavNode").gameObject);
-                    //        }
-                    //    }
-                    //}
+                        foreach (Tile tile in tiles)
+                        {
+                            tile.IsWalkable = false;
+                        }
+                    }
                 }
 
                 EditorGUI.EndDisabledGroup();
+
+                if (GUILayout.Button("Auto Block Tiles"))
+                {
+                    Tile[] tiles = grid.GetComponentsInChildren<Tile>();
+
+                    foreach (Tile tile in tiles)
+                    {
+                        tile.AutoBlock();
+                    }
+                }
 
                 GUI.backgroundColor = oldColor;
 
                 EditorGUILayout.Space();
 
-                GUILayout.Label("Connections:", centeredText);
+                oldColor = GUI.backgroundColor;
+                GUI.backgroundColor = new Color(1.0f, 0.19f, 0.19f, 1.0f); // red
+
+                GUI.backgroundColor = oldColor;
+
+                EditorGUILayout.Space();
+
+                GUILayout.Label("Greybox Assist:", centeredText);
+
+                EditorGUI.BeginDisabledGroup(Selection.gameObjects.Length == 0);
 
                 oldColor = GUI.backgroundColor;
                 GUI.backgroundColor = new Color(0.39f, 0.78f, 0.19f, 1.0f); // green
 
-                EditorGUI.BeginDisabledGroup(!mapHasNodes || nodesConnected);
-
-                if (GUILayout.Button("Connect nodes on grid"))
+                if (GUILayout.Button("Snap Objects"))
                 {
-                    nodesConnected = true;
-                }
-
-                EditorGUI.EndDisabledGroup();
-
-                bool enableConnection = (Selection.gameObjects.Length >= 2);
-
-                if (enableConnection)
-                {
-                    foreach (GameObject go in Selection.gameObjects)
+                    foreach (Transform transform in Selection.GetTransforms(SelectionMode.TopLevel))
                     {
-                        if (go.GetComponentInChildren<Tile>() == null)
-                        {
-                            enableConnection = false;
-                            break;
-                        }
+                        Vector3 position;
+
+                        position.x = (transform.position.x + transform.position.z * 0.5f - transform.position.z / 2) * (Tile.innerRadius * 2f);
+                        position.y = transform.position.y;
+                        position.z = transform.position.z * (Tile.outerRadius * 1.5f);
+
+                        transform.position = position;
                     }
-
-                    if (!enableConnection)
-                    {
-                        EditorGUILayout.HelpBox("Not all selected tiles don't have nodes", MessageType.Warning);
-
-                        EditorGUILayout.Space();
-                    }
-                }
-
-                EditorGUI.BeginDisabledGroup(!enableConnection);
-
-                if (GUILayout.Button("Connect selected nodes"))
-                {
-
-                }
-
-                if (GUILayout.Button("Connect selected nodes in sequence"))
-                {
-
-                }
-
-                EditorGUI.EndDisabledGroup();
-
-                EditorGUI.BeginDisabledGroup(Selection.gameObjects.Length != 2);
-
-                if (GUILayout.Button("Connect selected nodes in one direction"))
-                {
-
-
-                }
-
-                EditorGUI.EndDisabledGroup();
-
-                GUI.backgroundColor = oldColor;
-
-                EditorGUILayout.Space();
-
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = new Color(1.0f, 0.19f, 0.19f, 1.0f); // red
-
-                if (GUILayout.Button("Remove all Connections"))
-                {
-                    nodesConnected = false;
-                }
-
-                if (GUILayout.Button("Remove Connections on selected nodes"))
-                {
-                    nodesConnected = false;
                 }
 
                 GUI.backgroundColor = oldColor;
 
-                EditorGUILayout.Space();
+                EditorGUI.EndDisabledGroup();
 
                 GUILayout.Label("Visual Settings:", centeredText);
 
@@ -469,131 +471,131 @@ public class EasyDesignEditor : EditorWindow
 
             #region Tile settings
 
-            else if (selectedTab == 1)
-            {
-                if (!hasTileSelected)
-                {
-                    EditorGUILayout.HelpBox("Select at least one tile to modify.", MessageType.Warning);
+            //else if (selectedTab == 1)
+            //{
+            //    if (!hasTileSelected)
+            //    {
+            //        EditorGUILayout.HelpBox("Select at least one tile to modify.", MessageType.Warning);
 
-                    EditorGUILayout.Space();
-                }
+            //        EditorGUILayout.Space();
+            //    }
 
-                tileStatus = (Status)EditorGUILayout.EnumPopup("Tile State:", tileStatus);
+            //    tileStatus = (Status)EditorGUILayout.EnumPopup("Tile State:", tileStatus);
 
-                EditorGUI.BeginDisabledGroup(!hasTileSelected);
+            //    EditorGUI.BeginDisabledGroup(!hasTileSelected);
 
-                if (GUILayout.Button("Set State"))
-                {
-                    GameObject[] selectedObjects = Selection.gameObjects;
+            //    if (GUILayout.Button("Set State"))
+            //    {
+            //        GameObject[] selectedObjects = Selection.gameObjects;
 
-                    foreach (GameObject obj in selectedObjects)
-                    {
-                        Tile[] tiles = obj.GetComponentsInChildren<Tile>();
+            //        foreach (GameObject obj in selectedObjects)
+            //        {
+            //            Tile[] tiles = obj.GetComponentsInChildren<Tile>();
 
-                        foreach (Tile tile in tiles)
-                        {
-                            //  tile.SetStatus(tileStatus);
-                        }
-                    }
-                }
+            //            foreach (Tile tile in tiles)
+            //            {
+            //                //  tile.SetStatus(tileStatus);
+            //            }
+            //        }
+            //    }
 
-                EditorGUI.EndDisabledGroup();
+            //    EditorGUI.EndDisabledGroup();
 
-                EditorGUILayout.Space();
+            //    EditorGUILayout.Space();
 
-                // Tile height settings
+            //    // Tile height settings
 
-                GUILayout.Label("Tile Height: ", centeredText);
+            //    GUILayout.Label("Tile Height: ", centeredText);
 
-                EditorGUILayout.BeginHorizontal();
+            //    EditorGUILayout.BeginHorizontal();
 
-                EditorGUILayout.BeginVertical();
+            //    EditorGUILayout.BeginVertical();
 
-                EditorGUILayout.BeginHorizontal();
+            //    EditorGUILayout.BeginHorizontal();
 
-                stepSize = EditorGUILayout.FloatField(stepSize, GUILayout.Width(50));
+            //    stepSize = EditorGUILayout.FloatField(stepSize, GUILayout.Width(50));
 
-                if (stepSize < 0.0f)
-                {
-                    stepSize = 0.0f;
-                }
+            //    if (stepSize < 0.0f)
+            //    {
+            //        stepSize = 0.0f;
+            //    }
 
-                if (GUILayout.Button("Set Step Size:", GUILayout.Width(150)))
-                {
+            //    if (GUILayout.Button("Set Step Size:", GUILayout.Width(150)))
+            //    {
 
-                }
+            //    }
 
-                EditorGUILayout.EndHorizontal();
+            //    EditorGUILayout.EndHorizontal();
 
-                EditorGUILayout.BeginHorizontal();
+            //    EditorGUILayout.BeginHorizontal();
 
-                EditorGUI.BeginDisabledGroup(!hasTileSelected);
+            //    EditorGUI.BeginDisabledGroup(!hasTileSelected);
 
-                step = EditorGUILayout.IntField("", step, GUILayout.Width(50));
+            //    step = EditorGUILayout.IntField("", step, GUILayout.Width(50));
 
-                if (GUILayout.Button("Set Level:", GUILayout.Width(150)))
-                {
-                    GameObject[] selectedObjects = Selection.gameObjects;
+            //    if (GUILayout.Button("Set Level:", GUILayout.Width(150)))
+            //    {
+            //        GameObject[] selectedObjects = Selection.gameObjects;
 
-                    foreach (GameObject obj in selectedObjects)
-                    {
-                        Tile[] tiles = obj.GetComponentsInChildren<Tile>();
+            //        foreach (GameObject obj in selectedObjects)
+            //        {
+            //            Tile[] tiles = obj.GetComponentsInChildren<Tile>();
 
-                        foreach (Tile tile in tiles)
-                        {
-                            // tile.SetHeight(step * stepSize);
-                        }
-                    }
-                }
+            //            foreach (Tile tile in tiles)
+            //            {
+            //                // tile.SetHeight(step * stepSize);
+            //            }
+            //        }
+            //    }
 
-                EditorGUILayout.EndHorizontal();
+            //    EditorGUILayout.EndHorizontal();
 
-                EditorGUILayout.EndVertical();
+            //    EditorGUILayout.EndVertical();
 
-                EditorGUILayout.BeginVertical();
+            //    EditorGUILayout.BeginVertical();
 
-                if (GUILayout.Button("^", GUILayout.Width(50)))
-                {
-                    GameObject[] selectedObjects = Selection.gameObjects;
+            //    if (GUILayout.Button("^", GUILayout.Width(50)))
+            //    {
+            //        GameObject[] selectedObjects = Selection.gameObjects;
 
-                    foreach (GameObject obj in selectedObjects)
-                    {
-                        Tile[] tiles = obj.GetComponentsInChildren<Tile>();
+            //        foreach (GameObject obj in selectedObjects)
+            //        {
+            //            Tile[] tiles = obj.GetComponentsInChildren<Tile>();
 
-                        foreach (Tile tile in tiles)
-                        {
-                            // tile.IncreaseHeight(stepSize);
-                        }
-                    }
-                }
+            //            foreach (Tile tile in tiles)
+            //            {
+            //                // tile.IncreaseHeight(stepSize);
+            //            }
+            //        }
+            //    }
 
-                if (GUILayout.Button("v", GUILayout.Width(50)))
-                {
-                    GameObject[] selectedObjects = Selection.gameObjects;
+            //    if (GUILayout.Button("v", GUILayout.Width(50)))
+            //    {
+            //        GameObject[] selectedObjects = Selection.gameObjects;
 
-                    foreach (GameObject obj in selectedObjects)
-                    {
-                        Tile[] tiles = obj.GetComponentsInChildren<Tile>();
+            //        foreach (GameObject obj in selectedObjects)
+            //        {
+            //            Tile[] tiles = obj.GetComponentsInChildren<Tile>();
 
-                        foreach (Tile tile in tiles)
-                        {
-                            // tile.DecreaseHeight(stepSize);
-                        }
-                    }
-                }
+            //            foreach (Tile tile in tiles)
+            //            {
+            //                // tile.DecreaseHeight(stepSize);
+            //            }
+            //        }
+            //    }
 
-                EditorGUILayout.EndVertical();
+            //    EditorGUILayout.EndVertical();
 
-                EditorGUILayout.EndHorizontal();
+            //    EditorGUILayout.EndHorizontal();
 
-                EditorGUI.EndDisabledGroup();
-            }
+            //    EditorGUI.EndDisabledGroup();
+            //}
 
             #endregion
 
             #region GameFlow
 
-            else if (selectedTab == 2)
+            else if (selectedTab == 1)
             {
                 #region Player Spawn points 
 
@@ -689,9 +691,22 @@ public class EasyDesignEditor : EditorWindow
 
                 GUILayout.Label("Enemy Spawn Points", centeredText);
 
-                spawnUnit = (Unit_type)EditorGUILayout.EnumPopup("Unit:", spawnUnit);
+                EditorGUILayout.BeginHorizontal();
 
-                turnToSpawn = EditorGUILayout.IntField("Turn #: ", turnToSpawn);
+                GUILayout.Label("Spawn a ", GUILayout.ExpandWidth(false));
+
+                enemyType = (Unit_type)EditorGUILayout.EnumPopup(enemyType, GUILayout.Width(60));
+
+
+                GUILayout.Label(" on turn ", GUILayout.ExpandWidth(false));
+
+                turnToSpawn = EditorGUILayout.IntField(turnToSpawn, GUILayout.Width(25));
+
+                GUILayout.Label(" and repeat every ", GUILayout.ExpandWidth(false));
+
+                everyXTurns = EditorGUILayout.IntField(everyXTurns, GUILayout.Width(25));
+
+                EditorGUILayout.EndHorizontal();
 
                 oldColor = GUI.backgroundColor;
                 GUI.backgroundColor = new Color(0.39f, 0.78f, 0.19f, 1.0f); // green
@@ -740,6 +755,16 @@ public class EasyDesignEditor : EditorWindow
                                 DestroyImmediate(tile.GetComponentInChildren<Spawner>().gameObject);
                             }
                         }
+                    }
+                }
+
+                if (GUILayout.Button("Remove All Spawners"))
+                {
+                    Spawner[] spawnPoints = grid.GetComponentsInChildren<Spawner>();
+
+                    foreach (Spawner spawner in spawnPoints)
+                    {
+                        DestroyImmediate(spawner.gameObject);
                     }
                 }
 
@@ -918,6 +943,11 @@ public class EasyDesignEditor : EditorWindow
             }
 
             #endregion
+
+            else if (selectedTab == 2)
+            {
+                healthyMode = EditorGUILayout.Toggle("Healthy Mode: ", healthyMode);
+            }
 
             GUILayout.FlexibleSpace();
             EditorGUILayout.EndVertical(); // outer box

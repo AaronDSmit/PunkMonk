@@ -89,8 +89,7 @@ public class CameraController : MonoBehaviour
             vel = vel.normalized * maxSpeed;
         }
 
-        transform.position += transform.forward * vel.z;
-        transform.position += transform.right * vel.x;
+        transform.position += ((transform.forward * vel.z) + (transform.right * vel.x)).normalized;
 
         if (Input.anyKeyDown == false)
         {

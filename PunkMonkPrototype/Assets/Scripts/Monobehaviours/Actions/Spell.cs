@@ -13,7 +13,7 @@ using System;
 /// </summary>
 
 
-public class Spell : MonoBehaviour
+public class Spell : ScriptableObject
 {
     public virtual void CastSpell(Tile[] a_tiles, System.Action a_onStartCB, System.Action a_onFinishCB)
     {

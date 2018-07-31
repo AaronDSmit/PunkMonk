@@ -13,4 +13,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ruleset: {fileID: 11400000, guid: 81dff8d2d2852d9469924b4ff054d313, type: 2}
   coolDown: 2
+  atttack: {fileID: 11400000, guid: c41f8276349aa2c41aa213211c712a42, type: 2}
   AnimTrigger: 

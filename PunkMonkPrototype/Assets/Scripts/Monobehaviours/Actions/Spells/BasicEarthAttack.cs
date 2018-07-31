@@ -11,6 +11,7 @@ using UnityEngine;
 ///
 /// </summary>
 
+[CreateAssetMenu(fileName = "EarthBasicAttack", menuName = "Attacks/new EarthBasicAttack", order = 0)]
 public class BasicEarthAttack : Spell
 {
     [SerializeField] private float damageAmount;

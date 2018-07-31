@@ -24,7 +24,7 @@ public class BasicEarthAttack : Spell
         {
             if (hex.CurrentUnit != null)
             {
-                hex.CurrentUnit.TakeDamage(Element.EARTH, damageAmount);
+                hex.CurrentUnit.TakeDamage(Element.earth, damageAmount);
             }
         }
 

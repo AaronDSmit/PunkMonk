@@ -28,6 +28,8 @@ public class InteractionRulesetEditor : Editor
 
     private SerializedProperty distanceCheckType;
 
+    private SerializedProperty distanceCheckLength;
+
     private SerializedProperty maxDistance;
 
     private SerializedProperty targetTeam;
@@ -55,6 +57,8 @@ public class InteractionRulesetEditor : Editor
         requireClearTile = serializedObject.FindProperty("requireClearTile");
 
         distanceCheckType = serializedObject.FindProperty("distanceCheckType");
+
+        distanceCheckLength = serializedObject.FindProperty("distanceType");
 
         maxDistance = serializedObject.FindProperty("minDistance");
 
@@ -128,8 +132,16 @@ public class InteractionRulesetEditor : Editor
         {
             GUILayout.BeginHorizontal();
 
-            GUILayout.Label("Use Unit's Move Range: ");
+            GUILayout.Label("Distance Formulae: ");
 
+            DistanceType distanceLength = (DistanceType)EditorGUILayout.EnumPopup("", (DistanceType)distanceCheckLength.enumValueIndex);
+            distanceCheckLength.enumValueIndex = (int)distanceLength;
+
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+
+            GUILayout.Label("Use Unit's : ");
 
             DistanceCheck distanceType = (DistanceCheck)EditorGUILayout.EnumPopup("", (DistanceCheck)distanceCheckType.enumValueIndex);
             distanceCheckType.enumValueIndex = (int)distanceType;

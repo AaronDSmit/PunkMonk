@@ -9,7 +9,7 @@
 /// </summary>
 
 // used to indicate damage type, even if it deals zero damage
-public enum Element { FIRE, EARTH, LIGHTNING, WATER }
+public enum Element { fire, earth, lightning, water }
 
 public abstract class Entity : MonoBehaviour
 {

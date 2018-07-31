@@ -176,7 +176,7 @@ public class PlayerController : MonoBehaviour
                 {
                     tileUnderMouse.MouseEnter(currentRuleset.HighlightColour);
 
-                    List<Tile> path = FindObjectOfType<Navigation>().FindPath(selectedUnit.CurrentTile, tileUnderMouse);
+                    List<Tile> path = Navigation.FindPath(selectedUnit.CurrentTile, tileUnderMouse);
                     lineRenderer.positionCount = path.Count + 1;
 
                     lineRenderer.SetPosition(0, selectedUnit.CurrentTile.transform.position + Vector3.up * 0.5f);
@@ -205,8 +205,6 @@ public class PlayerController : MonoBehaviour
             }
             else if (unitUnderMouse)
             {
-
-                Debug.Log("Unit under Mouse");
                 currentRuleset.CheckValidity(selectedUnit, unitUnderMouse);
 
                 if (previousUnitUnderMouse != null && previousTileUnderMouse != unitUnderMouse)
@@ -268,7 +266,7 @@ public class PlayerController : MonoBehaviour
 
                 case ActionType.attack:
 
-                    selectedUnit.Attack(tilesAffectByAction.ToArray(), AttackStart, AttackEnd);
+                    selectedUnit.BasicAttack(tilesAffectByAction.ToArray(), AttackStart, AttackEnd);
                     RemoveHighlightedTiles();
                     currentRuleset = selectionRuleset;
 
@@ -357,12 +355,33 @@ public class PlayerController : MonoBehaviour
 
     private void HighlightTilesInRange(int a_range)
     {
-        Tile[] area = grid.GetTilesWithinDistance(selectedUnit.CurrentTile, a_range, true);
-
-        foreach (Tile tile in area)
+        if (currentRuleset.actionType == ActionType.movement)
         {
-            tilesWithinRange.Add(tile);
-            tile.HighlightMovement(currentRuleset.InRangeHighlightColour);
+            Tile[] area = grid.GetTilesWithinDistance(selectedUnit.CurrentTile, a_range, false);
+
+            foreach (Tile tile in area)
+            {
+                tilesWithinRange.Add(tile);
+
+                if (tile.IsWalkable)
+                {
+                    tile.HighlightMovement(currentRuleset.InRangeHighlightColour);
+                }
+                else
+                {
+                    tile.HighlightMovement(currentRuleset.InvalidHighlightColour);
+                }
+            }
+        }
+        else
+        {
+            Tile[] area = grid.GetTilesWithinDistance(selectedUnit.CurrentTile, a_range, true);
+
+            foreach (Tile tile in area)
+            {
+                tilesWithinRange.Add(tile);
+                tile.HighlightMovement(currentRuleset.InRangeHighlightColour);
+            }
         }
     }
 
@@ -468,19 +487,19 @@ public class PlayerController : MonoBehaviour
         // Highlight area in range to walk
         if (currentRuleset.actionType == ActionType.movement)
         {
-            HighlightTilesInRange(selectedUnit.GetComponent<Unit>().MoveRange);
+            HighlightTilesInRange(selectedUnit.MoveRange);
         }
 
         // Highlight area in range to attack
         if (currentRuleset.actionType == ActionType.attack)
         {
-            HighlightTilesInRange(selectedUnit.GetComponent<Unit>().AttackRange);
+            HighlightTilesInRange(selectedUnit.AttackRange);
         }
 
         // Highlight area in range to special attack
         if (currentRuleset.actionType == ActionType.specialAttack)
         {
-            HighlightTilesInRange(selectedUnit.GetComponent<Unit>().SpecialAttackRange);
+            HighlightTilesInRange(selectedUnit.SpecialAttackRange);
         }
     }
 
@@ -518,7 +537,7 @@ public class PlayerController : MonoBehaviour
 
         tilesAffectByAction.Clear();
 
-        Debug.DrawLine(selectedUnit.CurrentTile.transform.position + Vector3.up * 0.2f, a_hitInfo.point + Vector3.up * 0.2f, Color.yellow);
+        //Debug.DrawLine(selectedUnit.CurrentTile.transform.position + Vector3.up * 0.2f, a_hitInfo.point + Vector3.up * 0.2f, Color.yellow);
 
         // angle = Vector3.SignedAngle(Vector3.forward, a_hitInfo.point - selectedUnit.CurrentTile.transform.position, Vector3.up);
 
@@ -533,11 +552,18 @@ public class PlayerController : MonoBehaviour
 
         MakeCone(snapAngle, 6);
 
-        Debug.DrawLine(selectedUnit.CurrentTile.transform.position + Vector3.up * 0.2f, selectedUnit.CurrentTile.transform.position + new Vector3(Mathf.Sin(Mathf.Deg2Rad * snapAngle), 0.0f, Mathf.Cos(Mathf.Deg2Rad * snapAngle)) * 2 + Vector3.up * 0.2f, Color.magenta);
+        //Debug.DrawLine(selectedUnit.CurrentTile.transform.position + Vector3.up * 0.2f, selectedUnit.CurrentTile.transform.position + new Vector3(Mathf.Sin(Mathf.Deg2Rad * snapAngle), 0.0f, Mathf.Cos(Mathf.Deg2Rad * snapAngle)) * 2 + Vector3.up * 0.2f, Color.magenta);
 
         foreach (Tile tile in tilesAffectByAction)
         {
-            tile.MouseEnter(currentRuleset.HighlightColour);
+            if (!tile.IsWalkable)
+            {
+                tile.MouseEnter(currentRuleset.HighlightColour);
+            }
+            else
+            {
+                tile.MouseEnter(currentRuleset.HighlightColour);
+            }
         }
     }
 
@@ -564,7 +590,7 @@ public class PlayerController : MonoBehaviour
         {
             if (!tile.IsWalkable)
             {
-                tile.MouseEnter(Color.red);
+                tile.MouseEnter(currentRuleset.HighlightColour);
             }
             else
             {

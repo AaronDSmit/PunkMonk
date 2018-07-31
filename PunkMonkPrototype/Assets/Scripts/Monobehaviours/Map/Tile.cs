@@ -182,7 +182,7 @@ public class Tile : Entity
 
     public override void TakeDamage(Element damageType, float damageAmount)
     {
-        if (currentStatus == Status.OIL && damageType == Element.FIRE)
+        if (currentStatus == Status.OIL && damageType == Element.fire)
         {
             currentStatus = Status.FIRE;
 
@@ -191,10 +191,10 @@ public class Tile : Entity
                 currentUnit.TakeDamage(damageType, damageAmount);
             }
 
-            StartCoroutine(SpreadStatus(Element.FIRE));
+            StartCoroutine(SpreadStatus(Element.fire));
         }
 
-        if (currentStatus == Status.FAULTLINE && damageType == Element.EARTH)
+        if (currentStatus == Status.FAULTLINE && damageType == Element.earth)
         {
             currentStatus = Status.ABYSS;
             isWalkable = false;
@@ -204,7 +204,7 @@ public class Tile : Entity
                 // well fuck
             }
 
-            StartCoroutine(SpreadStatus(Element.EARTH));
+            StartCoroutine(SpreadStatus(Element.earth));
         }
     }
 

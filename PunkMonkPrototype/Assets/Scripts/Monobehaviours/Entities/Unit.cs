@@ -10,27 +10,25 @@ public class Unit : LivingEntity
 
     [SerializeField] private int moveRange;
 
-    [SerializeField] private int attackRange;
+    [SerializeField] protected int attackRange;
 
-    [SerializeField] private int specialAttackRange;
+    [SerializeField] protected int specialAttackRange;
 
     [SerializeField] protected float turnTime;
 
     [SerializeField] protected float walkSpeed;
 
-    [SerializeField] protected Element element;
-
     #endregion
 
-    private bool canMove;
+    protected Element element;
 
-    private bool canAttack;
+    protected bool canMove;
 
-    private bool isSelected;
+    protected bool canAttack;
 
-    protected Navigation navigation;
+    protected bool isSelected;
 
-    private System.Action finishedAction;
+    protected System.Action finishedWalking;
 
     private Renderer myRenderer;
 
@@ -44,8 +42,6 @@ public class Unit : LivingEntity
         base.Awake();
 
         myRenderer = GetComponentInChildren<Renderer>();
-
-        navigation = GameObject.FindGameObjectWithTag("Grid").GetComponent<Navigation>();
 
         canAttack = true;
         canMove = true;
@@ -97,28 +93,6 @@ public class Unit : LivingEntity
         }
     }
 
-    public void Attack(Tile[] targetTiles, System.Action start, System.Action finished)
-    {
-        finishedAction = finished;
-
-        StartCoroutine(TurnToAttack(targetTiles[0]));
-    }
-
-    private IEnumerator TurnToAttack(Tile targetTile)
-    {
-        yield return StartCoroutine(Turn(targetTile.transform.position));
-
-        // m_Animator.SetTrigger(actions[1].AnimTrigger);
-
-        // m_CurrentClipInfo = m_Animator.GetCurrentAnimatorClipInfo(0);
-
-        // yield return new WaitForSeconds(m_CurrentClipInfo[0].clip.length * 0.8f);
-
-        CanAttack = false;
-
-        finishedAction();
-    }
-
     protected IEnumerator Turn(Vector3 targetPos)
     {
         Vector3 targetDirection = targetPos - transform.position;
@@ -142,12 +116,45 @@ public class Unit : LivingEntity
         }
     }
 
+    #region Basic Attack
+    public void BasicAttack(Tile[] targetTiles, System.Action start, System.Action finished)
+    {
+        StartCoroutine(DelayedBasicAction(targetTiles, start, finished));
+    }
+
+    private IEnumerator DelayedBasicAction(Tile[] targetTiles, System.Action start, System.Action finished)
+    {
+        yield return StartCoroutine(Turn(targetTiles[0].transform.position));
+
+        DoBasicAttack(targetTiles, start, finished);
+    }
+
+    protected virtual void DoBasicAttack(Tile[] targetTiles, System.Action start, System.Action finished)
+    {
+        // keep empty
+    }
+
+    #endregion
+
+    #region Basic Attack
     public void SpecialAttack(Tile[] targetTiles, System.Action start, System.Action finished)
     {
-        finishedAction = finished;
-
-        // StartCoroutine(TurnToAttack(targetUnit));
+        StartCoroutine(DelayedSpecialAction(targetTiles, start, finished));
     }
+
+    private IEnumerator DelayedSpecialAction(Tile[] targetTiles, System.Action start, System.Action finished)
+    {
+        yield return StartCoroutine(Turn(targetTiles[0].transform.position));
+
+        DoSpecialAttack(targetTiles, start, finished);
+    }
+
+    protected virtual void DoSpecialAttack(Tile[] targetTiles, System.Action start, System.Action finished)
+    {
+        // Keep empty
+    }
+
+    #endregion
 
     public Action GetAction(int index)
     {
@@ -213,9 +220,9 @@ public class Unit : LivingEntity
 
     public void MoveTo(Tile a_targetTile, System.Action a_finished)
     {
-        finishedAction = a_finished;
+        finishedWalking = a_finished;
 
-        List<Tile> path = navigation.FindPath(currentTile, a_targetTile);
+        List<Tile> path = Navigation.FindPath(currentTile, a_targetTile);
 
         if (path != null)
         {
@@ -227,7 +234,7 @@ public class Unit : LivingEntity
         }
     }
 
-    private IEnumerator Walk(List<Tile> path)
+    protected IEnumerator Walk(List<Tile> path)
     {
         int index = 0;
 
@@ -261,22 +268,7 @@ public class Unit : LivingEntity
         }
 
         CanMove = false;
-        finishedAction();
-    }
-
-
-    public void BasicAttack(Unit a_targetUnit, System.Action a_finished)
-    {
-        finishedAction = a_finished;
-
-        // StartCoroutine(TurnToAttack(targetUnit));
-    }
-
-    public void SpecialAttack(Unit a_targetUnit, System.Action a_finished)
-    {
-        finishedAction = a_finished;
-
-        // StartCoroutine(TurnToAttack(targetUnit));
+        finishedWalking();
     }
 
     public void Refresh()

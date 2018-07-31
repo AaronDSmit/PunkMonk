@@ -40,6 +40,9 @@ public class InteractionRuleset : ScriptableObject
     [SerializeField]
     private TargetTeam targetTeam;
 
+    [SerializeField]
+    private DistanceType distanceType;
+
     public bool IsValid { get; private set; }
 
     public bool WithinRange { get; private set; }
@@ -47,7 +50,6 @@ public class InteractionRuleset : ScriptableObject
     public bool CorrectTileOccupation { get; private set; }
 
     public bool CorrectTeam { get; private set; }
-
 
     public Color HighlightColour
     {
@@ -59,6 +61,11 @@ public class InteractionRuleset : ScriptableObject
         get { return validHighlightColour; }
     }
 
+    public Color InvalidHighlightColour
+    {
+        get { return invalidHighlightColour; }
+    }
+
     public Color InRangeHighlightColour
     {
         get { return withinRangeHighlightColour; }
@@ -68,7 +75,14 @@ public class InteractionRuleset : ScriptableObject
     {
         if (useDistanceCheck)
         {
-            WithinRange = WithinDistance(a_selectedObject, a_tileUnderMouse);
+            if (distanceType == DistanceType.absolute)
+            {
+                WithinRange = WithinDistanceAboslute(a_selectedObject, a_tileUnderMouse);
+            }
+            else if (distanceType == DistanceType.pathTraveled)
+            {
+                WithinRange = WithinDistancePath(a_selectedObject, a_tileUnderMouse);
+            }
         }
         else
         {
@@ -100,7 +114,14 @@ public class InteractionRuleset : ScriptableObject
     {
         if (useTeamCheck && useDistanceCheck)
         {
-            IsValid = TeamCheck(a_entityUnderMouse) && WithinDistance(a_selectedObject, a_entityUnderMouse.CurrentTile);
+            if (distanceType == DistanceType.absolute)
+            {
+                IsValid = TeamCheck(a_entityUnderMouse) && WithinDistanceAboslute(a_selectedObject, a_entityUnderMouse.CurrentTile);
+            }
+            else if (distanceType == DistanceType.pathTraveled)
+            {
+                IsValid = TeamCheck(a_entityUnderMouse) && WithinDistancePath(a_selectedObject, a_entityUnderMouse.CurrentTile);
+            }
         }
         else if (useTeamCheck)
         {
@@ -108,7 +129,14 @@ public class InteractionRuleset : ScriptableObject
         }
         else if (useDistanceCheck)
         {
-            IsValid = WithinDistance(a_selectedObject, a_entityUnderMouse.CurrentTile);
+            if (distanceType == DistanceType.absolute)
+            {
+                IsValid = WithinDistanceAboslute(a_selectedObject, a_entityUnderMouse.CurrentTile);
+            }
+            else if (distanceType == DistanceType.pathTraveled)
+            {
+                IsValid = WithinDistancePath(a_selectedObject, a_entityUnderMouse.CurrentTile);
+            }
         }
         else
         {
@@ -116,7 +144,7 @@ public class InteractionRuleset : ScriptableObject
         }
     }
 
-    private bool WithinDistance(Entity a_selectedObject, Tile a_tileLocation)
+    private bool WithinDistanceAboslute(Entity a_selectedObject, Tile a_tileLocation)
     {
         int distance = 0;
 
@@ -141,6 +169,31 @@ public class InteractionRuleset : ScriptableObject
         return false;
     }
 
+    private bool WithinDistancePath(Entity a_selectedObject, Tile a_tileLocation)
+    {
+        int distance = 0;
+
+        switch (distanceCheckType)
+        {
+            case DistanceCheck.attackRange:
+                distance = a_selectedObject.GetComponent<Unit>().AttackRange;
+                return Navigation.PathLength(a_selectedObject.CurrentTile, a_tileLocation) <= distance;
+
+            case DistanceCheck.specialAttackRange:
+                distance = a_selectedObject.GetComponent<Unit>().SpecialAttackRange;
+                return Navigation.PathLength(a_selectedObject.CurrentTile, a_tileLocation) <= distance;
+
+            case DistanceCheck.movementRange:
+                distance = a_selectedObject.GetComponent<Unit>().MoveRange;
+                return Navigation.PathLength(a_selectedObject.CurrentTile, a_tileLocation) <= distance;
+
+            case DistanceCheck.custom:
+                return Navigation.PathLength(a_selectedObject.CurrentTile, a_tileLocation) <= minDistance;
+        }
+
+        return false;
+    }
+
     private bool TeamCheck(Entity a_GO)
     {
         if (targetTeam == TargetTeam.friendly)
@@ -155,7 +208,7 @@ public class InteractionRuleset : ScriptableObject
 
     private bool TileOccupationCheck(Tile a_tile)
     {
-        if(targetOccupation == TileOccupation.clear)
+        if (targetOccupation == TileOccupation.clear)
         {
             return a_tile.IsWalkable;
         }
@@ -184,4 +237,10 @@ public enum TileOccupation
 {
     clear,
     blocked
+}
+
+public enum DistanceType
+{
+    absolute,
+    pathTraveled
 }

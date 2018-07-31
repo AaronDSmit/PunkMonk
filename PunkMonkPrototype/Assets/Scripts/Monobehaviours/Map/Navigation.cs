@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Navigation : MonoBehaviour
 {
-    public List<Tile> FindPath(Tile starting, Tile target)
+    public static List<Tile> FindPath(Tile starting, Tile target)
     {
         List<Tile> openSet = new List<Tile>();
         HashSet<Tile> closedSet = new HashSet<Tile>();
@@ -58,12 +58,22 @@ public class Navigation : MonoBehaviour
             }
         }
 
-
-
         return null;
     }
 
-    private List<Tile> RetracePath(Tile start, Tile end)
+    public static int PathLength(Tile a_starting, Tile a_target)
+    {
+        List<Tile> path = FindPath(a_starting, a_target);
+
+        if (path != null)
+        {
+            return path.Count;
+        }
+
+        return 0;
+    }
+
+    private static List<Tile> RetracePath(Tile start, Tile end)
     {
         List<Tile> path = new List<Tile>();
         Tile current = end;

@@ -19,8 +19,7 @@ public class CameraController : MonoBehaviour
 
     private Vector3 vel;
 
-    [SerializeField] private float slowSpeed;
-    [SerializeField] private float acculturationSpeed;
+    [SerializeField] private float accelerationSpeed;
     [SerializeField] private float maxSpeed;
     [SerializeField] private float overworldSpeed;
     [SerializeField] private float RotationalSpeed;
@@ -82,16 +81,22 @@ public class CameraController : MonoBehaviour
     {
         Vector3 dir = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 
-        if(vel.magnitude < maxSpeed)
-        vel += dir * acculturationSpeed * Time.deltaTime;        
+
+        vel += dir * accelerationSpeed * Time.deltaTime;
+        
+        if(vel.magnitude > maxSpeed)
+        {
+            vel = vel.normalized * maxSpeed;
+        }
+
         transform.position += transform.forward * vel.z;
         transform.position += transform.right * vel.x;
 
-
-        if (dir == Vector3.zero)
+        if (Input.anyKeyDown == false)
         {
-            vel *= slowSpeed;
+            vel = Vector3.zero;
         }
+
         //if (Input.GetAxis("Vertical") > 0)
         //{
         //    targetPos += transform.forward * cameraSpeed * Time.deltaTime;

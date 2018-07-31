@@ -29,11 +29,10 @@ public class SpecialEarthAttack : Spell {
         highVec = groundVecBetween.normalized * (groundVecBetween.magnitude / 2);
         highVec.y = hight;
 
-        Vector3.Slerp(a_unit.CurrentTile.transform.position, highVec, speedOfJump * Time.deltaTime);
+        targetPosition = Vector3.Slerp(a_unit.CurrentTile.transform.position, highVec, speedOfJump * Time.deltaTime);
         targetPosition = a_tile[0].transform.position;
 
 
     }
-
 
 }

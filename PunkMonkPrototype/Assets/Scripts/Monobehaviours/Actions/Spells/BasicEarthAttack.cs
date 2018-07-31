@@ -15,14 +15,20 @@ using UnityEngine;
 public class BasicEarthAttack : Spell
 {
     [SerializeField] private float damageAmount;
-    [SerializeField] private float Range;
 
-    private Vector3 targetPosition;
-
-    public override void CastSpell(Tile[] a_tile, System.Action a_onStartCB, System.Action a_onFinishCB)
+    public override void CastSpell(Unit a_unit, Tile[] a_tile, System.Action a_onStartCB, System.Action a_onFinishCB)
     {
-        base.CastSpell(a_tile, a_onStartCB, a_onFinishCB);
-        targetPosition = a_tile[0].transform.position;
+
+        base.CastSpell(a_unit, a_tile, a_onStartCB, a_onFinishCB);
+        foreach (Tile hex in a_tile)
+        {
+            if (hex.CurrentUnit != null)
+            {
+                hex.CurrentUnit.TakeDamage(Element.EARTH, damageAmount);
+            }
+        }
+
+        a_onFinishCB();
 
     }
 

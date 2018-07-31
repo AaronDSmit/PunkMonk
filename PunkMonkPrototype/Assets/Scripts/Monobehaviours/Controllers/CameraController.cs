@@ -10,20 +10,21 @@ public class CameraController : MonoBehaviour
 
     private GameObject cameraGO;
 
+    private float targetY;
+
     private Vector3 targetPos;
 
     private Quaternion targetRot;
 
     private bool lockedMovement = false;
-
-
     private Vector3 vel;
 
-    [SerializeField] private float accelerationSpeed;
-    [SerializeField] private float maxSpeed;
+    [SerializeField] private float speed;
     [SerializeField] private float overworldSpeed;
     [SerializeField] private float RotationalSpeed;
     [SerializeField] private float scrollSpeed;
+
+    private Vector3 dir;
 
 
     private void Awake()
@@ -36,6 +37,7 @@ public class CameraController : MonoBehaviour
     {
         cameraGO = Camera.main.gameObject;
         targetPos = transform.position;
+        targetY = transform.position.y;
         targetRot = transform.rotation;
     }
 
@@ -57,7 +59,7 @@ public class CameraController : MonoBehaviour
             ProcessKeyboardInput();
         }
 
-        //  transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * lerpSpeed);
+        transform.position = Vector3.Slerp(transform.position, new Vector3(transform.position.x, targetY, transform.position.z), Time.deltaTime * scrollSpeed);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.deltaTime * RotationalSpeed);
 
     }
@@ -79,52 +81,34 @@ public class CameraController : MonoBehaviour
     // Process Keyboard Input
     private void ProcessKeyboardInput()
     {
-        Vector3 dir = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 
+        dir = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 
-        vel += dir * accelerationSpeed * Time.deltaTime;
-        
-        if(vel.magnitude > maxSpeed)
+        if (dir.magnitude > 1)
         {
-            vel = vel.normalized * maxSpeed;
+            vel = dir.normalized * speed * Time.deltaTime;
+        }
+        else
+        {
+            vel = dir * speed * Time.deltaTime;
         }
 
-        transform.position += ((transform.forward * vel.z) + (transform.right * vel.x)).normalized;
 
-        if (Input.anyKeyDown == false)
-        {
-            vel = Vector3.zero;
-        }
+        transform.position += transform.right * vel.x;
+        transform.position += transform.forward * vel.z;
 
-        //if (Input.GetAxis("Vertical") > 0)
-        //{
-        //    targetPos += transform.forward * cameraSpeed * Time.deltaTime;
-        //}
-
-        //if (Input.GetAxis("Horizontal") < 0)
-        //{
-        //    targetPos += -transform.right * cameraSpeed * Time.deltaTime;
-        //}
-
-        //if (Input.GetAxis("Horizontal") > 0)
-        //{
-        //    targetPos += transform.right * cameraSpeed * Time.deltaTime;
-        //}
-
-        //if (Input.GetAxis("Vertical") < 0)
-        //{
-        //    targetPos += -transform.forward * cameraSpeed * Time.deltaTime;
-        //}
 
 
 
         if (Input.GetAxis("Mouse ScrollWheel") > 0)
         {
-            targetPos += -Vector3.up * scrollSpeed * Time.deltaTime;
+            if(targetY > 1)
+            targetY -= scrollSpeed * Time.deltaTime;
         }
         if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
-            targetPos += Vector3.up * scrollSpeed * Time.deltaTime;
+            if(targetY < 10)
+            targetY += scrollSpeed * Time.deltaTime;
         }
 
 

@@ -151,7 +151,93 @@ MonoBehaviour:
   specialAttackRange: 5
   turnTime: 0.2
   walkSpeed: 5
-  element: 1
+  specialDamage: 1
+  specialheight: 5
+  specialSpeedOfJump: 1
+  upYCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 3.6148024
+      outSlope: 3.6148024
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.20603174
+      value: 1.0034823
+      inSlope: -0.028076157
+      outSlope: -0.028076157
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 0.00000069421884
+      outSlope: 0.00000069421884
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  upZCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 3.6148024
+      outSlope: 3.6148024
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.20603174
+      value: 1.0034823
+      inSlope: -0.028076157
+      outSlope: -0.028076157
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 0.00000069421884
+      outSlope: 0.00000069421884
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  downYCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: -0.0017062379
+      value: 0.99836534
+      inSlope: -0.06609994
+      outSlope: -0.06609994
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.9998474
+      value: 0.0050621033
+      inSlope: -3.0603533
+      outSlope: -3.0603533
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  downZCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!136 &136876744524752574
 CapsuleCollider:
   m_ObjectHideFlags: 1

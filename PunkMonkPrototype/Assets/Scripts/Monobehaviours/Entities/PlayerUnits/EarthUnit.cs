@@ -21,6 +21,7 @@ public class EarthUnit : Unit
     private bool specialAttack = false;
     private Vector3 specialVecBetween;
     private Tile[] specialTiles;
+    private System.Action specialFinishedFunc;
 
     [Header("Basic Attack")]
 
@@ -39,19 +40,27 @@ public class EarthUnit : Unit
 
     protected override void DoBasicAttack(Tile[] targetTiles, System.Action start, System.Action finished)
     {
+        //call the start call back function
+        start();
+
         //store the target tile
         basicTiles = targetTiles;
 
         //call the basicAttackDamageDelay coroutine 
-        StartCoroutine(BasicAttackDamageDelay(basicDamgeDelayTimer));
-
+        StartCoroutine(BasicAttackDamageDelay(basicDamgeDelayTimer, finished));
 
     }
 
     protected override void DoSpecialAttack(Tile[] targetTiles, System.Action start, System.Action finished)
     {
+        //call the start call back function
+        start();
+
         //store the target tile
         specialTiles = targetTiles;
+
+        //store the finished function call
+        specialFinishedFunc = finished;
 
         //store the start position
         specialStartPosition = transform.position;
@@ -108,7 +117,7 @@ public class EarthUnit : Unit
         }
     }
 
-    private IEnumerator BasicAttackDamageDelay(float a_timer)
+    private IEnumerator BasicAttackDamageDelay(float a_timer, System.Action a_finished)
     {
         //wait for timer before runing code
         yield return new WaitForSeconds(a_timer);
@@ -127,6 +136,8 @@ public class EarthUnit : Unit
                 }
             }
         }
+        //call the finished call back function
+        a_finished();
     }
 
 
@@ -149,6 +160,9 @@ public class EarthUnit : Unit
                 }
             }
         }
+        
+        //call the finished call back function
+        specialFinishedFunc();
     }
 
 }

@@ -7,9 +7,11 @@ public class EarthUnit : Unit
 
     [Header("Special Attack")]
 
-    [SerializeField] private float specialDamage;
+    [SerializeField]
+    private float specialDamage;
     [SerializeField] private float specialheight;
     [SerializeField] private float specialJumpTime;
+    [SerializeField] private float specialDamgeDelayTimer;
     [SerializeField] private AnimationCurve YCurve;
     [SerializeField] private AnimationCurve ZCurve;
 
@@ -20,6 +22,13 @@ public class EarthUnit : Unit
     private Vector3 specialVecBetween;
     private Tile[] specialTiles;
 
+    [Header("Basic Attack")]
+
+    [SerializeField]
+    private float basicDamage;
+    [SerializeField] private float basicDamgeDelayTimer;
+
+    private Tile[] basicTiles;
 
     protected override void Awake()
     {
@@ -30,7 +39,11 @@ public class EarthUnit : Unit
 
     protected override void DoBasicAttack(Tile[] targetTiles, System.Action start, System.Action finished)
     {
+        //store the target tile
+        basicTiles = targetTiles;
 
+        //call the basicAttackDamageDelay coroutine 
+        StartCoroutine(BasicAttackDamageDelay(basicDamgeDelayTimer));
 
 
     }
@@ -45,7 +58,7 @@ public class EarthUnit : Unit
 
         //store the target position
         specialTargetPosition = targetTiles[0].transform.position;
-        
+
         //make sure the target's y is the same as the start's y
         specialTargetPosition.y = specialStartPosition.y;
 
@@ -63,7 +76,7 @@ public class EarthUnit : Unit
         {
             //Update the timer
             specialTimer += Time.deltaTime;
-            
+
             //set the new xz position is equal to the current distance though the z animationCurve
             transform.position = specialStartPosition + specialVecBetween.normalized * ZCurve.Evaluate(specialTimer / specialJumpTime) * (specialVecBetween.magnitude);
 
@@ -82,14 +95,8 @@ public class EarthUnit : Unit
                 //make sure we are at the target position
                 transform.position = specialTargetPosition;
 
-                //go though each tile and deal damage to the enemy
-                foreach(Tile x in specialTiles)
-                {
-                    if(x.CurrentUnit != null)
-                    {
-                        x.CurrentUnit.TakeDamage(Element.earth, specialDamage);
-                    }
-                }
+                //call the specialAttackDamageDelay coroutine 
+                StartCoroutine(SpecialAttackDamageDelay(specialDamgeDelayTimer));
 
                 //exit current tile
                 currentTile.Exit();
@@ -97,6 +104,49 @@ public class EarthUnit : Unit
                 //enter target tile
                 specialTiles[0].Enter(this);
 
+            }
+        }
+    }
+
+    private IEnumerator BasicAttackDamageDelay(float a_timer)
+    {
+        //wait for timer before runing code
+        yield return new WaitForSeconds(a_timer);
+
+        //go though each tile and deal damage to the enemy
+        foreach (Tile x in basicTiles)
+        {
+            //if there is a unit
+            if (x.CurrentUnit != null)
+            {
+                //make sure we arent damaging the player or team
+                if (x.CurrentUnit.Team != TEAM.player)
+                {
+                    //deal damage to that unit
+                    x.CurrentUnit.TakeDamage(Element.earth, basicDamage);
+                }
+            }
+        }
+    }
+
+
+    private IEnumerator SpecialAttackDamageDelay(float a_timer)
+    {
+        //wait for timer before runing code
+        yield return new WaitForSeconds(a_timer);
+
+        //go though each tile and deal damage to the enemy
+        foreach (Tile x in specialTiles)
+        {
+            //if there is a unit
+            if (x.CurrentUnit != null)
+            {
+                //make sure we arent damaging the player or team
+                if (x.CurrentUnit.Team != TEAM.player)
+                {
+                    //deal damage to that unit
+                    x.CurrentUnit.TakeDamage(Element.earth, specialDamage);
+                }
             }
         }
     }

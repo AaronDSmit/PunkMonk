@@ -5,27 +5,20 @@ using UnityEngine;
 public class EarthUnit : Unit
 {
 
+    [Header("Special Attack")]
+
     [SerializeField] private float specialDamage;
     [SerializeField] private float specialheight;
-    [SerializeField] private float specialSpeedOfJump;
+    [SerializeField] private float specialJumpTime;
+    [SerializeField] private AnimationCurve YCurve;
+    [SerializeField] private AnimationCurve ZCurve;
 
-    [SerializeField] private AnimationCurve upYCurve;
-    [SerializeField] private AnimationCurve upZCurve;
-
-    [SerializeField] private AnimationCurve downYCurve;
-    [SerializeField] private AnimationCurve downZCurve;
-
-    private Vector3 targetPosition;
-    private Vector3 startPosition;
-    private float lerpDistance;
-
+    private Vector3 specialTargetPosition;
+    private Vector3 specialStartPosition;
+    private float specialTimer;
     private bool specialAttack = false;
-    private bool jumping = false;
-
-
-
-    private Vector3 groundVecBetween;
-    private Vector3 highVec;
+    private Vector3 specialVecBetween;
+    private Tile[] specialTiles;
 
 
     protected override void Awake()
@@ -44,48 +37,66 @@ public class EarthUnit : Unit
 
     protected override void DoSpecialAttack(Tile[] targetTiles, System.Action start, System.Action finished)
     {
-        groundVecBetween = targetTiles[0].transform.position - CurrentTile.transform.position;
+        //store the target tile
+        specialTiles = targetTiles;
 
-        // transform.position = targetTiles[0].transform.position;
+        //store the start position
+        specialStartPosition = transform.position;
 
+        //store the target position
+        specialTargetPosition = targetTiles[0].transform.position;
+        
+        //make sure the target's y is the same as the start's y
+        specialTargetPosition.y = specialStartPosition.y;
 
-        highVec = groundVecBetween.normalized * (groundVecBetween.magnitude / 2) + CurrentTile.transform.position;
-        highVec.y = specialheight;
+        //get the vector between the start position and the target position
+        specialVecBetween = specialTargetPosition - specialStartPosition;
 
-        targetPosition = targetTiles[0].transform.position;
-
-        startPosition = CurrentTile.transform.position;
-
-        jumping = true;
+        //Start the Update Loop
         specialAttack = true;
     }
 
     private void Update()
     {
+        //if special Attack is true
         if (specialAttack)
         {
-            if (jumping)
+            //Update the timer
+            specialTimer += Time.deltaTime;
+            
+            //set the new xz position is equal to the current distance though the z animationCurve
+            transform.position = specialStartPosition + specialVecBetween.normalized * ZCurve.Evaluate(specialTimer / specialJumpTime) * (specialVecBetween.magnitude);
+
+            //set the new y position to the current distance though the y animationCurve
+            transform.position = new Vector3(transform.position.x, specialStartPosition.y + YCurve.Evaluate(specialTimer / specialJumpTime) * specialheight, transform.position.z);
+
+            //if the current timer is grater then the overall time
+            if (specialTimer > specialJumpTime)
             {
-                lerpDistance += Time.deltaTime * specialSpeedOfJump;
-                transform.position = startPosition + groundVecBetween.normalized * upZCurve.Evaluate(lerpDistance) * (groundVecBetween.magnitude / 2);
-                transform.position = new Vector3(transform.position.x, startPosition.y + upYCurve.Evaluate(lerpDistance) * specialheight, transform.position.z);
-                if (lerpDistance > 1)
+                //finish the animation
+                specialAttack = false;
+
+                //reset Timer
+                specialTimer -= specialJumpTime;
+
+                //make sure we are at the target position
+                transform.position = specialTargetPosition;
+
+                //go though each tile and deal damage to the enemy
+                foreach(Tile x in specialTiles)
                 {
-                    jumping = false;
-                    lerpDistance = 0;
-                    transform.position = highVec;
+                    if(x.CurrentUnit != null)
+                    {
+                        x.CurrentUnit.TakeDamage(Element.earth, specialDamage);
+                    }
                 }
-            }
-            else
-            {
-                lerpDistance += Time.deltaTime * specialSpeedOfJump;
-                transform.position = highVec + groundVecBetween.normalized * downZCurve.Evaluate(lerpDistance) * (groundVecBetween.magnitude / 2);
-                transform.position = new Vector3(transform.position.x, highVec.y + downZCurve.Evaluate(lerpDistance) * -specialheight, transform.position.z);
-                if (lerpDistance < 0)
-                {
-                    specialAttack = false;
-                    lerpDistance = 0;
-                }
+
+                //exit current tile
+                currentTile.Exit();
+
+                //enter target tile
+                specialTiles[0].Enter(this);
+
             }
         }
     }

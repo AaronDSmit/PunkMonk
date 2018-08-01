@@ -154,38 +154,57 @@ MonoBehaviour:
   specialDamage: 1
   specialheight: 5
   specialJumpTime: 3
+  specialDamgeDelayTimer: 0
   YCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 2
       time: 0
       value: 0
-      inSlope: 1.463972
-      outSlope: 1.463972
+      inSlope: 0.19547848
+      outSlope: 0.19547848
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.7154785
-      value: 0.9887128
-      inSlope: 1.3924849
-      outSlope: 1.3924849
+      time: 0.06995061
+      value: 0.4869227
+      inSlope: 3.8506768
+      outSlope: 3.8506768
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.72593033
-      value: 0.9988264
-      inSlope: 0.06861688
-      outSlope: 0.06861688
+      time: 0.108635895
+      value: 0.5954726
+      inSlope: 1.8700957
+      outSlope: 1.8700957
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.7441389
-      value: 0.99908304
-      inSlope: 0.07165829
-      outSlope: 0.07165829
+      time: 0.19324696
+      value: 0.66403276
+      inSlope: -0.03175786
+      outSlope: -0.03175786
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.2706938
+      value: 0.59964854
+      inSlope: -1.9189715
+      outSlope: -1.9189715
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.30446318
+      value: 0.5016133
+      inSlope: -4.4633904
+      outSlope: -4.4633904
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.38639912
+      value: -0.00081820507
+      inSlope: 0.017503379
+      outSlope: 0.017503379
       tangentMode: 0
     - serializedVersion: 2
       time: 1
       value: -0.00030136108
-      inSlope: -5.4550486
-      outSlope: -5.4550486
+      inSlope: -0.019158633
+      outSlope: -0.019158633
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -196,24 +215,32 @@ MonoBehaviour:
     - serializedVersion: 2
       time: 0
       value: 0
-      inSlope: 3.6148024
-      outSlope: 3.6148024
+      inSlope: 3.8531802
+      outSlope: 3.8531802
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.57602686
-      value: 0.6695285
-      inSlope: -0.028076157
-      outSlope: -0.028076157
+      time: 0.2626596
+      value: 0.95266473
+      inSlope: 3.891172
+      outSlope: 3.891172
       tangentMode: 0
     - serializedVersion: 2
-      time: 1
-      value: 1
-      inSlope: 2.245241
-      outSlope: 2.245241
+      time: 0.27605006
+      value: 0.9966875
+      inSlope: 0.045958515
+      outSlope: 0.045958515
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.5
+      value: 1.0062485
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+  basicDamage: 0
+  basicDamgeDelayTimer: 0
 --- !u!136 &136876744524752574
 CapsuleCollider:
   m_ObjectHideFlags: 1

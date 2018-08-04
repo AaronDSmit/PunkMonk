@@ -30,20 +30,23 @@ public class PlayerController : MonoBehaviour
 
     private Unit lightningUnit;
 
-    private Tile tileUnderMouse;
-    private Tile previousTileUnderMouse;
+    private Hex tileUnderMouse;
+    private Hex previousTileUnderMouse;
 
     private Unit unitUnderMouse;
     private Unit previousUnitUnderMouse;
 
-    private List<Tile> tilesWithinRange;
+    private List<Hex> tilesWithinRange;
 
-    private List<Tile> tilesAffectByAction;
+    private List<Hex> tilesAffectByAction;
 
     private UIManager UI;
 
     private GridManager grid;
 
+    private Hex earthSnapHex;
+
+    private Hex lightningSnapHex;
 
     private void Awake()
     {
@@ -55,9 +58,9 @@ public class PlayerController : MonoBehaviour
 
         grid = GameObject.FindGameObjectWithTag("Grid").GetComponent<GridManager>();
 
-        tilesWithinRange = new List<Tile>();
+        tilesWithinRange = new List<Hex>();
 
-        tilesAffectByAction = new List<Tile>();
+        tilesAffectByAction = new List<Hex>();
 
         if (selectionRuleset == null)
         {
@@ -161,7 +164,7 @@ public class PlayerController : MonoBehaviour
                 previousUnitUnderMouse = unitUnderMouse;
             }
 
-            tileUnderMouse = hitInfo.transform.GetComponent<Tile>();
+            tileUnderMouse = hitInfo.transform.GetComponent<Hex>();
             unitUnderMouse = hitInfo.transform.GetComponent<Unit>();
 
             if (tileUnderMouse)
@@ -176,7 +179,7 @@ public class PlayerController : MonoBehaviour
                 {
                     tileUnderMouse.MouseEnter(currentRuleset.HighlightColour);
 
-                    List<Tile> path = Navigation.FindPath(selectedUnit.CurrentTile, tileUnderMouse);
+                    List<Hex> path = Navigation.FindPath(selectedUnit.CurrentTile, tileUnderMouse);
                     lineRenderer.positionCount = path.Count + 1;
 
                     lineRenderer.SetPosition(0, selectedUnit.CurrentTile.transform.position + Vector3.up * 0.5f);
@@ -192,7 +195,7 @@ public class PlayerController : MonoBehaviour
 
                     if (tilesAffectByAction.Count > 0)
                     {
-                        foreach (Tile tile in tilesAffectByAction)
+                        foreach (Hex tile in tilesAffectByAction)
                         {
                             tile.MouseExit();
                         }
@@ -250,7 +253,7 @@ public class PlayerController : MonoBehaviour
 
                 case ActionType.movement:
 
-                    if (tileUnderMouse.IsWalkable) // redundant check, needs to be valid to reach this point anyway
+                    if (tileUnderMouse.IsTraversable) // redundant check, needs to be valid to reach this point anyway
                     {
                         selectedUnit.MoveTo(tileUnderMouse, UnitFinishedAction);
                         RemoveHighlightedTiles();
@@ -259,7 +262,6 @@ public class PlayerController : MonoBehaviour
                         tileUnderMouse.MouseExit();
                         lineRenderer.positionCount = 0;
                         canInteract = false;
-                        //UI.ToggleHUDLock();
                     }
 
                     break;
@@ -357,37 +359,37 @@ public class PlayerController : MonoBehaviour
     {
         if (currentRuleset.actionType == ActionType.movement)
         {
-            Tile[] area = grid.GetTilesWithinDistance(selectedUnit.CurrentTile, a_range, false);
+            Hex[] area = grid.GetTilesWithinDistance(selectedUnit.CurrentTile, a_range, false);
 
-            foreach (Tile tile in area)
+            foreach (Hex tile in area)
             {
                 tilesWithinRange.Add(tile);
 
-                if (tile.IsWalkable)
+                if (tile.IsTraversable)
                 {
-                    tile.HighlightMovement(currentRuleset.InRangeHighlightColour);
+                    tile.Highlight(currentRuleset.InRangeHighlightColour);
                 }
                 else
                 {
-                    tile.HighlightMovement(currentRuleset.InvalidHighlightColour);
+                    tile.Highlight(currentRuleset.InvalidHighlightColour);
                 }
             }
         }
         else
         {
-            Tile[] area = grid.GetTilesWithinDistance(selectedUnit.CurrentTile, a_range, true);
+            Hex[] area = grid.GetTilesWithinDistance(selectedUnit.CurrentTile, a_range, true);
 
-            foreach (Tile tile in area)
+            foreach (Hex tile in area)
             {
                 tilesWithinRange.Add(tile);
-                tile.HighlightMovement(currentRuleset.InRangeHighlightColour);
+                tile.Highlight(currentRuleset.InRangeHighlightColour);
             }
         }
     }
 
     private void RemoveHighlightedTiles()
     {
-        foreach (Tile tile in tilesWithinRange)
+        foreach (Hex tile in tilesWithinRange)
         {
             tile.RemoveHighlight();
         }
@@ -396,7 +398,7 @@ public class PlayerController : MonoBehaviour
 
         if (tilesAffectByAction.Count > 0)
         {
-            foreach (Tile tile in tilesAffectByAction)
+            foreach (Hex tile in tilesAffectByAction)
             {
                 tile.MouseExit();
             }
@@ -431,27 +433,18 @@ public class PlayerController : MonoBehaviour
         // ensure this script knows it's in over-world state
         if (_newstate == Game_state.battle)
         {
-            Ray earthRay = new Ray(earthUnit.transform.position + Vector3.up * 2, Vector3.down);
-            Ray lightningRay = new Ray(lightningUnit.transform.position + Vector3.up * 2, Vector3.down);
-
-            RaycastHit hitinfo;
-
-            int layerMask = 0;
-            layerMask |= (1 << LayerMask.NameToLayer("Ground"));
-
-            if (Physics.Raycast(earthRay, out hitinfo, Mathf.Infinity, layerMask))
-            {
-                earthUnit.SnapToGrid(hitinfo.transform.GetComponent<Tile>());
-            }
-
-            if (Physics.Raycast(lightningRay, out hitinfo, Mathf.Infinity, layerMask))
-            {
-                lightningUnit.SnapToGrid(hitinfo.transform.GetComponent<Tile>());
-            }
+            earthUnit.SnapToGrid(earthSnapHex);
+            lightningUnit.SnapToGrid(lightningSnapHex);
 
             canInteract = true;
             SelectUnit(earthUnit);
         }
+    }
+
+    public void SetUnitSnapHexes(Hex a_earthHex, Hex a_lightningHex)
+    {
+        earthSnapHex = a_earthHex;
+        lightningSnapHex = a_lightningHex;
     }
 
     public void SelectAction(int actionIndex)
@@ -503,7 +496,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void ProcessActionHighlighting(Tile a_targetTile, RaycastHit a_hitInfo)
+    private void ProcessActionHighlighting(Hex a_targetTile, RaycastHit a_hitInfo)
     {
         switch (currentAttack)
         {
@@ -528,9 +521,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int snapAngle;
 
     // returns a tiles within a tilesAffectByAction
-    private void GetTilesAffectByEarthAttack(Tile a_targetTile, RaycastHit a_hitInfo)
+    private void GetTilesAffectByEarthAttack(Hex a_targetTile, RaycastHit a_hitInfo)
     {
-        foreach (Tile tile in tilesAffectByAction)
+        foreach (Hex tile in tilesAffectByAction)
         {
             tile.MouseExit();
         }
@@ -554,9 +547,9 @@ public class PlayerController : MonoBehaviour
 
         //Debug.DrawLine(selectedUnit.CurrentTile.transform.position + Vector3.up * 0.2f, selectedUnit.CurrentTile.transform.position + new Vector3(Mathf.Sin(Mathf.Deg2Rad * snapAngle), 0.0f, Mathf.Cos(Mathf.Deg2Rad * snapAngle)) * 2 + Vector3.up * 0.2f, Color.magenta);
 
-        foreach (Tile tile in tilesAffectByAction)
+        foreach (Hex tile in tilesAffectByAction)
         {
-            if (!tile.IsWalkable)
+            if (!tile.IsTraversable)
             {
                 tile.MouseEnter(currentRuleset.HighlightColour);
             }
@@ -568,9 +561,9 @@ public class PlayerController : MonoBehaviour
     }
 
     // returns a tiles within range of landing tiles
-    private void GetTilesAffectByEarthSpecialAttack(Tile a_targetTile)
+    private void GetTilesAffectByEarthSpecialAttack(Hex a_targetTile)
     {
-        foreach (Tile tile in tilesAffectByAction)
+        foreach (Hex tile in tilesAffectByAction)
         {
             tile.MouseExit();
         }
@@ -579,16 +572,16 @@ public class PlayerController : MonoBehaviour
 
         tilesAffectByAction.Add(a_targetTile);
 
-        Tile[] tilesInRange = grid.GetTilesWithinDistance(a_targetTile, 1, true);
+        Hex[] tilesInRange = grid.GetTilesWithinDistance(a_targetTile, 1, true);
 
         for (int i = 0; i < tilesInRange.Length; i++)
         {
             tilesAffectByAction.Add(tilesInRange[i]);
         }
 
-        foreach (Tile tile in tilesAffectByAction)
+        foreach (Hex tile in tilesAffectByAction)
         {
-            if (!tile.IsWalkable)
+            if (!tile.IsTraversable)
             {
                 tile.MouseEnter(currentRuleset.HighlightColour);
             }
@@ -619,7 +612,7 @@ public class PlayerController : MonoBehaviour
                 mainDir = (HexDirection)a;
 
                 // the tile that is under the cursor
-                Tile currentTile = selectedUnit.CurrentTile.GetNeighbour(mainDir);
+                Hex currentTile = selectedUnit.CurrentTile.GetNeighbour(mainDir);
 
                 if (currentTile)
                 {
@@ -642,8 +635,8 @@ public class PlayerController : MonoBehaviour
                         }
                     }
 
-                    Tile leftTile = currentTile;
-                    Tile rightTile = currentTile;
+                    Hex leftTile = currentTile;
+                    Hex rightTile = currentTile;
 
                     for (int s = 0; s < sideRange; s++)
                     {

@@ -15,14 +15,34 @@ public class StateTransitionPointEditor : Editor
     {
         if (stateTransitionPoint.drawText)
         {
-            GUIStyle style = new GUIStyle(); // This is optional
-            style.normal.textColor = Color.yellow;
-            style.alignment = TextAnchor.MiddleCenter;
-            style.contentOffset = new Vector2(0, -7);
+            GUIStyle stateStyle = new GUIStyle();
+            stateStyle.normal.textColor = Color.yellow;
+            stateStyle.alignment = TextAnchor.MiddleCenter;
+            stateStyle.contentOffset = new Vector2(0, -7);
 
-            style.fontSize = 20;
+            GUIStyle indexStyle = new GUIStyle();
+            indexStyle.normal.textColor = Color.yellow;
+            indexStyle.alignment = TextAnchor.LowerRight;
+            indexStyle.contentOffset = new Vector2(10, 3);
 
-            Handles.Label(stateTransitionPoint.transform.position, StateManager.StateToString(stateTransitionPoint.TargetState)[0].ToString(), style);
+            stateStyle.fontSize = 20;
+
+            Handles.Label(stateTransitionPoint.transform.position, StateManager.StateToString(stateTransitionPoint.TargetState)[0].ToString(), stateStyle);
+            Handles.Label(stateTransitionPoint.transform.position, stateTransitionPoint.index.ToString(), indexStyle);
+
+            if(stateTransitionPoint.EarthHex)
+            {
+                Gizmos.color = new Color(1.0f, 0.2f, 0.2f, 1.0f); // brown
+                DrawArrow.ForGizmo(stateTransitionPoint.transform.position, stateTransitionPoint.EarthHex.transform.position - stateTransitionPoint.transform.position);
+            }
+
+           
+
+            if (stateTransitionPoint.LightningHex)
+            {
+                Gizmos.color = new Color(0.0f, 0.0f, 1.0f, 1.0f); // blue
+                DrawArrow.ForGizmo(stateTransitionPoint.transform.position, stateTransitionPoint.LightningHex.transform.position - stateTransitionPoint.transform.position);
+            }
         }
     }
 }

@@ -3,7 +3,7 @@
     NE, E, SE, SW, W, NW
 }
 
-public static class HexDirectionExtensions
+public static class HexDirectionUtility
 {
     public static HexDirection Opposite(this HexDirection direction)
     {

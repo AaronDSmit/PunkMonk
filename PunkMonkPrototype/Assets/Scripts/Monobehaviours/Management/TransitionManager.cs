@@ -33,29 +33,69 @@ public class TransitionManager : MonoBehaviour
     {
         if (next.buildIndex > 0)
         {
-            Tile spawnTileEarth = GameObject.FindGameObjectWithTag("EarthUnitSpawn").transform.parent.GetComponent<Tile>();
-            Tile spawnTileLightning = GameObject.FindGameObjectWithTag("LightningUnitSpawn").transform.parent.GetComponent<Tile>();
+            GameObject earthGO = GameObject.FindGameObjectWithTag("EarthUnitSpawn");
+            Hex spawnHexEarth = null;
 
-            Vector3 spawnPosEarth = spawnTileEarth.transform.position;
-            spawnPosEarth.y = 0.1f;
+            if (earthGO)
+            {
+                spawnHexEarth = earthGO.transform.parent.GetComponent<Hex>();
 
-            Vector3 spawnPosLightning = spawnTileLightning.transform.position;
-            spawnPosLightning.y = 0.1f;
+                Vector3 spawnPosEarth = spawnHexEarth.transform.position;
+                spawnPosEarth.y = 0.1f;
 
-            Unit earth = Instantiate(earthUnitPrefab, spawnPosEarth, Quaternion.identity);
-            earth.Spawn(spawnTileEarth);
+                Unit earth = Instantiate(earthUnitPrefab, spawnPosEarth, Quaternion.identity);
+                earth.Spawn(spawnHexEarth);
+            }
+            else
+            {
+                Debug.LogError("No Earth unit found!");
+            }
 
-            Unit lightning = Instantiate(LightningUnitPrefab, spawnPosLightning, Quaternion.identity);
-            lightning.Spawn(spawnTileLightning);
+
+            GameObject lightningGO = GameObject.FindGameObjectWithTag("LightningUnitSpawn");
+            Hex spawnHexLightning = null;
+
+            if (lightningGO)
+            {
+                spawnHexLightning = lightningGO.transform.parent.GetComponent<Hex>();
+
+                Vector3 spawnPosLightning = spawnHexLightning.transform.position;
+                spawnPosLightning.y = 0.1f;
+
+                Unit lightning = Instantiate(LightningUnitPrefab, spawnPosLightning, Quaternion.identity);
+                lightning.Spawn(spawnHexLightning);
+
+                lightning.GetComponent<OverworldFollower>().Init();
+            }
+            else
+            {
+                Debug.LogError("No lightning unit found!");
+            }
+
 
             GameObject playerGo = GameObject.FindGameObjectWithTag("Player");
 
-            playerGo.GetComponent<PlayerController>().Init();
-            playerGo.GetComponent<OverworldController>().Init();
-            lightning.GetComponent<OverworldFollower>().Init();
+            if (playerGo && lightningGO && earthGO)
+            {
+                playerGo.GetComponent<PlayerController>().Init();
+                playerGo.GetComponent<OverworldController>().Init();
+            }
+            else
+            {
+                Debug.LogError("No PlayerController found!");
+            }
 
-            CameraController cameraController = GameObject.FindGameObjectWithTag("CameraRig").GetComponent<CameraController>();
-            cameraController.Init();
+
+            GameObject cameraGO = GameObject.FindGameObjectWithTag("CameraRig");
+
+            if (cameraGO)
+            {
+                cameraGO.GetComponent<CameraController>().Init();
+            }
+            else
+            {
+                Debug.LogError("No CameraController found!");
+            }
         }
     }
 

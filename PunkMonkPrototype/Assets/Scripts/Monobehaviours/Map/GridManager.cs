@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GridManager : MonoBehaviour
 {
-    [SerializeField] private Tile tilePrefab;
+    [SerializeField] private Hex tilePrefab;
 
     [HideInInspector]
     [SerializeField]
@@ -17,49 +17,33 @@ public class GridManager : MonoBehaviour
 
     [HideInInspector]
     [SerializeField]
-    private List<Tile> map = new List<Tile>();
+    private Hex[] grid;
 
     [HideInInspector]
     [SerializeField]
-    private Dictionary<string, Tile> grid = new Dictionary<string, Tile>();
+    private Color clearHexColour;
 
-    private bool generateWithColour = false;
+    [HideInInspector]
+    [SerializeField]
+    private Color blockedHexColour;
 
-    private Color traversableTileColour;
-
-    private Color blockedTileColour;
-
+    [HideInInspector]
+    [SerializeField]
     private Color connectionColour;
 
-    private void Start()
+    private void Awake()
     {
-        grid.Clear();
-
-        Tile[] tiles = GetComponentsInChildren<Tile>();
-
-        foreach (Tile tile in tiles)
-        {
-            grid.Add(tile.ToString(), tile);
-        }
-
         StateManager.OnGameStateChanged += GameStateChanged;
     }
 
-    public bool GenerateGrid(int a_width, int a_height, Color a_walkable, Color a_notWalkable, Color a_connection)
-    {
-        traversableTileColour = a_walkable;
-        blockedTileColour = a_notWalkable;
-        connectionColour = a_connection;
-
-        generateWithColour = true;
-
-        return GenerateGrid(a_width, a_height);
-    }
-
-    public bool GenerateGrid(int width, int height)
+    public bool GenerateGrid(int width, int height, Color a_hexClearColour, Color a_hexBlockedColour, Color a_hexConnectColour)
     {
         mapWidth = width;
         mapHeight = height;
+
+        clearHexColour = a_hexClearColour;
+        blockedHexColour = a_hexBlockedColour;
+        connectionColour = a_hexConnectColour;
 
         if (transform.childCount > 0)
         {
@@ -69,82 +53,57 @@ public class GridManager : MonoBehaviour
             }
         }
 
-        map.Clear();
-        grid.Clear();
+        grid = new Hex[mapWidth * mapHeight];
 
         for (int y = 0, i = 0; y < mapHeight; y++)
         {
             for (int x = 0; x < mapWidth; x++)
             {
-                CreateTile(x, y, i++);
+                CreateHex(x, y, i++);
             }
         }
-
-        generateWithColour = false;
 
         return (transform.childCount > 0);
     }
 
-    private void CreateTile(int x, int y, int i)
+    private void CreateHex(int x, int y, int i)
     {
-        Tile newHex = Instantiate(tilePrefab, new Vector3(), Quaternion.Euler(-90.0f, 0.0f, 0.0f), transform);
-
-        newHex.Init(x, y);
-
-        //GameObject textGO = new GameObject("Text Display");
-        //TextMesh text = textGO.AddComponent<TextMesh>();
-
-        //text.transform.parent = newHex.transform;
-        //text.transform.position = newHex.transform.position;
-        //text.transform.localEulerAngles = new Vector3(180, 0.0f, 0.0f);
-        //text.transform.localScale = new Vector3(0.5f, 0.5f, 1.0f);
-
-        //text.text = newHex.ToString();
-        //text.characterSize = 0.2f;
-        //text.fontSize = 60;
-        //text.anchor = TextAnchor.MiddleCenter;
-
         Vector3 position;
-        position.x = (x + y * 0.5f - y / 2) * (Tile.innerRadius * 2f);
+        position.x = (x + y * 0.5f - y / 2) * (HexUtility.innerRadius * 2f);
         position.y = transform.position.y;
-        position.z = y * (Tile.outerRadius * 1.5f);
+        position.z = y * (HexUtility.outerRadius * 1.5f);
 
-        newHex.transform.position = position;
-        newHex.name = newHex.ToString();
+        grid[i] = Instantiate(tilePrefab, position, Quaternion.Euler(-90.0f, 0.0f, 0.0f), transform);
 
-        map.Add(newHex);
+        grid[i].Init(x, y);
 
-        grid.Add(newHex.ToString(), newHex);
+        grid[i].transform.position = position;
+        grid[i].name = string.Format("{0}, {1}", x, y);
 
         if (x > 0)
         {
-            map[i].SetNeighbour(HexDirection.W, map[i - 1]);
+            grid[i].SetNeighbour(HexDirection.W, grid[i - 1]);
         }
         if (y > 0)
         {
             if ((y & 1) == 0)
             {
-                map[i].SetNeighbour(HexDirection.SE, map[i - mapWidth]);
+                grid[i].SetNeighbour(HexDirection.SE, grid[i - mapWidth]);
+
                 if (x > 0)
                 {
-                    map[i].SetNeighbour(HexDirection.SW, map[i - mapWidth - 1]);
+                    grid[i].SetNeighbour(HexDirection.SW, grid[i - mapWidth - 1]);
                 }
             }
             else
             {
-                map[i].SetNeighbour(HexDirection.SW, map[i - mapWidth]);
+                grid[i].SetNeighbour(HexDirection.SW, grid[i - mapWidth]);
+
                 if (x < mapWidth - 1)
                 {
-                    map[i].SetNeighbour(HexDirection.SE, map[i - mapWidth + 1]);
+                    grid[i].SetNeighbour(HexDirection.SE, grid[i - mapWidth + 1]);
                 }
             }
-        }
-
-        if (generateWithColour)
-        {
-            map[i].walkableColour = traversableTileColour;
-            map[i].notWalkableColour = blockedTileColour;
-            map[i].connectionColour = connectionColour;
         }
     }
 
@@ -153,29 +112,29 @@ public class GridManager : MonoBehaviour
         // ensure this script knows it's in over-world state
         if (_newstate == Game_state.battle)
         {
-            Tile[] tiles = GetComponentsInChildren<Tile>();
+            Hex[] tiles = GetComponentsInChildren<Hex>();
 
-            foreach (Tile tile in tiles)
+            foreach (Hex tile in tiles)
             {
-                tile.ShowGrid(true);
+                tile.ShowOverlay(true);
             }
         }
         else
         {
-            Tile[] tiles = GetComponentsInChildren<Tile>();
+            Hex[] tiles = GetComponentsInChildren<Hex>();
 
-            foreach (Tile tile in tiles)
+            foreach (Hex tile in tiles)
             {
-                tile.ShowGrid(false);
+                tile.ShowOverlay(false);
             }
         }
     }
 
-    public Tile[] GetTilesWithinDistance(Tile centerTile, int range, bool ignoreBlockedTiles = false)
+    public Hex[] GetTilesWithinDistance(Hex centerTile, int range, bool ignoreBlockedTiles = false)
     {
-        List<Tile> openList = new List<Tile>();
-        List<Tile> returnList = new List<Tile>();
-        Tile currentTile;
+        List<Hex> openList = new List<Hex>();
+        List<Hex> returnList = new List<Hex>();
+        Hex currentTile;
 
         centerTile.GScore = 0;
 
@@ -186,13 +145,13 @@ public class GridManager : MonoBehaviour
             currentTile = openList[0];
             openList.Remove(currentTile);
 
-            foreach (Tile neighbour in currentTile.Neighbours)
+            foreach (Hex neighbour in currentTile.Neighbours)
             {
                 if (ignoreBlockedTiles)
                 {
                     if (!returnList.Contains(neighbour))
                     {
-                        neighbour.GScore = Tile.Distance(currentTile, neighbour) + currentTile.GScore;
+                        neighbour.GScore = HexUtility.Distance(currentTile, neighbour) + currentTile.GScore;
                         if (neighbour.GScore < range + 1)
                         {
                             openList.Add(neighbour);
@@ -200,9 +159,9 @@ public class GridManager : MonoBehaviour
                         }
                     }
                 }
-                else if (neighbour.IsWalkable && !returnList.Contains(neighbour))
+                else if (neighbour.IsTraversable && !returnList.Contains(neighbour))
                 {
-                    neighbour.GScore = Tile.Distance(currentTile, neighbour) + currentTile.GScore;
+                    neighbour.GScore = HexUtility.Distance(currentTile, neighbour) + currentTile.GScore;
                     if (neighbour.GScore < range + 1)
                     {
                         openList.Add(neighbour);
@@ -214,7 +173,7 @@ public class GridManager : MonoBehaviour
             openList.Sort((x, y) => x.GScore.CompareTo(y.GScore));
         }
 
-        foreach (Tile hex in returnList)
+        foreach (Hex hex in returnList)
         {
             hex.GScore = 0;
         }
@@ -222,39 +181,25 @@ public class GridManager : MonoBehaviour
         return returnList.ToArray();
     }
 
-    //public Tile[] GetTilesWithinRangeOf(Tile centerTile, int range)
-    //{
-    //    //Return tiles range steps from centre, http://www.redblobgames.com/grids/hexagons/#range
-
-    //    List<Tile> result = new List<Tile>();
-
-    //    for (int dx = -range; dx <= range; dx++)
-    //    {
-    //        for (int dy = Mathf.Max(-range, -dx - range); dy <= Mathf.Min(range, -dx + range); dy++)
-    //        {
-    //            Cube cubeCoord = Tile.OffsetToCube(centerTile.coord);
-    //            Tile h = GetTileAt(cubeCoord.q + dx, cubeCoord.r + dy);
-
-    //            if (h != null)
-    //            {
-    //                result.Add(h);
-    //            }
-    //        }
-    //    }
-
-    //    return result.ToArray();
-    //}
-
-    public Tile GetTileAt(int x, int z)
+    public Hex GetHexFromPosition(Vector3 a_position)
     {
-        string index = string.Format("{0},{1}", x, z);
+        a_position = transform.InverseTransformPoint(a_position);
 
-        if (grid.ContainsKey(index.ToString()))
+        OffsetCoord offsetCoord = HexCoordinate.PositionToOffset(a_position);
+
+        int index = offsetCoord.y * MapWidth + offsetCoord.x;
+
+        if (index < MapWidth * mapHeight)
         {
-            return grid[index.ToString()];
+            return grid[index];
         }
 
         return null;
+    }
+
+    public Hex GetHexAt(int x, int z)
+    {
+        return grid[z * MapWidth + x];
     }
 
     public int MapWidth

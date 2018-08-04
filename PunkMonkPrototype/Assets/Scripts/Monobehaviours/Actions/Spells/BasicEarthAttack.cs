@@ -16,11 +16,11 @@ public class BasicEarthAttack : Spell
 {
     [SerializeField] private float damageAmount;
 
-    public override void CastSpell(Unit a_unit, Tile[] a_tile, System.Action a_onStartCB, System.Action a_onFinishCB)
+    public override void CastSpell(Unit a_unit, Hex[] a_tile, System.Action a_onStartCB, System.Action a_onFinishCB)
     {
 
         base.CastSpell(a_unit, a_tile, a_onStartCB, a_onFinishCB);
-        foreach (Tile hex in a_tile)
+        foreach (Hex hex in a_tile)
         {
             if (hex.CurrentUnit != null)
             {

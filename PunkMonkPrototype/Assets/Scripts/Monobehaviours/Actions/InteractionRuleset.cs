@@ -71,7 +71,7 @@ public class InteractionRuleset : ScriptableObject
         get { return withinRangeHighlightColour; }
     }
 
-    public void CheckValidity(Unit a_selectedObject, Tile a_tileUnderMouse)
+    public void CheckValidity(Unit a_selectedObject, Hex a_tileUnderMouse)
     {
         if (useDistanceCheck)
         {
@@ -144,7 +144,7 @@ public class InteractionRuleset : ScriptableObject
         }
     }
 
-    private bool WithinDistanceAboslute(Entity a_selectedObject, Tile a_tileLocation)
+    private bool WithinDistanceAboslute(Entity a_selectedObject, Hex a_tileLocation)
     {
         int distance = 0;
 
@@ -152,24 +152,24 @@ public class InteractionRuleset : ScriptableObject
         {
             case DistanceCheck.attackRange:
                 distance = a_selectedObject.GetComponent<Unit>().AttackRange;
-                return Tile.Distance(a_selectedObject.CurrentTile, a_tileLocation) <= distance;
+                return HexUtility.Distance(a_selectedObject.CurrentTile, a_tileLocation) <= distance;
 
             case DistanceCheck.specialAttackRange:
                 distance = a_selectedObject.GetComponent<Unit>().SpecialAttackRange;
-                return Tile.Distance(a_selectedObject.CurrentTile, a_tileLocation) <= distance;
+                return HexUtility.Distance(a_selectedObject.CurrentTile, a_tileLocation) <= distance;
 
             case DistanceCheck.movementRange:
                 distance = a_selectedObject.GetComponent<Unit>().MoveRange;
-                return Tile.Distance(a_selectedObject.CurrentTile, a_tileLocation) <= distance;
+                return HexUtility.Distance(a_selectedObject.CurrentTile, a_tileLocation) <= distance;
 
             case DistanceCheck.custom:
-                return Tile.Distance(a_selectedObject.CurrentTile, a_tileLocation) <= minDistance;
+                return HexUtility.Distance(a_selectedObject.CurrentTile, a_tileLocation) <= minDistance;
         }
 
         return false;
     }
 
-    private bool WithinDistancePath(Entity a_selectedObject, Tile a_tileLocation)
+    private bool WithinDistancePath(Entity a_selectedObject, Hex a_tileLocation)
     {
         int distance = 0;
 
@@ -206,15 +206,15 @@ public class InteractionRuleset : ScriptableObject
         }
     }
 
-    private bool TileOccupationCheck(Tile a_tile)
+    private bool TileOccupationCheck(Hex a_tile)
     {
         if (targetOccupation == TileOccupation.clear)
         {
-            return a_tile.IsWalkable;
+            return a_tile.IsTraversable;
         }
         else
         {
-            return !a_tile.IsWalkable;
+            return !a_tile.IsTraversable;
         }
     }
 }

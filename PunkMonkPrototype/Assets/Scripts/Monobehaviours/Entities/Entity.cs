@@ -15,11 +15,11 @@ public abstract class Entity : MonoBehaviour
 {
     [SerializeField] protected TEAM team;
 
-    protected Tile currentTile;
+    protected Hex currentTile;
 
     public TEAM Team { get { return team; } }
 
-    public Tile CurrentTile
+    public Hex CurrentTile
     {
         get { return currentTile; }
     }

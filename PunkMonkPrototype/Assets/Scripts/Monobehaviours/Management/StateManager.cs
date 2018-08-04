@@ -96,17 +96,17 @@ public class StateManager : MonoBehaviour
         switch (a_state)
         {
             case Game_state.pausemenu:
-                return "pause menu";
+                return "Pause menu";
             case Game_state.battle:
-                return "battle";
+                return "Battle";
             case Game_state.cinematic:
-                return "cinematic";
+                return "Cinematic";
             case Game_state.loading:
-                return "loading";
+                return "Loading";
             case Game_state.mainmenu:
-                return "main menu";
+                return "Main menu";
             case Game_state.overworld:
-                return "over world";
+                return "Over world";
             default:
                 return "unknown state";
         }

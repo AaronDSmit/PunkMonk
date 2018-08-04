@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class Navigation : MonoBehaviour
 {
-    public static List<Tile> FindPath(Tile starting, Tile target)
+    public static List<Hex> FindPath(Hex starting, Hex target)
     {
-        List<Tile> openSet = new List<Tile>();
-        HashSet<Tile> closedSet = new HashSet<Tile>();
+        List<Hex> openSet = new List<Hex>();
+        HashSet<Hex> closedSet = new HashSet<Hex>();
 
         openSet.Add(starting);
 
         while (openSet.Count > 0)
         {
-            Tile current = openSet[0];
-            current.HScore = Tile.Distance(current, target);
+            Hex current = openSet[0];
+            current.HScore = HexUtility.Distance(current, target);
             for (int i = 1; i < openSet.Count; i++)
             {
                 if (openSet[i].FScore < current.FScore || (openSet[i].FScore == current.FScore && openSet[i].FScore < current.FScore))
@@ -28,7 +28,7 @@ public class Navigation : MonoBehaviour
 
             if (current == target)
             {
-                foreach (Tile node in closedSet)
+                foreach (Hex node in closedSet)
                 {
                     node.GScore = 0;
                 }
@@ -36,18 +36,18 @@ public class Navigation : MonoBehaviour
                 return RetracePath(starting, target);
             }
 
-            foreach (Tile neighbour in current.Neighbours)
+            foreach (Hex neighbour in current.Neighbours)
             {
-                if (!neighbour.IsWalkable || closedSet.Contains(neighbour))
+                if (!neighbour.IsTraversable || closedSet.Contains(neighbour))
                 {
                     continue;
                 }
 
-                float newMovemntCostToNeighour = current.GScore + Tile.Distance(current, neighbour);
+                float newMovemntCostToNeighour = current.GScore + HexUtility.Distance(current, neighbour);
                 if (newMovemntCostToNeighour < neighbour.GScore || !openSet.Contains(neighbour))
                 {
                     neighbour.GScore = newMovemntCostToNeighour;
-                    neighbour.HScore = Tile.Distance(neighbour, target);
+                    neighbour.HScore = HexUtility.Distance(neighbour, target);
                     neighbour.Parent = current;
 
                     if (!openSet.Contains(neighbour))
@@ -61,9 +61,9 @@ public class Navigation : MonoBehaviour
         return null;
     }
 
-    public static int PathLength(Tile a_starting, Tile a_target)
+    public static int PathLength(Hex a_starting, Hex a_target)
     {
-        List<Tile> path = FindPath(a_starting, a_target);
+        List<Hex> path = FindPath(a_starting, a_target);
 
         if (path != null)
         {
@@ -73,10 +73,10 @@ public class Navigation : MonoBehaviour
         return 0;
     }
 
-    private static List<Tile> RetracePath(Tile start, Tile end)
+    private static List<Hex> RetracePath(Hex start, Hex end)
     {
-        List<Tile> path = new List<Tile>();
-        Tile current = end;
+        List<Hex> path = new List<Hex>();
+        Hex current = end;
 
         while (current != start)
         {

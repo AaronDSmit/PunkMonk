@@ -50,11 +50,6 @@ public class LivingEntity : Entity
         Destroy(gameObject);
     }
 
-    public Tile CurrentTile
-    {
-        get { return currentTile; }
-    }
-
     // Returns entity's dead status
     public bool IsDead
     {

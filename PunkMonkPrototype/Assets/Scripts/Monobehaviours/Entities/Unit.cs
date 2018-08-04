@@ -68,7 +68,7 @@ public class Unit : LivingEntity
         }
     }
 
-    public void SnapToGrid(Tile a_targetTile)
+    public void SnapToGrid(Hex a_targetTile)
     {
         currentTile.Exit();
         currentTile = a_targetTile;
@@ -117,19 +117,19 @@ public class Unit : LivingEntity
     }
 
     #region Basic Attack
-    public void BasicAttack(Tile[] targetTiles, System.Action start, System.Action finished)
+    public void BasicAttack(Hex[] targetTiles, System.Action start, System.Action finished)
     {
         StartCoroutine(DelayedBasicAction(targetTiles, start, finished));
     }
 
-    private IEnumerator DelayedBasicAction(Tile[] targetTiles, System.Action start, System.Action finished)
+    private IEnumerator DelayedBasicAction(Hex[] targetTiles, System.Action start, System.Action finished)
     {
         yield return StartCoroutine(Turn(targetTiles[0].transform.position));
 
         DoBasicAttack(targetTiles, start, finished);
     }
 
-    protected virtual void DoBasicAttack(Tile[] targetTiles, System.Action start, System.Action finished)
+    protected virtual void DoBasicAttack(Hex[] targetTiles, System.Action start, System.Action finished)
     {
         // keep empty
     }
@@ -137,19 +137,19 @@ public class Unit : LivingEntity
     #endregion
 
     #region Basic Attack
-    public void SpecialAttack(Tile[] targetTiles, System.Action start, System.Action finished)
+    public void SpecialAttack(Hex[] targetTiles, System.Action start, System.Action finished)
     {
         StartCoroutine(DelayedSpecialAction(targetTiles, start, finished));
     }
 
-    private IEnumerator DelayedSpecialAction(Tile[] targetTiles, System.Action start, System.Action finished)
+    private IEnumerator DelayedSpecialAction(Hex[] targetTiles, System.Action start, System.Action finished)
     {
         yield return StartCoroutine(Turn(targetTiles[0].transform.position));
 
         DoSpecialAttack(targetTiles, start, finished);
     }
 
-    protected virtual void DoSpecialAttack(Tile[] targetTiles, System.Action start, System.Action finished)
+    protected virtual void DoSpecialAttack(Hex[] targetTiles, System.Action start, System.Action finished)
     {
         // Keep empty
     }
@@ -211,18 +211,18 @@ public class Unit : LivingEntity
         }
     }
 
-    public void Spawn(Tile a_startingTile)
+    public void Spawn(Hex a_startingTile)
     {
         currentTile = a_startingTile;
 
         currentTile.Enter(this);
     }
 
-    public void MoveTo(Tile a_targetTile, System.Action a_finished)
+    public void MoveTo(Hex a_targetTile, System.Action a_finished)
     {
         finishedWalking = a_finished;
 
-        List<Tile> path = Navigation.FindPath(currentTile, a_targetTile);
+        List<Hex> path = Navigation.FindPath(currentTile, a_targetTile);
 
         if (path != null)
         {
@@ -234,7 +234,7 @@ public class Unit : LivingEntity
         }
     }
 
-    protected IEnumerator Walk(List<Tile> path)
+    protected IEnumerator Walk(List<Hex> path)
     {
         int index = 0;
 

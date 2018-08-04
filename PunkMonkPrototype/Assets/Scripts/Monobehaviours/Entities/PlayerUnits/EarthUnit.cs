@@ -20,7 +20,7 @@ public class EarthUnit : Unit
     private float specialTimer;
     private bool specialAttack = false;
     private Vector3 specialVecBetween;
-    private Tile[] specialTiles;
+    private Hex[] specialTiles;
     private System.Action specialFinishedFunc;
 
     [Header("Basic Attack")]
@@ -29,7 +29,7 @@ public class EarthUnit : Unit
     private float basicDamage;
     [SerializeField] private float basicDamgeDelayTimer;
 
-    private Tile[] basicTiles;
+    private Hex[] basicTiles;
 
     protected override void Awake()
     {
@@ -38,7 +38,7 @@ public class EarthUnit : Unit
         element = Element.earth;
     }
 
-    protected override void DoBasicAttack(Tile[] targetTiles, System.Action start, System.Action finished)
+    protected override void DoBasicAttack(Hex[] targetTiles, System.Action start, System.Action finished)
     {
         //call the start call back function
         start();
@@ -51,7 +51,7 @@ public class EarthUnit : Unit
 
     }
 
-    protected override void DoSpecialAttack(Tile[] targetTiles, System.Action start, System.Action finished)
+    protected override void DoSpecialAttack(Hex[] targetTiles, System.Action start, System.Action finished)
     {
         //call the start call back function
         start();
@@ -109,9 +109,10 @@ public class EarthUnit : Unit
 
                 //exit current tile
                 currentTile.Exit();
+                currentTile = specialTiles[0];
 
                 //enter target tile
-                specialTiles[0].Enter(this);
+                currentTile.Enter(this);
 
             }
         }
@@ -123,7 +124,7 @@ public class EarthUnit : Unit
         yield return new WaitForSeconds(a_timer);
 
         //go though each tile and deal damage to the enemy
-        foreach (Tile x in basicTiles)
+        foreach (Hex x in basicTiles)
         {
             //if there is a unit
             if (x.CurrentUnit != null)
@@ -147,7 +148,7 @@ public class EarthUnit : Unit
         yield return new WaitForSeconds(a_timer);
 
         //go though each tile and deal damage to the enemy
-        foreach (Tile x in specialTiles)
+        foreach (Hex x in specialTiles)
         {
             //if there is a unit
             if (x.CurrentUnit != null)

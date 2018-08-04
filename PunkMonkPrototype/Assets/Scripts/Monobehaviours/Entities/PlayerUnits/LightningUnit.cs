@@ -11,12 +11,12 @@ public class LightningUnit : Unit
         element = Element.lightning;
     }
 
-    protected override void DoBasicAttack(Tile[] targetTiles, System.Action start, System.Action finished)
+    protected override void DoBasicAttack(Hex[] targetTiles, System.Action start, System.Action finished)
     {
 
     }
 
-    protected override void DoSpecialAttack(Tile[] targetTiles, System.Action start, System.Action finished)
+    protected override void DoSpecialAttack(Hex[] targetTiles, System.Action start, System.Action finished)
     {
 
     }

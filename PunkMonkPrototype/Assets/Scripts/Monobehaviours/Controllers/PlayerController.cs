@@ -331,14 +331,14 @@ public class PlayerController : MonoBehaviour
                 return;
             }
 
-            selectedUnit.Select(false, currentRuleset.HighlightColour);
+            selectedUnit.Select(false, currentRuleset.ValidHighlightColour);
         }
 
         selectedUnit = a_newSelectedUnit;
 
         UI.UpdateSelectedUnit(selectedUnit);
 
-        selectedUnit.Select(true, currentRuleset.HighlightColour);
+        selectedUnit.Select(true, currentRuleset.ValidHighlightColour);
     }
 
     private void DeselectUnit()

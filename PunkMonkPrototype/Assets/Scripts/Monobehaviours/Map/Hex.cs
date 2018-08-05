@@ -233,4 +233,16 @@ public class Hex : Entity
             }
         }
     }
+
+    public void ShowHighlight(bool a_show, Color a_traversable, Color a_inaccessable)
+    {
+        if (!highlight)
+        {
+            highlight = GetComponentsInChildren<SpriteRenderer>()[1];
+        }
+
+        highlight.enabled = a_show;
+
+        highlight.color = (IsTraversable) ? a_traversable : a_inaccessable;
+    }
 }

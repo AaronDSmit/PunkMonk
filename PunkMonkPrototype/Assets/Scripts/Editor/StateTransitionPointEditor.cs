@@ -23,7 +23,7 @@ public class StateTransitionPointEditor : Editor
             GUIStyle indexStyle = new GUIStyle();
             indexStyle.normal.textColor = Color.yellow;
             indexStyle.alignment = TextAnchor.LowerRight;
-            indexStyle.contentOffset = new Vector2(10, 3);
+            indexStyle.contentOffset = new Vector2(12, 3);
 
             stateStyle.fontSize = 20;
 
@@ -35,8 +35,6 @@ public class StateTransitionPointEditor : Editor
                 Gizmos.color = new Color(1.0f, 0.2f, 0.2f, 1.0f); // brown
                 DrawArrow.ForGizmo(stateTransitionPoint.transform.position, stateTransitionPoint.EarthHex.transform.position - stateTransitionPoint.transform.position);
             }
-
-           
 
             if (stateTransitionPoint.LightningHex)
             {

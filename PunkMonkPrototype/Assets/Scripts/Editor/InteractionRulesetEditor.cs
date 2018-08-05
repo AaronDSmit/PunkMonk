@@ -24,8 +24,6 @@ public class InteractionRulesetEditor : Editor
 
     private SerializedProperty useTileOccupation;
 
-    private SerializedProperty requireClearTile;
-
     private SerializedProperty distanceCheckType;
 
     private SerializedProperty distanceCheckLength;
@@ -53,8 +51,6 @@ public class InteractionRulesetEditor : Editor
         useTeamCheck = serializedObject.FindProperty("useTeamCheck");
 
         useTileOccupation = serializedObject.FindProperty("useTileOccupationCheck");
-
-        requireClearTile = serializedObject.FindProperty("requireClearTile");
 
         distanceCheckType = serializedObject.FindProperty("distanceCheckType");
 

@@ -16,6 +16,9 @@ public class Spawner : MonoBehaviour
     [HideInInspector]
     [SerializeField] public bool drawText;
 
+    [HideInInspector]
+    [SerializeField] public int index;
+
     private void Awake()
     {
         TurnManager.TurnEvent += TurnEvent;

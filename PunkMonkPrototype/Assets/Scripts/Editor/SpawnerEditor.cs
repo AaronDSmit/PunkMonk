@@ -24,13 +24,19 @@ public class SpawnerEditor : Editor
 
             GUIStyle indexStyle = new GUIStyle();
             indexStyle.normal.textColor = Color.yellow;
-            indexStyle.alignment = TextAnchor.LowerRight;
-            indexStyle.contentOffset = new Vector2(10, 3);
+            indexStyle.alignment = TextAnchor.UpperLeft;
+            indexStyle.contentOffset = new Vector2(12, 3);
+
+            GUIStyle turnNumStyle = new GUIStyle();
+            turnNumStyle.normal.textColor = Color.white;
+            turnNumStyle.alignment = TextAnchor.LowerRight;
+            turnNumStyle.contentOffset = new Vector2(-12, -20);
 
             if (spawner.EntityToSpawn)
             {
                 Handles.Label(spawner.transform.position, spawner.EntityToSpawn.name[0].ToString(), style);
-                Handles.Label(spawner.transform.position, spawner.TurnToSpawn.ToString(), indexStyle);
+                Handles.Label(spawner.transform.position, spawner.TurnToSpawn.ToString(), turnNumStyle);
+                Handles.Label(spawner.transform.position, spawner.index.ToString(), indexStyle);
             }
             else if (spawner.CompareTag("EarthUnitSpawn"))
             {

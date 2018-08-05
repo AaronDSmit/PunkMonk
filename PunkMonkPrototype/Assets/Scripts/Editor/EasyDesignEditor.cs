@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -7,7 +8,7 @@ using UnityEditor.AnimatedValues;
 #endif
 
 
-public enum Unit_type { grunt, range }
+public enum Unit_type { runner, watcher }
 
 public class EasyDesignEditor : EditorWindow
 {
@@ -51,6 +52,7 @@ public class EasyDesignEditor : EditorWindow
     [SerializeField] private int loadLevel = 0;
     [SerializeField] private Game_state state = Game_state.battle;
     [SerializeField] private int stateIndex;
+    [SerializeField] private int spawnIndex;
 
     // Settings
     [SerializeField] private bool healthyMode = true;
@@ -83,6 +85,8 @@ public class EasyDesignEditor : EditorWindow
                 mapHeight = int.Parse(mapSize[1]) + 1;
             }
         }
+
+        EditorApplication.playModeStateChanged += PlayModeChanged;
     }
 
     [MenuItem("Window/EasyDesign")]
@@ -92,13 +96,23 @@ public class EasyDesignEditor : EditorWindow
 
         icon = (Texture)Resources.Load("save_icon");
         window.titleContent = new GUIContent("Easy Design", icon);
+    }
 
-        EditorApplication.playModeStateChanged += PlayModeChanged;
+    private void OnDisable()
+    {
+        EditorApplication.playModeStateChanged -= PlayModeChanged;
     }
 
     private static void PlayModeChanged(PlayModeStateChange state)
     {
-        Debug.Log(state);
+        if (state == PlayModeStateChange.EnteredPlayMode)
+        {
+            
+        }
+        else if(state == PlayModeStateChange.EnteredEditMode)
+        {
+            
+        }
     }
 
     private void OnGUI()
@@ -371,6 +385,38 @@ public class EasyDesignEditor : EditorWindow
                 }
             }
 
+            EditorGUI.BeginDisabledGroup(!hasTileSelected || Selection.gameObjects.Length != 1);
+
+            if (GUILayout.Button("Fill Inaccessible Tiles"))
+            {
+                Hex hex = Selection.gameObjects[0].GetComponent<Hex>();
+                Hex currentHex;
+
+                List<Hex> openList = new List<Hex>();
+                List<Hex> closeList = new List<Hex>();
+
+                openList.Add(hex);
+
+                while (openList.Count > 0)
+                {
+                    currentHex = openList[0];
+                    openList.RemoveAt(0);
+                    closeList.Add(currentHex);
+
+                    currentHex.SetTraversable(false, inaccessibleColour);
+
+                    foreach (Hex neighbour in currentHex.Neighbours)
+                    {
+                        if (neighbour.IsTraversable && !openList.Contains(neighbour) && !closeList.Contains(neighbour))
+                        {
+                            openList.Add(neighbour);
+                        }
+                    }
+                }
+            }
+
+            EditorGUI.EndDisabledGroup();
+
             GUI.backgroundColor = oldColor;
 
             EditorGUILayout.Space();
@@ -407,7 +453,10 @@ public class EasyDesignEditor : EditorWindow
 
                 foreach (Transform transform in Selection.GetTransforms(SelectionMode.TopLevel))
                 {
-                    hexSelection[i++] = transform.parent.gameObject;
+                    if (transform.parent != null && transform.parent.GetComponent<Hex>())
+                    {
+                        hexSelection[i++] = transform.parent.gameObject;
+                    }
                 }
 
                 Selection.objects = hexSelection;
@@ -535,25 +584,14 @@ public class EasyDesignEditor : EditorWindow
 
             EditorGUILayout.BeginHorizontal();
 
-            GUILayout.Label("Spawn a ", GUILayout.ExpandWidth(false));
-
-            enemyType = (Unit_type)EditorGUILayout.EnumPopup(enemyType, GUILayout.Width(60));
-
-
-            GUILayout.Label(" on turn ", GUILayout.ExpandWidth(false));
-
-            turnToSpawn = EditorGUILayout.IntField(turnToSpawn, GUILayout.Width(25));
-
-            GUILayout.Label(" and repeat every ", GUILayout.ExpandWidth(false));
-
-            everyXTurns = EditorGUILayout.IntField(everyXTurns, GUILayout.Width(25));
-
             EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.BeginHorizontal();
 
             oldColor = GUI.backgroundColor;
             GUI.backgroundColor = new Color(0.39f, 0.78f, 0.19f, 1.0f); // green
 
-            if (GUILayout.Button("Add Spawner To Selected Tiles"))
+            if (GUILayout.Button("Add Spawner"))
             {
                 GameObject[] selectedObjects = Selection.gameObjects;
 
@@ -563,9 +601,20 @@ public class EasyDesignEditor : EditorWindow
 
                     foreach (Hex tile in tiles)
                     {
-                        GameObject spawnerGO = new GameObject("Enemy Spawner");
+                        GameObject spawnerGO = new GameObject("EnemySpawner");
                         Spawner spawner = spawnerGO.AddComponent<Spawner>();
                         spawner.drawText = true;
+
+                        if (enemyType == Unit_type.watcher)
+                        {
+                            spawner.EntityToSpawn = Resources.Load<Entity>("EnemyCharacters/WatcherUnit");
+                            spawner.TextColour = Color.red;
+                        }
+                        else if (enemyType == Unit_type.runner)
+                        {
+                            spawner.EntityToSpawn = Resources.Load<Entity>("EnemyCharacters/RunnerUnit");
+                            spawner.TextColour = Color.red;
+                        }
 
                         spawner.transform.parent = tile.transform;
                         spawner.transform.position = tile.transform.position;
@@ -576,6 +625,18 @@ public class EasyDesignEditor : EditorWindow
             }
 
             GUI.backgroundColor = oldColor;
+
+            GUILayout.Label("Enemy: ");
+
+            enemyType = (Unit_type)EditorGUILayout.EnumPopup(enemyType);
+
+            GUILayout.Label("ID:");
+
+            spawnIndex = EditorGUILayout.IntField(spawnIndex);
+
+            EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.Space();
 
             EditorGUI.BeginDisabledGroup(!hasSpawnerSelected);
 
@@ -600,19 +661,22 @@ public class EasyDesignEditor : EditorWindow
                 }
             }
 
+            EditorGUI.EndDisabledGroup();
+
             if (GUILayout.Button("Remove All Spawners"))
             {
                 Spawner[] spawnPoints = grid.GetComponentsInChildren<Spawner>();
 
                 foreach (Spawner spawner in spawnPoints)
                 {
-                    DestroyImmediate(spawner.gameObject);
+                    if (spawner.name == "EnemySpawner")
+                    {
+                        DestroyImmediate(spawner.gameObject);
+                    }
                 }
             }
 
             GUI.backgroundColor = oldColor;
-
-            EditorGUI.EndDisabledGroup();
 
             #endregion
 
@@ -653,9 +717,8 @@ public class EasyDesignEditor : EditorWindow
                     transition.NextLevelIndex = loadLevel;
                     transition.drawText = true;
 
-                    SphereCollider trigger = transitionGO.AddComponent<SphereCollider>();
+                    BoxCollider trigger = transitionGO.AddComponent<BoxCollider>();
                     trigger.isTrigger = true;
-
 
                     transition.transform.parent = tile.transform;
                     transition.transform.position = tile.transform.position;
@@ -739,9 +802,8 @@ public class EasyDesignEditor : EditorWindow
                     sceneTransition.drawText = true;
                     sceneTransition.index = stateIndex;
 
-                    SphereCollider trigger = transitionGO.AddComponent<SphereCollider>();
+                    BoxCollider trigger = transitionGO.AddComponent<BoxCollider>();
                     trigger.isTrigger = true;
-                    trigger.radius = 0.8f;
 
                     sceneTransition.transform.parent = tile.transform;
                     sceneTransition.transform.position = tile.transform.position;

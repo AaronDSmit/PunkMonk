@@ -8,9 +8,10 @@ public class LightningUnit : Unit
 
     [Header("Basic Attack")]
 
-    [SerializeField]
-    private float basicDamage;
+    [SerializeField] private float basicDamage;
     [SerializeField] private float basicDamgeDelayTimer;
+    [SerializeField] private float electricityLifetime;
+
     private System.Action basicFinishedFunc;
     private Hex basicTile;
     private bool basicLightningAnimation;
@@ -19,10 +20,12 @@ public class LightningUnit : Unit
 
     [Header("Special Attack")]
 
-    private GameObject[] specialEnemies;
     [SerializeField] private bool specialRehitEnemies;
     [SerializeField] private int specialRange;
     [SerializeField] private int specialAmountOfBounces;
+    
+
+    private GameObject[] specialEnemies;
     private List<GameObject> specialSortedList = new List<GameObject>();
     private GameObject specialNextTarget;
     private List<GameObject> specialFinalTargets;
@@ -61,7 +64,9 @@ public class LightningUnit : Unit
         basicLightningGO.transform.GetChild(1).position = transform.position;
 
 
-        //call the basicAttackDamageDelay coroutine 
+        Destroy(basicLightningGO, electricityLifetime);
+
+        //call the basicAttackDamageDelay coroutine dw
         StartCoroutine(BasicAttackDamageDelay(basicDamgeDelayTimer));
 
     }

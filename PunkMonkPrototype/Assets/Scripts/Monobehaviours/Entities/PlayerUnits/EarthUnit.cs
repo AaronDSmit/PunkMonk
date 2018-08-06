@@ -7,8 +7,7 @@ public class EarthUnit : Unit
 
     [Header("Special Attack")]
 
-    [SerializeField]
-    private float specialDamage;
+    [SerializeField] private float specialDamage;
     [SerializeField] private float specialheight;
     [SerializeField] private float specialJumpTime;
     [SerializeField] private float specialDamgeDelayTimer;
@@ -25,8 +24,7 @@ public class EarthUnit : Unit
 
     [Header("Basic Attack")]
 
-    [SerializeField]
-    private float basicDamage;
+    [SerializeField] private float basicDamage;
     [SerializeField] private float basicDamgeDelayTimer;
 
     private Hex[] basicTiles;

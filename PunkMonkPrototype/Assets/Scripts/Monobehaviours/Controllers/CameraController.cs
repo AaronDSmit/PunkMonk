@@ -31,7 +31,6 @@ public class CameraController : MonoBehaviour
     private void Awake()
     {
         StateManager.OnGameStateChanged += GameStateChanged;
-
     }
 
     private void Start()
@@ -137,11 +136,6 @@ public class CameraController : MonoBehaviour
             }
 
         }
-
-
-
-
-
     }
 
     private void ProcessOverworldCamera()

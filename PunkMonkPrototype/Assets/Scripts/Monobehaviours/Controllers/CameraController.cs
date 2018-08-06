@@ -23,6 +23,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float overworldSpeed;
     [SerializeField] private float RotationalSpeed;
     [SerializeField] private float scrollSpeed;
+    [SerializeField] private bool inverseRotation;
 
     private Vector3 dir;
 
@@ -102,24 +103,39 @@ public class CameraController : MonoBehaviour
 
         if (Input.GetAxis("Mouse ScrollWheel") > 0)
         {
-            if(targetY > 1)
-            targetY -= scrollSpeed * Time.deltaTime;
+            if (targetY > 1)
+                targetY -= scrollSpeed * Time.deltaTime;
         }
         if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
-            if(targetY < 10)
-            targetY += scrollSpeed * Time.deltaTime;
+            if (targetY < 10)
+                targetY += scrollSpeed * Time.deltaTime;
         }
 
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            targetRot *= Quaternion.Euler(new Vector3(0, -60, 0));
+            if (inverseRotation)
+            {
+                targetRot *= Quaternion.Euler(new Vector3(0, 60, 0));
+            }
+            else
+            {
+                targetRot *= Quaternion.Euler(new Vector3(0, -60, 0));
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            targetRot *= Quaternion.Euler(new Vector3(0, 60, 0));
+            if (inverseRotation)
+            {
+                targetRot *= Quaternion.Euler(new Vector3(0, -60, 0));
+            }
+            else
+            {
+                targetRot *= Quaternion.Euler(new Vector3(0, 60, 0));
+            }
+
         }
 
 

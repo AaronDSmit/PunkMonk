@@ -19,7 +19,7 @@ public class Action : ScriptableObject
 
     public int coolDown;
 
-    public Spell atttack;
+   // public Spell atttack;
 
     public string AnimTrigger;
 }

@@ -145,12 +145,18 @@ MonoBehaviour:
   startHealth: 100
   actions:
   - {fileID: 11400000, guid: 2f4429e83ae258647a203d36c3f14919, type: 2}
+  - {fileID: 11400000, guid: c8d6d920f1429604189ab5d760244910, type: 2}
+  - {fileID: 11400000, guid: f568e3635f9309c4a9502d1b5e8148ef, type: 2}
   moveRange: 3
-  attackRange: 1
+  attackRange: 5
   specialAttackRange: 5
   turnTime: 0.2
   walkSpeed: 5
-  element: 2
+  lightningPrefab: {fileID: 0}
+  basicDamage: 0
+  basicDamgeDelayTimer: 0
+  specialREHitEnemies: 0
+  specialRange: 0
 --- !u!114 &114441757422822586
 MonoBehaviour:
   m_ObjectHideFlags: 1

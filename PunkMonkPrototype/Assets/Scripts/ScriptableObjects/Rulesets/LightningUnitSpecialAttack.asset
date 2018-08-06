@@ -13,16 +13,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactableLayers:
     serializedVersion: 2
-    m_Bits: 0
-  withinRangeHighlightColour: {r: 0, g: 0, b: 0, a: 0}
-  validHighlightColour: {r: 0, g: 0, b: 0, a: 0}
-  invalidHighlightColour: {r: 0, g: 0, b: 0, a: 0}
-  actionType: 0
-  useDistanceCheck: 0
-  useTeamCheck: 0
-  useTileOccupationCheck: 0
-  targetOccupation: 0
-  distanceCheckType: 0
+    m_Bits: 256
+  withinRangeHighlightColour: {r: 0.101960786, g: 0.54901963, b: 0.8666667, a: 0.6784314}
+  validHighlightColour: {r: 0.32156864, g: 0.8392157, b: 0.2784314, a: 1}
+  invalidHighlightColour: {r: 0.8392157, g: 0.2784314, b: 0.2784314, a: 1}
+  actionType: 3
+  useDistanceCheck: 1
+  useTeamCheck: 1
+  useTileOccupationCheck: 1
+  targetOccupation: 1
+  distanceCheckType: 1
   minDistance: 0
-  targetTeam: 0
+  targetTeam: 1
   distanceType: 0

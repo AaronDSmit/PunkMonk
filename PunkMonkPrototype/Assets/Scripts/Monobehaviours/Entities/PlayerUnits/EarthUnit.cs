@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EarthUnit : Unit
 {
-
     [Header("Special Attack")]
 
     [SerializeField] private float specialDamage;
@@ -76,33 +75,38 @@ public class EarthUnit : Unit
         specialAttack = true;
     }
 
+    [SerializeField] private float jumpHeight = 5;
+
+    [SerializeField] private float jumpSpeed = 3f;
+
+    [SerializeField] private float fallSpeed = 4f;
+
+    private bool falling = false;
+
+    private float incrementor = 0;
+
     private void Update()
     {
         //if special Attack is true
         if (specialAttack)
         {
-            //Update the timer
-            specialTimer += Time.deltaTime;
+            incrementor += (falling) ? fallSpeed / 100 : jumpSpeed / 100;
+            Vector3 currentPos = Vector3.Lerp(specialStartPosition, specialTargetPosition, incrementor);
+            currentPos.y += jumpHeight * Mathf.Sin(Mathf.Clamp01(incrementor) * Mathf.PI);
+            transform.position = currentPos;
 
-            //set the new xz position is equal to the current distance though the z animationCurve
-            transform.position = specialStartPosition + specialVecBetween.normalized * ZCurve.Evaluate(specialTimer / specialJumpTime) * (specialVecBetween.magnitude);
-
-            //set the new y position to the current distance though the y animationCurve
-            transform.position = new Vector3(transform.position.x, specialStartPosition.y + YCurve.Evaluate(specialTimer / specialJumpTime) * specialheight, transform.position.z);
-
-            //if the current timer is grater then the overall time
-            if (specialTimer > specialJumpTime)
+            if (transform.position.y >= jumpHeight)
             {
-                //finish the animation
+                falling = true;
+            }
+
+            if (Vector3.Distance(transform.position, specialTargetPosition) < 0.1f)
+            {
                 specialAttack = false;
-
-                //reset Timer
-                specialTimer -= specialJumpTime;
-
-                //make sure we are at the target position
+                falling = false;
+                incrementor = 0;
                 transform.position = specialTargetPosition;
 
-                //call the specialAttackDamageDelay coroutine 
                 StartCoroutine(SpecialAttackDamageDelay(specialDamgeDelayTimer));
 
                 //exit current tile
@@ -111,8 +115,40 @@ public class EarthUnit : Unit
 
                 //enter target tile
                 currentTile.Enter(this);
-
             }
+
+            ////Update the timer
+            //specialTimer += Time.deltaTime;
+
+            ////set the new xz position is equal to the current distance though the z animationCurve
+            //transform.position = specialStartPosition + specialVecBetween.normalized * ZCurve.Evaluate(specialTimer / specialJumpTime) * (specialVecBetween.magnitude);
+
+            ////set the new y position to the current distance though the y animationCurve
+            //transform.position = new Vector3(transform.position.x, specialStartPosition.y + YCurve.Evaluate(specialTimer / specialJumpTime) * specialheight, transform.position.z);
+
+            ////if the current timer is grater then the overall time
+            //if (specialTimer > specialJumpTime)
+            //{
+            //    //finish the animation
+            //    specialAttack = false;
+
+            //    //reset Timer
+            //    specialTimer -= specialJumpTime;
+
+            //    //make sure we are at the target position
+            //    transform.position = specialTargetPosition;
+
+            //    //call the specialAttackDamageDelay coroutine 
+            //    StartCoroutine(SpecialAttackDamageDelay(specialDamgeDelayTimer));
+
+            //    //exit current tile
+            //    currentTile.Exit();
+            //    currentTile = specialTiles[0];
+
+            //    //enter target tile
+            //    currentTile.Enter(this);
+
+            //}
         }
     }
 
@@ -159,7 +195,7 @@ public class EarthUnit : Unit
                 }
             }
         }
-        
+
         //call the finished call back function
         specialFinishedFunc();
     }

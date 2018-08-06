@@ -8,7 +8,8 @@ public class LightningUnit : Unit
 
     [Header("Basic Attack")]
 
-    [SerializeField] private float basicDamage;
+    [SerializeField]
+    private float basicDamage;
     [SerializeField] private float basicDamgeDelayTimer;
     private System.Action basicFinishedFunc;
     private Hex basicTile;
@@ -19,10 +20,13 @@ public class LightningUnit : Unit
     [Header("Special Attack")]
 
     private GameObject[] specialEnemies;
-    [SerializeField] private bool specialREHitEnemies;
+    [SerializeField] private bool specialRehitEnemies;
     [SerializeField] private int specialRange;
-    SortedList<int, GameObject> specialSortedList = new SortedList<int, GameObject>();
-
+    [SerializeField] private int specialAmountOfBounces;
+    private List<GameObject> specialSortedList = new List<GameObject>();
+    private GameObject specialNextTarget;
+    private List<GameObject> specialFinalTargets;
+    private List<GameObject> specialDirtyList;
 
 
 
@@ -68,15 +72,38 @@ public class LightningUnit : Unit
 
         specialEnemies = GameObject.FindGameObjectsWithTag("Enemies");
 
-
-        foreach(var x in specialEnemies)
-        {  
-            if(HexUtility.Distance(currentTile, x.GetComponent<Entity>().CurrentTile) < specialRange)
+        for (int i = 0; i < specialAmountOfBounces; i++)
+        {
+            foreach (var x in specialEnemies)
             {
-                specialSortedList.Add(HexUtility.Distance(currentTile, x.GetComponent<Entity>().CurrentTile), x);
+                if (HexUtility.Distance(currentTile, x.GetComponent<Entity>().CurrentTile) < specialRange)
+                {
+                    specialSortedList.Add(x);
+                }
+            }
 
+            //specialSortedList.Sort(HexUtility.Distance(currentTile, x.GetComponent<Entity>().CurrentTile),
+
+            if (specialRehitEnemies == false)
+            {
+                foreach (var y in specialDirtyList)
+                {
+                    if (y == specialSortedList[0])
+                    {
+                        //specialSortedList.Remove();
+                    }
+                }
+            }
+            
+            specialFinalTargets.Add(specialSortedList[0]);
+
+            if(specialRehitEnemies)
+            {
+                specialDirtyList.Add(specialSortedList[0]);
             }
         }
+
+
     }
 
     private IEnumerator BasicAttackDamageDelay(float a_timer)
@@ -102,11 +129,11 @@ public class LightningUnit : Unit
 
     private void Update()
     {
-        if(basicLightningAnimation)
+        if (basicLightningAnimation)
         {
             basicLightningTimer -= Time.deltaTime;
-            
-            if(basicLightningTimer < 0)
+
+            if (basicLightningTimer < 0)
             {
                 basicLightningAnimation = false;
                 basicLightningTimer += 3;

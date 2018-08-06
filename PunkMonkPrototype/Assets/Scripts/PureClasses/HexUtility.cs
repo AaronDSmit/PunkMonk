@@ -26,7 +26,7 @@ public static class HexUtility
         return corners[(int)direction + 1];
     }
 
-    public static float Distance(Hex a, Hex b)
+    public static int Distance(Hex a, Hex b)
     {
         // convert offset coordinate to cube coordinate
         CubeCoord ac = HexCoordinate.OffsetToCube(a.Coordinates);
@@ -35,7 +35,7 @@ public static class HexUtility
         return CubeDistance(ac, bc);
     }
 
-    private static float CubeDistance(CubeCoord a, CubeCoord b)
+    private static int CubeDistance(CubeCoord a, CubeCoord b)
     {
         int dQ = Mathf.Abs(a.q - b.q);
         int dR = Mathf.Abs(a.r - b.r);

@@ -32,17 +32,25 @@ public class SpawnerEditor : Editor
             turnNumStyle.alignment = TextAnchor.LowerRight;
             turnNumStyle.contentOffset = new Vector2(-12, -20);
 
-            if (spawner.EntityToSpawn)
+            if (spawner.UntiToSpawn)
             {
-                Handles.Label(spawner.transform.position, spawner.EntityToSpawn.name[0].ToString(), style);
-                Handles.Label(spawner.transform.position, spawner.TurnToSpawn.ToString(), turnNumStyle);
+                Handles.Label(spawner.transform.position, spawner.UntiToSpawn.name[0].ToString(), style);
+
+                if (spawner.TurnToSpawn > 0)
+                {
+                    Handles.Label(spawner.transform.position, spawner.TurnToSpawn.ToString(), turnNumStyle);
+                }
+
                 Handles.Label(spawner.transform.position, spawner.index.ToString(), indexStyle);
 
-                foreach (Hex hex in spawner.triggers)
-                {
-                    Gizmos.color = new Color(1.0f, 1.0f, 1.0f, 1.0f); // white
-                    DrawArrow.ForGizmo(spawner.transform.position, hex.transform.position - spawner.transform.position);
-                }
+                //if (spawner.triggers != null && spawner.triggers.Count > 0)
+                //{
+                //    foreach (SpawnTrigger trigger in spawner.triggers)
+                //    {
+                //        Gizmos.color = new Color(1.0f, 1.0f, 1.0f, 1.0f); // white
+                //        DrawArrow.ForGizmo(spawner.transform.position, trigger.transform.position - spawner.transform.position);
+                //    }
+                //}
 
             }
             else if (spawner.CompareTag("EarthUnitSpawn"))

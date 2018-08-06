@@ -18,9 +18,29 @@ public class TurnManager : MonoBehaviour
     public delegate void TurnStateChanged(Turn_state newState, TEAM team, int turnNumber);
     public static event TurnStateChanged TurnEvent;
 
+    private void Awake()
+    {
+        StateManager.OnGameStateChanged += GameStateChanged;
+    }
+
+    private void OnDisable()
+    {
+        StateManager.OnGameStateChanged -= GameStateChanged;
+    }
+
+    private void GameStateChanged(Game_state _oldstate, Game_state _newstate)
+    {
+        // ensure this script knows it's in over-world state
+        if (_newstate == Game_state.battle)
+        {
+            StartTurn();
+        }
+    }
+
     public void Init()
     {
         currentTeam = startingTeam;
+        turnCount = 0;
 
         isReady = true;
     }

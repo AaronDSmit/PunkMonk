@@ -29,12 +29,19 @@ public class Hex : Entity
 
     #region API
 
-    public void Init(int x, int y)
+    public void Init(int x, int y, Color a_colour)
     {
         coordinates = new OffsetCoord(x, y);
 
         neighbours = new Hex[6];
         allNeighbours = new List<Hex>();
+
+        if (!highlight)
+        {
+            highlight = GetComponentsInChildren<SpriteRenderer>()[1];
+        }
+
+        highlight.color = a_colour;
     }
 
     public OffsetCoord Coordinates

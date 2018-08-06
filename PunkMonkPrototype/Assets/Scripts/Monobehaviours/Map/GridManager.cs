@@ -75,7 +75,7 @@ public class GridManager : MonoBehaviour
 
         grid[i] = Instantiate(tilePrefab, position, Quaternion.Euler(-90.0f, 0.0f, 0.0f), transform);
 
-        grid[i].Init(x, y);
+        grid[i].Init(x, y, clearHexColour);
 
         grid[i].transform.position = position;
         grid[i].name = string.Format("{0}, {1}", x, y);

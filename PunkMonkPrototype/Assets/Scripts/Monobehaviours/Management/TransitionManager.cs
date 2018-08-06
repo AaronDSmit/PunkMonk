@@ -15,10 +15,6 @@ public class TransitionManager : MonoBehaviour
 
     private bool isReady;
 
-    [HideInInspector]
-    [SerializeField]
-    private List<SceneTransitionPoint> transitionPoints;
-
     public void Init()
     {
         isReady = true;

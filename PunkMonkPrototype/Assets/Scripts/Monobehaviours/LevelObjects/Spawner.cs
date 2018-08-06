@@ -10,11 +10,11 @@ public class Spawner : MonoBehaviour
 
     [HideInInspector]
     [SerializeField]
-    private Entity entityToSpawn = null;
+    private Unit unitToSpawn;
 
     [HideInInspector]
     [SerializeField]
-    private Color textColour = Color.white;
+    private Color textColour = Color.black;
 
     [HideInInspector]
     [SerializeField]
@@ -26,27 +26,36 @@ public class Spawner : MonoBehaviour
 
     [HideInInspector]
     [SerializeField]
-    public List<Hex> triggers;
+    public Hex currentHex;
 
     private void Awake()
     {
         TurnManager.TurnEvent += TurnEvent;
     }
 
+    private void OnDisable()
+    {
+        TurnManager.TurnEvent -= TurnEvent;
+    }
+
     private void TurnEvent(Turn_state newState, TEAM team, int turnNumber)
     {
         if (newState == Turn_state.start && turnNumber == turnToSpawn)
         {
-            Entity entity = Instantiate(entityToSpawn, transform.parent.position, Quaternion.identity);
+            SpawnUnit();
         }
     }
 
-    public void AddTrigger(Hex a_hex)
+    public void SpawnUnit()
     {
+        if (currentHex.IsTraversable)
+        {
+            Vector3 spawnPos = transform.parent.position;
+            spawnPos.y = 0.0f;
 
-
-
-        triggers.Add(a_hex);
+            Unit unit = Instantiate(unitToSpawn, spawnPos, Quaternion.identity);
+            unit.Spawn(currentHex);
+        }
     }
 
     public int TurnToSpawn
@@ -55,10 +64,10 @@ public class Spawner : MonoBehaviour
         set { turnToSpawn = value; }
     }
 
-    public Entity EntityToSpawn
+    public Unit UntiToSpawn
     {
-        get { return entityToSpawn; }
-        set { entityToSpawn = value; }
+        get { return unitToSpawn; }
+        set { unitToSpawn = value; }
     }
 
     public Color TextColour

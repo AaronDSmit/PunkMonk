@@ -17,6 +17,10 @@ public class Hex : Entity
     [SerializeField]
     public OffsetCoord coordinates;
 
+    [HideInInspector]
+    [SerializeField]
+    public float inaccessibleAlpha;
+
     private GameObject child;
 
     private SpriteRenderer highlight;
@@ -25,12 +29,19 @@ public class Hex : Entity
 
     #region API
 
-    public void Init(int x, int y)
+    public void Init(int x, int y, Color a_colour)
     {
         coordinates = new OffsetCoord(x, y);
 
         neighbours = new Hex[6];
         allNeighbours = new List<Hex>();
+
+        if (!highlight)
+        {
+            highlight = GetComponentsInChildren<SpriteRenderer>()[1];
+        }
+
+        highlight.color = a_colour;
     }
 
     public OffsetCoord Coordinates
@@ -212,7 +223,7 @@ public class Hex : Entity
             if (!isTraversable)
             {
                 SpriteRenderer border = GetComponentsInChildren<SpriteRenderer>()[0];
-                border.color = new Color(border.color.r, border.color.g, border.color.b, 0.2f);
+                border.color = new Color(border.color.r, border.color.g, border.color.b, inaccessibleAlpha);
             }
 
             highlight = GetComponentsInChildren<SpriteRenderer>()[1];

@@ -144,6 +144,8 @@ public class PlayerController : MonoBehaviour
 
         if (Physics.Raycast(mouseRay, out hitInfo, Mathf.Infinity, currentRuleset.interactableLayers))
         {
+            #region Remove Previous highlighting
+
             if (tileUnderMouse)
             {
                 if (previousTileUnderMouse && previousTileUnderMouse != tileUnderMouse)
@@ -163,6 +165,8 @@ public class PlayerController : MonoBehaviour
 
                 previousUnitUnderMouse = unitUnderMouse;
             }
+
+            #endregion
 
             tileUnderMouse = hitInfo.transform.GetComponent<Hex>();
             unitUnderMouse = hitInfo.transform.GetComponent<Unit>();
@@ -509,16 +513,18 @@ public class PlayerController : MonoBehaviour
                 GetTilesAffectByEarthSpecialAttack(a_targetTile);
                 break;
             case PlayerAttack.lightningBasic:
-
+                GetTilesAffectByLightningAttack(a_targetTile);
                 break;
             case PlayerAttack.lightningSpecial:
-
+                GetTilesAffectByLightningSpecialAttack(a_targetTile);
                 break;
         }
     }
 
-    [SerializeField] private float angle;
-    [SerializeField] private int snapAngle;
+    #region Earth Attack highlighting
+
+    private float angle;
+    private int snapAngle;
 
     // returns a tiles within a tilesAffectByAction
     private void GetTilesAffectByEarthAttack(Hex a_targetTile, RaycastHit a_hitInfo)
@@ -673,4 +679,45 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
+    #endregion
+
+
+    #region Lighting Attack Highlighting
+
+    private void GetTilesAffectByLightningAttack(Hex a_targetTile)
+    {
+        foreach (Hex tile in tilesAffectByAction)
+        {
+            tile.MouseExit();
+        }
+
+        tilesAffectByAction.Clear();
+
+        tilesAffectByAction.Add(a_targetTile);
+
+        foreach (Hex tile in tilesAffectByAction)
+        {
+            tile.MouseEnter(currentRuleset.HighlightColour);
+        }
+    }
+
+    private void GetTilesAffectByLightningSpecialAttack(Hex a_targetTile)
+    {
+        foreach (Hex tile in tilesAffectByAction)
+        {
+            tile.MouseExit();
+        }
+
+        tilesAffectByAction.Clear();
+
+        tilesAffectByAction.Add(a_targetTile);
+
+        foreach (Hex tile in tilesAffectByAction)
+        {
+            tile.MouseEnter(currentRuleset.HighlightColour);
+        }
+    }
+
+    #endregion
 }

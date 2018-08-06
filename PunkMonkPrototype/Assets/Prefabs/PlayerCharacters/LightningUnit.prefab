@@ -148,14 +148,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c8d6d920f1429604189ab5d760244910, type: 2}
   - {fileID: 11400000, guid: f568e3635f9309c4a9502d1b5e8148ef, type: 2}
   moveRange: 3
-  attackRange: 1
+  attackRange: 5
   specialAttackRange: 5
   turnTime: 0.2
   walkSpeed: 5
-  lightningPrefab: {fileID: 106988, guid: 15dec7b07032b2f4aa6f855bfbe120f7, type: 2}
+  lightningPrefab: {fileID: 0}
   basicDamage: 0
   basicDamgeDelayTimer: 0
-  specialRehitEnemies: 1
+  specialREHitEnemies: 0
   specialRange: 0
 --- !u!114 &114441757422822586
 MonoBehaviour:

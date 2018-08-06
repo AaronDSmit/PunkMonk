@@ -8,7 +8,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94fc8e08af05c2443991c48f03a2c9c8, type: 3}
-  m_Name: EarthSpecialAttack
+  m_Script: {fileID: 11500000, guid: 0f51c28d4cdd77d46a9eaeb64435a8be, type: 3}
+  m_Name: LightningSpecial
   m_EditorClassIdentifier: 
-  damageAmount: 5
+  ruleset: {fileID: 0}
+  coolDown: 0
+  AnimTrigger: 

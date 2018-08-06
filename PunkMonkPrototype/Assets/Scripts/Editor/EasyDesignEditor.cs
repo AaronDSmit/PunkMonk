@@ -86,6 +86,10 @@ public class EasyDesignEditor : EditorWindow
             }
         }
 
+        traversableColour = new Color(0.0f, 1.0f, 0.0f, 0.35f);
+        inaccessibleColour = new Color(1.0f, 0.0f, 0.0f, 0.35f);
+        connectionColour = new Color(1.0f, 1.0f, 1.0f, 0.35f);
+
         EditorApplication.playModeStateChanged += PlayModeChanged;
     }
 
@@ -107,11 +111,11 @@ public class EasyDesignEditor : EditorWindow
     {
         if (state == PlayModeStateChange.EnteredPlayMode)
         {
-            
+
         }
-        else if(state == PlayModeStateChange.EnteredEditMode)
+        else if (state == PlayModeStateChange.EnteredEditMode)
         {
-            
+
         }
     }
 
@@ -635,6 +639,38 @@ public class EasyDesignEditor : EditorWindow
             spawnIndex = EditorGUILayout.IntField(spawnIndex);
 
             EditorGUILayout.EndHorizontal();
+
+            EditorGUI.BeginDisabledGroup(Selection.gameObjects.Length != 1 || !hasTileSelected);
+
+            EditorGUILayout.BeginHorizontal();
+
+            oldColor = GUI.backgroundColor;
+            GUI.backgroundColor = new Color(0.39f, 0.78f, 0.19f, 1.0f); // green
+
+            if (GUILayout.Button("Add Trigger"))
+            {
+                Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
+
+                Spawner[] spawners = FindObjectsOfType<Spawner>();
+
+                foreach (Spawner spawner in spawners)
+                {
+                    if (spawner.index == stateIndex)
+                    {
+                        spawner.AddTrigger(tile);
+                    }
+                }
+            }
+
+            GUI.backgroundColor = oldColor;
+
+            GUILayout.Label("ID:");
+
+            spawnIndex = EditorGUILayout.IntField(spawnIndex);
+
+            EditorGUILayout.EndHorizontal();
+
+            EditorGUI.EndDisabledGroup();
 
             EditorGUILayout.Space();
 

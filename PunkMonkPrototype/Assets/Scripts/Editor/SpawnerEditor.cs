@@ -37,6 +37,13 @@ public class SpawnerEditor : Editor
                 Handles.Label(spawner.transform.position, spawner.EntityToSpawn.name[0].ToString(), style);
                 Handles.Label(spawner.transform.position, spawner.TurnToSpawn.ToString(), turnNumStyle);
                 Handles.Label(spawner.transform.position, spawner.index.ToString(), indexStyle);
+
+                foreach (Hex hex in spawner.triggers)
+                {
+                    Gizmos.color = new Color(1.0f, 1.0f, 1.0f, 1.0f); // white
+                    DrawArrow.ForGizmo(spawner.transform.position, hex.transform.position - spawner.transform.position);
+                }
+
             }
             else if (spawner.CompareTag("EarthUnitSpawn"))
             {

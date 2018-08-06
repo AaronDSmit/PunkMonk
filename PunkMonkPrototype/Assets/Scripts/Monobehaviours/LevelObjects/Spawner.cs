@@ -5,19 +5,28 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
     [HideInInspector]
-    [SerializeField] private int turnToSpawn;
+    [SerializeField]
+    private int turnToSpawn;
 
     [HideInInspector]
-    [SerializeField] private Entity entityToSpawn = null;
+    [SerializeField]
+    private Entity entityToSpawn = null;
 
     [HideInInspector]
-    [SerializeField] private Color textColour = Color.white;
+    [SerializeField]
+    private Color textColour = Color.white;
 
     [HideInInspector]
-    [SerializeField] public bool drawText;
+    [SerializeField]
+    public bool drawText;
 
     [HideInInspector]
-    [SerializeField] public int index;
+    [SerializeField]
+    public int index;
+
+    [HideInInspector]
+    [SerializeField]
+    public List<Hex> triggers;
 
     private void Awake()
     {
@@ -32,14 +41,18 @@ public class Spawner : MonoBehaviour
         }
     }
 
+    public void AddTrigger(Hex a_hex)
+    {
+
+
+
+        triggers.Add(a_hex);
+    }
+
     public int TurnToSpawn
     {
         get { return turnToSpawn; }
-
-        set
-        {
-            turnToSpawn = value;
-        }
+        set { turnToSpawn = value; }
     }
 
     public Entity EntityToSpawn

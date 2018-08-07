@@ -12,6 +12,7 @@ TagManager:
   - UI
   - Grid
   - CameraRig
+  - AI_Controller
   layers:
   - Default
   - TransparentFX

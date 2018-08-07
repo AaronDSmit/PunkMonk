@@ -2,9 +2,15 @@
 
 public static class HexUtility
 {
-    public const float outerRadius = 1;
+    public static float outerRadius;
 
-    public const float innerRadius = outerRadius * 0.866025404f;
+    public static float innerRadius;
+
+    public static void UpdateScale(float a_scale)
+    {
+        outerRadius = a_scale;
+        innerRadius = outerRadius * 0.866025404f;
+    }
 
     public static Vector3[] corners = {
         new Vector3(0f, 0f, outerRadius),

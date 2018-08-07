@@ -7,7 +7,6 @@ using UnityEditor.SceneManagement;
 using UnityEditor.AnimatedValues;
 #endif
 
-
 public enum Unit_type { runner, watcher }
 
 public class EasyDesignEditor : EditorWindow
@@ -22,6 +21,7 @@ public class EasyDesignEditor : EditorWindow
     [SerializeField] private static int selectedTab = 0;
     [SerializeField] private static int previousSelectedTab = -1;
     [SerializeField] private static GridManager grid;
+    [SerializeField] private static float HexScale = 1;
 
     // GridManager Generation
     [SerializeField] private int mapWidth;
@@ -40,6 +40,9 @@ public class EasyDesignEditor : EditorWindow
 
     [SerializeField] private bool autoAllNodesTraversable = false;
     [SerializeField] private bool autoAllNodesInaccessible = false;
+
+    [SerializeField] private bool fillNodesTraversable = false;
+    [SerializeField] private bool fillNodesInaccessible = false;
 
     [SerializeField] private Color traversableColour;
     [SerializeField] private Color inaccessibleColour;
@@ -236,6 +239,8 @@ public class EasyDesignEditor : EditorWindow
 
                 if (GUILayout.Button("Yes!"))
                 {
+                    HexUtility.UpdateScale(HexScale);
+
                     if (grid.GenerateGrid(mapWidth, mapHeight, traversableColour, inaccessibleColour, connectionColour))
                     {
                         confirmMapGeneration = false;
@@ -559,6 +564,8 @@ public class EasyDesignEditor : EditorWindow
 
             #endregion
 
+            EditorGUILayout.Space();
+
             #region Fill Tiles Traversable/Inaccessible
 
             GUILayout.Label("Fill Area", centeredText);
@@ -570,31 +577,68 @@ public class EasyDesignEditor : EditorWindow
             oldColor = GUI.backgroundColor;
             GUI.backgroundColor = new Color(0.39f, 0.78f, 0.19f, 1.0f); // green
 
-            if (GUILayout.Button("Traversable"))
+            if (!fillNodesInaccessible && fillNodesTraversable)
             {
-                Hex hex = Selection.gameObjects[0].GetComponent<Hex>();
-                Hex currentHex;
+                oldColor = GUI.backgroundColor;
+                GUI.backgroundColor = new Color(1.0f, 0.58f, 0.19f, 1.0f); // orange
 
-                List<Hex> openList = new List<Hex>();
-                List<Hex> closeList = new List<Hex>();
+                EditorGUILayout.BeginVertical("Box");
 
-                openList.Add(hex);
+                GUI.backgroundColor = oldColor;
 
-                while (openList.Count > 0)
+                GUILayout.Label("Fil Traversable?", centeredText);
+
+                EditorGUILayout.BeginHorizontal();
+
+                if (GUILayout.Button("Yes!"))
                 {
-                    currentHex = openList[0];
-                    openList.RemoveAt(0);
-                    closeList.Add(currentHex);
+                    Hex hex = Selection.gameObjects[0].GetComponent<Hex>();
+                    Hex currentHex;
 
-                    currentHex.SetTraversable(true, traversableColour);
+                    List<Hex> openList = new List<Hex>();
+                    List<Hex> closeList = new List<Hex>();
 
-                    foreach (Hex neighbour in currentHex.Neighbours)
+                    openList.Add(hex);
+
+                    while (openList.Count > 0)
                     {
-                        if (!neighbour.IsTraversable && !openList.Contains(neighbour) && !closeList.Contains(neighbour))
+                        currentHex = openList[0];
+                        openList.RemoveAt(0);
+                        closeList.Add(currentHex);
+
+                        currentHex.SetTraversable(true, traversableColour);
+
+                        foreach (Hex neighbour in currentHex.Neighbours)
                         {
-                            openList.Add(neighbour);
+                            if (!neighbour.IsTraversable && !openList.Contains(neighbour) && !closeList.Contains(neighbour))
+                            {
+                                openList.Add(neighbour);
+                            }
                         }
                     }
+
+                    fillNodesTraversable = false;
+                }
+
+                oldColor = GUI.backgroundColor;
+                GUI.backgroundColor = new Color(1.0f, 0.19f, 0.19f, 1.0f); // red
+
+                if (GUILayout.Button("No..."))
+                {
+                    fillNodesTraversable = false;
+                }
+
+                GUI.backgroundColor = oldColor;
+
+                EditorGUILayout.EndHorizontal();
+
+                EditorGUILayout.EndVertical();
+            }
+            else if (!fillNodesInaccessible)
+            {
+                if (GUILayout.Button("Traversable"))
+                {
+                    fillNodesTraversable = true;
                 }
             }
 
@@ -603,31 +647,68 @@ public class EasyDesignEditor : EditorWindow
             oldColor = GUI.backgroundColor;
             GUI.backgroundColor = new Color(1.0f, 0.19f, 0.19f, 1.0f); // red
 
-            if (GUILayout.Button("Inaccessible"))
+            if (!fillNodesTraversable && fillNodesInaccessible)
             {
-                Hex hex = Selection.gameObjects[0].GetComponent<Hex>();
-                Hex currentHex;
+                oldColor = GUI.backgroundColor;
+                GUI.backgroundColor = new Color(1.0f, 0.58f, 0.19f, 1.0f); // orange
 
-                List<Hex> openList = new List<Hex>();
-                List<Hex> closeList = new List<Hex>();
+                EditorGUILayout.BeginVertical("Box");
 
-                openList.Add(hex);
+                GUI.backgroundColor = oldColor;
 
-                while (openList.Count > 0)
+                GUILayout.Label("Fill Inaccessible?", centeredText);
+
+                EditorGUILayout.BeginHorizontal();
+
+                oldColor = GUI.backgroundColor;
+                GUI.backgroundColor = new Color(0.39f, 0.78f, 0.19f, 1.0f); // green
+
+                if (GUILayout.Button("yes!"))
                 {
-                    currentHex = openList[0];
-                    openList.RemoveAt(0);
-                    closeList.Add(currentHex);
+                    Hex hex = Selection.gameObjects[0].GetComponent<Hex>();
+                    Hex currentHex;
 
-                    currentHex.SetTraversable(false, inaccessibleColour);
+                    List<Hex> openList = new List<Hex>();
+                    List<Hex> closeList = new List<Hex>();
 
-                    foreach (Hex neighbour in currentHex.Neighbours)
+                    openList.Add(hex);
+
+                    while (openList.Count > 0)
                     {
-                        if (neighbour.IsTraversable && !openList.Contains(neighbour) && !closeList.Contains(neighbour))
+                        currentHex = openList[0];
+                        openList.RemoveAt(0);
+                        closeList.Add(currentHex);
+
+                        currentHex.SetTraversable(false, inaccessibleColour);
+
+                        foreach (Hex neighbour in currentHex.Neighbours)
                         {
-                            openList.Add(neighbour);
+                            if (neighbour.IsTraversable && !openList.Contains(neighbour) && !closeList.Contains(neighbour))
+                            {
+                                openList.Add(neighbour);
+                            }
                         }
                     }
+
+                    fillNodesInaccessible = false;
+                }
+
+                GUI.backgroundColor = oldColor;
+
+                if (GUILayout.Button("No..."))
+                {
+                    fillNodesInaccessible = false;
+                }
+
+                EditorGUILayout.EndHorizontal();
+
+                EditorGUILayout.EndVertical();
+            }
+            else if (!fillNodesTraversable)
+            {
+                if (GUILayout.Button("Inaccessible"))
+                {
+                    fillNodesInaccessible = true;
                 }
             }
 
@@ -640,6 +721,8 @@ public class EasyDesignEditor : EditorWindow
             #endregion
 
             EditorGUILayout.Space();
+
+            #region Assest Assist
 
             GUILayout.Label("Greybox Assist:", centeredText);
 
@@ -679,6 +762,8 @@ public class EasyDesignEditor : EditorWindow
 
             EditorGUI.EndDisabledGroup();
 
+            #endregion
+
             EditorGUILayout.Space();
 
             GUILayout.Label("Visual Settings:", centeredText);
@@ -693,6 +778,13 @@ public class EasyDesignEditor : EditorWindow
             inaccessibleAlpha = EditorGUILayout.Slider(inaccessibleAlpha, 0.0f, 1.0f);
 
             EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.BeginHorizontal();
+
+            GUILayout.Label("Hex Scale:");
+            HexScale = EditorGUILayout.FloatField(HexScale);
+
+            EditorGUILayout.EndHorizontal();
         }
 
         #endregion
@@ -705,6 +797,8 @@ public class EasyDesignEditor : EditorWindow
 
             GUILayout.Label("Player Spawn Points", centeredText);
 
+            EditorGUILayout.BeginHorizontal();
+
             EditorGUI.BeginDisabledGroup(!hasTileSelected || hasSpawnerSelected);
 
             oldColor = GUI.backgroundColor;
@@ -712,7 +806,7 @@ public class EasyDesignEditor : EditorWindow
 
             if (GameObject.FindGameObjectWithTag("EarthUnitSpawn") == null)
             {
-                if (GUILayout.Button("Add Earth spawner"))
+                if (GUILayout.Button("Add Earth Spawn"))
                 {
                     Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
 
@@ -733,7 +827,7 @@ public class EasyDesignEditor : EditorWindow
             }
             else
             {
-                if (GUILayout.Button("Move Earth spawner"))
+                if (GUILayout.Button("Move Earth Spawn"))
                 {
                     Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
                     Spawner spawner = GameObject.FindGameObjectWithTag("EarthUnitSpawn").GetComponent<Spawner>();
@@ -751,7 +845,7 @@ public class EasyDesignEditor : EditorWindow
 
             if (GameObject.FindGameObjectWithTag("LightningUnitSpawn") == null)
             {
-                if (GUILayout.Button("Add Lightning spawner"))
+                if (GUILayout.Button("Add Lightning spawn"))
                 {
                     Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
 
@@ -772,7 +866,7 @@ public class EasyDesignEditor : EditorWindow
             }
             else
             {
-                if (GUILayout.Button("Move Lightning spawner"))
+                if (GUILayout.Button("Move Lightning Spawn"))
                 {
                     Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
                     Spawner spawner = GameObject.FindGameObjectWithTag("LightningUnitSpawn").GetComponent<Spawner>();
@@ -787,11 +881,13 @@ public class EasyDesignEditor : EditorWindow
 
             EditorGUI.EndDisabledGroup();
 
+            EditorGUILayout.EndHorizontal();
+
             #endregion
 
-            #region Enemy Spawn Points
-
             EditorGUILayout.Space();
+
+            #region Enemy Spawn Points
 
             GUILayout.Label("Enemy Spawn Points", centeredText);
 
@@ -895,6 +991,8 @@ public class EasyDesignEditor : EditorWindow
 
             EditorGUILayout.Space();
 
+            GUILayout.Label("Spawn Triggers:", centeredText);
+
             EditorGUILayout.BeginHorizontal();
 
             // if the selected tile has a Spawner change it rather than add a new one
@@ -935,9 +1033,15 @@ public class EasyDesignEditor : EditorWindow
                 GUI.backgroundColor = oldColor;
             }
 
-            GUILayout.Label("ID:");
+            oldColor = GUI.backgroundColor;
+            GUI.backgroundColor = new Color(1.0f, 0.19f, 0.19f, 1.0f); // red
 
-            spawnIndex = EditorGUILayout.IntField(spawnIndex);
+            if (GUILayout.Button("Remove Trigger"))
+            {
+               
+            }
+
+            GUI.backgroundColor = oldColor;
 
             EditorGUILayout.EndHorizontal();
 
@@ -945,12 +1049,14 @@ public class EasyDesignEditor : EditorWindow
 
             EditorGUILayout.Space();
 
+            EditorGUILayout.BeginHorizontal();
+
             EditorGUI.BeginDisabledGroup(!hasSpawnerSelected);
 
             oldColor = GUI.backgroundColor;
             GUI.backgroundColor = new Color(1.0f, 0.19f, 0.19f, 1.0f); // red
 
-            if (GUILayout.Button("Remove Spawner From Selected Tiles"))
+            if (GUILayout.Button("Remove Spawner"))
             {
                 GameObject[] selectedObjects = Selection.gameObjects;
 
@@ -1001,6 +1107,8 @@ public class EasyDesignEditor : EditorWindow
             }
 
             GUI.backgroundColor = oldColor;
+
+            EditorGUILayout.EndHorizontal();
 
             #endregion
 

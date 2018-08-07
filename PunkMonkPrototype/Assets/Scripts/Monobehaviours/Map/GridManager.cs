@@ -76,6 +76,8 @@ public class GridManager : MonoBehaviour
 
         grid[i].Init(x, y, clearHexColour);
 
+        grid[i].transform.localScale = new Vector3(HexUtility.outerRadius, HexUtility.outerRadius, HexUtility.outerRadius);
+
         grid[i].transform.position = position;
         grid[i].name = string.Format("{0}, {1}", x, y);
 

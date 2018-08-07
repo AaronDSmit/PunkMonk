@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
 
     private GridManager grid;
 
-    private CameraController CameraRig;
+    private CameraController cameraRig;
 
     private Hex earthSnapHex;
 
@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour
 
         tilesAffectByAction = new List<Hex>();
 
-        CameraRig = GameObject.FindGameObjectWithTag("CameraRig").GetComponent<CameraController>();
+        cameraRig = GameObject.FindGameObjectWithTag("CameraRig").GetComponent<CameraController>();
 
         if (selectionRuleset == null)
         {
@@ -127,7 +127,8 @@ public class PlayerController : MonoBehaviour
             {
                 SelectUnit(earthUnit);
             }
-            // CameraRig.LookAtPosition(selectedUnit.transform.position);
+
+            cameraRig.LookAtPosition(selectedUnit.transform.position);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -442,6 +443,7 @@ public class PlayerController : MonoBehaviour
         // ensure this script knows it's in over-world state
         if (_newstate == Game_state.battle)
         {
+            cameraRig.SetRotation(CameraDirection.N);
             earthUnit.SnapToGrid(earthSnapHex);
             lightningUnit.SnapToGrid(lightningSnapHex);
 

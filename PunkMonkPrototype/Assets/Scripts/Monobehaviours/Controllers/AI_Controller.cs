@@ -52,7 +52,7 @@ public class AI_Controller : MonoBehaviour
         foreach (AI_Agent agent in agents)
         {
             agent.Highlight(true, currentUnitColour);
-            agent.StartTurn();
+            agent.StartTurn(grid);
 
             yield return new WaitUntil(() => agent.TurnComplete);
 

@@ -30,6 +30,18 @@ public class CameraController : MonoBehaviour
 
     private Vector3 dir;
 
+    public enum CameraDirection
+    {
+        N,
+        NE,
+        NW,
+        SE,
+        SW,
+        S
+    }
+
+
+
 
     private void Awake()
     {
@@ -69,10 +81,12 @@ public class CameraController : MonoBehaviour
             }
             else
             {
-                if (Vector3.Distance(transform.position, targetPos) < 0.1f)
+                if (Vector3.Distance(transform.position, targetPos) < 1f)
                 {
+
                     canMove = true;
                 }
+                transform.position = Vector3.Slerp(transform.position, targetPos, Time.deltaTime * overworldSpeed);
             }
         }
 
@@ -167,6 +181,45 @@ public class CameraController : MonoBehaviour
     }
 
 
+    public void SetRotation(CameraDirection a_dir)
+    {
+        transform.rotation = Quaternion.Euler(new Vector3(0, CalculateRot(a_dir), 0));
+    }
+
+    public void SetRotationLerp(CameraDirection a_dir)
+    {
+        targetRot *= Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y - CalculateRot(a_dir), 0));
+    }
+
+    private float CalculateRot(CameraDirection a_dir)
+    {
+        if (a_dir == CameraDirection.N)
+        {
+            return 0;
+        }
+        else if (a_dir == CameraDirection.NE)
+        {
+            return 60;
+        }
+        else if (a_dir == CameraDirection.SE)
+        {
+            return 120;
+        }
+        else if (a_dir == CameraDirection.S)
+        {
+            return 180;
+        }
+        else if (a_dir == CameraDirection.NW)
+        {
+            return -60;
+        }
+        else if (a_dir == CameraDirection.SW)
+        {
+            return -120;
+        }
+        return -1;
+    }
+
     public void LookAtPosition(Vector3 a_position, float time = 0)
     {
         Vector3 oldPos = transform.position;
@@ -188,7 +241,7 @@ public class CameraController : MonoBehaviour
     {
         yield return new WaitForSeconds(timer);
 
-        lookAtObject = true;
+        lookAtObject = false;
         targetPos = a_pos;
     }
 

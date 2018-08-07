@@ -19,6 +19,9 @@ public class CameraController : MonoBehaviour
     private bool lockedMovement = false;
     private Vector3 vel;
 
+    private bool lookAtObject = false;
+    private bool canMove = true;
+
     [SerializeField] private float speed;
     [SerializeField] private float overworldSpeed;
     [SerializeField] private float RotationalSpeed;
@@ -50,17 +53,33 @@ public class CameraController : MonoBehaviour
     private void Update()
     {
         // Don't update if in any other game state
-        if (inOverworld)
+        if (lookAtObject == false)
         {
-            ProcessOverworldCamera();
-        }
-        else
-        {
-            ProcessKeyboardInput();
+            if (canMove == true)
+            {
+
+                if (inOverworld)
+                {
+                    ProcessOverworldCamera();
+                }
+                else
+                {
+                    ProcessKeyboardInput();
+                }
+            }
+            else
+            {
+                if (Vector3.Distance(transform.position, targetPos) < 0.1f)
+                {
+                    canMove = true;
+                }
+            }
         }
 
         transform.position = Vector3.Slerp(transform.position, new Vector3(transform.position.x, targetY, transform.position.z), Time.deltaTime * scrollSpeed);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.deltaTime * RotationalSpeed);
+
+
 
     }
 
@@ -146,4 +165,31 @@ public class CameraController : MonoBehaviour
         }
         transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * overworldSpeed);
     }
+
+
+    private void LookAtPosition(Vector3 a_position, float time = 0)
+    {
+        Vector3 oldPos = transform.position;
+
+        if (time == 0)
+        {
+            targetPos = a_position;
+            canMove = false;
+        }
+        else
+        {
+            lookAtObject = true;
+            targetPos = a_position;
+            StartCoroutine(LookAtTimer(time, oldPos));
+        }
+    }
+
+    private IEnumerator LookAtTimer(float timer, Vector3 a_pos)
+    {
+        yield return new WaitForSeconds(timer);
+
+        lookAtObject = true;
+        targetPos = a_pos;
+    }
+
 }

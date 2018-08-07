@@ -167,7 +167,7 @@ public class CameraController : MonoBehaviour
     }
 
 
-    private void LookAtPosition(Vector3 a_position, float time = 0)
+    public void LookAtPosition(Vector3 a_position, float time = 0)
     {
         Vector3 oldPos = transform.position;
 

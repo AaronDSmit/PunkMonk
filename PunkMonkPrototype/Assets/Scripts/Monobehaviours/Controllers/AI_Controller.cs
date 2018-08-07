@@ -22,10 +22,10 @@ public class AI_Controller : MonoBehaviour
         return players;
     }
 
-    public void Init(Unit a_player1, Unit a_player2, GridManager a_gridManager)
+    public void Init(Unit a_player1, Unit a_player2)
     {
         players = new Unit[] { a_player1, a_player2 };
-        grid = a_gridManager;
+        grid = GameObject.FindGameObjectWithTag("Grid").GetComponent<GridManager>();
     }
 
     private void Awake()

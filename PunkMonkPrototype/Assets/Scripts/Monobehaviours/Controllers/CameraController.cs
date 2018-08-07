@@ -192,7 +192,7 @@ public class CameraController : MonoBehaviour
 
     public void SetRotationLerp(CameraDirection a_dir)
     {
-        targetRot = Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y - CalculateRot(a_dir), 0));
+        targetRot = Quaternion.Euler(new Vector3(0, CalculateRot(a_dir), 0));
     }
 
     private float CalculateRot(CameraDirection a_dir)

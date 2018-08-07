@@ -443,7 +443,7 @@ public class PlayerController : MonoBehaviour
         // ensure this script knows it's in over-world state
         if (_newstate == Game_state.battle)
         {
-            cameraRig.SetRotation(CameraDirection.N);
+            cameraRig.SetRotationLerp(CameraDirection.N);
             earthUnit.SnapToGrid(earthSnapHex);
             lightningUnit.SnapToGrid(lightningSnapHex);
 

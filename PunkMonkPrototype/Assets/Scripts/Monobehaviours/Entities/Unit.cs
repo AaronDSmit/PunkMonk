@@ -136,7 +136,7 @@ public class Unit : LivingEntity
 
     #endregion
 
-    #region Basic Attack
+    #region Special Attack
     public void SpecialAttack(Hex[] targetTiles, System.Action start, System.Action finished)
     {
         StartCoroutine(DelayedSpecialAction(targetTiles, start, finished));
@@ -211,7 +211,7 @@ public class Unit : LivingEntity
         }
     }
 
-    public void Spawn(Hex a_startingTile)
+    public virtual void Spawn(Hex a_startingTile)
     {
         currentTile = a_startingTile;
 

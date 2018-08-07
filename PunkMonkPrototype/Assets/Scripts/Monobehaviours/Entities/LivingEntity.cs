@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LivingEntity : Entity
 {
-    [SerializeField] protected float startHealth = 100;
+    [SerializeField] protected float maxHealth = 100;
 
     protected float currentHealth;
 
@@ -16,7 +16,7 @@ public class LivingEntity : Entity
 
     protected virtual void Awake()
     {
-        currentHealth = startHealth;
+        currentHealth = maxHealth;
         dead = false;
     }
 
@@ -56,8 +56,18 @@ public class LivingEntity : Entity
         get { return dead; }
     }
 
-    public float LifePercent
+    public float CurrentHealth
     {
-        get { return currentHealth / startHealth; }
+        get { return currentHealth; }
+    }
+
+    public float MaxHealth
+    {
+        get { return maxHealth; }
+    }
+
+    public float HealthPercent
+    {
+        get { return currentHealth / maxHealth; }
     }
 }

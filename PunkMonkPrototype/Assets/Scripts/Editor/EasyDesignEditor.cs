@@ -19,7 +19,6 @@ public class EasyDesignEditor : EditorWindow
     [SerializeField] private GUISkin skin;
     [SerializeField] private GUIStyle centeredText;
     [SerializeField] private static int selectedTab = 0;
-    [SerializeField] private static int previousSelectedTab = -1;
     [SerializeField] private static GridManager grid;
     [SerializeField] private static float HexScale = 1;
 
@@ -34,6 +33,7 @@ public class EasyDesignEditor : EditorWindow
     [SerializeField] private bool hasTransitionSelected = false;
     [SerializeField] private bool hasStateTransitionSelected = false;
     [SerializeField] private bool hasSpawnerSelected = false;
+    [SerializeField] private bool hasTriggerSelected = false;
 
     [SerializeField] private bool setAllNodesTraversable = false;
     [SerializeField] private bool setAllNodesInaccessible = false;
@@ -971,6 +971,8 @@ public class EasyDesignEditor : EditorWindow
                 GUI.backgroundColor = oldColor;
             }
 
+            EditorGUI.EndDisabledGroup();
+
             GUILayout.Label("Enemy: ");
 
             enemyType = (Unit_type)EditorGUILayout.EnumPopup(enemyType);
@@ -988,64 +990,6 @@ public class EasyDesignEditor : EditorWindow
             turnToSpawn = EditorGUILayout.IntField(turnToSpawn);
 
             EditorGUILayout.EndHorizontal();
-
-            EditorGUILayout.Space();
-
-            GUILayout.Label("Spawn Triggers:", centeredText);
-
-            EditorGUILayout.BeginHorizontal();
-
-            // if the selected tile has a Spawner change it rather than add a new one
-            if (Selection.gameObjects.Length == 1 && Selection.gameObjects[0].GetComponentInChildren<SpawnTrigger>())
-            {
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = new Color(1.0f, 0.58f, 0.19f, 1.0f); // orange
-
-                if (GUILayout.Button("Change Trigger"))
-                {
-                    SpawnTrigger spawnTrigger = Selection.gameObjects[0].GetComponentInChildren<SpawnTrigger>();
-                    spawnTrigger.index = spawnIndex;
-                    spawnTrigger.UpdateSpawnerList();
-                }
-
-                GUI.backgroundColor = oldColor;
-            }
-            else
-            {
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = new Color(0.39f, 0.78f, 0.19f, 1.0f); // green
-
-                if (GUILayout.Button("Add Trigger"))
-                {
-                    Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
-
-                    GameObject go = new GameObject("SpawnTrigger");
-                    go.transform.parent = tile.transform;
-                    go.transform.localPosition = Vector3.zero;
-
-                    BoxCollider collider = go.AddComponent<BoxCollider>();
-                    collider.isTrigger = true;
-
-                    SpawnTrigger spawnTrigger = go.AddComponent<SpawnTrigger>();
-                    spawnTrigger.UpdateSpawnerList();
-                }
-
-                GUI.backgroundColor = oldColor;
-            }
-
-            oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = new Color(1.0f, 0.19f, 0.19f, 1.0f); // red
-
-            if (GUILayout.Button("Remove Trigger"))
-            {
-               
-            }
-
-            GUI.backgroundColor = oldColor;
-
-            EditorGUILayout.EndHorizontal();
-
-            EditorGUI.EndDisabledGroup();
 
             EditorGUILayout.Space();
 
@@ -1110,6 +1054,70 @@ public class EasyDesignEditor : EditorWindow
 
             EditorGUILayout.EndHorizontal();
 
+            EditorGUILayout.Space();
+
+            GUILayout.Label("Spawn Triggers:", centeredText);
+
+            EditorGUI.BeginDisabledGroup(Selection.gameObjects.Length != 1 || !hasTileSelected);
+
+            EditorGUILayout.BeginHorizontal();
+
+            // if the selected tile has a Spawner change it rather than add a new one
+            if (Selection.gameObjects.Length == 1 && Selection.gameObjects[0].GetComponentInChildren<SpawnTrigger>())
+            {
+                oldColor = GUI.backgroundColor;
+                GUI.backgroundColor = new Color(1.0f, 0.58f, 0.19f, 1.0f); // orange
+
+                if (GUILayout.Button("Change Trigger"))
+                {
+                    SpawnTrigger spawnTrigger = Selection.gameObjects[0].GetComponentInChildren<SpawnTrigger>();
+                    spawnTrigger.index = spawnIndex;
+                    spawnTrigger.UpdateSpawnerList();
+                }
+
+                GUI.backgroundColor = oldColor;
+            }
+            else
+            {
+                oldColor = GUI.backgroundColor;
+                GUI.backgroundColor = new Color(0.39f, 0.78f, 0.19f, 1.0f); // green
+
+                if (GUILayout.Button("Add Trigger"))
+                {
+                    Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
+
+                    GameObject go = new GameObject("SpawnTrigger");
+                    go.transform.parent = tile.transform;
+                    go.transform.localPosition = Vector3.zero;
+
+                    BoxCollider collider = go.AddComponent<BoxCollider>();
+                    collider.isTrigger = true;
+
+                    SpawnTrigger spawnTrigger = go.AddComponent<SpawnTrigger>();
+                    spawnTrigger.UpdateSpawnerList();
+                }
+
+                GUI.backgroundColor = oldColor;
+            }
+
+            EditorGUI.EndDisabledGroup();
+
+            EditorGUI.BeginDisabledGroup(Selection.gameObjects.Length != 1 || !hasTriggerSelected);
+
+            oldColor = GUI.backgroundColor;
+            GUI.backgroundColor = new Color(1.0f, 0.19f, 0.19f, 1.0f); // red
+
+            if (GUILayout.Button("Remove Trigger"))
+            {
+               
+            }
+
+            GUI.backgroundColor = oldColor;
+
+            EditorGUILayout.EndHorizontal();
+
+            EditorGUI.EndDisabledGroup();
+
             #endregion
 
             EditorGUILayout.Space();
@@ -1167,10 +1175,12 @@ public class EasyDesignEditor : EditorWindow
 
             EditorGUI.EndDisabledGroup();
 
-            oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = new Color(1.0f, 0.19f, 0.19f, 1.0f); // red
+            EditorGUILayout.BeginHorizontal();
 
             EditorGUI.BeginDisabledGroup(!hasTransitionSelected || !hasTileSelected);
+
+            oldColor = GUI.backgroundColor;
+            GUI.backgroundColor = new Color(1.0f, 0.19f, 0.19f, 1.0f); // red
 
             if (GUILayout.Button("Remove Scene Transition"))
             {
@@ -1194,6 +1204,8 @@ public class EasyDesignEditor : EditorWindow
             }
 
             GUI.backgroundColor = oldColor;
+
+            EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.Space();
 
@@ -1254,12 +1266,14 @@ public class EasyDesignEditor : EditorWindow
 
             EditorGUILayout.EndHorizontal();
 
+            EditorGUILayout.Space();
+
             EditorGUILayout.BeginHorizontal();
 
             oldColor = GUI.backgroundColor;
             GUI.backgroundColor = new Color(0.64f, 0.26f, 0.26f, 1.0f); // brown
 
-            if (GUILayout.Button("Earth Hex After Transition"))
+            if (GUILayout.Button("Earth Hex"))
             {
                 Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
 
@@ -1276,16 +1290,10 @@ public class EasyDesignEditor : EditorWindow
 
             GUI.backgroundColor = oldColor;
 
-            stateIndex = EditorGUILayout.IntField(stateIndex);
-
-            EditorGUILayout.EndHorizontal();
-
-            EditorGUILayout.BeginHorizontal();
-
             oldColor = GUI.backgroundColor;
             GUI.backgroundColor = new Color(0.39f, 0.39f, 0.78f, 1.0f); // blue
 
-            if (GUILayout.Button("Lightning Hex After Transition"))
+            if (GUILayout.Button("Lightning Hex"))
             {
                 Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
 
@@ -1302,11 +1310,13 @@ public class EasyDesignEditor : EditorWindow
 
             GUI.backgroundColor = oldColor;
 
-            stateIndex = EditorGUILayout.IntField(stateIndex);
-
             EditorGUILayout.EndHorizontal();
 
+            EditorGUILayout.Space();
+
             EditorGUI.EndDisabledGroup();
+
+            EditorGUILayout.BeginHorizontal();
 
             oldColor = GUI.backgroundColor;
             GUI.backgroundColor = new Color(1.0f, 0.19f, 0.19f, 1.0f); // red
@@ -1335,6 +1345,8 @@ public class EasyDesignEditor : EditorWindow
             }
 
             GUI.backgroundColor = oldColor;
+
+            EditorGUILayout.EndHorizontal();
         }
 
         #endregion
@@ -1372,6 +1384,8 @@ public class EasyDesignEditor : EditorWindow
 
             hasSpawnerSelected = (Selection.gameObjects[0].GetComponentsInChildren<Spawner>().Length > 0);
 
+            hasTriggerSelected = (Selection.gameObjects[0].GetComponentsInChildren<SpawnTrigger>().Length > 0);
+
             Repaint();
         }
         else
@@ -1380,6 +1394,7 @@ public class EasyDesignEditor : EditorWindow
             hasTransitionSelected = false;
             hasStateTransitionSelected = false;
             hasSpawnerSelected = false;
+            hasTriggerSelected = false;
             Repaint();
         }
 

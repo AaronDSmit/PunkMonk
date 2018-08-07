@@ -31,6 +31,7 @@ public class TransitionManager : MonoBehaviour
         {
             GameObject earthGO = GameObject.FindGameObjectWithTag("EarthUnitSpawn");
             Hex spawnHexEarth = null;
+            Unit earth = null;
 
             if (earthGO)
             {
@@ -39,7 +40,7 @@ public class TransitionManager : MonoBehaviour
                 Vector3 spawnPosEarth = spawnHexEarth.transform.position;
                 spawnPosEarth.y = 0.1f;
 
-                Unit earth = Instantiate(earthUnitPrefab, spawnPosEarth, Quaternion.identity);
+                earth = Instantiate(earthUnitPrefab, spawnPosEarth, Quaternion.identity);
                 earth.Spawn(spawnHexEarth);
             }
             else
@@ -50,6 +51,7 @@ public class TransitionManager : MonoBehaviour
 
             GameObject lightningGO = GameObject.FindGameObjectWithTag("LightningUnitSpawn");
             Hex spawnHexLightning = null;
+            Unit lightning = null;
 
             if (lightningGO)
             {
@@ -58,7 +60,7 @@ public class TransitionManager : MonoBehaviour
                 Vector3 spawnPosLightning = spawnHexLightning.transform.position;
                 spawnPosLightning.y = 0.1f;
 
-                Unit lightning = Instantiate(LightningUnitPrefab, spawnPosLightning, Quaternion.identity);
+                lightning = Instantiate(LightningUnitPrefab, spawnPosLightning, Quaternion.identity);
                 lightning.Spawn(spawnHexLightning);
 
                 lightning.GetComponent<OverworldFollower>().Init();
@@ -81,6 +83,16 @@ public class TransitionManager : MonoBehaviour
                 Debug.LogError("No PlayerController found!");
             }
 
+            GameObject AI_Controller = GameObject.FindGameObjectWithTag("AI_Controller");
+
+            if (AI_Controller && lightningGO && earthGO)
+            {
+                playerGo.GetComponent<AI_Controller>().Init(earth, lightning);
+            }
+            else
+            {
+                Debug.LogError("No PlayerController found!");
+            }
 
             GameObject cameraGO = GameObject.FindGameObjectWithTag("CameraRig");
 

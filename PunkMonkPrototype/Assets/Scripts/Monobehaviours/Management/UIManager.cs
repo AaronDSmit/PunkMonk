@@ -90,10 +90,10 @@ public class UIManager : MonoBehaviour
             gameplayUI.SetActive(false);
         }
 
-        TurnManager.TurnEvent += TurnEvent;
+        Manager.instance.TurnController.TurnEvent += TurnEvent;
 
         // Subscribe to game state
-        StateManager.OnGameStateChanged += GameStateChanged;
+        Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
     }
 
     private void GameStateChanged(Game_state a_oldstate, Game_state a_newstate)

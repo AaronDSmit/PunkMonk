@@ -28,11 +28,14 @@ public class SpawnTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("EarthUnit") || other.CompareTag("LightningUnit"))
+        if (Manager.instance.StateController.CurrentGameState == Game_state.battle)
         {
-            foreach (Spawner spawner in spawners)
+            if (other.CompareTag("EarthUnit") || other.CompareTag("LightningUnit"))
             {
-                spawner.SpawnUnit();
+                foreach (Spawner spawner in spawners)
+                {
+                    spawner.SpawnUnit();
+                }
             }
         }
     }

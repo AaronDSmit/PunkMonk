@@ -30,7 +30,7 @@ public class CameraController : MonoBehaviour
 
     private void Awake()
     {
-        StateManager.OnGameStateChanged += GameStateChanged;
+        Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
     }
 
     private void Start()

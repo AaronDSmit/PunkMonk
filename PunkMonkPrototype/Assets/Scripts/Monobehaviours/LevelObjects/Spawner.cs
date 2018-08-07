@@ -30,12 +30,7 @@ public class Spawner : MonoBehaviour
 
     private void Awake()
     {
-        TurnManager.TurnEvent += TurnEvent;
-    }
-
-    private void OnDisable()
-    {
-        TurnManager.TurnEvent -= TurnEvent;
+        Manager.instance.TurnController.TurnEvent += TurnEvent;
     }
 
     private void TurnEvent(Turn_state newState, TEAM team, int turnNumber)

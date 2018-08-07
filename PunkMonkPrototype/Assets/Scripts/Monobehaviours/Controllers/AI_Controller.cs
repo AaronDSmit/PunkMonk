@@ -19,7 +19,7 @@ public class AI_Controller : MonoBehaviour
 
     private void Awake()
     {
-        TurnManager.TurnEvent += TurnEvent;
+        Manager.instance.TurnController.TurnEvent += TurnEvent;
     }
 
     private void Update()

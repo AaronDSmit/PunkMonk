@@ -14,7 +14,7 @@ public class OverworldController : MonoBehaviour
 
     private void Awake()
     {
-        StateManager.OnGameStateChanged += GameStateChanged;
+        Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
     }
 
     private void GameStateChanged(Game_state _oldstate, Game_state _newstate)

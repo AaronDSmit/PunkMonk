@@ -50,9 +50,9 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        TurnManager.TurnEvent += TurnEvent;
+        Manager.instance.TurnController.TurnEvent += TurnEvent;
 
-        StateManager.OnGameStateChanged += GameStateChanged;
+        Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
 
         UI = GameObject.FindGameObjectWithTag("Manager").GetComponent<UIManager>();
 

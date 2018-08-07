@@ -33,7 +33,7 @@ public class GridManager : MonoBehaviour
 
     private void Awake()
     {
-        StateManager.OnGameStateChanged += GameStateChanged;
+        Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
     }
 
     public bool GenerateGrid(int width, int height, Color a_hexClearColour, Color a_hexBlockedColour, Color a_hexConnectColour)

@@ -19,7 +19,7 @@ public class StateManager : MonoBehaviour
 
     // events
     public delegate void Game_stateChanged(Game_state _oldState, Game_state _newState);
-    public static event Game_stateChanged OnGameStateChanged;
+    public event Game_stateChanged OnGameStateChanged;
 
     #region public Functions
 

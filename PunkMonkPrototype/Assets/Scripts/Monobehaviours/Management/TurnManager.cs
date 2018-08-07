@@ -16,16 +16,11 @@ public class TurnManager : MonoBehaviour
     private bool isReady;
 
     public delegate void TurnStateChanged(Turn_state newState, TEAM team, int turnNumber);
-    public static event TurnStateChanged TurnEvent;
+    public event TurnStateChanged TurnEvent;
 
     private void Awake()
     {
-        StateManager.OnGameStateChanged += GameStateChanged;
-    }
-
-    private void OnDisable()
-    {
-        StateManager.OnGameStateChanged -= GameStateChanged;
+        Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
     }
 
     private void GameStateChanged(Game_state _oldstate, Game_state _newstate)

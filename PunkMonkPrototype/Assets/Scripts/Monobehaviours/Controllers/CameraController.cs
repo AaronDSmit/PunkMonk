@@ -2,6 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum CameraDirection
+{
+    N,
+    NE,
+    NW,
+    SE,
+    SW,
+    S
+}
+
+
+
 public class CameraController : MonoBehaviour
 {
     private Unit earthUnit;
@@ -30,15 +42,6 @@ public class CameraController : MonoBehaviour
 
     private Vector3 dir;
 
-    public enum CameraDirection
-    {
-        N,
-        NE,
-        NW,
-        SE,
-        SW,
-        S
-    }
 
 
 
@@ -184,11 +187,12 @@ public class CameraController : MonoBehaviour
     public void SetRotation(CameraDirection a_dir)
     {
         transform.rotation = Quaternion.Euler(new Vector3(0, CalculateRot(a_dir), 0));
+        targetRot = transform.rotation;
     }
 
     public void SetRotationLerp(CameraDirection a_dir)
     {
-        targetRot *= Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y - CalculateRot(a_dir), 0));
+        targetRot = Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y - CalculateRot(a_dir), 0));
     }
 
     private float CalculateRot(CameraDirection a_dir)

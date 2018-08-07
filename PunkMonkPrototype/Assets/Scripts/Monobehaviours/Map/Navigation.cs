@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class Navigation : MonoBehaviour
 {
-    public static List<Hex> FindPath(Hex starting, Hex target)
+    public static List<Hex> FindPath(Hex a_starting, Hex a_target)
     {
         List<Hex> openSet = new List<Hex>();
         HashSet<Hex> closedSet = new HashSet<Hex>();
 
-        openSet.Add(starting);
+        openSet.Add(a_starting);
 
         while (openSet.Count > 0)
         {
             Hex current = openSet[0];
-            current.HScore = HexUtility.Distance(current, target);
+            current.HScore = HexUtility.Distance(current, a_target);
             for (int i = 1; i < openSet.Count; i++)
             {
                 if (openSet[i].FScore < current.FScore || (openSet[i].FScore == current.FScore && openSet[i].FScore < current.FScore))
@@ -26,14 +26,14 @@ public class Navigation : MonoBehaviour
             closedSet.Add(current);
             openSet.Remove(current);
 
-            if (current == target)
+            if (current == a_target)
             {
                 foreach (Hex node in closedSet)
                 {
                     node.GScore = 0;
                 }
 
-                return RetracePath(starting, target);
+                return RetracePath(a_starting, a_target);
             }
 
             foreach (Hex neighbour in current.Neighbours)
@@ -47,7 +47,7 @@ public class Navigation : MonoBehaviour
                 if (newMovemntCostToNeighour < neighbour.GScore || !openSet.Contains(neighbour))
                 {
                     neighbour.GScore = newMovemntCostToNeighour;
-                    neighbour.HScore = HexUtility.Distance(neighbour, target);
+                    neighbour.HScore = HexUtility.Distance(neighbour, a_target);
                     neighbour.Parent = current;
 
                     if (!openSet.Contains(neighbour))
@@ -73,12 +73,12 @@ public class Navigation : MonoBehaviour
         return 0;
     }
 
-    private static List<Hex> RetracePath(Hex start, Hex end)
+    private static List<Hex> RetracePath(Hex a_start, Hex a_end)
     {
         List<Hex> path = new List<Hex>();
-        Hex current = end;
+        Hex current = a_end;
 
-        while (current != start)
+        while (current != a_start)
         {
             path.Add(current);
             current = current.Parent;

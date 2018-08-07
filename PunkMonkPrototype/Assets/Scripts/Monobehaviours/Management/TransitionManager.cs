@@ -87,7 +87,7 @@ public class TransitionManager : MonoBehaviour
 
             if (AI_Controller && lightningGO && earthGO)
             {
-                playerGo.GetComponent<AI_Controller>().Init(earth, lightning);
+                AI_Controller.GetComponent<AI_Controller>().Init(earth, lightning);
             }
             else
             {

@@ -128,7 +128,6 @@ public class PlayerController : MonoBehaviour
                 SelectUnit(earthUnit);
             }
 
-            cameraRig.LookAtPosition(selectedUnit.transform.position);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -443,7 +442,6 @@ public class PlayerController : MonoBehaviour
         // ensure this script knows it's in over-world state
         if (_newstate == Game_state.battle)
         {
-            cameraRig.SetRotationLerp(CameraDirection.N);
             earthUnit.SnapToGrid(earthSnapHex);
             lightningUnit.SnapToGrid(lightningSnapHex);
 

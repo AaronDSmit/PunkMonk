@@ -21,18 +21,21 @@ public class LightningUnit : Unit
 
     [Header("Special Attack")]
 
-    [SerializeField] private bool specialRehitEnemies;
+    [SerializeField]
+    private bool specialRehitEnemies;
     [SerializeField] private int specialRange;
     [SerializeField] private int specialAmountOfBounces;
     [SerializeField] private float specialLightningTimer;
 
 
-    private GameObject[] specialEnemies;
-    private List<GameObject> specialSortedList = new List<GameObject>();
-    private List<GameObject> specialFinalTargets;
-    private List<GameObject> specialDirtyList;
+    private List<AI_Agent> specialEnemies;
+    private List<Entity> specialSortedList = new List<Entity>();
+    private List<Entity> specialFinalTargets = new List<Entity>();
+    private List<Entity> specialDirtyList = new List<Entity>();
     private GameObject specialNextTarget;
     private GameObject specialLightningGO;
+    private AI_Controller specialAIController;
+
 
 
 
@@ -81,17 +84,23 @@ public class LightningUnit : Unit
 
         specialLightningGO = Instantiate(lightningPrefab);
 
-        specialEnemies = GameObject.FindGameObjectsWithTag("Enemies");
 
-        specialFinalTargets.Add(currentTile.gameObject);
+        if (specialAIController == null)
+        {
+            specialAIController = GameObject.FindGameObjectWithTag("AI_Controller").GetComponent<AI_Controller>();
+        }
+
+        specialEnemies = specialAIController.Agents;
+
+        specialFinalTargets.Add(this);
 
         for (int i = 0; i < specialAmountOfBounces; i++)
         {
-            foreach (var x in specialEnemies)
+            foreach (var enemy in specialEnemies)
             {
-                if (HexUtility.Distance(specialFinalTargets[i].GetComponent<Entity>().CurrentTile, x.GetComponent<Entity>().CurrentTile) < specialRange)
+                if (HexUtility.Distance(CurrentTile, enemy.CurrentTile) < specialRange)
                 {
-                    specialSortedList.Add(x);
+                    specialSortedList.Add(enemy);
                 }
             }
 
@@ -110,7 +119,7 @@ public class LightningUnit : Unit
                 }
             }
 
-            specialSortedList.Sort((a, b) => (HexUtility.Distance(currentTile, a.GetComponent<Entity>().CurrentTile).CompareTo(HexUtility.Distance(currentTile, b.GetComponent<Entity>().CurrentTile))));
+            specialSortedList.Sort((a, b) => (HexUtility.Distance(currentTile, a.CurrentTile).CompareTo(HexUtility.Distance(currentTile, b.CurrentTile))));
 
 
             specialFinalTargets.Add(specialSortedList[0]);
@@ -140,6 +149,10 @@ public class LightningUnit : Unit
         }
 
         Destroy(specialLightningGO);
+        specialDirtyList.Clear();
+        specialFinalTargets.Clear();
+        specialSortedList.Clear();
+
     }
 
 

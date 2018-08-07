@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4430143421023892}
-  - component: {fileID: 114015199346475256}
+  - component: {fileID: 114497477456733288}
   - component: {fileID: 136694835722273770}
   - component: {fileID: 54471463929484426}
   m_Layer: 9
@@ -129,7 +129,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 4
   m_CollisionDetection: 0
---- !u!114 &114015199346475256
+--- !u!114 &114497477456733288
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -137,17 +137,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 1236160524999862}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1cf94a6d617a91f4baf41c165c9f3992, type: 3}
+  m_Script: {fileID: 11500000, guid: 97e06f1c348f8424d9beb5162ad90d5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   team: 1
-  startHealth: 100
+  maxHealth: 100
   actions: []
   moveRange: 0
   attackRange: 0
   specialAttackRange: 0
   turnTime: 0
   walkSpeed: 0
+  thing: 0
+  player: {fileID: 0}
+  damage: 0
+  movement: 0
 --- !u!136 &136694835722273770
 CapsuleCollider:
   m_ObjectHideFlags: 1

@@ -908,12 +908,12 @@ public class EasyDesignEditor : EditorWindow
 
                     if (enemyType == Unit_type.watcher)
                     {
-                        spawner.UntiToSpawn = Resources.Load<Unit>("EnemyCharacters/WatcherUnit");
+                        spawner.UntiToSpawn = Resources.Load<AI_Agent>("EnemyCharacters/WatcherUnit");
                         spawner.TextColour = Color.red;
                     }
                     else if (enemyType == Unit_type.runner)
                     {
-                        spawner.UntiToSpawn = Resources.Load<Unit>("EnemyCharacters/RunnerUnit");
+                        spawner.UntiToSpawn = Resources.Load<AI_Agent>("EnemyCharacters/RunnerUnit");
                         spawner.TextColour = Color.red;
                     }
 

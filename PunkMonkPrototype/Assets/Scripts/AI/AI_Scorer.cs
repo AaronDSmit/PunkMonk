@@ -52,7 +52,7 @@ public class AI_Scorer
                             node.Value = agent.Damage; // Set to agents damage
                             break;
                         case AgentValue.movement:
-                            node.Value = agent.Movement; // Set to agents movement
+                            node.Value = 1;//agent.CanMove; // Set to agents movement
                             break;
                         default:
                             break;

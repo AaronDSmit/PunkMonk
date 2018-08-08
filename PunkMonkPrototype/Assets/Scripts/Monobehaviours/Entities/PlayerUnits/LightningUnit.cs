@@ -8,33 +8,33 @@ public class LightningUnit : Unit
 
     [Header("Basic Attack")]
 
-    [SerializeField]
-    private float basicDamage;
-    [SerializeField] private float basicDamgeDelayTimer;
-    [SerializeField] private float electricityLifetime;
+    [SerializeField] private float basicDamage = 1;
+    [SerializeField] private float basicDamgeDelayTimer = 3;
+    [SerializeField] private float basicElectricityLifetime = 3;
 
     private System.Action basicFinishedFunc;
     private Hex basicTile;
     private bool basicLightningAnimation;
     private float basicLightningTimer;
-    GameObject basicLightningGO;
+    private GameObject basicLightningGO;
 
     [Header("Special Attack")]
 
-    [SerializeField]
-    private bool specialRehitEnemies;
-    [SerializeField] private int specialRange;
-    [SerializeField] private int specialAmountOfBounces;
-    [SerializeField] private float specialLightningTimer;
-
+    [SerializeField] private bool specialRehitEnemies = false;
+    [SerializeField] private int specialRange = 3;
+    [SerializeField] private int specialAmountOfBounces = 3;
+    [SerializeField] private float specialLightningLifeTime = 1;
+    [SerializeField] private float specialBounceDamage = 1;
+    [SerializeField] private float specialFinalDamage = 1;
+    [SerializeField] private float specialDelayTime = 1;
 
     private List<AI_Agent> specialEnemies;
     private List<Entity> specialSortedList = new List<Entity>();
     private List<Entity> specialFinalTargets = new List<Entity>();
     private List<Entity> specialDirtyList = new List<Entity>();
-    private GameObject specialNextTarget;
     private GameObject specialLightningGO;
     private AI_Controller specialAIController;
+    private System.Action specialFinishedFunc;
 
 
 
@@ -68,7 +68,7 @@ public class LightningUnit : Unit
         basicLightningGO.transform.GetChild(1).position = transform.position + (transform.up * 0.8f);
 
 
-        Destroy(basicLightningGO, electricityLifetime);
+        Destroy(basicLightningGO, basicElectricityLifetime);
 
         //call the basicAttackDamageDelay coroutine 
         StartCoroutine(BasicAttackDamageDelay(basicDamgeDelayTimer));
@@ -79,6 +79,8 @@ public class LightningUnit : Unit
     {
         start();
 
+
+        specialFinishedFunc = finished;
 
         specialLightningGO = Instantiate(lightningPrefab);
 
@@ -99,11 +101,14 @@ public class LightningUnit : Unit
         {
             foreach (var enemy in specialEnemies)
             {
-                if (enemy != specialFinalTargets[i + 1])
+                if (i + 1 < specialFinalTargets.Count)
                 {
-                    if (HexUtility.Distance(specialFinalTargets[i].CurrentTile, enemy.CurrentTile) < specialRange)
+                    if (enemy != specialFinalTargets[i + 1])
                     {
-                        specialSortedList.Add(enemy);
+                        if (HexUtility.Distance(specialFinalTargets[i].CurrentTile, enemy.CurrentTile) < specialRange)
+                        {
+                            specialSortedList.Add(enemy);
+                        }
                     }
                 }
             }
@@ -126,13 +131,16 @@ public class LightningUnit : Unit
             {
                 if (specialSortedList.Count > 1)
                 {
-                    if (specialSortedList[0] == specialFinalTargets[i - 1])
+                    if (i - 1 < specialFinalTargets.Count)
                     {
-                        specialFinalTargets.Add(specialSortedList[0]);
-                    }
-                    else
-                    {
-                        specialFinalTargets.Add(specialSortedList[1]);
+                        if (specialSortedList[0] == specialFinalTargets[i - 1])
+                        {
+                            specialFinalTargets.Add(specialSortedList[0]);
+                        }
+                        else
+                        {
+                            specialFinalTargets.Add(specialSortedList[1]);
+                        }
                     }
                 }
                 else
@@ -141,11 +149,6 @@ public class LightningUnit : Unit
                 }
             }
 
-            //if (specialRehitEnemies == false)
-            //{
-            //    specialDirtyList.Add(specialSortedList[0]);
-            //}
-
             specialSortedList.Clear();
 
         }
@@ -153,7 +156,7 @@ public class LightningUnit : Unit
         specialLightningGO.transform.GetChild(0).position = specialFinalTargets[0].transform.position + (transform.up * 0.8f);
         specialLightningGO.transform.GetChild(1).position = specialFinalTargets[1].transform.position + (transform.up * 0.8f);
 
-        StartCoroutine(SpecialAttackDamageDelay(electricityLifetime));
+        StartCoroutine(SpecialAttackDamageDelay(specialLightningLifeTime));
 
     }
 
@@ -170,6 +173,7 @@ public class LightningUnit : Unit
                 {
                     specialLightningGO.transform.GetChild(0).position = specialFinalTargets[i].transform.position + (transform.up * 0.8f);
                     specialLightningGO.transform.GetChild(1).position = specialFinalTargets[i + 1].transform.position + (transform.up * 0.8f);
+                    StartCoroutine(SpecialAttackDamageDelay(specialDelayTime, specialBounceDamage, specialFinalTargets[i]));
                 }
                 else
                 {
@@ -181,10 +185,31 @@ public class LightningUnit : Unit
 
         yield return new WaitForSeconds(a_timer);
 
+        StartCoroutine(SpecialAttackDamageDelay(specialDelayTime, specialFinalDamage, specialFinalTargets[specialFinalTargets.Count - 1]));
+
+
+        specialFinishedFunc();
+
         Destroy(specialLightningGO);
         specialDirtyList.Clear();
         specialFinalTargets.Clear();
         specialSortedList.Clear();
+
+    }
+
+
+    private IEnumerator SpecialAttackDamageDelay(float a_timer, float a_damage, Entity a_unit)
+    {
+
+        yield return new WaitForSeconds(a_timer);
+
+        if(a_unit != null)
+        {
+            if(a_unit.Team != TEAM.player)
+            {
+                a_unit.TakeDamage(a_damage);
+            }
+        }
 
     }
 

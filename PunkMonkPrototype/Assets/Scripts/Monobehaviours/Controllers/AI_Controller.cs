@@ -5,7 +5,7 @@ using UnityEngine;
 public class AI_Controller : MonoBehaviour
 {
     [SerializeField] private Color currentUnitColour = Color.black;
-    [SerializeField] private Color attackingUnitColour = Color.black;
+    //[SerializeField] private Color attackingUnitColour = Color.black;
 
     private GridManager grid = null;
     private TurnManager turnManager = null;

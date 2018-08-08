@@ -109,19 +109,6 @@ public class LightningUnit : Unit
             }
 
 
-            //if (specialRehitEnemies == false)
-            //{
-            //    foreach (var x in specialSortedList)
-            //    {
-            //        foreach (var y in specialDirtyList)
-            //        {
-            //            if (x == y)
-            //            {
-            //                specialSortedList.Remove(y);
-            //            }
-            //        }
-            //    }
-            //}
 
             specialSortedList.Sort((a, b) => (HexUtility.Distance(currentTile, a.CurrentTile).CompareTo(HexUtility.Distance(currentTile, b.CurrentTile))));
 
@@ -137,7 +124,18 @@ public class LightningUnit : Unit
             }
             else
             {
-                if (specialSortedList[0] == specialFinalTargets[i])
+                if (specialSortedList.Count > 1)
+                {
+                    if (specialSortedList[0] == specialFinalTargets[i - 1])
+                    {
+                        specialFinalTargets.Add(specialSortedList[0]);
+                    }
+                    else
+                    {
+                        specialFinalTargets.Add(specialSortedList[1]);
+                    }
+                }
+                else
                 {
                     specialFinalTargets.Add(specialSortedList[0]);
                 }
@@ -155,7 +153,7 @@ public class LightningUnit : Unit
         specialLightningGO.transform.GetChild(0).position = specialFinalTargets[0].transform.position + (transform.up * 0.8f);
         specialLightningGO.transform.GetChild(1).position = specialFinalTargets[1].transform.position + (transform.up * 0.8f);
 
-        StartCoroutine(SpecialAttackDamageDelay(specialLightningTimer));
+        StartCoroutine(SpecialAttackDamageDelay(electricityLifetime));
 
     }
 
@@ -168,8 +166,16 @@ public class LightningUnit : Unit
 
             if (i + 1 <= specialAmountOfBounces)
             {
-                specialLightningGO.transform.GetChild(0).position = specialFinalTargets[i].transform.position + (transform.up * 0.8f);
-                specialLightningGO.transform.GetChild(1).position = specialFinalTargets[i + 1].transform.position + (transform.up * 0.8f);
+                if (i + 1 < specialFinalTargets.Count)
+                {
+                    specialLightningGO.transform.GetChild(0).position = specialFinalTargets[i].transform.position + (transform.up * 0.8f);
+                    specialLightningGO.transform.GetChild(1).position = specialFinalTargets[i + 1].transform.position + (transform.up * 0.8f);
+                }
+                else
+                {
+                    specialLightningGO.transform.GetChild(1).position = specialLightningGO.transform.GetChild(0).position;
+                    break;
+                }
             }
         }
 

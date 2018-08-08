@@ -94,40 +94,64 @@ public class LightningUnit : Unit
 
         specialFinalTargets.Add(this);
 
-        for (int i = 0; i < specialAmountOfBounces; i++)
+        specialFinalTargets.Add(targetTiles[0].CurrentUnit);
+
+
+        for (int i = 0; i < specialAmountOfBounces - 1; i++)
         {
             foreach (var enemy in specialEnemies)
             {
-                if (HexUtility.Distance(CurrentTile, enemy.CurrentTile) < specialRange)
+                if (enemy != specialFinalTargets[i + 1])
                 {
-                    specialSortedList.Add(enemy);
-                }
-            }
-
-
-            if (specialRehitEnemies == false)
-            {
-                foreach (var x in specialSortedList)
-                {
-                    foreach (var y in specialDirtyList)
+                    if (HexUtility.Distance(specialFinalTargets[i].CurrentTile, enemy.CurrentTile) < specialRange)
                     {
-                        if (x == y)
-                        {
-                            specialSortedList.Remove(y);
-                        }
+                        specialSortedList.Add(enemy);
                     }
                 }
             }
 
+
+            //if (specialRehitEnemies == false)
+            //{
+            //    foreach (var x in specialSortedList)
+            //    {
+            //        foreach (var y in specialDirtyList)
+            //        {
+            //            if (x == y)
+            //            {
+            //                specialSortedList.Remove(y);
+            //            }
+            //        }
+            //    }
+            //}
+
             specialSortedList.Sort((a, b) => (HexUtility.Distance(currentTile, a.CurrentTile).CompareTo(HexUtility.Distance(currentTile, b.CurrentTile))));
 
-
-            specialFinalTargets.Add(specialSortedList[0]);
-
-            if (specialRehitEnemies == false)
+            if(specialRehitEnemies == false)
             {
-                specialDirtyList.Add(specialSortedList[0]);
+                foreach(var x in specialSortedList)
+                {
+                    if(!specialFinalTargets.Contains(x))
+                    {
+                        specialFinalTargets.Add(x);
+                    }
+                }
             }
+            else
+            {
+                if (specialSortedList[0] == specialFinalTargets[i])
+                {
+                    specialFinalTargets.Add(specialSortedList[0]);
+                }
+            }
+
+            //if (specialRehitEnemies == false)
+            //{
+            //    specialDirtyList.Add(specialSortedList[0]);
+            //}
+
+            specialSortedList.Clear();
+
         }
 
         specialLightningGO.transform.GetChild(0).position = specialFinalTargets[0].transform.position + (transform.up * 0.8f);
@@ -140,13 +164,18 @@ public class LightningUnit : Unit
 
     private IEnumerator SpecialAttackDamageDelay(float a_timer)
     {
-        for (int i = 1; i < specialAmountOfBounces - 1; i++)
+        for (int i = 1; i < specialAmountOfBounces; i++)
         {
             yield return new WaitForSeconds(a_timer);
 
-            specialLightningGO.transform.GetChild(0).position = specialFinalTargets[i].transform.position + (transform.up * 0.8f);
-            specialLightningGO.transform.GetChild(1).position = specialFinalTargets[i + 1].transform.position + (transform.up * 0.8f);
+            if (i + 1 <= specialAmountOfBounces)
+            {
+                specialLightningGO.transform.GetChild(0).position = specialFinalTargets[i].transform.position + (transform.up * 0.8f);
+                specialLightningGO.transform.GetChild(1).position = specialFinalTargets[i + 1].transform.position + (transform.up * 0.8f);
+            }
         }
+
+        yield return new WaitForSeconds(a_timer);
 
         Destroy(specialLightningGO);
         specialDirtyList.Clear();

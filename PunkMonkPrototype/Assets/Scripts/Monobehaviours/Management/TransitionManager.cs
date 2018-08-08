@@ -91,7 +91,7 @@ public class TransitionManager : MonoBehaviour
             }
             else
             {
-                Debug.LogError("No PlayerController found!");
+                Debug.LogError("No AI_Controller found!");
             }
 
             GameObject cameraGO = GameObject.FindGameObjectWithTag("CameraRig");

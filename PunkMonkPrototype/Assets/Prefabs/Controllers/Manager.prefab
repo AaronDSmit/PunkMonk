@@ -72,7 +72,6 @@ MonoBehaviour:
     type: 2}
   LightningUnitPrefab: {fileID: 114218915007959840, guid: 9565e2b5fb696954eb179035caf30d53,
     type: 2}
-  transitionPoints: []
 --- !u!114 &114216600504430388
 MonoBehaviour:
   m_ObjectHideFlags: 1

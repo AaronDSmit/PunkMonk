@@ -11,7 +11,9 @@ public class UIManager : MonoBehaviour
 
     private Button specialAttack;
 
-    private GameObject gameplayUI;
+    private SlidingUI battleUI;
+
+    private SlidingUI endTurnButton;
 
     private Image fadePlane;
 
@@ -36,28 +38,6 @@ public class UIManager : MonoBehaviour
         isReady = true;
 
         isLocked = false;
-
-        //GameObject playerGO = GameObject.FindGameObjectWithTag("Player");
-
-        //if (playerGO)
-        //{
-        //    player = playerGO.GetComponent<PlayerController>();
-        //}
-        //else
-        //{
-        //    Debug.LogError("No player controller found!");
-        //}
-
-        //buttons = GetComponentsInChildren<Button>();
-
-        //buttonInitialState = new bool[buttons.Length];
-
-        //for (int i = 0; i < buttons.Length; i++)
-        //{
-        //    buttonInitialState[i] = buttons[i].interactable;
-        //}
-
-        //
     }
 
     private void Awake()
@@ -66,16 +46,18 @@ public class UIManager : MonoBehaviour
 
         if (canvas)
         {
-            gameplayUI = canvas.GetChild(0).gameObject;
+            battleUI = canvas.GetChild(0).GetComponent<SlidingUI>();
 
-            profiles = gameplayUI.transform.GetChild(0).GetComponent<ProfileSwitcher>();
+            profiles = battleUI.transform.GetChild(0).GetComponent<ProfileSwitcher>();
 
-            move = gameplayUI.transform.Find("Actions").GetChild(0).GetComponent<Button>();
-            attack = gameplayUI.transform.Find("Actions").GetChild(1).GetComponent<Button>();
-            specialAttack = gameplayUI.transform.Find("Actions").GetChild(2).GetComponent<Button>();
+            move = battleUI.transform.Find("Actions").GetChild(0).GetComponent<Button>();
+            attack = battleUI.transform.Find("Actions").GetChild(1).GetComponent<Button>();
+            specialAttack = battleUI.transform.Find("Actions").GetChild(2).GetComponent<Button>();
 
             fadePlane = canvas.Find("FadePlane").GetComponent<Image>();
             loadingText = fadePlane.transform.GetComponentInChildren<Text>();
+
+            endTurnButton = canvas.transform.Find("EndTurnButton").GetComponent<SlidingUI>();
 
             if (fadePlane)
             {
@@ -86,8 +68,6 @@ public class UIManager : MonoBehaviour
             {
                 loadingText.color = new Color(loadingText.color.r, loadingText.color.g, loadingText.color.b, 1.0f);
             }
-
-            gameplayUI.SetActive(false);
         }
 
         Manager.instance.TurnController.TurnEvent += TurnEvent;
@@ -105,7 +85,8 @@ public class UIManager : MonoBehaviour
         }
         else if (a_newstate == Game_state.battle)
         {
-            gameplayUI.SetActive(true);
+            // battleUI.Toggle();
+            // endTurnButton.Toggle();
         }
         else if (a_newstate == Game_state.loading)
         {
@@ -113,7 +94,11 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            gameplayUI.SetActive(false);
+            //if (battleUI.Toggled)
+            //{
+            //    battleUI.Toggle();
+            //    endTurnButton.Toggle();
+            //}
         }
     }
 
@@ -182,13 +167,13 @@ public class UIManager : MonoBehaviour
         {
             if (a_newState == Turn_state.start)
             {
-                //ToggleHUD();
-                //endTurnButton.Toggle();
+                battleUI.Toggle();
+                endTurnButton.Toggle();
             }
             else if (a_newState == Turn_state.end)
             {
-                //ToggleHUD();
-                //endTurnButton.Toggle();
+                battleUI.Toggle();
+                endTurnButton.Toggle();
             }
         }
     }

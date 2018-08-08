@@ -123,7 +123,6 @@ public class PlayerController : MonoBehaviour
             {
                 SelectUnit(earthUnit);
             }
-
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))

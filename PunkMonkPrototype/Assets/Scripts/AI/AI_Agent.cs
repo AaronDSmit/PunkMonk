@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class AI_Agent : Unit
 {
-    [SerializeField] private float damage;
-    [SerializeField] private float damgeDelayTimer;
+    [SerializeField] private float damage = 100;
+    [SerializeField] private float damgeDelayTimer = 0;
 
     private AI_Controller ai_Controller = null;
 
@@ -32,7 +32,6 @@ public class AI_Agent : Unit
 
     }
 
-
     public override void Spawn(Hex a_startingTile)
     {
         base.Spawn(a_startingTile);
@@ -56,8 +55,6 @@ public class AI_Agent : Unit
 
     private IEnumerator DoTurn(GridManager a_grid)
     {
-        // TODO: Implement agents turn
-
         List<Hex>[] shortestPaths = new List<Hex>[] { null, null };
 
         for (int i = 0; i < 2; i++)
@@ -89,18 +86,19 @@ public class AI_Agent : Unit
         // Choose the closest player
         int closestPlayer = shortestPaths[0].Count <= shortestPaths[1].Count ? 0 : 1;
 
-        // Path find
+        // Path find and wait for it to finish
         isPerformingAction = true;
         finishedWalking = FinishedAction;
         StartCoroutine(Walk(shortestPaths[closestPlayer]));
         yield return new WaitUntil(() => isPerformingAction == false);
 
-
-        // Attack the player if possible
+        // Attack the player, checking if it is in range // TODO check if possible
         if (HexUtility.Distance(currentTile, players[closestPlayer].CurrentTile) <= attackRange)
         {
-            // Turn to face the player 
-
+            // Attack the player
+            isPerformingAction = true;
+            BasicAttack(new Hex[] { players[closestPlayer].CurrentTile }, null, FinishedAction);
+            yield return new WaitUntil(() => isPerformingAction == false);
         }
 
         turnComplete = true;

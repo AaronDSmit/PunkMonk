@@ -60,19 +60,25 @@ public class AI_Agent : Unit
         {
             Unit currentPlayer = players[i];
             // Find all of the tiles within attack range
-            List<Hex> tiles = new List<Hex>(a_grid.GetTilesWithinDistance(currentPlayer.CurrentTile, attackRange, true));
-            foreach (Hex tile in tiles)
+            List<Hex> tiles = new List<Hex>(a_grid.GetTilesWithinDistance(currentPlayer.CurrentTile, attackRange));
+            foreach (Hex targetTile in tiles)
             {
                 // Ignore the tile that the player is on
-                if (tile == currentPlayer.CurrentTile)
+                if (targetTile == currentPlayer.CurrentTile)
                     continue;
                 // Ignore the tiles that can't attack the player
-                if (HasClearShot(tile, players[i].CurrentTile))
-                    continue;
+                //if (HasClearShot(tile, players[i]) == false)
+                //    continue;
                 // Pathfind to the tile
-                List<Hex> path = Navigation.FindPath(tile, currentPlayer.CurrentTile);
-                if (shortestPaths[i] == null) // Check if this is the first path
+                List<Hex> path = Navigation.FindPath(CurrentTile, targetTile);
+                if (path == null)
                 {
+                    Debug.LogError("No path found", gameObject);
+                    continue;
+                }
+
+                if (shortestPaths[i] == null) // Check if this is the first path
+                { 
                     shortestPaths[i] = path;
                 }
                 // Set it as the shortest path if it is shorter than the current shortest
@@ -83,20 +89,27 @@ public class AI_Agent : Unit
             }
         }
 
+        // TODO: Check for the shortest paths being null
+        if (shortestPaths[0] == null || shortestPaths[1] == null)
+        {
+            turnComplete = true;
+            Debug.LogError("No path found", gameObject);
+            yield break;
+        }
         // Choose the closest player
-        int closestPlayer = shortestPaths[0].Count <= shortestPaths[1].Count ? 0 : 1;
+        int playerToAttack = shortestPaths[0].Count <= shortestPaths[1].Count ? 0 : 1;
 
         // Path find and wait for it to finish
         isPerformingAction = true;
         finishedWalking = FinishedAction;
-        StartCoroutine(Walk(shortestPaths[closestPlayer]));
+        StartCoroutine(Walk(shortestPaths[playerToAttack]));
         yield return new WaitUntil(() => isPerformingAction == false);
 
         // Attack the player, checking if it is in range && if we have a clear shot
-        if (HexUtility.Distance(currentTile, players[closestPlayer].CurrentTile) <= attackRange && HasClearShot(currentTile, players[closestPlayer].CurrentTile))
+        if (HexUtility.Distance(currentTile, players[playerToAttack].CurrentTile) <= attackRange && HasClearShot(this, players[playerToAttack]))
         {
             isPerformingAction = true;
-            BasicAttack(new Hex[] { players[closestPlayer].CurrentTile }, null, FinishedAction);
+            BasicAttack(new Hex[] { players[playerToAttack].CurrentTile }, null, FinishedAction);
             yield return new WaitUntil(() => isPerformingAction == false);
         }
 
@@ -130,4 +143,12 @@ public class AI_Agent : Unit
     {
         isPerformingAction = false;
     }
+
+    public override void Refresh()
+    {
+        base.Refresh();
+
+        turnComplete = false;
+    }
+
 }

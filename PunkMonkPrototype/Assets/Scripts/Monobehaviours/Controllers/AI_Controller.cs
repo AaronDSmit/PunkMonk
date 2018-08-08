@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class AI_Controller : MonoBehaviour
 {
-    [SerializeField] private Color currentUnitColour;
-    [SerializeField] private Color attackingUnitColour;
+    [SerializeField] private Color currentUnitColour = Color.black;
+    [SerializeField] private Color attackingUnitColour = Color.black;
 
     private GridManager grid = null;
     private TurnManager turnManager = null;
@@ -18,7 +18,7 @@ public class AI_Controller : MonoBehaviour
     public Unit[] AddUnit(AI_Agent a_newAgent)
     {
         agents.Add(a_newAgent);
-
+        a_newAgent.OnDeath += RemoveUnit;
         return players;
     }
 
@@ -39,11 +39,11 @@ public class AI_Controller : MonoBehaviour
         // Check if it is the AI's turn
         if (a_newState == Turn_state.start && a_team == TEAM.ai)
         {
-            StartCoroutine(DoTurn());
-
             // Refresh all units
             foreach (Unit unit in agents)
                 unit.Refresh();
+
+            StartCoroutine(DoTurn());
         }
     }
 
@@ -67,4 +67,8 @@ public class AI_Controller : MonoBehaviour
         turnManager.EndTurn();
     }
 
+    private void RemoveUnit(LivingEntity a_unit)
+    {
+        agents.Remove((AI_Agent)a_unit);
+    }
 }

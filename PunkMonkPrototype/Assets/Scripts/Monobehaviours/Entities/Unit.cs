@@ -72,12 +72,58 @@ public class Unit : LivingEntity
         }
     }
 
-    protected bool HasClearShot(Hex a_currentHex, Hex a_targetHex)
+    protected bool HasClearShot(Unit a_currentUnit, Unit a_targetUnit)
     {
-        Ray ray = new Ray(a_currentHex.transform.position + Vector3.up, a_targetHex.transform.position - a_currentHex.transform.position);
+        // Unit height should be replaced with 
+        float unitHeight = 1.8f;
+        // StartPos should be the transform from where the Unit shoots from
+        Vector3 startPos = a_currentUnit.CurrentTile.transform.position + Vector3.up * (unitHeight / 2.0f);
+        // TargetPos is the centre of the target unit
+        Vector3 targetPos = a_targetUnit.CurrentTile.transform.position + Vector3.up * (unitHeight / 2.0f);
+        Ray ray = new Ray(startPos, targetPos - startPos);
         RaycastHit hitInfo;
 
-        return !Physics.Raycast(ray, out hitInfo);
+        if (Physics.Raycast(ray, out hitInfo))
+        {
+            // Check if we hit the target unit
+            if (hitInfo.collider.gameObject == a_targetUnit.gameObject)
+            {
+                // We hit the target unit, we have a clear shit
+                return true;
+            }
+            // We hit something, no clear shot
+            return false;
+        }
+
+        // The raycast hit nothing, we have a clear shot
+        return true;
+    }
+
+    protected bool HasClearShot(Hex a_currentTile, Unit a_targetUnit)
+    {
+        // Unit height should be replaced with 
+        float unitHeight = 1.8f;
+        // StartPos should be the transform from where the Unit shoots from
+        Vector3 startPos = a_currentTile.transform.position + Vector3.up * (unitHeight / 2.0f);
+        // TargetPos is the centre of the target unit
+        Vector3 targetPos = a_targetUnit.CurrentTile.transform.position + Vector3.up * (unitHeight / 2.0f);
+        Ray ray = new Ray(startPos, targetPos - startPos);
+        RaycastHit hitInfo;
+
+        if (Physics.Raycast(ray, out hitInfo))
+        {
+            // Check if we hit the target unit
+            if (hitInfo.collider.gameObject == a_targetUnit.gameObject)
+            {
+                // We hit the target unit, we have a clear shit
+                return true;
+            }
+            // We hit something, no clear shot
+            return false;
+        }
+
+        // The raycast hit nothing, we have a clear shot
+        return true;
     }
 
     public void TeleportToHex(Hex a_targetHex)
@@ -127,7 +173,7 @@ public class Unit : LivingEntity
         }
     }
 
-    public void Refresh()
+    public virtual void Refresh()
     {
         CanAttack = true;
         CanMove = true;

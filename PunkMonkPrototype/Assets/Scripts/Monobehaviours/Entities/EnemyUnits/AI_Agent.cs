@@ -29,7 +29,6 @@ public class AI_Agent : Unit
         {
             action.Init(this);
         }
-
     }
 
     public override void Spawn(Hex a_startingTile)
@@ -67,8 +66,9 @@ public class AI_Agent : Unit
                 // Ignore the tile that the player is on
                 if (tile == currentPlayer.CurrentTile)
                     continue;
-                // TODO: Ignore the tiles that can't attack the player
-
+                // Ignore the tiles that can't attack the player
+                if (HasClearShot(tile, players[i].CurrentTile))
+                    continue;
                 // Pathfind to the tile
                 List<Hex> path = Navigation.FindPath(tile, currentPlayer.CurrentTile);
                 if (shortestPaths[i] == null) // Check if this is the first path
@@ -92,10 +92,9 @@ public class AI_Agent : Unit
         StartCoroutine(Walk(shortestPaths[closestPlayer]));
         yield return new WaitUntil(() => isPerformingAction == false);
 
-        // Attack the player, checking if it is in range // TODO check if possible
-        if (HexUtility.Distance(currentTile, players[closestPlayer].CurrentTile) <= attackRange)
+        // Attack the player, checking if it is in range && if we have a clear shot
+        if (HexUtility.Distance(currentTile, players[closestPlayer].CurrentTile) <= attackRange && HasClearShot(currentTile, players[closestPlayer].CurrentTile))
         {
-            // Attack the player
             isPerformingAction = true;
             BasicAttack(new Hex[] { players[closestPlayer].CurrentTile }, null, FinishedAction);
             yield return new WaitUntil(() => isPerformingAction == false);

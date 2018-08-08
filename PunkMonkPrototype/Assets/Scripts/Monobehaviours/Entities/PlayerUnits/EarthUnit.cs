@@ -73,47 +73,14 @@ public class EarthUnit : Unit
         specialAttack = true;
     }
 
-    //[SerializeField] private float jumpHeight = 5;
 
-    //[SerializeField] private float jumpSpeed = 3f;
-
-    //[SerializeField] private float fallSpeed = 4f;
-
-    private bool falling = false;
-
-    private float incrementor = 0;
 
     private void Update()
     {
         //if special Attack is true
         if (specialAttack)
         {
-            //incrementor += (falling) ? fallSpeed / 100 : jumpSpeed / 100;
-            //Vector3 currentPos = Vector3.Lerp(specialStartPosition, specialTargetPosition, incrementor);
-            //currentPos.y += jumpHeight * Mathf.Sin(Mathf.Clamp01(incrementor) * Mathf.PI);
-            //transform.position = currentPos;
-
-            //if (transform.position.y >= jumpHeight)
-            //{
-            //    falling = true;
-            //}
-
-            //if (Vector3.Distance(transform.position, specialTargetPosition) < 0.1f)
-            //{
-            //    specialAttack = false;
-            //    falling = false;
-            //    incrementor = 0;
-            //    transform.position = specialTargetPosition;
-
-            //    StartCoroutine(SpecialAttackDamageDelay(specialDamgeDelayTimer));
-
-            //    //exit current tile
-            //    currentTile.Exit();
-            //    currentTile = specialTiles[0];
-
-            //    //enter target tile
-            //    currentTile.Enter(this);
-            //}
+         
 
             //Update the timer
             specialTimer += Time.deltaTime;

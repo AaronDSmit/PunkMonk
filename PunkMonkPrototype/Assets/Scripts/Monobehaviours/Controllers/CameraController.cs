@@ -20,15 +20,12 @@ public class CameraController : MonoBehaviour
 
     private bool inOverworld;
 
-    private GameObject cameraGO;
-
     private float targetY;
 
     private Vector3 targetPos;
 
     private Quaternion targetRot;
 
-    private bool lockedMovement = false;
     private Vector3 vel;
 
     private bool lookAtObject = false;
@@ -53,7 +50,6 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
-        cameraGO = Camera.main.gameObject;
         targetPos = transform.position;
         targetY = transform.position.y;
         targetRot = transform.rotation;

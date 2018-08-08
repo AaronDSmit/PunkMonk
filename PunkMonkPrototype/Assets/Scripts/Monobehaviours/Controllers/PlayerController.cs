@@ -44,8 +44,6 @@ public class PlayerController : MonoBehaviour
 
     private GridManager grid;
 
-    private CameraController cameraRig;
-
     private Hex earthSnapHex;
 
     private Hex lightningSnapHex;
@@ -63,8 +61,6 @@ public class PlayerController : MonoBehaviour
         tilesWithinRange = new List<Hex>();
 
         tilesAffectByAction = new List<Hex>();
-
-        cameraRig = GameObject.FindGameObjectWithTag("CameraRig").GetComponent<CameraController>();
 
         if (selectionRuleset == null)
         {

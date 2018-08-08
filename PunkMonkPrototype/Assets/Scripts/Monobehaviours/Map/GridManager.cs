@@ -20,29 +20,19 @@ public class GridManager : MonoBehaviour
 
     [HideInInspector]
     [SerializeField]
-    private Color clearHexColour;
-
-    [HideInInspector]
-    [SerializeField]
-    private Color blockedHexColour;
-
-    [HideInInspector]
-    [SerializeField]
-    private Color connectionColour;
+    private Color traversableColour;
 
     private void Awake()
     {
         Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
     }
 
-    public bool GenerateGrid(int width, int height, Color a_hexClearColour, Color a_hexBlockedColour, Color a_hexConnectColour)
+    public bool GenerateGrid(int width, int height, Color a_traversableColour)
     {
         mapWidth = width;
         mapHeight = height;
 
-        clearHexColour = a_hexClearColour;
-        blockedHexColour = a_hexBlockedColour;
-        connectionColour = a_hexConnectColour;
+        traversableColour = a_traversableColour;
 
         if (transform.childCount > 0)
         {
@@ -74,7 +64,7 @@ public class GridManager : MonoBehaviour
 
         grid[i] = Instantiate(tilePrefab, position, Quaternion.Euler(-90.0f, 0.0f, 0.0f), transform);
 
-        grid[i].Init(x, y, clearHexColour);
+        grid[i].Init(x, y, traversableColour);
 
         grid[i].transform.localScale = new Vector3(HexUtility.outerRadius, HexUtility.outerRadius, HexUtility.outerRadius);
 

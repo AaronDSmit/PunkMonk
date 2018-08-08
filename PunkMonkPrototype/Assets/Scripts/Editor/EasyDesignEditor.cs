@@ -241,7 +241,7 @@ public class EasyDesignEditor : EditorWindow
                 {
                     HexUtility.UpdateScale(HexScale);
 
-                    if (grid.GenerateGrid(mapWidth, mapHeight, traversableColour, inaccessibleColour, connectionColour))
+                    if (grid.GenerateGrid(mapWidth, mapHeight, traversableColour))
                     {
                         confirmMapGeneration = false;
                     }

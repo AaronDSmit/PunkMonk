@@ -8,8 +8,6 @@
 ///
 /// </summary>
 
-// used to indicate damage type, even if it deals zero damage
-public enum Element { fire, earth, lightning, water }
 
 public abstract class Entity : MonoBehaviour
 {
@@ -25,5 +23,5 @@ public abstract class Entity : MonoBehaviour
     }
 
     // damage can be left out if you only want to apply an element.
-    public abstract void TakeDamage(Element a_damageType, float a_damageAmount);
+    public abstract void TakeDamage(float a_damageAmount);
 }

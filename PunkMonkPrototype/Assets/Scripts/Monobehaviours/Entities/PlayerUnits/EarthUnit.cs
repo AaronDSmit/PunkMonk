@@ -31,8 +31,6 @@ public class EarthUnit : Unit
     protected override void Awake()
     {
         base.Awake();
-
-        element = Element.earth;
     }
 
     protected override void DoBasicAttack(Hex[] targetTiles, System.Action start, System.Action finished)
@@ -167,7 +165,7 @@ public class EarthUnit : Unit
                 if (x.CurrentUnit.Team != TEAM.player)
                 {
                     //deal damage to that unit
-                    x.CurrentUnit.TakeDamage(Element.earth, basicDamage);
+                    x.CurrentUnit.TakeDamage(basicDamage);
                 }
             }
         }
@@ -191,7 +189,7 @@ public class EarthUnit : Unit
                 if (x.CurrentUnit.Team != TEAM.player)
                 {
                     //deal damage to that unit
-                    x.CurrentUnit.TakeDamage(Element.earth, specialDamage);
+                    x.CurrentUnit.TakeDamage(specialDamage);
                 }
             }
         }

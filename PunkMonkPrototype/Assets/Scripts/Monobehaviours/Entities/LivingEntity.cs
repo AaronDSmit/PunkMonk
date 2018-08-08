@@ -20,7 +20,7 @@ public class LivingEntity : Entity
         dead = false;
     }
 
-    public override void TakeDamage(Element a_damageType, float a_damageAmount)
+    public override void TakeDamage(float a_damageAmount)
     {
         currentHealth -= a_damageAmount;
 
@@ -50,7 +50,8 @@ public class LivingEntity : Entity
         Destroy(gameObject);
     }
 
-    // Returns entity's dead status
+    #region Getters / Setters
+
     public bool IsDead
     {
         get { return dead; }
@@ -70,4 +71,6 @@ public class LivingEntity : Entity
     {
         get { return currentHealth / maxHealth; }
     }
+
+    #endregion
 }

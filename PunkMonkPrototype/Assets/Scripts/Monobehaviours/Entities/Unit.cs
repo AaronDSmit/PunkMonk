@@ -20,8 +20,6 @@ public class Unit : LivingEntity
 
     #endregion
 
-    protected Element element;
-
     protected bool canMove;
 
     protected bool canAttack;
@@ -30,6 +28,7 @@ public class Unit : LivingEntity
 
     protected System.Action finishedWalking;
 
+    // Used to outline the character
     private Renderer myRenderer;
 
     // Events
@@ -68,10 +67,18 @@ public class Unit : LivingEntity
         }
     }
 
-    public void SnapToGrid(Hex a_targetTile)
+    protected bool HasClearShot(Hex a_currentHex, Hex a_targetHex)
+    {
+        Ray ray = new Ray(a_currentHex.transform.position + Vector3.up, a_targetHex.transform.position - a_currentHex.transform.position);
+        RaycastHit hitInfo;
+
+        return Physics.Raycast(ray, out hitInfo);
+    }
+
+    public void TeleportToHex(Hex a_targetHex)
     {
         currentTile.Exit();
-        currentTile = a_targetTile;
+        currentTile = a_targetHex;
         currentTile.Enter(this);
 
         transform.position = new Vector3(currentTile.transform.position.x, transform.position.y, currentTile.transform.position.z);
@@ -116,6 +123,43 @@ public class Unit : LivingEntity
         }
     }
 
+    protected IEnumerator Walk(List<Hex> path)
+    {
+        int index = 0;
+
+        while (index < path.Count)
+        {
+            Vector3 targetPos = path[index].transform.position;
+            targetPos.y = transform.position.y;
+
+            // yield return StartCoroutine(Turn(targetPos));
+
+            float distance = Vector3.Distance(transform.position, targetPos);
+
+            while (distance > 0.1f)
+            {
+                distance = Vector3.Distance(transform.position, targetPos);
+
+                Vector3 vecBetween = targetPos - transform.position;
+
+                transform.position += vecBetween.normalized * Time.deltaTime * walkSpeed;
+
+                yield return null;
+            }
+
+            transform.position = targetPos;
+
+            currentTile.Exit();
+            currentTile = path[index];
+            currentTile.Enter(this);
+
+            index++;
+        }
+
+        CanMove = false;
+        finishedWalking();
+    }
+
     #region Basic Attack
     public void BasicAttack(Hex[] targetTiles, System.Action start, System.Action finished)
     {
@@ -156,6 +200,8 @@ public class Unit : LivingEntity
 
     #endregion
 
+    #region Getters / Setters
+
     public Action GetAction(int index)
     {
         return actions[index];
@@ -164,11 +210,6 @@ public class Unit : LivingEntity
     public int MoveRange
     {
         get { return moveRange; }
-    }
-
-    public Element Element
-    {
-        get { return element; }
     }
 
     public int AttackRange
@@ -211,6 +252,8 @@ public class Unit : LivingEntity
         }
     }
 
+    #endregion
+
     public virtual void Spawn(Hex a_startingTile)
     {
         currentTile = a_startingTile;
@@ -232,43 +275,6 @@ public class Unit : LivingEntity
         {
             Debug.Log("Couldn't find path");
         }
-    }
-
-    protected IEnumerator Walk(List<Hex> path)
-    {
-        int index = 0;
-
-        while (index < path.Count)
-        {
-            Vector3 targetPos = path[index].transform.position;
-            targetPos.y = transform.position.y;
-
-            // yield return StartCoroutine(Turn(targetPos));
-
-            float distance = Vector3.Distance(transform.position, targetPos);
-
-            while (distance > 0.1f)
-            {
-                distance = Vector3.Distance(transform.position, targetPos);
-
-                Vector3 vecBetween = targetPos - transform.position;
-
-                transform.position += vecBetween.normalized * Time.deltaTime * walkSpeed;
-
-                yield return null;
-            }
-
-            transform.position = targetPos;
-
-            currentTile.Exit();
-            currentTile = path[index];
-            currentTile.Enter(this);
-
-            index++;
-        }
-
-        CanMove = false;
-        finishedWalking();
     }
 
     public void Refresh()

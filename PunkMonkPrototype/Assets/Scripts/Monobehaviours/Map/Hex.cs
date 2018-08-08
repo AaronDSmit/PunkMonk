@@ -201,7 +201,7 @@ public class Hex : Entity
         }
     }
 
-    public override void TakeDamage(Element damageType, float damageAmount)
+    public override void TakeDamage(float damageAmount)
     {
 
     }

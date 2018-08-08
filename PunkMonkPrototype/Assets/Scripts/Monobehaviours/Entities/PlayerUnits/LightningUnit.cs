@@ -46,8 +46,6 @@ public class LightningUnit : Unit
     protected override void Awake()
     {
         base.Awake();
-
-        element = Element.lightning;
     }
 
     protected override void DoBasicAttack(Hex[] targetTiles, System.Action start, System.Action finished)
@@ -198,7 +196,7 @@ public class LightningUnit : Unit
             if (basicTile.CurrentUnit.Team != TEAM.player)
             {
                 //deal damage to that unit
-                basicTile.CurrentUnit.TakeDamage(Element.lightning, basicDamage);
+                basicTile.CurrentUnit.TakeDamage(basicDamage);
             }
         }
         //call the finished call back function

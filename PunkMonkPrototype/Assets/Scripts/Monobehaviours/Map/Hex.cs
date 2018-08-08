@@ -2,12 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Hex class makes up each tile within the grid.
+/// 
+/// 1) Hex is an entity.
+/// 2) Hexes are stored using offset coordinates and can convert to and from cube coordinates.
+/// 3) Hexes have 3 spriteRenderer's, 1 to display the border, 1 to show permanant highlight and 1 to show mouse hover highlight
+/// 4) Neighbours are stored in order of their HexDirection and can be accessed by a HexDirection
+/// 
+/// </summary>
+
 [SelectionBase]
 public class Hex : Entity
 {
     [HideInInspector]
     [SerializeField] private Hex[] neighbours;
 
+    [HideInInspector]
     [SerializeField] private List<Hex> allNeighbours;
 
     [HideInInspector]
@@ -42,6 +53,18 @@ public class Hex : Entity
         }
 
         highlight.color = a_colour;
+    }
+
+    public void ShowHighlight(bool a_show, Color a_traversable, Color a_inaccessable)
+    {
+        if (!highlight)
+        {
+            highlight = GetComponentsInChildren<SpriteRenderer>()[1];
+        }
+
+        highlight.enabled = a_show;
+
+        highlight.color = (IsTraversable) ? a_traversable : a_inaccessable;
     }
 
     public OffsetCoord Coordinates
@@ -208,8 +231,6 @@ public class Hex : Entity
 
     #endregion
 
-    // https://answers.unity.com/questions/283271/material-leak-in-editor.html?childToView=322397#answer-322397
-
     private void Awake()
     {
         if (transform.childCount == 0)
@@ -243,17 +264,5 @@ public class Hex : Entity
                 }
             }
         }
-    }
-
-    public void ShowHighlight(bool a_show, Color a_traversable, Color a_inaccessable)
-    {
-        if (!highlight)
-        {
-            highlight = GetComponentsInChildren<SpriteRenderer>()[1];
-        }
-
-        highlight.enabled = a_show;
-
-        highlight.color = (IsTraversable) ? a_traversable : a_inaccessable;
     }
 }

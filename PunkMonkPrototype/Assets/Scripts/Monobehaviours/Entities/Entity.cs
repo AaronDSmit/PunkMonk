@@ -4,7 +4,7 @@
 /// Base class for any game object that can take damage:
 /// 
 /// 1) Object must belong to a team.
-/// 2) Object must implement TakeDamage which takes in an element and optional damage amount.
+/// 2) Object must implement TakeDamage which takes in a damage amount.
 ///
 /// </summary>
 

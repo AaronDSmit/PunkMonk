@@ -23,8 +23,6 @@ public class IntroMenu : MonoBehaviour
 
     public float progress = 0f;
 
-    private bool showingCredits = false;
-
     public bool isDone = false;
 
     private void Start()

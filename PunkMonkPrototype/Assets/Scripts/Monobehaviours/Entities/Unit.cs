@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Base class for any game object that can take damage AND die of a result of reaching zero life.
+/// 
+/// </summary>
+
 public class Unit : LivingEntity
 {
     #region Inspector Variables
@@ -14,7 +19,7 @@ public class Unit : LivingEntity
 
     [SerializeField] protected int specialAttackRange;
 
-    [SerializeField] protected float turnTime;
+    [SerializeField] protected float rotationTIme;
 
     [SerializeField] protected float walkSpeed;
 
@@ -72,7 +77,7 @@ public class Unit : LivingEntity
         Ray ray = new Ray(a_currentHex.transform.position + Vector3.up, a_targetHex.transform.position - a_currentHex.transform.position);
         RaycastHit hitInfo;
 
-        return Physics.Raycast(ray, out hitInfo);
+        return !Physics.Raycast(ray, out hitInfo);
     }
 
     public void TeleportToHex(Hex a_targetHex)
@@ -99,8 +104,36 @@ public class Unit : LivingEntity
             myRenderer.material.SetFloat("_UseOutline", 0);
         }
     }
+    public virtual void Spawn(Hex a_startingTile)
+    {
+        currentTile = a_startingTile;
 
-    protected IEnumerator Turn(Vector3 targetPos)
+        currentTile.Enter(this);
+    }
+
+    public void MoveTo(Hex a_targetTile, System.Action a_finished)
+    {
+        finishedWalking = a_finished;
+
+        List<Hex> path = Navigation.FindPath(currentTile, a_targetTile);
+
+        if (path != null)
+        {
+            StartCoroutine(Walk(path));
+        }
+        else
+        {
+            Debug.Log("Couldn't find path");
+        }
+    }
+
+    public void Refresh()
+    {
+        CanAttack = true;
+        CanMove = true;
+    }
+
+    protected IEnumerator Rotate(Vector3 targetPos)
     {
         Vector3 targetDirection = targetPos - transform.position;
 
@@ -113,7 +146,7 @@ public class Unit : LivingEntity
         while (t < 1)
         {
             currentLerpTime += Time.deltaTime;
-            t = currentLerpTime / turnTime;
+            t = currentLerpTime / rotationTIme;
 
             //rotate us over time according to speed until we are in the required rotation
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, t);
@@ -168,7 +201,7 @@ public class Unit : LivingEntity
 
     private IEnumerator DelayedBasicAction(Hex[] targetTiles, System.Action start, System.Action finished)
     {
-        yield return StartCoroutine(Turn(targetTiles[0].transform.position));
+        yield return StartCoroutine(Rotate(targetTiles[0].transform.position));
 
         DoBasicAttack(targetTiles, start, finished);
     }
@@ -188,7 +221,7 @@ public class Unit : LivingEntity
 
     private IEnumerator DelayedSpecialAction(Hex[] targetTiles, System.Action start, System.Action finished)
     {
-        yield return StartCoroutine(Turn(targetTiles[0].transform.position));
+        yield return StartCoroutine(Rotate(targetTiles[0].transform.position));
 
         DoSpecialAttack(targetTiles, start, finished);
     }
@@ -253,33 +286,4 @@ public class Unit : LivingEntity
     }
 
     #endregion
-
-    public virtual void Spawn(Hex a_startingTile)
-    {
-        currentTile = a_startingTile;
-
-        currentTile.Enter(this);
-    }
-
-    public void MoveTo(Hex a_targetTile, System.Action a_finished)
-    {
-        finishedWalking = a_finished;
-
-        List<Hex> path = Navigation.FindPath(currentTile, a_targetTile);
-
-        if (path != null)
-        {
-            StartCoroutine(Walk(path));
-        }
-        else
-        {
-            Debug.Log("Couldn't find path");
-        }
-    }
-
-    public void Refresh()
-    {
-        CanAttack = true;
-        CanMove = true;
-    }
 }

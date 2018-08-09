@@ -87,7 +87,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: bf790445505525c48848e1f3af80c496, type: 2}
+  - {fileID: 2100000, guid: 666ac3fd18dc7b1499efbb9b9e6d7331, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -142,16 +142,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   team: 1
   maxHealth: 100
+  dissolveMat: {fileID: 2100000, guid: 25b0cd8d1848b1f4a83e3fa96f6d0869, type: 2}
+  deathAnimationTime: 1
   actions: []
-  moveRange: 0
-  attackRange: 0
+  moveRange: 1
+  attackRange: 1
   specialAttackRange: 0
-  turnTime: 0
+  rotationTIme: 0
   walkSpeed: 0
-  thing: 0
-  player: {fileID: 0}
   damage: 0
-  movement: 0
+  damgeDelayTimer: 0
 --- !u!136 &136694835722273770
 CapsuleCollider:
   m_ObjectHideFlags: 1

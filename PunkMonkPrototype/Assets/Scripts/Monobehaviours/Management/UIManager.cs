@@ -11,7 +11,7 @@ public class UIManager : MonoBehaviour
 
     private Button specialAttack;
 
-    private SlidingUI battleUI;
+    private FadingUI battleUI;
 
     private SlidingUI endTurnButton;
 
@@ -46,7 +46,7 @@ public class UIManager : MonoBehaviour
 
         if (canvas)
         {
-            battleUI = canvas.GetChild(0).GetComponent<SlidingUI>();
+            battleUI = canvas.GetChild(0).GetComponent<FadingUI>();
 
             profiles = battleUI.transform.GetChild(0).GetComponent<ProfileSwitcher>();
 
@@ -74,6 +74,8 @@ public class UIManager : MonoBehaviour
 
         // Subscribe to game state
         Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
+
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
 
     private void GameStateChanged(Game_state a_oldstate, Game_state a_newstate)
@@ -158,7 +160,7 @@ public class UIManager : MonoBehaviour
 
     public void SelectAction(int actionIndex)
     {
-        // player.SelectAction(actionIndex);
+        player.SelectAction(actionIndex);
     }
 
     private void TurnEvent(Turn_state a_newState, TEAM a_team, int a_turnNumber)
@@ -167,12 +169,12 @@ public class UIManager : MonoBehaviour
         {
             if (a_newState == Turn_state.start)
             {
-                battleUI.Toggle();
+                battleUI.FadeIn();
                 endTurnButton.Toggle();
             }
             else if (a_newState == Turn_state.end)
             {
-                battleUI.Toggle();
+                battleUI.FadeOut();
                 endTurnButton.Toggle();
             }
         }

@@ -87,7 +87,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: bf790445505525c48848e1f3af80c496, type: 2}
+  - {fileID: 2100000, guid: 666ac3fd18dc7b1499efbb9b9e6d7331, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -141,7 +141,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   team: 0
-  startHealth: 100
+  maxHealth: 100
+  dissolveMat: {fileID: 2100000, guid: 25b0cd8d1848b1f4a83e3fa96f6d0869, type: 2}
+  deathAnimationTime: 1
   actions:
   - {fileID: 11400000, guid: 2f4429e83ae258647a203d36c3f14919, type: 2}
   - {fileID: 11400000, guid: bf99ef183f7535c4bb59f007aa0e16dd, type: 2}
@@ -149,7 +151,7 @@ MonoBehaviour:
   moveRange: 3
   attackRange: 1
   specialAttackRange: 5
-  turnTime: 0.2
+  rotationTIme: 0
   walkSpeed: 5
   specialDamage: 1
   specialheight: 5
@@ -239,11 +241,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  basicDamage: 0
+  basicDamage: 100
   basicDamgeDelayTimer: 0
-  jumpHeight: 7
-  jumpSpeed: 1.5
-  fallSpeed: 2
 --- !u!136 &136876744524752574
 CapsuleCollider:
   m_ObjectHideFlags: 1

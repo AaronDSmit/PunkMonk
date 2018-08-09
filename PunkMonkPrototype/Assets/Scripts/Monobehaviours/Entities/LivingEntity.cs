@@ -6,9 +6,15 @@ public class LivingEntity : Entity
 {
     [SerializeField] protected float maxHealth = 100;
 
+    [SerializeField] private Material dissolveMat;
+
+    [SerializeField] private float deathAnimationTime;
+
     protected float currentHealth;
 
     protected bool dead;
+
+    protected Renderer myRenderer;
 
     // event
     public delegate void Dead(LivingEntity a_entity);
@@ -17,6 +23,8 @@ public class LivingEntity : Entity
     protected virtual void Awake()
     {
         currentHealth = maxHealth;
+
+        myRenderer = GetComponentInChildren<Renderer>();
         dead = false;
     }
 
@@ -46,6 +54,26 @@ public class LivingEntity : Entity
         }
 
         // play Death animation/ particle effects
+
+        StartCoroutine(AnimateDeath());
+    }
+
+    private IEnumerator AnimateDeath()
+    {
+        myRenderer.material = dissolveMat;
+
+        float currentLerpTime = 0;
+        float t = 0;
+
+        while (t < 1)
+        {
+            currentLerpTime += Time.deltaTime;
+            t = currentLerpTime / deathAnimationTime;
+
+            myRenderer.material.SetFloat("_DissolveAmount", Mathf.Lerp(0, 1, t));
+
+            yield return null;
+        }
 
         Destroy(gameObject);
     }

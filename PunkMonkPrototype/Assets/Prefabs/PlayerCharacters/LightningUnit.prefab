@@ -88,7 +88,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: bf790445505525c48848e1f3af80c496, type: 2}
+  - {fileID: 2100000, guid: 666ac3fd18dc7b1499efbb9b9e6d7331, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -143,6 +143,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   team: 0
   maxHealth: 100
+  dissolveMat: {fileID: 2100000, guid: 25b0cd8d1848b1f4a83e3fa96f6d0869, type: 2}
+  deathAnimationTime: 1
   actions:
   - {fileID: 11400000, guid: 2f4429e83ae258647a203d36c3f14919, type: 2}
   - {fileID: 11400000, guid: c8d6d920f1429604189ab5d760244910, type: 2}
@@ -150,16 +152,19 @@ MonoBehaviour:
   moveRange: 3
   attackRange: 5
   specialAttackRange: 5
-  turnTime: 0.2
+  rotationTIme: 0
   walkSpeed: 5
   lightningPrefab: {fileID: 106988, guid: 15dec7b07032b2f4aa6f855bfbe120f7, type: 2}
-  basicDamage: 1
-  basicDamgeDelayTimer: 1
-  electricityLifetime: 3
+  basicDamage: 100
+  basicDamgeDelayTimer: 0.9
+  basicElectricityLifetime: 1
   specialRehitEnemies: 1
   specialRange: 5
   specialAmountOfBounces: 3
-  specialLightningTimer: 3
+  specialLightningLifeTime: 1
+  specialBounceDamage: 1
+  specialFinalDamage: 1
+  specialDelayTime: 1
 --- !u!114 &114441757422822586
 MonoBehaviour:
   m_ObjectHideFlags: 1

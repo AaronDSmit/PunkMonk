@@ -33,9 +33,6 @@ public class Unit : LivingEntity
 
     protected System.Action finishedWalking;
 
-    // Used to outline the character
-    private Renderer myRenderer;
-
     // Events
     public delegate void OnVariableChangeDelegate(bool a_newValue);
     public event OnVariableChangeDelegate OnCanAttackChange;
@@ -45,8 +42,6 @@ public class Unit : LivingEntity
     {
         base.Awake();
 
-        myRenderer = GetComponentInChildren<Renderer>();
-
         canAttack = true;
         canMove = true;
     }
@@ -55,19 +50,19 @@ public class Unit : LivingEntity
     {
         if (a_isHighlited)
         {
-            myRenderer.material.SetFloat("_UseOutline", 1);
-            myRenderer.material.SetFloat("_OutlineWidth", 0.06f);
-            myRenderer.material.SetColor("_OutlineColour", a_outlineColour);
+            myRenderer.material.SetFloat("_UseHighlight", 1);
+            myRenderer.material.SetFloat("_HighlightAmount", 0.06f);
+            myRenderer.material.SetColor("_HighlightColour", a_outlineColour);
         }
         else
         {
             if (isSelected)
             {
-                myRenderer.material.SetFloat("_OutlineWidth", 0.03f);
+                myRenderer.material.SetFloat("_HighlightAmount", 0.03f);
             }
             else
             {
-                myRenderer.material.SetInt("_UseOutline", 0);
+                myRenderer.material.SetInt("_UseHighlight", 0);
             }
         }
     }
@@ -141,13 +136,13 @@ public class Unit : LivingEntity
 
         if (isSelected)
         {
-            myRenderer.material.SetFloat("_UseOutline", 1);
-            myRenderer.material.SetFloat("_OutlineWidth", 0.04f);
-            myRenderer.material.SetColor("_OutlineColour", a_outlineColour);
+            myRenderer.material.SetFloat("_UseHighlight", 1);
+            myRenderer.material.SetFloat("_HighlightAmount", 0.04f);
+            myRenderer.material.SetColor("_HighlightColour", a_outlineColour);
         }
         else
         {
-            myRenderer.material.SetFloat("_UseOutline", 0);
+            myRenderer.material.SetFloat("_UseHighlight", 0);
         }
     }
     public virtual void Spawn(Hex a_startingTile)

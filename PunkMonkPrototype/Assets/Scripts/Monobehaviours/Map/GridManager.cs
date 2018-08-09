@@ -121,7 +121,7 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    public Hex[] GetTilesWithinDistance(Hex centerTile, int range, bool ignoreBlockedTiles = false)
+    public Hex[] GetTilesWithinDistance(Hex centerTile, int range, bool CheckIfTraversable = true)
     {
         List<Hex> openList = new List<Hex>();
         List<Hex> returnList = new List<Hex>();
@@ -138,9 +138,9 @@ public class GridManager : MonoBehaviour
 
             foreach (Hex neighbour in currentTile.Neighbours)
             {
-                if (ignoreBlockedTiles)
+                if (CheckIfTraversable)
                 {
-                    if (!returnList.Contains(neighbour))
+                    if (neighbour.IsTraversable && !returnList.Contains(neighbour))
                     {
                         neighbour.GScore = HexUtility.Distance(currentTile, neighbour) + currentTile.GScore;
                         if (neighbour.GScore < range + 1)
@@ -149,8 +149,9 @@ public class GridManager : MonoBehaviour
                             returnList.Add(neighbour);
                         }
                     }
+
                 }
-                else if (neighbour.IsTraversable && !returnList.Contains(neighbour))
+                else if (!returnList.Contains(neighbour))
                 {
                     neighbour.GScore = HexUtility.Distance(currentTile, neighbour) + currentTile.GScore;
                     if (neighbour.GScore < range + 1)

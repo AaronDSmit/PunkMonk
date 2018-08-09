@@ -115,6 +115,8 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
+            CancelCurrentAction();
+
             if (selectedUnit == earthUnit)
             {
                 SelectUnit(lightningUnit);
@@ -127,12 +129,17 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            SelectUnit(earthUnit);
+            SelectAction(0);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            SelectUnit(lightningUnit);
+            SelectAction(1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            SelectAction(2);
         }
     }
 
@@ -295,14 +302,19 @@ public class PlayerController : MonoBehaviour
         // Right click cancels current action
         if (Input.GetMouseButton(1))
         {
-            lineRenderer.positionCount = 0;
-            currentRuleset = selectionRuleset;
-            RemoveHighlightedTiles();
+            CancelCurrentAction();
+        }
+    }
 
-            if (tileUnderMouse)
-            {
-                tileUnderMouse.MouseExit();
-            }
+    private void CancelCurrentAction()
+    {
+        lineRenderer.positionCount = 0;
+        currentRuleset = selectionRuleset;
+        RemoveHighlightedTiles();
+
+        if (tileUnderMouse)
+        {
+            tileUnderMouse.MouseExit();
         }
     }
 
@@ -363,7 +375,7 @@ public class PlayerController : MonoBehaviour
     {
         if (currentRuleset.actionType == ActionType.movement)
         {
-            Hex[] area = grid.GetTilesWithinDistance(selectedUnit.CurrentTile, a_range, false);
+            Hex[] area = grid.GetTilesWithinDistance(selectedUnit.CurrentTile, a_range);
 
             foreach (Hex tile in area)
             {
@@ -381,7 +393,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            Hex[] area = grid.GetTilesWithinDistance(selectedUnit.CurrentTile, a_range, true);
+            Hex[] area = grid.GetTilesWithinDistance(selectedUnit.CurrentTile, a_range, false);
 
             foreach (Hex tile in area)
             {
@@ -578,7 +590,7 @@ public class PlayerController : MonoBehaviour
 
         tilesAffectByAction.Add(a_targetTile);
 
-        Hex[] tilesInRange = grid.GetTilesWithinDistance(a_targetTile, 1, true);
+        Hex[] tilesInRange = grid.GetTilesWithinDistance(a_targetTile, 1, false);
 
         for (int i = 0; i < tilesInRange.Length; i++)
         {

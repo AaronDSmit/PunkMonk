@@ -20,6 +20,19 @@ public static class HexDirectionUtility
         return direction == HexDirection.NW ? HexDirection.NE : (direction + 1);
     }
 
+    public static HexDirection DirectionFromNeighbour(Hex a_currentHex, Hex a_neighbour)
+    {
+        for (int i = 0; i < DirectionCount(); i++)
+        {
+            if (a_currentHex.GetNeighbour((HexDirection)i) == a_neighbour)
+            {
+                return (HexDirection)i;
+            }
+        }
+
+        return HexDirection.W;
+    }
+
     public static string ToString(this HexDirection direction)
     {
         switch (direction)

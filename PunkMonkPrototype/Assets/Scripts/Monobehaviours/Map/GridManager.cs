@@ -121,7 +121,7 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    public Hex[] GetTilesWithinDistance(Hex centerTile, int range, bool CheckIfTraversable = true)
+    public List<Hex> GetTilesWithinDistance(Hex centerTile, int range, bool CheckIfTraversable = true)
     {
         List<Hex> openList = new List<Hex>();
         List<Hex> returnList = new List<Hex>();
@@ -170,7 +170,7 @@ public class GridManager : MonoBehaviour
             hex.GScore = 0;
         }
 
-        return returnList.ToArray();
+        return returnList;
     }
 
     public Hex GetHexFromPosition(Vector3 a_position)

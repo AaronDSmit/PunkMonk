@@ -10,20 +10,24 @@ public static class HexUtility
     {
         outerRadius = a_scale;
         innerRadius = outerRadius * 0.866025404f;
+
+        corners = new Vector3[7];
+
+        corners[0] = new Vector3(0f, 0f, outerRadius);
+        corners[1] = new Vector3(innerRadius, 0f, 0.5f * outerRadius);
+        corners[2] = new Vector3(innerRadius, 0f, -0.5f * outerRadius);
+        corners[3] = new Vector3(0f, 0f, -outerRadius);
+        corners[4] = new Vector3(-innerRadius, 0f, -0.5f * outerRadius);
+        corners[5] = new Vector3(-innerRadius, 0f, 0.5f * outerRadius);
+        corners[6] = new Vector3(0f, 0f, outerRadius);
     }
 
-    public static Vector3[] corners = {
-        new Vector3(0f, 0f, outerRadius),
-        new Vector3(innerRadius, 0f, 0.5f * outerRadius),
-        new Vector3(innerRadius, 0f, -0.5f * outerRadius),
-        new Vector3(0f, 0f, -outerRadius),
-        new Vector3(-innerRadius, 0f, -0.5f * outerRadius),
-        new Vector3(-innerRadius, 0f, 0.5f * outerRadius),
-        new Vector3(0f, 0f, outerRadius)
-    };
+    public static Vector3[] corners;
 
     public static Vector3 GetFirstCorner(HexDirection direction)
     {
+        Vector3 output = corners[(int)direction];
+
         return corners[(int)direction];
     }
 

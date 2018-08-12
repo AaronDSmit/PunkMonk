@@ -130,6 +130,8 @@ public class EasyDesignEditor : EditorWindow
                     tile.inaccessibleAlpha = inaccessibleAlpha;
                 }
             }
+
+            HexUtility.UpdateScale(HexScale);
         }
         else if (state == PlayModeStateChange.EnteredEditMode)
         {

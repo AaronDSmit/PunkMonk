@@ -375,7 +375,7 @@ public class PlayerController : MonoBehaviour
     {
         if (currentRuleset.actionType == ActionType.movement)
         {
-            Hex[] area = grid.GetTilesWithinDistance(selectedUnit.CurrentTile, a_range);
+            List<Hex> area = grid.GetTilesWithinDistance(selectedUnit.CurrentTile, a_range);
 
             foreach (Hex tile in area)
             {
@@ -393,7 +393,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            Hex[] area = grid.GetTilesWithinDistance(selectedUnit.CurrentTile, a_range, false);
+            List<Hex> area = grid.GetTilesWithinDistance(selectedUnit.CurrentTile, a_range, false);
 
             foreach (Hex tile in area)
             {
@@ -590,9 +590,9 @@ public class PlayerController : MonoBehaviour
 
         tilesAffectByAction.Add(a_targetTile);
 
-        Hex[] tilesInRange = grid.GetTilesWithinDistance(a_targetTile, 1, false);
+        List<Hex> tilesInRange = grid.GetTilesWithinDistance(a_targetTile, 1, false);
 
-        for (int i = 0; i < tilesInRange.Length; i++)
+        for (int i = 0; i < tilesInRange.Count; i++)
         {
             tilesAffectByAction.Add(tilesInRange[i]);
         }

@@ -54,7 +54,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224032288350751272}
-  - component: {fileID: 114427600941043286}
+  - component: {fileID: 114470830249854214}
   m_Layer: 5
   m_Name: BattleHUD
   m_TagString: Untagged
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 222673135469801606}
   - component: {fileID: 114324513415725518}
   - component: {fileID: 114145617712752594}
-  - component: {fileID: 114491775131361354}
+  - component: {fileID: 114361620930696278}
   m_Layer: 5
   m_Name: EndTurnButton
   m_TagString: Untagged
@@ -628,6 +628,18 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114361620930696278
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1282388814872658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c041160ac00b2134ca69850543fce266, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeTime: 0.7
 --- !u!114 &114363909929614214
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -728,24 +740,6 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &114427600941043286
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1054034539581962}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2932fcb174f4c4a4b916b8de7c4683ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startLocation: {x: 0, y: -150}
-  targetLocation: {x: 0, y: 0}
-  overShootTarget: 1
-  overShootOnReturn: 0
-  disableButtonsDuringAnim: 1
-  overShootAmount: {x: 0, y: 20}
-  animationTime: 0.8
 --- !u!114 &114454599151188080
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -760,24 +754,18 @@ MonoBehaviour:
   animationTime: 0.4
   primaryScale: {x: 1, y: 1}
   secondaryScale: {x: 0.8, y: 0.8}
---- !u!114 &114491775131361354
+--- !u!114 &114470830249854214
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1282388814872658}
+  m_GameObject: {fileID: 1054034539581962}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2932fcb174f4c4a4b916b8de7c4683ce, type: 3}
+  m_Script: {fileID: 11500000, guid: c041160ac00b2134ca69850543fce266, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startLocation: {x: -10, y: -50}
-  targetLocation: {x: -10, y: 10}
-  overShootTarget: 1
-  overShootOnReturn: 0
-  disableButtonsDuringAnim: 1
-  overShootAmount: {x: 0, y: 10}
-  animationTime: 0.8
+  fadeTime: 0.7
 --- !u!114 &114572304935561472
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -13,7 +13,7 @@ public class UIManager : MonoBehaviour
 
     private FadingUI battleUI;
 
-    private SlidingUI endTurnButton;
+    private FadingUI endTurnButton;
 
     private Image fadePlane;
 
@@ -57,7 +57,7 @@ public class UIManager : MonoBehaviour
             fadePlane = canvas.Find("FadePlane").GetComponent<Image>();
             loadingText = fadePlane.transform.GetComponentInChildren<Text>();
 
-            endTurnButton = canvas.transform.Find("EndTurnButton").GetComponent<SlidingUI>();
+            endTurnButton = canvas.transform.Find("EndTurnButton").GetComponent<FadingUI>();
 
             if (fadePlane)
             {
@@ -170,12 +170,12 @@ public class UIManager : MonoBehaviour
             if (a_newState == Turn_state.start)
             {
                 battleUI.FadeIn();
-                endTurnButton.Toggle();
+                endTurnButton.FadeIn();
             }
             else if (a_newState == Turn_state.end)
             {
                 battleUI.FadeOut();
-                endTurnButton.Toggle();
+                endTurnButton.FadeOut();
             }
         }
     }

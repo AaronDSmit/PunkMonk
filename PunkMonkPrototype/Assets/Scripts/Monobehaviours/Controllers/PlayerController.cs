@@ -48,6 +48,12 @@ public class PlayerController : MonoBehaviour
 
     private Hex lightningSnapHex;
 
+    private int encounterKillLimit;
+
+    private int encounterKillCount;
+
+    private bool trackingKills = false;
+
     private void Awake()
     {
         Manager.instance.TurnController.TurnEvent += TurnEvent;
@@ -99,6 +105,13 @@ public class PlayerController : MonoBehaviour
         {
             Debug.LogError("No lightning unit found!");
         }
+    }
+
+    public int EncounterKillLimit
+    {
+        get { return encounterKillLimit; }
+
+        set { encounterKillLimit = value; }
     }
 
     private void Update()
@@ -347,7 +360,7 @@ public class PlayerController : MonoBehaviour
                 return;
             }
 
-            selectedUnit.Select(false, currentRuleset.ValidHighlightColour);
+            DeselectUnit();
         }
 
         selectedUnit = a_newSelectedUnit;
@@ -455,12 +468,38 @@ public class PlayerController : MonoBehaviour
             canInteract = true;
             SelectUnit(earthUnit);
         }
+        else
+        {
+            DeselectUnit();
+        }
+    }
+
+    // Temp code that would be removed with object pooling
+    public void SubscribeToUnitDeath(LivingEntity a_livingEntity)
+    {
+        a_livingEntity.OnDeath += EnemyDied;
+    }
+
+    public void EnemyDied(LivingEntity a_entity)
+    {
+        if (trackingKills)
+        {
+            encounterKillCount++;
+
+            if (encounterKillCount >= EncounterKillLimit)
+            {
+                Manager.instance.StateController.ChangeStateAfterFade(Game_state.overworld);
+            }
+        }
     }
 
     public void SetUnitSnapHexes(Hex a_earthHex, Hex a_lightningHex)
     {
         earthSnapHex = a_earthHex;
         lightningSnapHex = a_lightningHex;
+
+        trackingKills = (EncounterKillLimit > 0);
+        encounterKillCount = 0;
     }
 
     public void SelectAction(int actionIndex)

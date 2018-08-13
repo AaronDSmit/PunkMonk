@@ -5,12 +5,16 @@ using UnityEngine;
 public class StateTransitionPoint : MonoBehaviour
 {
     [SerializeField] private Game_state targetState;
+    [SerializeField] private Game_state fromState;
 
     [HideInInspector]
     [SerializeField] public bool drawText;
 
     [HideInInspector]
     [SerializeField] public int index;
+
+    [HideInInspector]
+    [SerializeField] public int numberToKill;
 
     [HideInInspector]
     [SerializeField] private Hex earthHex;
@@ -69,15 +73,26 @@ public class StateTransitionPoint : MonoBehaviour
         set { targetState = value; }
     }
 
+    public Game_state CurrentState
+    {
+        get { return fromState; }
+
+        set { fromState = value; }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("EarthUnit"))
+        if (other.CompareTag("EarthUnit") || other.CompareTag("LightningUnit"))
         {
-            if (Manager.instance.StateController.CurrentGameState == Game_state.overworld)
+            if (Manager.instance.StateController.CurrentGameState == fromState)
             {
-                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().SetUnitSnapHexes(earthHex, lightningHex);
+                PlayerController player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+                player.EncounterKillLimit = numberToKill;
+                player.SetUnitSnapHexes(earthHex, lightningHex);
 
                 Manager.instance.StateController.ChangeStateAfterFade(targetState);
+
+                Destroy(this);
             }
         }
     }

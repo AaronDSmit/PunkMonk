@@ -50,6 +50,9 @@ public class Spawner : MonoBehaviour
 
             Unit unit = Instantiate(unitToSpawn, spawnPos, Quaternion.identity);
             unit.Spawn(currentHex);
+
+            PlayerController player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+            player.SubscribeToUnitDeath(unit);
         }
     }
 

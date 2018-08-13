@@ -54,7 +54,9 @@ public class EasyDesignEditor : EditorWindow
     [SerializeField] private int turnToSpawn;
     [SerializeField] private int everyXTurns;
     [SerializeField] private int loadLevel = 0;
-    [SerializeField] private Game_state state = Game_state.battle;
+    [SerializeField] private Game_state targetState = Game_state.overworld;
+    [SerializeField] private Game_state currentState = Game_state.battle;
+    [SerializeField] private int numberToKill;
     [SerializeField] private int stateIndex;
     [SerializeField] private int spawnIndex;
 
@@ -1111,7 +1113,7 @@ public class EasyDesignEditor : EditorWindow
 
             if (GUILayout.Button("Remove Trigger"))
             {
-               
+
             }
 
             GUI.backgroundColor = oldColor;
@@ -1217,6 +1219,28 @@ public class EasyDesignEditor : EditorWindow
 
             EditorGUILayout.BeginHorizontal();
 
+            GUILayout.Label("From ");
+
+            currentState = (Game_state)EditorGUILayout.EnumPopup(currentState);
+
+            GUILayout.Label(" To ");
+
+            targetState = (Game_state)EditorGUILayout.EnumPopup(targetState);
+
+            GUILayout.Label("ID:");
+
+            stateIndex = EditorGUILayout.IntField(stateIndex);
+
+            EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.BeginHorizontal();
+
+            if (targetState == Game_state.battle)
+            {
+                GUILayout.Label("Enemies to kill ");
+                numberToKill = EditorGUILayout.IntField(numberToKill);
+            }
+
             // if the selected tile has a scene transition change it rather than add a new one
             if (Selection.gameObjects.Length == 1 && Selection.gameObjects[0].GetComponentInChildren<StateTransitionPoint>())
             {
@@ -1226,7 +1250,10 @@ public class EasyDesignEditor : EditorWindow
                 if (GUILayout.Button("Change Transition"))
                 {
                     StateTransitionPoint sceneTransition = Selection.gameObjects[0].GetComponentInChildren<StateTransitionPoint>();
-                    sceneTransition.TargetState = state;
+                    sceneTransition.TargetState = targetState;
+                    sceneTransition.CurrentState = currentState;
+                    sceneTransition.numberToKill = numberToKill;
+
                     sceneTransition.index = stateIndex;
                 }
 
@@ -1244,7 +1271,10 @@ public class EasyDesignEditor : EditorWindow
                     GameObject transitionGO = new GameObject("stateTransition");
 
                     StateTransitionPoint sceneTransition = transitionGO.AddComponent<StateTransitionPoint>();
-                    sceneTransition.TargetState = state;
+                    sceneTransition.TargetState = targetState;
+                    sceneTransition.CurrentState = currentState;
+                    sceneTransition.numberToKill = numberToKill;
+
                     sceneTransition.drawText = true;
                     sceneTransition.index = stateIndex;
 
@@ -1257,14 +1287,6 @@ public class EasyDesignEditor : EditorWindow
 
                 GUI.backgroundColor = oldColor;
             }
-
-            GUILayout.Label("State:");
-
-            state = (Game_state)EditorGUILayout.EnumPopup(state);
-
-            GUILayout.Label("ID:");
-
-            stateIndex = EditorGUILayout.IntField(stateIndex);
 
             EditorGUILayout.EndHorizontal();
 

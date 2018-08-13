@@ -24,6 +24,8 @@ public class AI_Agent : Unit
     {
         base.Awake();
 
+        Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
+
         // Setup the actions
         foreach (AI_Action action in actions)
         {
@@ -59,6 +61,11 @@ public class AI_Agent : Unit
         for (int i = 0; i < 2; i++)
         {
             Unit currentPlayer = players[i];
+
+            // Ignore dead players
+            if (currentPlayer.IsDead)
+                continue;
+
             // Find all of the tiles within attack range
             List<Hex> tiles = new List<Hex>(a_grid.GetTilesWithinDistance(currentPlayer.CurrentTile, attackRange));
             foreach (Hex targetTile in tiles)
@@ -106,7 +113,7 @@ public class AI_Agent : Unit
         yield return new WaitUntil(() => isPerformingAction == false);
 
         // Attack the player, checking if it is in range && if we have a clear shot
-        if (HexUtility.Distance(currentTile, players[playerToAttack].CurrentTile) <= attackRange && HasClearShot(this, players[playerToAttack]))
+        if (HexUtility.Distance(currentTile, players[playerToAttack].CurrentTile) <= attackRange)// && HasClearShot(this, players[playerToAttack]))
         {
             isPerformingAction = true;
             BasicAttack(new Hex[] { players[playerToAttack].CurrentTile }, null, FinishedAction);
@@ -151,4 +158,11 @@ public class AI_Agent : Unit
         turnComplete = false;
     }
 
+    private void GameStateChanged(Game_state a_oldstate, Game_state a_newstate)
+    {
+        if (a_oldstate == Game_state.battle && a_newstate != Game_state.battle)
+        {
+            Die();
+        }
+    }
 }

@@ -22,6 +22,8 @@ public class GridManager : MonoBehaviour
     [SerializeField]
     private Color traversableColour;
 
+    [SerializeField] private GameObject overlay;
+
     private void Awake()
     {
         Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
@@ -109,6 +111,11 @@ public class GridManager : MonoBehaviour
             {
                 tile.ShowOverlay(true);
             }
+
+            if(overlay)
+            {
+                overlay.SetActive(true);
+            }
         }
         else
         {
@@ -117,6 +124,11 @@ public class GridManager : MonoBehaviour
             foreach (Hex tile in tiles)
             {
                 tile.ShowOverlay(false);
+            }
+
+            if (overlay)
+            {
+                overlay.SetActive(false);
             }
         }
     }

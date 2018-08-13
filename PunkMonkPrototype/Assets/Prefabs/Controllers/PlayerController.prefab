@@ -55,8 +55,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectionRuleset: {fileID: 11400000, guid: 0a213320bf2f3b54dbe93f82d8c1341e, type: 2}
   currentRuleset: {fileID: 0}
-  angle: 0
-  snapAngle: 0
 --- !u!114 &114752336446416580
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -83,7 +81,7 @@ LineRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 2100000, guid: bf790445505525c48848e1f3af80c496, type: 2}
+  - {fileID: 2100000, guid: 25b0cd8d1848b1f4a83e3fa96f6d0869, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

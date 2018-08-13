@@ -87,7 +87,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 666ac3fd18dc7b1499efbb9b9e6d7331, type: 2}
+  - {fileID: 2100000, guid: 40364a3678fcc4f4dbd9b9c4900c38e2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -148,9 +148,9 @@ MonoBehaviour:
   moveRange: 1
   attackRange: 1
   specialAttackRange: 0
-  rotationTIme: 0
-  walkSpeed: 0
-  damage: 0
+  rotationTime: 0
+  walkSpeed: 10
+  damage: 1
   damgeDelayTimer: 0
 --- !u!136 &136694835722273770
 CapsuleCollider:

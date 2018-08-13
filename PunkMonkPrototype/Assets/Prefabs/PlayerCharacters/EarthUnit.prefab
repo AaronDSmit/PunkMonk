@@ -87,7 +87,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 666ac3fd18dc7b1499efbb9b9e6d7331, type: 2}
+  - {fileID: 2100000, guid: 21a97b0744932344bb09bb24c941413f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -151,7 +151,7 @@ MonoBehaviour:
   moveRange: 3
   attackRange: 1
   specialAttackRange: 5
-  rotationTIme: 0
+  rotationTime: 0
   walkSpeed: 5
   specialDamage: 1
   specialheight: 5

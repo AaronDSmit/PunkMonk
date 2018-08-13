@@ -11,16 +11,17 @@ public class Unit : LivingEntity
 {
     #region Inspector Variables
 
+    [Tooltip("A list of actions that this Unit can perform")]
     [SerializeField] protected Action[] actions;
-
+    [Tooltip("The distance in tiles that this unit can move in one turn")]
     [SerializeField] private int moveRange;
-
+    [Tooltip("The distance in tiles this character can attack")]
     [SerializeField] protected int attackRange;
-
+    [Tooltip("The distance in tiles this units special attack")]
     [SerializeField] protected int specialAttackRange;
-
-    [SerializeField] protected float rotationTIme;
-
+    [Tooltip("The time it takes this unit to rotate in seconds")]
+    [SerializeField] protected float rotationTime;
+    [Tooltip("How the fast this unit walks from tile to tile")]
     [SerializeField] protected float walkSpeed;
 
     #endregion
@@ -174,9 +175,9 @@ public class Unit : LivingEntity
         CanMove = true;
     }
 
-    protected IEnumerator Rotate(Vector3 targetPos)
+    protected IEnumerator Rotate(Vector3 a_targetPos)
     {
-        Vector3 targetDirection = targetPos - transform.position;
+        Vector3 targetDirection = a_targetPos - transform.position;
 
         //create the rotation we need to be in to look at the target
         Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
@@ -187,7 +188,7 @@ public class Unit : LivingEntity
         while (t < 1)
         {
             currentLerpTime += Time.deltaTime;
-            t = currentLerpTime / rotationTIme;
+            t = currentLerpTime / rotationTime;
 
             //rotate us over time according to speed until we are in the required rotation
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, t);
@@ -197,13 +198,13 @@ public class Unit : LivingEntity
         }
     }
 
-    protected IEnumerator Walk(List<Hex> path)
+    protected IEnumerator Walk(List<Hex> a_path)
     {
         int index = 0;
 
-        while (index < path.Count)
+        while (index < a_path.Count)
         {
-            Vector3 targetPos = path[index].transform.position;
+            Vector3 targetPos = a_path[index].transform.position;
             targetPos.y = transform.position.y;
 
             // yield return StartCoroutine(Turn(targetPos));
@@ -224,7 +225,7 @@ public class Unit : LivingEntity
             transform.position = targetPos;
 
             currentTile.Exit();
-            currentTile = path[index];
+            currentTile = a_path[index];
             currentTile.Enter(this);
 
             index++;
@@ -235,19 +236,19 @@ public class Unit : LivingEntity
     }
 
     #region Basic Attack
-    public void BasicAttack(Hex[] targetTiles, System.Action start, System.Action finished)
+    public void BasicAttack(Hex[] a_targetTiles, System.Action a_start, System.Action a_finished)
     {
-        StartCoroutine(DelayedBasicAction(targetTiles, start, finished));
+        StartCoroutine(DelayedBasicAction(a_targetTiles, a_start, a_finished));
     }
 
-    private IEnumerator DelayedBasicAction(Hex[] targetTiles, System.Action start, System.Action finished)
+    private IEnumerator DelayedBasicAction(Hex[] a_targetTiles, System.Action a_start, System.Action a_finished)
     {
-        yield return StartCoroutine(Rotate(targetTiles[0].transform.position));
+        yield return StartCoroutine(Rotate(a_targetTiles[0].transform.position));
 
-        DoBasicAttack(targetTiles, start, finished);
+        DoBasicAttack(a_targetTiles, a_start, a_finished);
     }
 
-    protected virtual void DoBasicAttack(Hex[] targetTiles, System.Action start, System.Action finished)
+    protected virtual void DoBasicAttack(Hex[] a_targetTiles, System.Action a_start, System.Action a_finished)
     {
         // keep empty
     }
@@ -255,19 +256,19 @@ public class Unit : LivingEntity
     #endregion
 
     #region Special Attack
-    public void SpecialAttack(Hex[] targetTiles, System.Action start, System.Action finished)
+    public void SpecialAttack(Hex[] a_targetTiles, System.Action a_start, System.Action a_finished)
     {
-        StartCoroutine(DelayedSpecialAction(targetTiles, start, finished));
+        StartCoroutine(DelayedSpecialAction(a_targetTiles, a_start, a_finished));
     }
 
-    private IEnumerator DelayedSpecialAction(Hex[] targetTiles, System.Action start, System.Action finished)
+    private IEnumerator DelayedSpecialAction(Hex[] a_targetTiles, System.Action a_start, System.Action a_finished)
     {
-        yield return StartCoroutine(Rotate(targetTiles[0].transform.position));
+        yield return StartCoroutine(Rotate(a_targetTiles[0].transform.position));
 
-        DoSpecialAttack(targetTiles, start, finished);
+        DoSpecialAttack(a_targetTiles, a_start, a_finished);
     }
 
-    protected virtual void DoSpecialAttack(Hex[] targetTiles, System.Action start, System.Action finished)
+    protected virtual void DoSpecialAttack(Hex[] a_targetTiles, System.Action a_start, System.Action a_finished)
     {
         // Keep empty
     }
@@ -276,9 +277,9 @@ public class Unit : LivingEntity
 
     #region Getters / Setters
 
-    public Action GetAction(int index)
+    public Action GetAction(int a_index)
     {
-        return actions[index];
+        return actions[a_index];
     }
 
     public int MoveRange

@@ -73,7 +73,7 @@ public class AI_Agent : Unit
                 // Ignore the tile that the player is on
                 if (targetTile == currentPlayer.CurrentTile)
                     continue;
-                // Ignore the tiles that can't attack the player
+                // TODO: Ignore the tiles that can't attack the player
                 //if (HasClearShot(tile, players[i]) == false)
                 //    continue;
                 // Pathfind to the tile
@@ -85,7 +85,7 @@ public class AI_Agent : Unit
                 }
 
                 if (shortestPaths[i] == null) // Check if this is the first path
-                { 
+                {
                     shortestPaths[i] = path;
                 }
                 // Set it as the shortest path if it is shorter than the current shortest
@@ -96,15 +96,22 @@ public class AI_Agent : Unit
             }
         }
 
-        // TODO: Check for the shortest paths being null
-        if (shortestPaths[0] == null || shortestPaths[1] == null)
+        // Check for the shortest paths being null
+        if (shortestPaths[0] == null && shortestPaths[1] == null)
         {
             turnComplete = true;
-            Debug.LogError("No path found", gameObject);
+            Debug.LogError("No path found to players", gameObject);
             yield break;
         }
-        // Choose the closest player
-        int playerToAttack = shortestPaths[0].Count <= shortestPaths[1].Count ? 0 : 1;
+
+        int playerToAttack = -1;
+        if (shortestPaths[0] == null)
+            playerToAttack = 1;
+        else if (shortestPaths[1] == null)
+            playerToAttack = 0;
+        else
+            // Choose the closest player
+            playerToAttack = shortestPaths[0].Count <= shortestPaths[1].Count ? 0 : 1;
 
         // Path find and wait for it to finish
         isPerformingAction = true;

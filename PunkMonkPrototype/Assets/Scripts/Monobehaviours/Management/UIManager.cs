@@ -106,11 +106,11 @@ public class UIManager : MonoBehaviour
 
     private IEnumerator FadeIntoState()
     {
-        StartCoroutine(FadeImage(0, 1, 1.0f));
-
-        yield return new WaitForSeconds(1.0f);
+        yield return StartCoroutine(FadeImage(0, 1, 1.0f));
 
         Manager.instance.StateController.MidLoad = true;
+
+        yield return new WaitForSeconds(0.1f);
 
         StartCoroutine(FadeImage(1, 0, 1.0f));
     }

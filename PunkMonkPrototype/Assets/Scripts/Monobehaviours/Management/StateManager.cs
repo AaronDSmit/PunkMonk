@@ -63,11 +63,11 @@ public class StateManager : MonoBehaviour
                 OnGameStateChanged(previousState, currentState);
             }
 
-            Debug.Log(string.Format("Changed from {0} to {1}", StateToString(previousState), StateToString(a_targetState)));
+            //Debug.Log(string.Format("Changed from {0} to {1}", StateToString(previousState), StateToString(a_targetState)));
         }
         else
         {
-            Debug.Log(string.Format("Tried to change to {0} but that's already the current state", StateToString(a_targetState)));
+            // Debug.Log(string.Format("Tried to change to {0} but that's already the current state", StateToString(a_targetState)));
         }
     }
 
@@ -81,6 +81,8 @@ public class StateManager : MonoBehaviour
     private IEnumerator ChangeMidLoad(Game_state a_targetState)
     {
         yield return new WaitUntil(() => midLoad);
+
+        midLoad = false;
 
         ChangeGameState(a_targetState);
     }

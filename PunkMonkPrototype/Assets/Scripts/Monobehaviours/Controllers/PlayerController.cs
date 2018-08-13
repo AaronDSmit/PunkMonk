@@ -46,6 +46,8 @@ public class PlayerController : MonoBehaviour
 
     private Hex earthSnapHex;
 
+    private CameraController cam;
+
     private Hex lightningSnapHex;
 
     private int encounterKillLimit;
@@ -67,6 +69,8 @@ public class PlayerController : MonoBehaviour
         tilesWithinRange = new List<Hex>();
 
         tilesAffectByAction = new List<Hex>();
+
+        cam = GameObject.FindGameObjectWithTag("CameraRig").GetComponent<CameraController>();
 
         if (selectionRuleset == null)
         {
@@ -138,6 +142,9 @@ public class PlayerController : MonoBehaviour
             {
                 SelectUnit(earthUnit);
             }
+
+            cam.LookAtPosition(selectedUnit.transform.position);
+
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))

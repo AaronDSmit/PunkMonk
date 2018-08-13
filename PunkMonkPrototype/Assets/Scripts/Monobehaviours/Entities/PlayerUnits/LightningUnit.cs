@@ -8,7 +8,8 @@ public class LightningUnit : Unit
 
     [Header("Basic Attack")]
 
-    [SerializeField] private float basicDamage = 1;
+    [SerializeField]
+    private float basicDamage = 1;
     [SerializeField] private float basicDamgeDelayTimer = 3;
     [SerializeField] private float basicElectricityLifetime = 3;
 
@@ -20,7 +21,8 @@ public class LightningUnit : Unit
 
     [Header("Special Attack")]
 
-    [SerializeField] private bool specialRehitEnemies = false;
+    [SerializeField]
+    private bool specialRehitEnemies = false;
     [SerializeField] private int specialRange = 3;
     [SerializeField] private int specialAmountOfBounces = 3;
     [SerializeField] private float specialLightningLifeTime = 1;
@@ -117,11 +119,11 @@ public class LightningUnit : Unit
 
             specialSortedList.Sort((a, b) => (HexUtility.Distance(currentTile, a.CurrentTile).CompareTo(HexUtility.Distance(currentTile, b.CurrentTile))));
 
-            if(specialRehitEnemies == false)
+            if (specialRehitEnemies == false)
             {
-                foreach(var x in specialSortedList)
+                foreach (var x in specialSortedList)
                 {
-                    if(!specialFinalTargets.Contains(x))
+                    if (!specialFinalTargets.Contains(x))
                     {
                         specialFinalTargets.Add(x);
                     }
@@ -143,7 +145,7 @@ public class LightningUnit : Unit
                         }
                     }
                 }
-                else
+                else if (specialSortedList.Count != 0)
                 {
                     specialFinalTargets.Add(specialSortedList[0]);
                 }
@@ -203,9 +205,9 @@ public class LightningUnit : Unit
 
         yield return new WaitForSeconds(a_timer);
 
-        if(a_unit != null)
+        if (a_unit != null)
         {
-            if(a_unit.Team != TEAM.player)
+            if (a_unit.Team != TEAM.player)
             {
                 a_unit.TakeDamage(a_damage);
             }

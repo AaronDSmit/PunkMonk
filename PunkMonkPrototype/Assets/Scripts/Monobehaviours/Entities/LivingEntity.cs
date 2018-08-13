@@ -46,16 +46,19 @@ public class LivingEntity : Entity
     [ContextMenu("Self Destruct")]
     protected virtual void Die()
     {
-        dead = true;
-
-        if (OnDeath != null)
+        if(!dead)
         {
-            OnDeath(this);
+            dead = true;
+
+            if (OnDeath != null)
+            {
+                OnDeath(this);
+            }
+
+            // play Death animation/ particle effects
+
+            StartCoroutine(AnimateDeath());
         }
-
-        // play Death animation/ particle effects
-
-        StartCoroutine(AnimateDeath());
     }
 
     private IEnumerator AnimateDeath()

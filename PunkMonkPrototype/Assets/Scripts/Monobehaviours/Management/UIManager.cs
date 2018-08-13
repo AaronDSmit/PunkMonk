@@ -85,22 +85,15 @@ public class UIManager : MonoBehaviour
         {
             StartCoroutine(FadeOutLoading());
         }
-        else if (a_newstate == Game_state.battle)
-        {
-            // battleUI.Toggle();
-            // endTurnButton.Toggle();
-        }
         else if (a_newstate == Game_state.loading)
         {
             StartCoroutine(FadeIntoState());
         }
-        else
+
+        if (a_oldstate == Game_state.battle)
         {
-            //if (battleUI.Toggled)
-            //{
-            //    battleUI.Toggle();
-            //    endTurnButton.Toggle();
-            //}
+            battleUI.FadeOut();
+            endTurnButton.FadeOut();
         }
     }
 

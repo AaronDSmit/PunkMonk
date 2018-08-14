@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public enum CameraDirection
 {
@@ -31,6 +32,9 @@ public class CameraController : MonoBehaviour
     private bool lookAtObject = false;
     private bool canMove = true;
 
+
+    [SerializeField] private float glamCamDistance;
+
     [SerializeField] private float speed;
     [SerializeField] private float overworldSpeed;
     [SerializeField] private float RotationalSpeed;
@@ -40,7 +44,13 @@ public class CameraController : MonoBehaviour
     private Vector3 dir;
 
 
+    bool cinemachine;
 
+
+    GameObject basicEarthGlamCam;
+    GameObject specialEarthGlamCam;
+    GameObject basicLightningGlamCam;
+    GameObject specialLightningGlamCam;
 
 
     private void Awake()
@@ -53,6 +63,23 @@ public class CameraController : MonoBehaviour
         targetPos = transform.position;
         targetY = transform.position.y;
         targetRot = transform.rotation;
+
+        basicEarthGlamCam = transform.GetChild(1).gameObject;
+        specialEarthGlamCam = transform.GetChild(2).gameObject;
+        basicLightningGlamCam = transform.GetChild(3).gameObject;
+        specialLightningGlamCam = transform.GetChild(4).gameObject;
+
+        basicEarthGlamCam.GetComponent<CinemachineVirtualCamera>().LookAt = GameObject.FindGameObjectWithTag("EarthUnit").transform.GetChild(0);
+        specialEarthGlamCam.GetComponent<CinemachineVirtualCamera>().LookAt = GameObject.FindGameObjectWithTag("EarthUnit").transform.GetChild(0);
+
+        basicLightningGlamCam.GetComponent<CinemachineVirtualCamera>().LookAt = GameObject.FindGameObjectWithTag("LightningUnit").transform.GetChild(0);
+        specialLightningGlamCam.GetComponent<CinemachineVirtualCamera>().LookAt = GameObject.FindGameObjectWithTag("LightningUnit").transform.GetChild(0);
+
+
+        basicEarthGlamCam.SetActive(false);
+        specialEarthGlamCam.SetActive(false);
+        basicLightningGlamCam.SetActive(false);
+        specialLightningGlamCam.SetActive(false);
     }
 
     private void GameStateChanged(Game_state _oldstate, Game_state _newstate)
@@ -64,35 +91,36 @@ public class CameraController : MonoBehaviour
     private void Update()
     {
         // Don't update if in any other game state
-        if (lookAtObject == false)
-        {
-            if (canMove == true)
-            {
 
-                if (inOverworld)
+        if (cinemachine == true)
+        {
+            if (lookAtObject == false)
+            {
+                if (canMove == true)
                 {
-                    ProcessOverworldCamera();
+
+                    if (inOverworld)
+                    {
+                        ProcessOverworldCamera();
+                    }
+                    else
+                    {
+                        ProcessKeyboardInput();
+                    }
                 }
                 else
                 {
-                    ProcessKeyboardInput();
-                }
-            }
-            else
-            {
-                if (Vector3.Distance(transform.position, targetPos) < 1f)
-                {
+                    if (Vector3.Distance(transform.position, targetPos) < 1f)
+                    {
 
-                    canMove = true;
+                        canMove = true;
+                    }
+                    transform.position = Vector3.Slerp(transform.position, targetPos, Time.deltaTime * overworldSpeed);
                 }
-                transform.position = Vector3.Slerp(transform.position, targetPos, Time.deltaTime * overworldSpeed);
             }
+            transform.position = Vector3.Slerp(transform.position, new Vector3(transform.position.x, targetY, transform.position.z), Time.deltaTime * scrollSpeed);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.deltaTime * RotationalSpeed);
         }
-
-        transform.position = Vector3.Slerp(transform.position, new Vector3(transform.position.x, targetY, transform.position.z), Time.deltaTime * scrollSpeed);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.deltaTime * RotationalSpeed);
-
-
 
     }
 
@@ -243,6 +271,29 @@ public class CameraController : MonoBehaviour
 
         lookAtObject = false;
         targetPos = a_pos;
+    }
+
+
+    public void PlayEarthBasicAttackGlamCam(Vector3 a_pos, Vector3 a_vecBetween)
+    {
+        Vector3 rightPerp = a_pos + Vector3.Cross(a_vecBetween.normalized, Vector3.up) * glamCamDistance;
+
+        transform.position = rightPerp;
+        basicEarthGlamCam.SetActive(true);
+
+    }
+
+    public void PlayEarthSpecialAttackGlamCam(Vector3 a_vecBetween)
+    {
+
+    }
+    public void PlayLightningBasicAttackGlamCam(Vector3 a_vecBetween)
+    {
+
+    }
+    public void PlayLightingSpecialAttackGlamCam(Vector3 a_vecBetween)
+    {
+
     }
 
 }

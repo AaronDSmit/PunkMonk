@@ -99,13 +99,13 @@ public class LightningUnit : Unit
         specialFinalTargets.Add(targetTiles[0].CurrentUnit);
 
 
-        for (int i = 0; i < specialAmountOfBounces - 1; i++)
+        for (int i = 1; i < specialAmountOfBounces - 1; i++)
         {
             foreach (var enemy in specialEnemies)
             {
-                if (i + 1 < specialFinalTargets.Count)
+                if (i < specialFinalTargets.Count)
                 {
-                    if (enemy != specialFinalTargets[i + 1])
+                    if (enemy != specialFinalTargets[i])
                     {
                         if (HexUtility.Distance(specialFinalTargets[i].CurrentTile, enemy.CurrentTile) < specialRange)
                         {

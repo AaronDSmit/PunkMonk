@@ -54,25 +54,47 @@ public class AI_Agent : Unit
         StartCoroutine(BasicAttackDamageDelay(damgeDelayTimer, a_finished));
     }
 
+    struct PathInfo
+    {
+        public bool isAlreadyInRange;
+        public List<Hex> path;
+
+        public void Init()
+        {
+            isAlreadyInRange = false;
+            path = null;
+        }
+
+    }
     private IEnumerator DoTurn(GridManager a_grid)
     {
+
         List<Hex>[] shortestPaths = new List<Hex>[] { null, null };
 
         for (int i = 0; i < 2; i++)
         {
             Unit currentPlayer = players[i];
 
+            // TODO: Check if this agent is already in range of the player
+
+
             // Ignore dead players
             if (currentPlayer.IsDead)
                 continue;
 
             // Find all of the tiles within attack range
-            List<Hex> tiles = new List<Hex>(a_grid.GetTilesWithinDistance(currentPlayer.CurrentTile, attackRange));
+            List<Hex> tiles = new List<Hex>(a_grid.GetTilesWithinDistance(currentPlayer.CurrentTile, attackRange, false));
             foreach (Hex targetTile in tiles)
             {
                 // Ignore the tile that the player is on
-                if (targetTile == currentPlayer.CurrentTile)
+                if (targetTile.IsTraversable == false)
+                {
+                    if (targetTile == currentTile)
+                        shortestPaths[i] = new List<Hex> { currentTile };
+
                     continue;
+                }
+
                 // TODO: Ignore the tiles that can't attack the player
                 //if (HasClearShot(tile, players[i]) == false)
                 //    continue;
@@ -112,6 +134,12 @@ public class AI_Agent : Unit
         else
             // Choose the closest player
             playerToAttack = shortestPaths[0].Count <= shortestPaths[1].Count ? 0 : 1;
+
+        // Remove the path that is out of the movement range
+        if (shortestPaths[playerToAttack].Count > MoveRange)
+        {
+            shortestPaths[playerToAttack].RemoveRange(MoveRange, shortestPaths[playerToAttack].Count - MoveRange);
+        }
 
         // Path find and wait for it to finish
         isPerformingAction = true;

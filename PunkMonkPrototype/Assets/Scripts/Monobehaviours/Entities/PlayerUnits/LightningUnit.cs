@@ -21,8 +21,7 @@ public class LightningUnit : Unit
 
     [Header("Special Attack")]
 
-    [SerializeField]
-    private bool specialRehitEnemies = false;
+    [SerializeField] private bool specialRehitEnemies = false;
     [SerializeField] private int specialRange = 3;
     [SerializeField] private int specialAmountOfBounces = 3;
     [SerializeField] private float specialLightningLifeTime = 1;
@@ -218,6 +217,20 @@ public class LightningUnit : Unit
 
     private IEnumerator BasicAttackDamageDelay(float a_timer)
     {
+        yield return new WaitForEndOfFrame();
+        GameObject tempGameobject1 = Instantiate(basicLightningGO);
+
+        tempGameobject1.transform.GetChild(0).position += Vector3.up * -0.5f;
+        tempGameobject1.transform.GetChild(1).position += Vector3.up * 0.5f;
+
+        yield return new WaitForEndOfFrame();
+        GameObject tempGameobject2 = Instantiate(basicLightningGO);
+
+        tempGameobject2.transform.GetChild(0).position += Vector3.up * -0.5f;
+        tempGameobject2.transform.GetChild(1).position += Vector3.up * 0.5f;
+
+
+
         //wait for timer before runing code
         yield return new WaitForSeconds(a_timer);
 
@@ -232,6 +245,10 @@ public class LightningUnit : Unit
                 basicTile.CurrentUnit.TakeDamage(basicDamage);
             }
         }
+
+        Destroy(tempGameobject1);
+        Destroy(tempGameobject2);
+
         //call the finished call back function
         basicFinishedFunc();
     }

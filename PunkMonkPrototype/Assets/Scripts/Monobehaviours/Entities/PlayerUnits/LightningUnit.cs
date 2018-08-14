@@ -21,7 +21,8 @@ public class LightningUnit : Unit
 
     [Header("Special Attack")]
 
-    [SerializeField] private bool specialRehitEnemies = false;
+    [SerializeField]
+    private bool specialRehitEnemies = false;
     [SerializeField] private int specialRange = 3;
     [SerializeField] private int specialAmountOfBounces = 3;
     [SerializeField] private float specialLightningLifeTime = 1;
@@ -98,7 +99,7 @@ public class LightningUnit : Unit
         specialFinalTargets.Add(targetTiles[0].CurrentUnit);
 
 
-        for (int i = 1; i < specialAmountOfBounces - 1; i++)
+        for (int i = 1; i < specialAmountOfBounces; i++)
         {
             foreach (var enemy in specialEnemies)
             {
@@ -106,17 +107,18 @@ public class LightningUnit : Unit
                 {
                     if (enemy != specialFinalTargets[i])
                     {
-                        if (HexUtility.Distance(specialFinalTargets[i].CurrentTile, enemy.CurrentTile) < specialRange)
+                        if (HexUtility.Distance(specialFinalTargets[i].CurrentTile, enemy.CurrentTile) <= specialRange)
                         {
                             specialSortedList.Add(enemy);
                         }
                     }
                 }
+
             }
 
 
 
-            specialSortedList.Sort((a, b) => (HexUtility.Distance(currentTile, a.CurrentTile).CompareTo(HexUtility.Distance(currentTile, b.CurrentTile))));
+            specialSortedList.Sort((a, b) => (HexUtility.Distance(specialFinalTargets[i].CurrentTile, a.CurrentTile).CompareTo(HexUtility.Distance(specialFinalTargets[i].CurrentTile, b.CurrentTile))));
 
             if (specialRehitEnemies == false)
             {
@@ -132,16 +134,13 @@ public class LightningUnit : Unit
             {
                 if (specialSortedList.Count > 1)
                 {
-                    if (i - 1 < specialFinalTargets.Count)
+                    if (specialSortedList[0] == specialFinalTargets[i - 1])
                     {
-                        if (specialSortedList[0] == specialFinalTargets[i - 1])
-                        {
-                            specialFinalTargets.Add(specialSortedList[0]);
-                        }
-                        else
-                        {
-                            specialFinalTargets.Add(specialSortedList[1]);
-                        }
+                        specialFinalTargets.Add(specialSortedList[1]);
+                    }
+                    else
+                    {
+                        specialFinalTargets.Add(specialSortedList[0]);
                     }
                 }
                 else if (specialSortedList.Count != 0)
@@ -164,24 +163,23 @@ public class LightningUnit : Unit
 
     private IEnumerator SpecialAttackDamageDelay(float a_timer)
     {
-        for (int i = 1; i < specialAmountOfBounces; i++)
+        for (int i = 1; i < specialFinalTargets.Count - 1; i++)
         {
             yield return new WaitForSeconds(a_timer);
 
-            if (i + 1 <= specialAmountOfBounces)
+
+            if (i + 1 < specialFinalTargets.Count)
             {
-                if (i + 1 < specialFinalTargets.Count)
-                {
-                    specialLightningGO.transform.GetChild(0).position = specialFinalTargets[i].transform.position + (transform.up * 0.8f);
-                    specialLightningGO.transform.GetChild(1).position = specialFinalTargets[i + 1].transform.position + (transform.up * 0.8f);
-                    StartCoroutine(SpecialAttackDamageDelay(specialDelayTime, specialBounceDamage, specialFinalTargets[i]));
-                }
-                else
-                {
-                    specialLightningGO.transform.GetChild(1).position = specialLightningGO.transform.GetChild(0).position;
-                    break;
-                }
+                specialLightningGO.transform.GetChild(0).position = specialFinalTargets[i].transform.position + (transform.up * 0.8f);
+                specialLightningGO.transform.GetChild(1).position = specialFinalTargets[i + 1].transform.position + (transform.up * 0.8f);
+                StartCoroutine(SpecialAttackDamageDelay(specialDelayTime, specialBounceDamage, specialFinalTargets[i]));
             }
+            else
+            {
+                specialLightningGO.transform.GetChild(1).position = specialLightningGO.transform.GetChild(0).position;
+                break;
+            }
+
         }
 
         yield return new WaitForSeconds(a_timer);

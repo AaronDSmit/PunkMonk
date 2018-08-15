@@ -2,14 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 
+/// </summary>
 public class AI_Agent : Unit
 {
+    #region Unity Inspector Fields
+
     [SerializeField] private float damage = 100;
     [SerializeField] private float damgeDelayTimer = 0;
+
+    #endregion
+
+    #region Reference Fields
 
     private AI_Controller ai_Controller = null;
 
     private Unit[] players = null;
+
+    #endregion
+
+    #region Local Fields
 
     private bool turnComplete = false;
 
@@ -17,21 +30,16 @@ public class AI_Agent : Unit
 
     private Hex[] tilesToAttack = null;
 
+    #endregion
+
+    #region Properties
+
     public float Damage { get { return damage; } }
     public bool TurnComplete { get { return turnComplete; } }
 
-    protected override void Awake()
-    {
-        base.Awake();
+    #endregion
 
-        Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
-
-        // Setup the actions
-        foreach (AI_Action action in actions)
-        {
-            action.Init(this);
-        }
-    }
+    #region Public Methods
 
     public override void Spawn(Hex a_startingTile)
     {
@@ -46,6 +54,27 @@ public class AI_Agent : Unit
     {
         StartCoroutine(DoTurn(a_grid));
     }
+
+    #endregion
+
+    #region Unity Life-cycle Methods
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
+
+        // Setup the actions
+        foreach (AI_Action action in actions)
+        {
+            action.Init(this);
+        }
+    }
+
+    #endregion
+
+    #region Local Methods
 
     protected override void DoBasicAttack(Hex[] a_targetTiles, System.Action a_start, System.Action a_finished)
     {
@@ -200,4 +229,6 @@ public class AI_Agent : Unit
             Die();
         }
     }
+
+    #endregion
 }

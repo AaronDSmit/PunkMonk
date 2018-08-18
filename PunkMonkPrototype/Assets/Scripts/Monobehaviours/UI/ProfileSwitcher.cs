@@ -2,17 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This script is used to animate the movement of the profile picture of the currently selected unit
+/// </summary>
+
 public class ProfileSwitcher : MonoBehaviour
 {
-    [SerializeField] private float animationTime;
+    #region Unity Inspector Fields
 
-    [SerializeField] private Vector2 primaryScale = Vector2.one;
+    [SerializeField]
+    private float animationTime = 1.0f;
 
-    [SerializeField] private Vector2 secondaryScale = Vector2.one;
+    [SerializeField]
+    private Vector2 primaryScale = Vector2.one;
 
+    [SerializeField]
+    private Vector2 secondaryScale = Vector2.one;
+
+    [SerializeField]
     private RectTransform earthProfile;
 
+    [SerializeField]
     private RectTransform lightningProfile;
+
+    #endregion
+
+    #region Local Fields
 
     private Vector2 primaryPos;
 
@@ -20,16 +35,9 @@ public class ProfileSwitcher : MonoBehaviour
 
     private bool earthSelected = true;
 
-    private void Awake()
-    {
-        earthProfile = transform.GetChild(0).GetComponent<RectTransform>();
-        lightningProfile = transform.GetChild(1).GetComponent<RectTransform>();
+    #endregion
 
-        primaryPos = earthProfile.anchoredPosition;
-        secondaryPos = lightningProfile.anchoredPosition;
-
-        lightningProfile.localScale = secondaryScale;
-    }
+    #region Public Methods
 
     public void Switch()
     {
@@ -56,6 +64,25 @@ public class ProfileSwitcher : MonoBehaviour
             StartCoroutine(Scale(earthProfile, primaryScale, secondaryScale));
         }
     }
+
+    #endregion
+
+    #region Unity Life-cycle Methods
+
+    private void Awake()
+    {
+        earthProfile = transform.GetChild(0).GetComponent<RectTransform>();
+        lightningProfile = transform.GetChild(1).GetComponent<RectTransform>();
+
+        primaryPos = earthProfile.anchoredPosition;
+        secondaryPos = lightningProfile.anchoredPosition;
+
+        lightningProfile.localScale = secondaryScale;
+    }
+
+    #endregion
+
+    #region Local Methods
 
     private IEnumerator MoveProfile(RectTransform a_rect, Vector2 a_from, Vector2 a_target)
     {
@@ -90,4 +117,6 @@ public class ProfileSwitcher : MonoBehaviour
             yield return null;
         }
     }
+
+    #endregion
 }

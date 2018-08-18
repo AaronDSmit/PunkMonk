@@ -443,11 +443,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void TurnEvent(Turn_state a_newState, TEAM a_team, int a_turnNumber)
+    private void TurnEvent(TurnState a_newState, TEAM a_team, int a_turnNumber)
     {
         if (a_team == TEAM.player)
         {
-            if (a_newState == Turn_state.start)
+            if (a_newState == TurnState.start)
             {
                 myTurn = true;
 
@@ -456,7 +456,7 @@ public class PlayerController : MonoBehaviour
                 earthUnit.Refresh();
                 lightningUnit.Refresh();
             }
-            else if (a_newState == Turn_state.end)
+            else if (a_newState == TurnState.end)
             {
                 myTurn = false;
                 DeselectUnit();
@@ -464,10 +464,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void GameStateChanged(Game_state _oldstate, Game_state _newstate)
+    private void GameStateChanged(GameState _oldstate, GameState _newstate)
     {
         // ensure this script knows it's in over-world state
-        if (_newstate == Game_state.battle)
+        if (_newstate == GameState.battle)
         {
             earthUnit.TeleportToHex(earthSnapHex);
             lightningUnit.TeleportToHex(lightningSnapHex);
@@ -495,7 +495,7 @@ public class PlayerController : MonoBehaviour
 
             if (encounterKillCount >= EncounterKillLimit)
             {
-                Manager.instance.StateController.ChangeStateAfterFade(Game_state.overworld);
+                Manager.instance.StateController.ChangeStateAfterFade(GameState.overworld);
             }
         }
     }

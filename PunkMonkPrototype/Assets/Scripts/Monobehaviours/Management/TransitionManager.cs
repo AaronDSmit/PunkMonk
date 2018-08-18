@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// This script is used
+/// </summary>
 public class TransitionManager : MonoBehaviour
 {
-    #region Inspector Variables
+    #region Unity Inspector Fields
 
     [SerializeField] private Unit earthUnitPrefab;
 
@@ -13,16 +16,31 @@ public class TransitionManager : MonoBehaviour
 
     #endregion
 
+    #region Local Fields
+
     private bool isReady;
+
+    #endregion
+
+    #region Properties
+
+    public bool Ready
+    {
+        get { return isReady; }
+    }
+
+    #endregion
+
+    #region Public Methods
+
+    public void Transition(int a_nextSceneIndex)
+    {
+        SceneManager.LoadScene(a_nextSceneIndex);
+    }
 
     public void Init()
     {
         isReady = true;
-    }
-
-    private void Awake()
-    {
-        SceneManager.activeSceneChanged += SceneLoaded;
     }
 
     public void SceneLoaded(Scene current, Scene next)
@@ -107,21 +125,19 @@ public class TransitionManager : MonoBehaviour
         }
     }
 
-    public static void Transition(int a_nextSceneIndex)
+    #endregion
+
+    #region Unity Life-cycle Methods
+
+    private void Awake()
     {
-        Debug.Log("Loading Scene " + a_nextSceneIndex);
-
-        SceneManager.LoadScene(a_nextSceneIndex);
+        SceneManager.activeSceneChanged += SceneLoaded;
     }
-
-    public bool Ready
-    {
-        get { return isReady; }
-    }
-
 
     private void OnDisable()
     {
         SceneManager.activeSceneChanged -= SceneLoaded;
     }
+
+    #endregion
 }

@@ -20,9 +20,9 @@ public class SceneTransitionPoint : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (Manager.instance.StateController.CurrentGameState == Game_state.overworld)
+        if (Manager.instance.StateController.CurrentGameState == GameState.overworld)
         {
-            TransitionManager.Transition(nextLevelIndex);
+            Manager.instance.TransitionController.Transition(nextLevelIndex);
         }
     }
 }

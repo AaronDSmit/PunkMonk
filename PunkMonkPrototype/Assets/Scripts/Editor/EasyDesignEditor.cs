@@ -54,8 +54,8 @@ public class EasyDesignEditor : EditorWindow
     [SerializeField] private int turnToSpawn;
     [SerializeField] private int everyXTurns;
     [SerializeField] private int loadLevel = 0;
-    [SerializeField] private Game_state targetState = Game_state.overworld;
-    [SerializeField] private Game_state currentState = Game_state.battle;
+    [SerializeField] private GameState targetState = GameState.overworld;
+    [SerializeField] private GameState currentState = GameState.battle;
     [SerializeField] private int numberToKill;
     [SerializeField] private int stateIndex;
     [SerializeField] private int spawnIndex;
@@ -1221,11 +1221,11 @@ public class EasyDesignEditor : EditorWindow
 
             GUILayout.Label("From ");
 
-            currentState = (Game_state)EditorGUILayout.EnumPopup(currentState);
+            currentState = (GameState)EditorGUILayout.EnumPopup(currentState);
 
             GUILayout.Label(" To ");
 
-            targetState = (Game_state)EditorGUILayout.EnumPopup(targetState);
+            targetState = (GameState)EditorGUILayout.EnumPopup(targetState);
 
             GUILayout.Label("ID:");
 
@@ -1235,7 +1235,7 @@ public class EasyDesignEditor : EditorWindow
 
             EditorGUILayout.BeginHorizontal();
 
-            if (targetState == Game_state.battle)
+            if (targetState == GameState.battle)
             {
                 GUILayout.Label("Enemies to kill ");
                 numberToKill = EditorGUILayout.IntField(numberToKill);

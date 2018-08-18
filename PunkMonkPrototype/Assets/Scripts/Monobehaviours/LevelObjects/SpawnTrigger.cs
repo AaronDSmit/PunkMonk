@@ -28,7 +28,7 @@ public class SpawnTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (Manager.instance.StateController.CurrentGameState == Game_state.battle)
+        if (Manager.instance.StateController.CurrentGameState == GameState.battle)
         {
             if (other.CompareTag("EarthUnit") || other.CompareTag("LightningUnit"))
             {

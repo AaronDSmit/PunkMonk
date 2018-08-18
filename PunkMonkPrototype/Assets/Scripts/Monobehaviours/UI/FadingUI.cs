@@ -1,17 +1,54 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// This script is used to fade in or out any sprite or text UI. Can disable buttons during fade animation.
+/// </summary>
+
 public class FadingUI : MonoBehaviour
 {
-    [SerializeField] private float fadeTime;
+    #region Unity Inspector Fields
+
+    [SerializeField]
+    private float fadeTime = 1.0f;
+
+    [SerializeField]
+    private bool disableButtons = true;
+
+    #endregion
+
+    #region Reference Fields
 
     private Image[] images;
 
     private Text[] texts;
 
     private Button[] buttons;
+
+    #endregion
+
+    #region Properties
+
+    public bool IsVisible { get; private set; }
+
+    #endregion
+
+    #region Public Methods
+
+    public void FadeOut()
+    {
+        StartCoroutine(AnimateFade(true));
+    }
+
+    public void FadeIn()
+    {
+        StartCoroutine(AnimateFade(false));
+    }
+
+    #endregion
+
+    #region Unity Life-cycle Methods
 
     private void Awake()
     {
@@ -32,23 +69,18 @@ public class FadingUI : MonoBehaviour
         }
     }
 
-    public bool IsVisible { get; private set; }
+    #endregion
 
-    public void FadeOut()
-    {
-        StartCoroutine(AnimateFade(true));
-    }
-
-    public void FadeIn()
-    {
-        StartCoroutine(AnimateFade(false));
-    }
+    #region Local Methods
 
     private IEnumerator AnimateFade(bool a_fadeOut)
     {
-        foreach (Button button in buttons)
+        if (disableButtons)
         {
-            button.interactable = false;
+            foreach (Button button in buttons)
+            {
+                button.interactable = false;
+            }
         }
 
         float currentLerpTime = 0;
@@ -62,7 +94,7 @@ public class FadingUI : MonoBehaviour
             currentLerpTime += Time.deltaTime;
             t = currentLerpTime / fadeTime;
 
-            foreach(Image image in images)
+            foreach (Image image in images)
             {
                 image.color = new Color(image.color.r, image.color.g, image.color.b, Mathf.Lerp(from, to, t));
             }
@@ -75,11 +107,16 @@ public class FadingUI : MonoBehaviour
             yield return null;
         }
 
-        foreach (Button button in buttons)
+        if (disableButtons)
         {
-            button.interactable = true;
+            foreach (Button button in buttons)
+            {
+                button.interactable = true;
+            }
         }
 
         IsVisible = !a_fadeOut;
     }
+
+    #endregion
 }

@@ -1,10 +1,19 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// This script is used to manage UI transitions
+/// </summary>
+
 public class UIManager : MonoBehaviour
 {
+    #region Unity Inspector Fields
+
+    #endregion
+
+    #region Reference Fields
+
     private Button move;
 
     private Button attack;
@@ -27,11 +36,28 @@ public class UIManager : MonoBehaviour
 
     private Button[] buttons;
 
+    #endregion
+
+    #region Local Fields
+
     private bool[] buttonInitialState;
 
     private bool isLocked;
 
     private bool isReady;
+
+    #endregion
+
+    #region Properties
+
+    public bool Ready
+    {
+        get { return isReady; }
+    }
+
+    #endregion
+
+    #region Public Methods
 
     public void Init()
     {
@@ -39,6 +65,25 @@ public class UIManager : MonoBehaviour
 
         isLocked = false;
     }
+
+    public void SelectAction(int actionIndex)
+    {
+        player.SelectAction(actionIndex);
+    }
+
+    public void UpdateSelectedUnit(Unit a_selectedUnit)
+    {
+        if (selectedUnit != null)
+        {
+            profiles.Switch();
+        }
+
+        selectedUnit = a_selectedUnit;
+    }
+
+    #endregion
+
+    #region Unity Life-cycle Methods
 
     private void Awake()
     {
@@ -71,26 +116,34 @@ public class UIManager : MonoBehaviour
         }
 
         Manager.instance.TurnController.TurnEvent += TurnEvent;
-
-        // Subscribe to game state
         Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
 
-    private void GameStateChanged(Game_state a_oldstate, Game_state a_newstate)
+    private void OnDisable()
+    {
+        Manager.instance.TurnController.TurnEvent -= TurnEvent;
+        Manager.instance.StateController.OnGameStateChanged -= GameStateChanged;
+    }
+
+    #endregion
+
+    #region Local Methods
+
+    private void GameStateChanged(GameState a_oldstate, GameState a_newstate)
     {
         // Leaving the loading state
-        if (a_oldstate == Game_state.mainmenu)
+        if (a_oldstate == GameState.mainmenu)
         {
             StartCoroutine(FadeOutLoading());
         }
-        else if (a_newstate == Game_state.loading)
+        else if (a_newstate == GameState.loading)
         {
             StartCoroutine(FadeIntoState());
         }
 
-        if (a_oldstate == Game_state.battle)
+        if (a_oldstate == GameState.battle)
         {
             battleUI.FadeOut();
             endTurnButton.FadeOut();
@@ -151,21 +204,16 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void SelectAction(int actionIndex)
-    {
-        player.SelectAction(actionIndex);
-    }
-
-    private void TurnEvent(Turn_state a_newState, TEAM a_team, int a_turnNumber)
+    private void TurnEvent(TurnState a_newState, TEAM a_team, int a_turnNumber)
     {
         if (a_team == TEAM.player)
         {
-            if (a_newState == Turn_state.start)
+            if (a_newState == TurnState.start)
             {
                 battleUI.FadeIn();
                 endTurnButton.FadeIn();
             }
-            else if (a_newState == Turn_state.end)
+            else if (a_newState == TurnState.end)
             {
                 battleUI.FadeOut();
                 endTurnButton.FadeOut();
@@ -173,18 +221,5 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public bool Ready
-    {
-        get { return isReady; }
-    }
-
-    public void UpdateSelectedUnit(Unit a_selectedUnit)
-    {
-        if (selectedUnit != null)
-        {
-            profiles.Switch();
-        }
-
-        selectedUnit = a_selectedUnit;
-    }
+    #endregion   
 }

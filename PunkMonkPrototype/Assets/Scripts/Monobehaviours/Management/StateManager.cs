@@ -1,44 +1,83 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public enum Game_state { mainmenu, overworld, battle, loading, cinematic, pausemenu }
+public enum GameState { mainmenu, overworld, battle, loading, cinematic, pausemenu }
 
+/// <summary>
+/// This script is used to handle state changes
+/// </summary>
 public class StateManager : MonoBehaviour
 {
-    [SerializeField] private Game_state currentState = Game_state.mainmenu;
+    #region Unity Inspector Fields
 
-    [SerializeField] private Game_state previousState = Game_state.pausemenu;
+    [Header("Debug Info")]
+    [SerializeField]
+    private GameState currentState = GameState.mainmenu;
 
-    [SerializeField] private List<Game_state> stateHistory;
+    [SerializeField]
+    private GameState previousState = GameState.pausemenu;
+
+    [SerializeField]
+    private List<GameState> stateHistory;
+
+    #endregion
+
+    #region Local Fields
 
     private bool midLoad = false;
 
     private bool isReady;
 
-    // events
-    public delegate void Game_stateChanged(Game_state _oldState, Game_state _newState);
+    public delegate void Game_stateChanged(GameState _oldState, GameState _newState);
     public event Game_stateChanged OnGameStateChanged;
 
-    #region public Functions
+    #endregion
+
+    #region Properties
+
+    public bool MidLoad
+    {
+        set { midLoad = value; }
+    }
+
+    public bool Ready
+    {
+        get { return isReady; }
+    }
+
+    // Returns previous game state
+    public GameState PreviousState
+    {
+        get { return previousState; }
+    }
+
+    // Returns current game state
+    public GameState CurrentGameState
+    {
+        get { return currentState; }
+    }
+
+    #endregion
+
+    #region Public Methods
 
     public void Init()
     {
-        stateHistory = new List<Game_state>();
+        stateHistory = new List<GameState>();
 
-        ChangeGameState(Game_state.loading);
+        ChangeGameState(GameState.loading);
 
         isReady = true;
     }
 
     public void StartGame()
     {
-        ChangeGameState(Game_state.overworld);
+        ChangeGameState(GameState.overworld);
     }
 
     // This function changes the current game state to the target game state and calls the event on any script that is listening
-    public void ChangeGameState(Game_state a_targetState)
+    public void ChangeGameState(GameState a_targetState)
     {
         // Don't change to target state if that is already the current state
         if (currentState != a_targetState)
@@ -48,12 +87,12 @@ public class StateManager : MonoBehaviour
 
             stateHistory.Add(currentState);
 
-            if (currentState == Game_state.pausemenu)
+            if (currentState == GameState.pausemenu)
             {
                 Time.timeScale = 0.0f;
             }
 
-            if (previousState == Game_state.pausemenu)
+            if (previousState == GameState.pausemenu)
             {
                 Time.timeScale = 1.0f;
             }
@@ -71,64 +110,46 @@ public class StateManager : MonoBehaviour
         }
     }
 
-    public void ChangeStateAfterFade(Game_state a_targetState)
+    public void ChangeStateAfterFade(GameState a_targetState)
     {
-        ChangeGameState(Game_state.loading);
+        ChangeGameState(GameState.loading);
 
         StartCoroutine(ChangeMidLoad(a_targetState));
     }
 
-    private IEnumerator ChangeMidLoad(Game_state a_targetState)
-    {
-        yield return new WaitUntil(() => midLoad);
-
-        midLoad = false;
-
-        ChangeGameState(a_targetState);
-    }
-
-    public bool MidLoad
-    {
-        set { midLoad = value; }
-    }
-
     // Returns the string version of the state
-    public static string StateToString(Game_state a_state)
+    public static string StateToString(GameState a_state)
     {
         switch (a_state)
         {
-            case Game_state.pausemenu:
+            case GameState.pausemenu:
                 return "Pause menu";
-            case Game_state.battle:
+            case GameState.battle:
                 return "Battle";
-            case Game_state.cinematic:
+            case GameState.cinematic:
                 return "Cinematic";
-            case Game_state.loading:
+            case GameState.loading:
                 return "Loading";
-            case Game_state.mainmenu:
+            case GameState.mainmenu:
                 return "Main menu";
-            case Game_state.overworld:
+            case GameState.overworld:
                 return "Over world";
             default:
                 return "unknown state";
         }
     }
 
-    public bool Ready
-    {
-        get { return isReady; }
-    }
+    #endregion
 
-    // Returns previous game state
-    public Game_state PreviousState
-    {
-        get { return previousState; }
-    }
+    #region Local Methods
 
-    // Returns current game state
-    public Game_state CurrentGameState
+    private IEnumerator ChangeMidLoad(GameState a_targetState)
     {
-        get { return currentState; }
+        yield return new WaitUntil(() => midLoad);
+
+        midLoad = false;
+
+        ChangeGameState(a_targetState);
     }
 
     #endregion

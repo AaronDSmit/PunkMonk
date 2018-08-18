@@ -26,8 +26,6 @@ public static class HexUtility
 
     public static Vector3 GetFirstCorner(HexDirection direction)
     {
-        Vector3 output = corners[(int)direction];
-
         return corners[(int)direction];
     }
 

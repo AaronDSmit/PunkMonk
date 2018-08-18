@@ -222,9 +222,9 @@ public class AI_Agent : Unit
         turnComplete = false;
     }
 
-    private void GameStateChanged(Game_state a_oldstate, Game_state a_newstate)
+    private void GameStateChanged(GameState a_oldstate, GameState a_newstate)
     {
-        if (a_oldstate == Game_state.battle && a_newstate != Game_state.battle)
+        if (a_oldstate == GameState.battle && a_newstate != GameState.battle)
         {
             Die();
         }

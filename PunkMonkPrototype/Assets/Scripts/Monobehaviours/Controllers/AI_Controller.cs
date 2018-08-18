@@ -74,10 +74,10 @@ public class AI_Controller : MonoBehaviour
 
     #region Local Methods
 
-    private void TurnEvent(Turn_state a_newState, TEAM a_team, int a_turnNumber)
+    private void TurnEvent(TurnState a_newState, TEAM a_team, int a_turnNumber)
     {
         // Check if it is the AI's turn
-        if (a_newState == Turn_state.start && a_team == TEAM.ai)
+        if (a_newState == TurnState.start && a_team == TEAM.ai)
         {
             // Refresh all units
             foreach (Unit unit in agents)

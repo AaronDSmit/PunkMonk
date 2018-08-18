@@ -1,12 +1,14 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// This script is used for the main menu, it loads the next scene before switching to it
+/// </summary>
 public class IntroMenu : MonoBehaviour
 {
-    #region Inspector Variables
+    #region Unity Inspector Fields
 
     [SerializeField]
     private Image FadePlane;
@@ -19,16 +21,35 @@ public class IntroMenu : MonoBehaviour
 
     #endregion
 
+    #region Local Fields
+
     private AsyncOperation async;
 
     public float progress = 0f;
 
     public bool isDone = false;
 
+    #endregion
+
+    #region Public Methods
+
+    public void StartGame()
+    {
+        StartCoroutine(ChangeScenes());
+    }
+
+    #endregion
+
+    #region Unity Life-cycle Methods
+
     private void Start()
     {
         StartCoroutine(LoadScene());
     }
+
+    #endregion
+
+    #region Local Methods
 
     // Fades the fadePlane image from a colour to another over x seconds.
     private IEnumerator Fade(Color from, Color to, float time, Image _plane)
@@ -82,8 +103,5 @@ public class IntroMenu : MonoBehaviour
         async.allowSceneActivation = true;
     }
 
-    public void StartGame()
-    {
-        StartCoroutine(ChangeScenes());
-    }
+    #endregion
 }

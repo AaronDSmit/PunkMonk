@@ -17,10 +17,10 @@ public class OverworldController : MonoBehaviour
         Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
     }
 
-    private void GameStateChanged(Game_state _oldstate, Game_state _newstate)
+    private void GameStateChanged(GameState _oldstate, GameState _newstate)
     {
         // ensure this script knows it's in over-world state
-        inOverworld = (_newstate == Game_state.overworld);
+        inOverworld = (_newstate == GameState.overworld);
     }
 
     private void Update()

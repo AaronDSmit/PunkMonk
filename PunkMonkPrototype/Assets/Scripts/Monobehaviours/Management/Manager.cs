@@ -2,15 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This script is used to initialise other Manager classes to ensure they are ready before being accessed. 
+/// </summary>
 public class Manager : MonoBehaviour
 {
-    // Global Manager ref
-    public static Manager instance;
+
+    #region Reference Fields
 
     private StateManager stateManager;
     private UIManager uiManager;
     private TransitionManager transitionManager;
     private TurnManager turnManager;
+
+    #endregion
+
+    #region Local Fields
+
+    public static Manager instance;
+
+    #endregion
+
+    #region Properties
 
     public StateManager StateController
     {
@@ -32,6 +45,10 @@ public class Manager : MonoBehaviour
         get { return turnManager; }
     }
 
+    #endregion
+
+    #region Unity Life-cycle Methods
+
     private void Awake()
     {
         if (instance == null)
@@ -42,6 +59,8 @@ public class Manager : MonoBehaviour
             transitionManager = GetComponent<TransitionManager>();
             uiManager = GetComponent<UIManager>();
             turnManager = GetComponent<TurnManager>();
+
+            StartCoroutine(InitManagers());
         }
         else
         {
@@ -54,10 +73,9 @@ public class Manager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    private void Start()
-    {
-        StartCoroutine(InitManagers());
-    }
+    #endregion
+
+    #region Local Methods
 
     private IEnumerator InitManagers()
     {
@@ -79,4 +97,6 @@ public class Manager : MonoBehaviour
 
         stateManager.StartGame();
     }
+
+    #endregion
 }

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class StateTransitionPoint : MonoBehaviour
 {
-    [SerializeField] private Game_state targetState;
-    [SerializeField] private Game_state fromState;
+    [SerializeField] private GameState targetState;
+    [SerializeField] private GameState fromState;
 
     [HideInInspector]
     [SerializeField] public bool drawText;
@@ -66,14 +66,14 @@ public class StateTransitionPoint : MonoBehaviour
         lightningHexT.position = lightningHexT.transform.position;
     }
 
-    public Game_state TargetState
+    public GameState TargetState
     {
         get { return targetState; }
 
         set { targetState = value; }
     }
 
-    public Game_state CurrentState
+    public GameState CurrentState
     {
         get { return fromState; }
 

@@ -100,10 +100,10 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    private void GameStateChanged(Game_state _oldstate, Game_state _newstate)
+    private void GameStateChanged(GameState _oldstate, GameState _newstate)
     {
         // ensure this script knows it's in over-world state
-        if (_newstate == Game_state.battle)
+        if (_newstate == GameState.battle)
         {
             Hex[] tiles = GetComponentsInChildren<Hex>();
 

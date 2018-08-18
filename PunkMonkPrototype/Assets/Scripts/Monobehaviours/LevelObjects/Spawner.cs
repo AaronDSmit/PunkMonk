@@ -33,9 +33,9 @@ public class Spawner : MonoBehaviour
         Manager.instance.TurnController.TurnEvent += TurnEvent;
     }
 
-    private void TurnEvent(Turn_state newState, TEAM team, int turnNumber)
+    private void TurnEvent(TurnState newState, TEAM team, int turnNumber)
     {
-        if (newState == Turn_state.start && turnNumber == turnToSpawn)
+        if (newState == TurnState.start && turnNumber == turnToSpawn)
         {
             SpawnUnit();
         }

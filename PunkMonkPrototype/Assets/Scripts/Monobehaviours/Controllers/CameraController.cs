@@ -44,7 +44,7 @@ public class CameraController : MonoBehaviour
     private Vector3 dir;
 
 
-    bool cinemachine;
+    //bool cinemachine = true;
 
 
     GameObject basicEarthGlamCam;
@@ -92,7 +92,7 @@ public class CameraController : MonoBehaviour
     {
         // Don't update if in any other game state
 
-        if (cinemachine == true)
+        //if (cinemachine == false)
         {
             if (lookAtObject == false)
             {

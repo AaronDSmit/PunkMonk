@@ -46,7 +46,7 @@ public class LivingEntity : Entity
     [ContextMenu("Self Destruct")]
     protected virtual void Die()
     {
-        if(!dead)
+        if (!dead)
         {
             dead = true;
 
@@ -77,6 +77,8 @@ public class LivingEntity : Entity
 
             yield return null;
         }
+
+        currentTile.Exit();
 
         Destroy(gameObject);
     }

@@ -33,17 +33,13 @@ public class ProfileSwitcher : MonoBehaviour
 
     private Vector2 secondaryPos;
 
-    private bool earthSelected = true;
-
     #endregion
 
     #region Public Methods
 
-    public void Switch()
+    public void Switch(bool a_earthSelected)
     {
-        earthSelected = !earthSelected;
-
-        if (earthSelected)
+        if (a_earthSelected)
         {
             earthProfile.transform.SetAsLastSibling();
 

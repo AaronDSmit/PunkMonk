@@ -17,7 +17,8 @@ public class TurnManager : MonoBehaviour
     [SerializeField] private TEAM startingTeam;
 
     [Header("Debug Info")]
-    [SerializeField] private TEAM currentTeam;
+    [SerializeField]
+    private TEAM currentTeam;
 
     #endregion
 
@@ -82,6 +83,10 @@ public class TurnManager : MonoBehaviour
         if (_newstate == GameState.battle)
         {
             StartTurn();
+        }
+        else
+        {
+            turnCount = 0;
         }
     }
 

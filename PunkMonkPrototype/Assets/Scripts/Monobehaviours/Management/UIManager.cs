@@ -75,7 +75,7 @@ public class UIManager : MonoBehaviour
     {
         if (selectedUnit != null)
         {
-            profiles.Switch();
+            profiles.Switch(a_selectedUnit.CompareTag("EarthUnit"));
         }
 
         selectedUnit = a_selectedUnit;

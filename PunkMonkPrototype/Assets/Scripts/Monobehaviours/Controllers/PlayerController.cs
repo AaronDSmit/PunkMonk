@@ -142,9 +142,6 @@ public class PlayerController : MonoBehaviour
             {
                 SelectUnit(earthUnit);
             }
-
-            cam.LookAtPosition(selectedUnit.transform.position);
-
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -374,6 +371,7 @@ public class PlayerController : MonoBehaviour
 
         UI.UpdateSelectedUnit(selectedUnit);
 
+        cam.LookAtPosition(selectedUnit.transform.position);
         selectedUnit.Select(true, currentRuleset.ValidHighlightColour);
     }
 

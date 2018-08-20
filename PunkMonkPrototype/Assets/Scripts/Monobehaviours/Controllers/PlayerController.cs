@@ -4,23 +4,23 @@ using UnityEngine;
 
 public enum PlayerAttack { earthBasic, earthSpecial, lightningBasic, lightningSpecial }
 
+/// <summary>
+/// 
+/// </summary>
 public class PlayerController : MonoBehaviour
 {
-    #region Inspector Variables
+    #region Unity Inspector Fields
 
-    [SerializeField] private InteractionRuleset selectionRuleset;
-
-    #endregion
+    [SerializeField]
+    private InteractionRuleset selectionRuleset;
 
     [Header("Debug Info")]
     [SerializeField]
     private InteractionRuleset currentRuleset;
 
-    private bool myTurn = true;
+    #endregion
 
-    private bool canInteract = false;
-
-    private PlayerAttack currentAttack;
+    #region Reference Fields
 
     private LineRenderer lineRenderer;
 
@@ -36,6 +36,18 @@ public class PlayerController : MonoBehaviour
     private Unit unitUnderMouse;
     private Unit previousUnitUnderMouse;
 
+    private CameraController cam;
+
+    #endregion
+
+    #region Local Fields
+
+    private bool myTurn = true;
+
+    private bool canInteract = false;
+
+    private PlayerAttack currentAttack;
+
     private List<Hex> tilesWithinRange;
 
     private List<Hex> tilesAffectByAction;
@@ -46,47 +58,36 @@ public class PlayerController : MonoBehaviour
 
     private Hex earthSnapHex;
 
-    private CameraController cam;
-
     private Hex lightningSnapHex;
 
-    private int encounterKillLimit;
+    private int encounterKillLimit = 0;
 
-    private int encounterKillCount;
+    private int encounterKillCount = 0;
 
     private bool trackingKills = false;
 
-    private void Awake()
+    #endregion
+
+    #region Properties
+
+    public int EncounterKillLimit
     {
-        Manager.instance.TurnController.TurnEvent += TurnEvent;
+        get { return encounterKillLimit; }
 
-        Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
-
-        UI = GameObject.FindGameObjectWithTag("Manager").GetComponent<UIManager>();
-
-        grid = GameObject.FindGameObjectWithTag("Grid").GetComponent<GridManager>();
-
-        tilesWithinRange = new List<Hex>();
-
-        tilesAffectByAction = new List<Hex>();
-
-        cam = GameObject.FindGameObjectWithTag("CameraRig").GetComponent<CameraController>();
-
-        if (selectionRuleset == null)
-        {
-            Debug.LogError("Player Controller selection ruleset not set!!!");
-        }
-        else
-        {
-            currentRuleset = selectionRuleset;
-        }
-
-        lineRenderer = GetComponent<LineRenderer>();
+        set { encounterKillLimit = value; }
     }
+
+    #endregion
+
+    #region Public Methods
 
     public void Init()
     {
         canInteract = false;
+
+        Manager.instance.TurnController.TurnEvent += TurnEvent;
+
+        Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
 
         GameObject earthGO = GameObject.FindGameObjectWithTag("EarthUnit");
 
@@ -111,12 +112,161 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public int EncounterKillLimit
+    public Unit SpawnEarthUnit()
     {
-        get { return encounterKillLimit; }
+        GameObject earthGO = GameObject.FindGameObjectWithTag("EarthUnitSpawn");
 
-        set { encounterKillLimit = value; }
+        if (earthGO)
+        {
+            Hex spawnHexEarth = earthGO.transform.parent.GetComponent<Hex>();
+
+            Vector3 spawnPosEarth = spawnHexEarth.transform.position;
+            spawnPosEarth.y = 0.1f;
+
+            earthUnit = Instantiate(Resources.Load<Unit>("PlayerCharacters/EarthUnit"), spawnPosEarth, Quaternion.identity);
+            earthUnit.Spawn(spawnHexEarth);
+
+            return earthUnit;
+        }
+        else
+        {
+            Debug.LogError("No Earth  spawn point found!");
+
+            return null;
+        }
     }
+
+    public Unit SpawnLightningUnit()
+    {
+        GameObject lightningGO = GameObject.FindGameObjectWithTag("LightningUnitSpawn");
+
+        if (lightningGO)
+        {
+            Hex spawnHexLightning = lightningGO.transform.parent.GetComponent<Hex>();
+
+            Vector3 spawnPosLightning = spawnHexLightning.transform.position;
+            spawnPosLightning.y = 0.1f;
+
+            lightningUnit = Instantiate(Resources.Load<Unit>("PlayerCharacters/LightningUnit"), spawnPosLightning, Quaternion.identity);
+            lightningUnit.Spawn(spawnHexLightning);
+
+            lightningUnit.GetComponent<OverworldFollower>().Init();
+
+            return lightningUnit;
+        }
+        else
+        {
+            Debug.LogError("No lightning spawn point found!");
+
+            return null;
+        }
+    }
+
+    // Temp code that would be removed with object pooling
+    public void SubscribeToUnitDeath(LivingEntity a_livingEntity)
+    {
+        a_livingEntity.OnDeath += EnemyDied;
+    }
+
+    public void EnemyDied(LivingEntity a_entity)
+    {
+        if (trackingKills)
+        {
+            encounterKillCount++;
+
+            if (encounterKillCount >= EncounterKillLimit)
+            {
+                Manager.instance.StateController.ChangeStateAfterFade(GameState.overworld);
+            }
+        }
+    }
+
+    public void SetUnitSnapHexes(Hex a_earthHex, Hex a_lightningHex)
+    {
+        earthSnapHex = a_earthHex;
+        lightningSnapHex = a_lightningHex;
+
+        trackingKills = (EncounterKillLimit > 0);
+        encounterKillCount = 0;
+    }
+
+    public void SelectAction(int actionIndex)
+    {
+        RemoveHighlightedTiles();
+
+        currentRuleset = selectedUnit.GetAction(actionIndex).ruleset;
+
+        // set the current attack
+        if (selectedUnit == earthUnit)
+        {
+            if (actionIndex == 1)
+            {
+                currentAttack = PlayerAttack.earthBasic;
+            }
+            else if (actionIndex == 2)
+            {
+                currentAttack = PlayerAttack.earthSpecial;
+            }
+        }
+        else if (selectedUnit == lightningUnit)
+        {
+            if (actionIndex == 1)
+            {
+                currentAttack = PlayerAttack.lightningBasic;
+            }
+            else if (actionIndex == 2)
+            {
+                currentAttack = PlayerAttack.lightningSpecial;
+            }
+        }
+
+        // Highlight area in range to walk
+        if (currentRuleset.actionType == ActionType.movement)
+        {
+            HighlightTilesInRange(selectedUnit.MoveRange);
+        }
+
+        // Highlight area in range to attack
+        if (currentRuleset.actionType == ActionType.attack)
+        {
+            HighlightTilesInRange(selectedUnit.AttackRange);
+        }
+
+        // Highlight area in range to special attack
+        if (currentRuleset.actionType == ActionType.specialAttack)
+        {
+            HighlightTilesInRange(selectedUnit.SpecialAttackRange);
+        }
+    }
+
+    #endregion
+
+    #region Unity Life-cycle Methods
+
+    private void Awake()
+    {
+        UI = GameObject.FindGameObjectWithTag("Manager").GetComponent<UIManager>();
+
+        grid = GameObject.FindGameObjectWithTag("Grid").GetComponent<GridManager>();
+
+        tilesWithinRange = new List<Hex>();
+
+        tilesAffectByAction = new List<Hex>();
+
+        cam = GameObject.FindGameObjectWithTag("CameraRig").GetComponent<CameraController>();
+
+        if (selectionRuleset == null)
+        {
+            Debug.LogError("Player Controller selection ruleset not set!!!");
+        }
+        else
+        {
+            currentRuleset = selectionRuleset;
+        }
+
+        lineRenderer = GetComponent<LineRenderer>();
+    }
+
 
     private void Update()
     {
@@ -126,6 +276,10 @@ public class PlayerController : MonoBehaviour
             ProcessMouseInput();
         }
     }
+
+    #endregion
+
+    #region Local Methods
 
     // Process Keyboard Input
     private void ProcessKeyboardInput()
@@ -357,22 +511,25 @@ public class PlayerController : MonoBehaviour
 
     private void SelectUnit(Unit a_newSelectedUnit)
     {
-        if (selectedUnit)
+        if (a_newSelectedUnit != null)
         {
-            if (selectedUnit == a_newSelectedUnit)
+            if (selectedUnit)
             {
-                return;
+                if (selectedUnit == a_newSelectedUnit)
+                {
+                    return;
+                }
+
+                DeselectUnit();
             }
 
-            DeselectUnit();
+            selectedUnit = a_newSelectedUnit;
+
+            UI.UpdateSelectedUnit(selectedUnit);
+            selectedUnit.Select(true, currentRuleset.ValidHighlightColour);
         }
 
-        selectedUnit = a_newSelectedUnit;
-
-        UI.UpdateSelectedUnit(selectedUnit);
-
         cam.LookAtPosition(selectedUnit.transform.position);
-        selectedUnit.Select(true, currentRuleset.ValidHighlightColour);
     }
 
     private void DeselectUnit()
@@ -449,7 +606,14 @@ public class PlayerController : MonoBehaviour
             {
                 myTurn = true;
 
-                SelectUnit(earthUnit);
+                if (earthUnit)
+                {
+                    SelectUnit(earthUnit);
+                }
+                else
+                {
+                    SelectUnit(lightningUnit);
+                }
 
                 earthUnit.Refresh();
                 lightningUnit.Refresh();
@@ -462,10 +626,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void GameStateChanged(GameState _oldstate, GameState _newstate)
+    private void GameStateChanged(GameState a_oldstate, GameState a_newstate)
     {
         // ensure this script knows it's in over-world state
-        if (_newstate == GameState.battle)
+        if (a_newstate == GameState.battle)
         {
             earthUnit.TeleportToHex(earthSnapHex);
             lightningUnit.TeleportToHex(lightningSnapHex);
@@ -473,86 +637,21 @@ public class PlayerController : MonoBehaviour
             canInteract = true;
             SelectUnit(earthUnit);
         }
-        else
+        else if (a_oldstate == GameState.battle)
         {
+
+            Debug.Log("PC: state changed");
             DeselectUnit();
-        }
-    }
 
-    // Temp code that would be removed with object pooling
-    public void SubscribeToUnitDeath(LivingEntity a_livingEntity)
-    {
-        a_livingEntity.OnDeath += EnemyDied;
-    }
-
-    public void EnemyDied(LivingEntity a_entity)
-    {
-        if (trackingKills)
-        {
-            encounterKillCount++;
-
-            if (encounterKillCount >= EncounterKillLimit)
+            if (!earthUnit)
             {
-                Manager.instance.StateController.ChangeStateAfterFade(GameState.overworld);
+                SpawnEarthUnit();
             }
-        }
-    }
 
-    public void SetUnitSnapHexes(Hex a_earthHex, Hex a_lightningHex)
-    {
-        earthSnapHex = a_earthHex;
-        lightningSnapHex = a_lightningHex;
-
-        trackingKills = (EncounterKillLimit > 0);
-        encounterKillCount = 0;
-    }
-
-    public void SelectAction(int actionIndex)
-    {
-        RemoveHighlightedTiles();
-
-        currentRuleset = selectedUnit.GetAction(actionIndex).ruleset;
-
-        // set the current attack
-        if (selectedUnit == earthUnit)
-        {
-            if (actionIndex == 1)
+            if (!lightningUnit)
             {
-                currentAttack = PlayerAttack.earthBasic;
+                SpawnLightningUnit();
             }
-            else if (actionIndex == 2)
-            {
-                currentAttack = PlayerAttack.earthSpecial;
-            }
-        }
-        else if (selectedUnit == lightningUnit)
-        {
-            if (actionIndex == 1)
-            {
-                currentAttack = PlayerAttack.lightningBasic;
-            }
-            else if (actionIndex == 2)
-            {
-                currentAttack = PlayerAttack.lightningSpecial;
-            }
-        }
-
-        // Highlight area in range to walk
-        if (currentRuleset.actionType == ActionType.movement)
-        {
-            HighlightTilesInRange(selectedUnit.MoveRange);
-        }
-
-        // Highlight area in range to attack
-        if (currentRuleset.actionType == ActionType.attack)
-        {
-            HighlightTilesInRange(selectedUnit.AttackRange);
-        }
-
-        // Highlight area in range to special attack
-        if (currentRuleset.actionType == ActionType.specialAttack)
-        {
-            HighlightTilesInRange(selectedUnit.SpecialAttackRange);
         }
     }
 
@@ -774,6 +873,8 @@ public class PlayerController : MonoBehaviour
             tile.MouseEnter(currentRuleset.HighlightColour);
         }
     }
+
+    #endregion
 
     #endregion
 }

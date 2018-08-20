@@ -8,14 +8,6 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class TransitionManager : MonoBehaviour
 {
-    #region Unity Inspector Fields
-
-    [SerializeField] private Unit earthUnitPrefab;
-
-    [SerializeField] private Unit LightningUnitPrefab;
-
-    #endregion
-
     #region Local Fields
 
     private bool isReady;
@@ -47,53 +39,20 @@ public class TransitionManager : MonoBehaviour
     {
         if (next.buildIndex > 0)
         {
-            GameObject earthGO = GameObject.FindGameObjectWithTag("EarthUnitSpawn");
-            Hex spawnHexEarth = null;
-            Unit earth = null;
-
-            if (earthGO)
-            {
-                spawnHexEarth = earthGO.transform.parent.GetComponent<Hex>();
-
-                Vector3 spawnPosEarth = spawnHexEarth.transform.position;
-                spawnPosEarth.y = 0.1f;
-
-                earth = Instantiate(earthUnitPrefab, spawnPosEarth, Quaternion.identity);
-                earth.Spawn(spawnHexEarth);
-            }
-            else
-            {
-                Debug.LogError("No Earth unit found!");
-            }
-
-
-            GameObject lightningGO = GameObject.FindGameObjectWithTag("LightningUnitSpawn");
-            Hex spawnHexLightning = null;
-            Unit lightning = null;
-
-            if (lightningGO)
-            {
-                spawnHexLightning = lightningGO.transform.parent.GetComponent<Hex>();
-
-                Vector3 spawnPosLightning = spawnHexLightning.transform.position;
-                spawnPosLightning.y = 0.1f;
-
-                lightning = Instantiate(LightningUnitPrefab, spawnPosLightning, Quaternion.identity);
-                lightning.Spawn(spawnHexLightning);
-
-                lightning.GetComponent<OverworldFollower>().Init();
-            }
-            else
-            {
-                Debug.LogError("No lightning unit found!");
-            }
-
-
             GameObject playerGo = GameObject.FindGameObjectWithTag("Player");
 
-            if (playerGo && lightningGO && earthGO)
+            Unit earthUnit = null;
+            Unit LightningUnit = null;
+
+            if (playerGo)
             {
-                playerGo.GetComponent<PlayerController>().Init();
+                PlayerController player = playerGo.GetComponent<PlayerController>();
+
+                earthUnit = player.SpawnEarthUnit();
+                LightningUnit = player.SpawnLightningUnit();
+
+                player.Init();
+
                 playerGo.GetComponent<OverworldController>().Init();
             }
             else
@@ -103,9 +62,9 @@ public class TransitionManager : MonoBehaviour
 
             GameObject AI_Controller = GameObject.FindGameObjectWithTag("AI_Controller");
 
-            if (AI_Controller && lightningGO && earthGO)
+            if (AI_Controller && LightningUnit && earthUnit)
             {
-                AI_Controller.GetComponent<AI_Controller>().Init(earth, lightning);
+                AI_Controller.GetComponent<AI_Controller>().Init(earthUnit, LightningUnit);
             }
             else
             {

@@ -6,7 +6,7 @@ public class OverworldController : MonoBehaviour
 {
     private Unit earthUnit;
 
-    private Unit lightningUnit;
+    private Unit lightningUnit = null;
 
     private bool inOverworld;
 
@@ -21,6 +21,11 @@ public class OverworldController : MonoBehaviour
     {
         // ensure this script knows it's in over-world state
         inOverworld = (_newstate == GameState.overworld);
+
+        if(inOverworld)
+        {
+            Init();
+        }
     }
 
     private void Update()

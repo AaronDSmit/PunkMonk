@@ -4,29 +4,61 @@ using UnityEngine;
 
 public class LivingEntity : Entity
 {
-    [SerializeField] protected float maxHealth = 100;
+    #region Unity Inspector Fields
 
-    [SerializeField] private Material dissolveMat;
+    [SerializeField]
+    protected float maxHealth = 100;
 
-    [SerializeField] private float deathAnimationTime;
+    [SerializeField]
+    private Material dissolveMat = null;
 
-    protected float currentHealth;
+    [SerializeField]
+    private float deathAnimationTime = 1.0f;
 
-    protected bool dead;
+    #endregion
+
+    #region Reference Fields
 
     protected Renderer myRenderer;
 
-    // event
+    #endregion
+
+    #region Local Fields
+
+    private float currentHealth;
+
+    private bool dead;
+
     public delegate void Dead(LivingEntity a_entity);
     public event Dead OnDeath;
 
-    protected virtual void Awake()
-    {
-        currentHealth = maxHealth;
+    #endregion
 
-        myRenderer = GetComponentInChildren<Renderer>();
-        dead = false;
+    #region Properties
+
+    public bool IsDead
+    {
+        get { return dead; }
     }
+
+    public float CurrentHealth
+    {
+        get { return currentHealth; }
+    }
+
+    public float MaxHealth
+    {
+        get { return maxHealth; }
+    }
+
+    public float HealthPercent
+    {
+        get { return currentHealth / maxHealth; }
+    }
+
+    #endregion
+
+    #region Public Methods
 
     public override void TakeDamage(float a_damageAmount)
     {
@@ -42,6 +74,22 @@ public class LivingEntity : Entity
             Die();
         }
     }
+
+    #endregion
+
+    #region Unity Life-cycle Methods
+
+    protected virtual void Awake()
+    {
+        currentHealth = maxHealth;
+
+        myRenderer = GetComponentInChildren<Renderer>();
+        dead = false;
+    }
+
+    #endregion
+
+    #region Local Methods
 
     [ContextMenu("Self Destruct")]
     protected virtual void Die()
@@ -81,28 +129,6 @@ public class LivingEntity : Entity
         currentTile.Exit();
 
         Destroy(gameObject);
-    }
-
-    #region Getters / Setters
-
-    public bool IsDead
-    {
-        get { return dead; }
-    }
-
-    public float CurrentHealth
-    {
-        get { return currentHealth; }
-    }
-
-    public float MaxHealth
-    {
-        get { return maxHealth; }
-    }
-
-    public float HealthPercent
-    {
-        get { return currentHealth / maxHealth; }
     }
 
     #endregion

@@ -10,7 +10,7 @@ public class OverworldFollower : MonoBehaviour
     private Vector3 vecBetween;
 
     [SerializeField] private float movementSpeed;
-    
+
     private void Awake()
     {
         Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
@@ -34,6 +34,11 @@ public class OverworldFollower : MonoBehaviour
     {
         // ensure this script knows it's in over-world state
         inOverworld = (_newstate == GameState.overworld);
+
+        if (inOverworld)
+        {
+            Init();
+        }
     }
 
     private void Update()

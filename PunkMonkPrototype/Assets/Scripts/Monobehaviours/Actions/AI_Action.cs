@@ -14,7 +14,7 @@ public class AI_Action : Action
 
     public bool Init(AI_Agent a_Agent)
     {
-        scorer = new AI_Scorer(calculationCanvas, agent, new WorldState());
+        scorer = new AI_Scorer(calculationCanvas, agent);
 
         if (agent == null)
         {

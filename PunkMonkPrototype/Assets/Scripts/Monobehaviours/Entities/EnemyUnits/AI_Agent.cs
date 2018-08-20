@@ -95,6 +95,7 @@ public class AI_Agent : Unit
         }
 
     }
+
     private IEnumerator DoTurn(GridManager a_grid)
     {
 

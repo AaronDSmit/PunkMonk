@@ -57,7 +57,7 @@ namespace NodeEditorFramework.Standard
 
 		public override bool Calculate()
 		{
-            outputKnob.SetValue<float>(value);
+            outputKnob.SetValue(value);
 
 			return true;
 		}
@@ -67,4 +67,4 @@ namespace NodeEditorFramework.Standard
 public enum InputType { player, agent, world }
 public enum PlayerValue { health, maxHealth }
 public enum AgentValue { damage, movement }
-public enum WorldValue { distToPlayer }
+public enum WorldValue { movesToAttackRange }

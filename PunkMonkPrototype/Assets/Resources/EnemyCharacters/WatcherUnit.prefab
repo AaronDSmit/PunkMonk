@@ -144,13 +144,14 @@ MonoBehaviour:
   maxHealth: 100
   dissolveMat: {fileID: 2100000, guid: 25b0cd8d1848b1f4a83e3fa96f6d0869, type: 2}
   deathAnimationTime: 1
-  actions: []
+  actions:
+  - {fileID: 11400000, guid: 85a01b7788e76f845875da8b3c3553d2, type: 2}
   moveRange: 1
   attackRange: 1
   specialAttackRange: 0
   rotationTime: 0
   walkSpeed: 10
-  damage: 1
+  damage: 34
   damgeDelayTimer: 0
 --- !u!136 &136935669470407730
 CapsuleCollider:

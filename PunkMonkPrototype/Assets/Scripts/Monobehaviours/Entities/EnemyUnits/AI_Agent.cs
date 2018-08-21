@@ -63,13 +63,21 @@ public class AI_Agent : Unit
     {
         base.Awake();
 
-        Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
-
         // Setup the actions
         foreach (AI_Action action in actions)
         {
             action.Init(this);
         }
+    }
+
+    private void OnEnable()
+    {
+        Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
+    }
+
+    protected void OnDisable()
+    {
+        Manager.instance.StateController.OnGameStateChanged -= GameStateChanged;
     }
 
     #endregion
@@ -83,98 +91,55 @@ public class AI_Agent : Unit
         StartCoroutine(BasicAttackDamageDelay(damgeDelayTimer, a_finished));
     }
 
-    struct PathInfo
-    {
-        public bool isAlreadyInRange;
-        public List<Hex> path;
-
-        public void Init()
-        {
-            isAlreadyInRange = false;
-            path = null;
-        }
-
-    }
-
     private IEnumerator DoTurn(GridManager a_grid)
     {
+        AI_Action bestAction = null;
+        int playerToAttack = 0;
+        float bestScore = int.MinValue;
+        List<Hex> path = null;
 
-        List<Hex>[] shortestPaths = new List<Hex>[] { null, null };
+        ScoringInfo[] scoringInfo = new ScoringInfo[2];
+        scoringInfo[0] = players[0] == null ? null : new ScoringInfo(a_grid, this, players[0]);
+        scoringInfo[1] = players[1] == null ? null : new ScoringInfo(a_grid, this, players[1]);
 
-        for (int i = 0; i < 2; i++)
+        foreach (AI_Action action in actions)
         {
-            Unit currentPlayer = players[i];
-
-            // TODO: Check if this agent is already in range of the player
-
-
-            // Ignore dead players
-            if (currentPlayer.IsDead)
-                continue;
-
-            // Find all of the tiles within attack range
-            List<Hex> tiles = new List<Hex>(a_grid.GetTilesWithinDistance(currentPlayer.CurrentTile, attackRange, false));
-            foreach (Hex targetTile in tiles)
+            for (int i = 0; i < 2; i++)
             {
-                // Ignore the tile that the player is on
-                if (targetTile.IsTraversable == false)
-                {
-                    if (targetTile == currentTile)
-                        shortestPaths[i] = new List<Hex> { currentTile };
-
+                if (scoringInfo[i] == null)
                     continue;
-                }
 
-                // TODO: Ignore the tiles that can't attack the player
-                //if (HasClearShot(tile, players[i]) == false)
-                //    continue;
-                // Pathfind to the tile
-                List<Hex> path = Navigation.FindPath(CurrentTile, targetTile);
-                if (path == null)
+                float score = action.GetScore(scoringInfo[i]);
+                if (scoringInfo[i].Path != null)
                 {
-                    Debug.LogError("No path found", gameObject);
-                    continue;
-                }
-
-                if (shortestPaths[i] == null) // Check if this is the first path
-                {
-                    shortestPaths[i] = path;
-                }
-                // Set it as the shortest path if it is shorter than the current shortest
-                else if (path.Count < shortestPaths[i].Count)
-                {
-                    shortestPaths[i] = path;
+                    if (score > bestScore)
+                    {
+                        bestAction = action;
+                        playerToAttack = i;
+                        bestScore = score;
+                        path = scoringInfo[i].Path;
+                    }
                 }
             }
         }
 
-        // Check for the shortest paths being null
-        if (shortestPaths[0] == null && shortestPaths[1] == null)
+        if (bestAction == null)
         {
+            Debug.Log("No valid actions found", gameObject);
             turnComplete = true;
-            Debug.LogError("No path found to players", gameObject);
             yield break;
         }
 
-        int playerToAttack = -1;
-        if (shortestPaths[0] == null)
-            playerToAttack = 1;
-        else if (shortestPaths[1] == null)
-            playerToAttack = 0;
-        else
-            // Choose the closest player
-            playerToAttack = shortestPaths[0].Count <= shortestPaths[1].Count ? 0 : 1;
-
         // Remove the path that is out of the movement range
-        if (shortestPaths[playerToAttack].Count > MoveRange)
+        if (path.Count > MoveRange)
         {
-            shortestPaths[playerToAttack].RemoveRange(MoveRange, shortestPaths[playerToAttack].Count - MoveRange);
+            path.RemoveRange(MoveRange, path.Count - MoveRange);
         }
 
         // Path find and wait for it to finish
         isPerformingAction = true;
         finishedWalking = FinishedAction;
-        StartCoroutine(Walk(shortestPaths[playerToAttack]));
+        StartCoroutine(Walk(path));
         yield return new WaitUntil(() => isPerformingAction == false);
 
         // Attack the player, checking if it is in range && if we have a clear shot
@@ -186,6 +151,7 @@ public class AI_Agent : Unit
         }
 
         turnComplete = true;
+        yield break;
     }
 
     private IEnumerator BasicAttackDamageDelay(float a_timer, System.Action a_finished)

@@ -6,52 +6,42 @@ public class ScoringInfo
 {
     private GridManager grid;
     private AI_Agent agent;
-    private PlayerInfo[] playerInfo;
+    private Unit player;
+    private bool isInAttackRange;
+    private List<Hex> path;
+    private int movesToAttackRange;
 
-    private struct PlayerInfo
+    public GridManager Grid { get { return grid; } }
+    public AI_Agent Agent { get { return agent; } }
+    public Unit Player { get { return player; } }
+    public bool IsInAttackRange { get { return isInAttackRange; } }
+    public List<Hex> Path { get { return path; } }
+    public int MovesToAttackRange { get { return movesToAttackRange; } }
+
+    public ScoringInfo(GridManager a_grid, AI_Agent a_agent, Unit a_player)
     {
-        public Unit player;
-
-        public List<Hex> path;
-
-        public int movesToAttackRange;
-
-        public PlayerInfo(Unit a_player, List<Hex> a_path, int a_movesToAttackRange)
-        {
-            player = a_player;
-            path = a_path;
-            movesToAttackRange = a_movesToAttackRange;
-        }
-
-    }
-
-    ScoringInfo(GridManager a_grid, AI_Agent a_agent, Unit[] a_players)
-    {
-        if (a_grid == null || a_agent == null || a_players == null || a_players[0] == null || a_players[1] == null)
+        if (a_grid == null || a_agent == null || a_player == null)
         {
             Debug.LogError("ScoringInfo was given a null value in its constructor.");
         }
 
         grid = a_grid;
         agent = a_agent;
-        playerInfo = new PlayerInfo[2];
+        player = a_player;
 
-        for (int i = 0; i < 2; i++)
-        {
-            List<Hex> path = ClacPathToAttackRange(grid, agent, a_players[i]);
+        path = ClacPathToAttackRange(grid, agent, player);
+        isInAttackRange = path != null && path.Count == 1 && path[0] == agent.CurrentTile;
 
-            playerInfo[i] = new PlayerInfo(a_players[i], path, ClacMovesToAttackRange(a_players[i], path));
-        }
+        movesToAttackRange = path == null ? int.MinValue : ClacMovesToAttackRange(player, path);
     }
 
-    static int ClacMovesToAttackRange(Unit a_unit, List<Hex> a_path)
+    private static int ClacMovesToAttackRange(Unit a_unit, List<Hex> a_path)
     {
         return a_path.Count / a_unit.MoveRange;
     }
 
-    static List<Hex> ClacPathToAttackRange(GridManager a_grid, Unit a_fromUnit, Unit a_toUnit)
+    private static List<Hex> ClacPathToAttackRange(GridManager a_grid, Unit a_fromUnit, Unit a_toUnit)
     {
-        // TODO: Check if this agent is already in range of the player
 
         List<Hex> shortestPath = null;
 

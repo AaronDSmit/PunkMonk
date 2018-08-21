@@ -36,8 +36,8 @@ namespace NodeEditorFramework.Standard
         public override bool CanAddNode(string nodeID)
         {
             //Debug.Log ("Check can add node " + nodeID);
-            if (nodeID == OutputNodeID)
-                return !nodes.Exists((Node n) => n.GetID == OutputNodeID);
+            //if (nodeID == OutputNodeID)
+            //    return !nodes.Exists((Node n) => n.GetID == OutputNodeID);
             return true;
         }
 
@@ -47,6 +47,11 @@ namespace NodeEditorFramework.Standard
                 Traversal = new CanvasCalculator(this);
 
             Traversal.TraverseAll();
+
+            if (outputNode == null)
+            {
+                outputNode = nodes.Find((Node n) => n.GetID == OutputNodeID) as OutputNode;
+            }
 
             output = outputNode.GetValue;
         }

@@ -2,9 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A template to follow for all unity C# classes. Created with help from: https://medium.com/@akb1ggs/structuring-your-unity-monobehaviours-df090b587110
+/// </summary>
 public class GridManager : MonoBehaviour
 {
-    [SerializeField] private Hex tilePrefab;
+    #region Unity Inspector Fields
+
+    [SerializeField]
+    private Hex tilePrefab;
+
+    [SerializeField]
+    private GameObject overlay;
+
+    #endregion
+
+    #region Local Fields
 
     [HideInInspector]
     [SerializeField]
@@ -22,12 +35,25 @@ public class GridManager : MonoBehaviour
     [SerializeField]
     private Color traversableColour;
 
-    [SerializeField] private GameObject overlay;
+    private GameObject gridMesh;
 
-    private void Awake()
+    #endregion
+
+    #region Properties
+
+    public int MapWidth
     {
-        Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
+        get { return mapWidth; }
     }
+
+    public int Mapheight
+    {
+        get { return mapHeight; }
+    }
+
+    #endregion
+
+    #region Public Methods
 
     public bool GenerateGrid(int width, int height, Color a_traversableColour)
     {
@@ -55,82 +81,6 @@ public class GridManager : MonoBehaviour
         }
 
         return (transform.childCount > 0);
-    }
-
-    private void CreateHex(int x, int y, int i)
-    {
-        Vector3 position;
-        position.x = (x + y * 0.5f - y / 2) * (HexUtility.innerRadius * 2f);
-        position.y = transform.position.y;
-        position.z = y * (HexUtility.outerRadius * 1.5f);
-
-        grid[i] = Instantiate(tilePrefab, position, Quaternion.Euler(-90.0f, 0.0f, 0.0f), transform);
-
-        grid[i].Init(x, y, traversableColour);
-
-        grid[i].transform.localScale = new Vector3(HexUtility.outerRadius, HexUtility.outerRadius, HexUtility.outerRadius);
-
-        grid[i].transform.position = position;
-        grid[i].name = string.Format("{0}, {1}", x, y);
-
-        if (x > 0)
-        {
-            grid[i].SetNeighbour(HexDirection.W, grid[i - 1]);
-        }
-        if (y > 0)
-        {
-            if ((y & 1) == 0)
-            {
-                grid[i].SetNeighbour(HexDirection.SE, grid[i - mapWidth]);
-
-                if (x > 0)
-                {
-                    grid[i].SetNeighbour(HexDirection.SW, grid[i - mapWidth - 1]);
-                }
-            }
-            else
-            {
-                grid[i].SetNeighbour(HexDirection.SW, grid[i - mapWidth]);
-
-                if (x < mapWidth - 1)
-                {
-                    grid[i].SetNeighbour(HexDirection.SE, grid[i - mapWidth + 1]);
-                }
-            }
-        }
-    }
-
-    private void GameStateChanged(GameState _oldstate, GameState _newstate)
-    {
-        // ensure this script knows it's in over-world state
-        if (_newstate == GameState.battle)
-        {
-            Hex[] tiles = GetComponentsInChildren<Hex>();
-
-            foreach (Hex tile in tiles)
-            {
-                tile.ShowOverlay(true);
-            }
-
-            if(overlay)
-            {
-                overlay.SetActive(true);
-            }
-        }
-        else
-        {
-            Hex[] tiles = GetComponentsInChildren<Hex>();
-
-            foreach (Hex tile in tiles)
-            {
-                tile.ShowOverlay(false);
-            }
-
-            if (overlay)
-            {
-                overlay.SetActive(false);
-            }
-        }
     }
 
     public List<Hex> GetTilesWithinDistance(Hex centerTile, int range, bool CheckIfTraversable = true)
@@ -200,19 +150,115 @@ public class GridManager : MonoBehaviour
 
         return null;
     }
+    
+    [ContextMenu("Bake Mesh")]
+    public void BakeMesh()
+    {
+        if (gridMesh != null)
+        {
+            Destroy(gridMesh);
+        }
+
+        gridMesh = new GameObject();
+        gridMesh.AddComponent<MeshFilter>();
+        gridMesh.AddComponent<MeshRenderer>();
+        gridMesh.AddComponent<GridMesh>();
+        gridMesh.GetComponent<GridMesh>().Triangulate(grid);
+    }
 
     public Hex GetHexAt(int x, int z)
     {
         return grid[z * MapWidth + x];
     }
 
-    public int MapWidth
+    #endregion
+
+    #region Unity Life-cycle Methods
+
+    private void Awake()
     {
-        get { return mapWidth; }
+        Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
     }
 
-    public int Mapheight
+    #endregion
+
+    #region Local Methods
+
+    private void CreateHex(int x, int y, int i)
     {
-        get { return mapHeight; }
+        Vector3 position;
+        position.x = (x + y * 0.5f - y / 2) * (HexUtility.innerRadius * 2f);
+        position.y = transform.position.y;
+        position.z = y * (HexUtility.outerRadius * 1.5f);
+
+        grid[i] = Instantiate(tilePrefab, position, Quaternion.Euler(-90.0f, 0.0f, 0.0f), transform);
+
+        grid[i].Init(x, y, traversableColour);
+
+        grid[i].transform.localScale = new Vector3(HexUtility.outerRadius, HexUtility.outerRadius, HexUtility.outerRadius);
+
+        grid[i].transform.position = position;
+        grid[i].name = string.Format("{0}, {1}", x, y);
+
+        if (x > 0)
+        {
+            grid[i].SetNeighbour(HexDirection.W, grid[i - 1]);
+        }
+        if (y > 0)
+        {
+            if ((y & 1) == 0)
+            {
+                grid[i].SetNeighbour(HexDirection.SE, grid[i - mapWidth]);
+
+                if (x > 0)
+                {
+                    grid[i].SetNeighbour(HexDirection.SW, grid[i - mapWidth - 1]);
+                }
+            }
+            else
+            {
+                grid[i].SetNeighbour(HexDirection.SW, grid[i - mapWidth]);
+
+                if (x < mapWidth - 1)
+                {
+                    grid[i].SetNeighbour(HexDirection.SE, grid[i - mapWidth + 1]);
+                }
+            }
+        }
     }
+
+    private void GameStateChanged(GameState _oldstate, GameState _newstate)
+    {
+        // ensure this script knows it's in over-world state
+        if (_newstate == GameState.battle)
+        {
+            Hex[] tiles = GetComponentsInChildren<Hex>();
+
+            foreach (Hex tile in tiles)
+            {
+                tile.ShowOverlay(true);
+            }
+
+            if (overlay)
+            {
+                overlay.SetActive(true);
+            }
+        }
+        else
+        {
+            Hex[] tiles = GetComponentsInChildren<Hex>();
+
+            foreach (Hex tile in tiles)
+            {
+                tile.ShowOverlay(false);
+            }
+
+            if (overlay)
+            {
+                overlay.SetActive(false);
+            }
+        }
+    }
+
+    #endregion
 }

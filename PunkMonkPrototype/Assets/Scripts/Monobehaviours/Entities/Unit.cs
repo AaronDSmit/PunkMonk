@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Base class for any game object that can take damage AND die of a result of reaching zero life.
 /// 
 /// </summary>
 
@@ -36,25 +35,23 @@ public class Unit : LivingEntity
 
     protected bool canAttack;
 
+    private bool canSpecialAttack;
+
     protected bool isSelected;
 
     protected System.Action finishedWalking;
 
     protected CameraController cameraController;
 
-
-    // Events
-    public delegate void OnVariableChangeDelegate(bool a_newValue);
-    public event OnVariableChangeDelegate OnCanAttackChange;
-    public event OnVariableChangeDelegate OnCanMoveChange;
-
     protected override void Awake()
     {
         base.Awake();
 
         cameraController = GameObject.FindGameObjectWithTag("CameraRig").GetComponent<CameraController>();
+
         canAttack = true;
         canMove = true;
+        canSpecialAttack = true;
     }
 
     public void Highlight(bool a_isHighlited, Color a_outlineColour)
@@ -340,30 +337,21 @@ public class Unit : LivingEntity
     {
         get { return canMove; }
 
-        set
-        {
-            canMove = value;
-
-            if (OnCanMoveChange != null)
-            {
-                OnCanMoveChange(canMove);
-            }
-        }
+        set { canMove = value; }
     }
 
     public bool CanAttack
     {
         get { return canAttack; }
 
-        set
-        {
-            canAttack = value;
+        set { canAttack = value; }
+    }
 
-            if (OnCanAttackChange != null)
-            {
-                OnCanAttackChange(canAttack);
-            }
-        }
+    public bool CanSpecialAttack
+    {
+        get { return canSpecialAttack; }
+
+        set { canSpecialAttack = value; }
     }
 
     #endregion

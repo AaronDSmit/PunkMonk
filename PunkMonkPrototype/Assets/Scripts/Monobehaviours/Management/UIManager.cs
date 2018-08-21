@@ -46,8 +46,6 @@ public class UIManager : MonoBehaviour
 
     private bool[] buttonInitialState;
 
-    private bool isLocked;
-
     private bool isReady;
 
     #endregion
@@ -66,8 +64,6 @@ public class UIManager : MonoBehaviour
     public void Init()
     {
         isReady = true;
-
-        isLocked = false;
     }
 
     public void SelectAction(int actionIndex)
@@ -83,6 +79,28 @@ public class UIManager : MonoBehaviour
         }
 
         selectedUnit = a_selectedUnit;
+        UpdateUnitInfo();
+    }
+
+    public void LockUI()
+    {
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            // save previous state
+            buttonInitialState[i] = buttons[i].interactable;
+
+            buttons[i].interactable = false;
+        }
+    }
+
+    public void UnlockUI()
+    {
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            buttons[i].interactable = buttonInitialState[i];
+        }
+
+        UpdateUnitInfo();
     }
 
     #endregion
@@ -116,10 +134,20 @@ public class UIManager : MonoBehaviour
         Manager.instance.TurnController.TurnEvent += TurnEvent;
         Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
 
+        buttons = GetComponentsInChildren<Button>();
+
+        buttonInitialState = new bool[buttons.Length];
+
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            buttonInitialState[i] = buttons[i].interactable;
+        }
+
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
 
-    private void OnDisable()
+
+    private void OnDestroy()
     {
         Manager.instance.TurnController.TurnEvent -= TurnEvent;
         Manager.instance.StateController.OnGameStateChanged -= GameStateChanged;
@@ -147,6 +175,35 @@ public class UIManager : MonoBehaviour
             endTurnButton.FadeOut();
         }
     }
+
+    private void TurnEvent(TurnState a_newState, TEAM a_team, int a_turnNumber)
+    {
+        if (a_team == TEAM.player)
+        {
+            if (a_newState == TurnState.start)
+            {
+                battleUI.FadeIn();
+                endTurnButton.FadeIn();
+            }
+            else if (a_newState == TurnState.end)
+            {
+                battleUI.FadeOut();
+                endTurnButton.FadeOut();
+            }
+        }
+    }
+
+    private void UpdateUnitInfo()
+    {
+        if (selectedUnit)
+        {
+            move.interactable = selectedUnit.CanMove;
+            attack.interactable = selectedUnit.CanAttack;
+            specialAttack.interactable = selectedUnit.CanSpecialAttack;
+        }
+    }
+
+    #region Coroutines
 
     private IEnumerator FadeIntoState()
     {
@@ -202,22 +259,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private void TurnEvent(TurnState a_newState, TEAM a_team, int a_turnNumber)
-    {
-        if (a_team == TEAM.player)
-        {
-            if (a_newState == TurnState.start)
-            {
-                battleUI.FadeIn();
-                endTurnButton.FadeIn();
-            }
-            else if (a_newState == TurnState.end)
-            {
-                battleUI.FadeOut();
-                endTurnButton.FadeOut();
-            }
-        }
-    }
+    #endregion
 
-    #endregion   
+    #endregion
 }

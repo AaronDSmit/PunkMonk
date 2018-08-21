@@ -317,6 +317,9 @@ public class PlayerController : MonoBehaviour
     // Process Mouse Input
     private void ProcessMouseInput()
     {
+
+        #region Tile / Unit hover Highlighting
+
         Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hitInfo;
 
@@ -351,6 +354,7 @@ public class PlayerController : MonoBehaviour
 
             if (tileUnderMouse)
             {
+                // Check if the tile under the mouse is a valid target
                 currentRuleset.CheckValidity(selectedUnit, tileUnderMouse);
 
                 if (currentRuleset.WithinRange && currentRuleset.actionType == ActionType.attack || currentRuleset.actionType == ActionType.specialAttack)
@@ -385,8 +389,6 @@ public class PlayerController : MonoBehaviour
                         tilesAffectByAction.Clear();
                     }
                 }
-
-                //HighlightObject(objectUnderMouse);
             }
             else if (unitUnderMouse)
             {
@@ -404,22 +406,25 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            // If there was a unit that was highlighted remove the highlight
             if (unitUnderMouse)
             {
                 unitUnderMouse.Highlight(false, currentRuleset.HighlightColour);
                 unitUnderMouse = null;
             }
 
+            // If there was a tile that was highlighted remove the highlight
             if (previousTileUnderMouse)
             {
                 previousTileUnderMouse.MouseExit();
                 previousTileUnderMouse = null;
             }
-
-            // RemoveHighlight();
         }
 
-        // Left click
+        #endregion
+
+        #region Left Click
+
         if (Input.GetMouseButton(0) && currentRuleset.IsValid)
         {
             switch (currentRuleset.actionType)
@@ -435,16 +440,14 @@ public class PlayerController : MonoBehaviour
 
                 case ActionType.movement:
 
-                    if (tileUnderMouse.IsTraversable) // redundant check, needs to be valid to reach this point anyway
-                    {
-                        selectedUnit.MoveTo(tileUnderMouse, UnitFinishedAction);
-                        RemoveHighlightedTiles();
-                        currentRuleset = selectionRuleset;
+                    selectedUnit.MoveTo(tileUnderMouse, UnitFinishedWalking);
+                    RemoveHighlightedTiles();
+                    currentRuleset = selectionRuleset;
 
-                        tileUnderMouse.MouseExit();
-                        lineRenderer.positionCount = 0;
-                        canInteract = false;
-                    }
+                    tileUnderMouse.MouseExit();
+                    lineRenderer.positionCount = 0;
+                    canInteract = false;
+                    UI.LockUI();
 
                     break;
 
@@ -470,11 +473,17 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // Right click cancels current action
+        #endregion
+
+        #region Right Click
+
         if (Input.GetMouseButton(1))
         {
+            // Right click cancels current action
             CancelCurrentAction();
         }
+
+        #endregion
     }
 
     private void CancelCurrentAction()
@@ -491,22 +500,24 @@ public class PlayerController : MonoBehaviour
 
     private void AttackStart()
     {
-
+        UI.LockUI();
     }
 
     private void AttackEnd()
     {
         canInteract = true;
+        UI.UnlockUI();
     }
 
     private void SpecialAttackStart()
     {
-
+        UI.LockUI();
     }
 
     private void SpecialAttackEnd()
     {
         canInteract = true;
+        UI.UnlockUI();
     }
 
     private void SelectUnit(Unit a_newSelectedUnit)
@@ -541,9 +552,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void UnitFinishedAction()
+    private void UnitFinishedWalking()
     {
         canInteract = true;
+        UI.UnlockUI();
     }
 
     private void HighlightTilesInRange(int a_range)
@@ -606,6 +618,9 @@ public class PlayerController : MonoBehaviour
             {
                 myTurn = true;
 
+                earthUnit.Refresh();
+                lightningUnit.Refresh();
+
                 if (earthUnit)
                 {
                     SelectUnit(earthUnit);
@@ -614,13 +629,11 @@ public class PlayerController : MonoBehaviour
                 {
                     SelectUnit(lightningUnit);
                 }
-
-                earthUnit.Refresh();
-                lightningUnit.Refresh();
             }
             else if (a_newState == TurnState.end)
             {
                 myTurn = false;
+
                 DeselectUnit();
             }
         }

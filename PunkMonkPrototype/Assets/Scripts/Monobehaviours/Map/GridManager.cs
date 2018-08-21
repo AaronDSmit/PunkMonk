@@ -15,6 +15,24 @@ public class GridManager : MonoBehaviour
     [SerializeField]
     private GameObject overlay;
 
+    [SerializeField]
+    private bool fadeIn;
+
+    [SerializeField]
+    private bool dropIn;
+
+    [SerializeField]
+    private float slideSpeed = 1;
+
+    [SerializeField]
+    private float starting;
+
+    [SerializeField]
+    private float target;
+
+    [SerializeField]
+    private float overshoot;
+
     #endregion
 
     #region Local Fields
@@ -36,6 +54,8 @@ public class GridManager : MonoBehaviour
     private Color traversableColour;
 
     private GameObject gridMesh;
+
+    protected Renderer gridRenderer;
 
     #endregion
 
@@ -150,7 +170,7 @@ public class GridManager : MonoBehaviour
 
         return null;
     }
-    
+
     [ContextMenu("Bake Mesh")]
     public void BakeMesh()
     {
@@ -178,6 +198,8 @@ public class GridManager : MonoBehaviour
     private void Awake()
     {
         Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
+
+        gridRenderer = overlay.GetComponent<Renderer>();
     }
 
     #endregion
@@ -242,9 +264,20 @@ public class GridManager : MonoBehaviour
             if (overlay)
             {
                 overlay.SetActive(true);
+
+                if (fadeIn)
+                {
+                    StartCoroutine(FadeGrid(0, 1, 3));
+                }
+
+                if (dropIn)
+                {
+                    overlay.transform.position = new Vector3(overlay.transform.position.x, starting, overlay.transform.position.z);
+                    StartCoroutine(SlideVertical(target, overshoot));
+                }
             }
         }
-        else
+        else if (_oldstate == GameState.battle)
         {
             Hex[] tiles = GetComponentsInChildren<Hex>();
 
@@ -255,9 +288,53 @@ public class GridManager : MonoBehaviour
 
             if (overlay)
             {
-                overlay.SetActive(false);
+                if (fadeIn)
+                {
+                    StartCoroutine(FadeGrid(1, 0, 3));
+                }
+
+                if (dropIn)
+                {
+                    StartCoroutine(SlideVertical(starting, overshoot));
+                }
             }
         }
+    }
+
+    private IEnumerator FadeGrid(float from, float to, float time)
+    {
+        float currentLerpTime = 0;
+        float t = 0;
+
+        while (t < 1)
+        {
+            currentLerpTime += Time.deltaTime;
+            t = currentLerpTime / time;
+
+            gridRenderer.material.SetFloat("_Alpha", Mathf.Lerp(from, to, t));
+
+            yield return null;
+        }
+
+        gridRenderer.material.SetFloat("_Alpha", to);
+    }
+
+    private IEnumerator SlideVertical(float target, float overshoot)
+    {
+        while (overlay.transform.position.y < overshoot)
+        {
+            overlay.transform.Translate(Vector2.up * Time.deltaTime * slideSpeed);
+            yield return null;
+        }
+
+        while (overlay.transform.position.y > target)
+        {
+            overlay.transform.Translate(Vector3.down * Time.deltaTime * slideSpeed);
+
+            yield return null;
+        }
+
+        overlay.transform.position = new Vector3(overlay.transform.position.x, target, overlay.transform.position.z);
     }
 
     #endregion

@@ -70,6 +70,11 @@ public class AI_Controller : MonoBehaviour
         turnManager.TurnEvent += TurnEvent;
     }
 
+    private void OnDestroy()
+    {
+        turnManager.TurnEvent -= TurnEvent;
+    }
+
     #endregion
 
     #region Local Methods

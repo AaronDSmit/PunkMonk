@@ -15,29 +15,31 @@ public class AI_Scorer
         agent = a_agent;
     }
 
-    public float GetScore(Unit a_player)
+    public float GetScore(ScoringInfo a_scoringInfo)
     {
+
         // Set up all the input nodes to have the right values
         List<InputNode> workList = new List<InputNode>();
-        for (int i = 0; i < calculationCanvas.nodes.Count; i++)
+        for (int x = 0; x < calculationCanvas.nodes.Count; x++)
         {
-            Node node = calculationCanvas.nodes[i];
+            Node node = calculationCanvas.nodes[x];
             if (node.GetID == "inputNode")
                 workList.Add((InputNode)node);
         }
 
         foreach (InputNode node in workList)
         {
+            Unit player = a_scoringInfo.Player;
             switch (node.inputType)
             {
                 case InputType.player:
                     switch (node.playerValue)
                     {
                         case PlayerValue.health:
-                            node.Value = a_player.CurrentHealth; // Set to players health
+                            node.Value = player.CurrentHealth; // Set to players health
                             break;
                         case PlayerValue.maxHealth:
-                            node.Value = a_player.MaxHealth; // Set to players max health
+                            node.Value = player.MaxHealth; // Set to players max health
                             break;
                         default:
                             break;
@@ -50,7 +52,7 @@ public class AI_Scorer
                             node.Value = agent.Damage; // Set to agents damage
                             break;
                         case AgentValue.movement:
-                            node.Value = 1;//agent.CanMove; // Set to agents movement
+                            node.Value = agent.CanMove ? agent.MoveRange : 0; // Set to agents movement
                             break;
                         default:
                             break;
@@ -59,8 +61,8 @@ public class AI_Scorer
                 case InputType.world:
                     switch (node.worldValue)
                     {
-                        case WorldValue.distToPlayer:
-                            node.Value = 1; // Set to distance to the player
+                        case WorldValue.movesToAttackRange:
+                            node.Value = a_scoringInfo.MovesToAttackRange; // Set to moves to attack range
                             break;
                         default:
                             break;
@@ -71,7 +73,6 @@ public class AI_Scorer
             }
         }
 
-        // Calculate and get the result to return
         calculationCanvas.Calculate();
         return calculationCanvas.Output;
     }

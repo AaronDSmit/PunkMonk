@@ -10,19 +10,23 @@ public class UIManager : MonoBehaviour
 {
     #region Unity Inspector Fields
 
+    [SerializeField]
+    private Button move;
+
+    [SerializeField]
+    private Button attack;
+
+    [SerializeField]
+    private Button specialAttack;
+
+    [SerializeField]
+    private FadingUI endTurnButton;
+
     #endregion
 
     #region Reference Fields
 
-    private Button move;
-
-    private Button attack;
-
-    private Button specialAttack;
-
     private FadingUI battleUI;
-
-    private FadingUI endTurnButton;
 
     private Image fadePlane;
 
@@ -95,14 +99,8 @@ public class UIManager : MonoBehaviour
 
             profiles = battleUI.transform.GetChild(0).GetComponent<ProfileSwitcher>();
 
-            move = battleUI.transform.Find("Actions").GetChild(0).GetComponent<Button>();
-            attack = battleUI.transform.Find("Actions").GetChild(1).GetComponent<Button>();
-            specialAttack = battleUI.transform.Find("Actions").GetChild(2).GetComponent<Button>();
-
             fadePlane = canvas.Find("FadePlane").GetComponent<Image>();
             loadingText = fadePlane.transform.GetComponentInChildren<Text>();
-
-            endTurnButton = canvas.transform.Find("EndTurnButton").GetComponent<FadingUI>();
 
             if (fadePlane)
             {

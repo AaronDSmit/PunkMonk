@@ -34,6 +34,9 @@ public class Unit : LivingEntity
 
     protected System.Action finishedWalking;
 
+    protected CameraController cameraController;
+
+
     // Events
     public delegate void OnVariableChangeDelegate(bool a_newValue);
     public event OnVariableChangeDelegate OnCanAttackChange;
@@ -43,6 +46,7 @@ public class Unit : LivingEntity
     {
         base.Awake();
 
+        cameraController = GameObject.FindGameObjectWithTag("CameraRig").GetComponent<CameraController>();
         canAttack = true;
         canMove = true;
     }

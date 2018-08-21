@@ -32,6 +32,8 @@ public class CameraController : MonoBehaviour
     private bool lookAtObject = false;
     private bool canMove = true;
 
+    private Vector3 oldCamPosition;
+    private Quaternion oldCamRotation;
 
     [SerializeField] private float glamCamDistance;
 
@@ -44,7 +46,7 @@ public class CameraController : MonoBehaviour
     private Vector3 dir;
 
 
-    //bool cinemachine = true;
+    bool cinemachine = false;
 
 
     GameObject basicEarthGlamCam;
@@ -92,7 +94,7 @@ public class CameraController : MonoBehaviour
     {
         // Don't update if in any other game state
 
-        //if (cinemachine == false)
+        if (cinemachine == false)
         {
             if (lookAtObject == false)
             {
@@ -276,17 +278,23 @@ public class CameraController : MonoBehaviour
 
     public void PlayEarthBasicAttackGlamCam(Vector3 a_pos, Vector3 a_vecBetween)
     {
+
+    }
+
+    public void PlayEarthSpecialAttackGlamCam(Vector3 a_pos, Vector3 a_vecBetween)
+    {
+        cinemachine = true;
+        oldCamPosition = transform.GetChild(0).position;
+        oldCamRotation = transform.GetChild(0).rotation;
+
         Vector3 rightPerp = a_pos + Vector3.Cross(a_vecBetween.normalized, Vector3.up) * glamCamDistance;
 
+
         transform.position = rightPerp;
-        basicEarthGlamCam.SetActive(true);
-
+        specialEarthGlamCam.SetActive(true);
+        
     }
 
-    public void PlayEarthSpecialAttackGlamCam(Vector3 a_vecBetween)
-    {
-
-    }
     public void PlayLightningBasicAttackGlamCam(Vector3 a_vecBetween)
     {
 
@@ -295,5 +303,35 @@ public class CameraController : MonoBehaviour
     {
 
     }
+
+    public void TurnOffGlamCam()
+    {
+        if (basicEarthGlamCam.activeInHierarchy == true)
+        {
+            basicEarthGlamCam.SetActive(false);
+        }
+
+        if (specialEarthGlamCam.activeInHierarchy == true)
+        {
+            specialEarthGlamCam.SetActive(false);
+        }
+
+        if (basicLightningGlamCam.activeInHierarchy == true)
+        {
+            basicLightningGlamCam.SetActive(false);
+        }
+
+        if (specialLightningGlamCam.activeInHierarchy == true)
+        {
+            specialLightningGlamCam.SetActive(false);
+        }
+
+        transform.GetChild(0).position = oldCamPosition;
+        transform.GetChild(0).rotation = oldCamRotation;
+
+        cinemachine = false;
+
+    }
+
 
 }

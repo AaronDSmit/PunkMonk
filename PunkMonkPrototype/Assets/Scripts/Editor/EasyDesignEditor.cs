@@ -51,6 +51,7 @@ public class EasyDesignEditor : EditorWindow
 
     // GameFlow
     [SerializeField] private Unit_type enemyType;
+    [SerializeField] private bool hasVolt = false;
     [SerializeField] private int turnToSpawn;
     [SerializeField] private int everyXTurns;
     [SerializeField] private int loadLevel = 0;
@@ -977,21 +978,21 @@ public class EasyDesignEditor : EditorWindow
 
             EditorGUI.EndDisabledGroup();
 
-            GUILayout.Label("Enemy: ");
+            GUILayout.Label("Turn:");
 
-            enemyType = (Unit_type)EditorGUILayout.EnumPopup(enemyType);
+            turnToSpawn = EditorGUILayout.IntField(turnToSpawn);
 
             EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.BeginHorizontal();
 
-            GUILayout.Label("ID:");
+            GUILayout.Label("Enemy: ");
 
-            spawnIndex = EditorGUILayout.IntField(spawnIndex);
+            enemyType = (Unit_type)EditorGUILayout.EnumPopup(enemyType);
 
-            GUILayout.Label("Turn:");
+            GUILayout.Label("Has volt: ");
 
-            turnToSpawn = EditorGUILayout.IntField(turnToSpawn);
+            hasVolt = EditorGUILayout.Toggle(hasVolt);
 
             EditorGUILayout.EndHorizontal();
 
@@ -1042,16 +1043,6 @@ public class EasyDesignEditor : EditorWindow
                         DestroyImmediate(spawner.gameObject);
                     }
                 }
-
-                SpawnTrigger[] triggers = grid.GetComponentsInChildren<SpawnTrigger>();
-
-                foreach (SpawnTrigger trigger in triggers)
-                {
-                    if (trigger.name == "SpawnTrigger")
-                    {
-                        DestroyImmediate(trigger.gameObject);
-                    }
-                }
             }
 
             GUI.backgroundColor = oldColor;
@@ -1062,7 +1053,7 @@ public class EasyDesignEditor : EditorWindow
 
             GUILayout.Label("Spawn Triggers:", centeredText);
 
-            EditorGUI.BeginDisabledGroup(Selection.gameObjects.Length != 1 || !hasTileSelected);
+            EditorGUI.BeginDisabledGroup(Selection.gameObjects.Length != 1);
 
             EditorGUILayout.BeginHorizontal();
 
@@ -1107,13 +1098,23 @@ public class EasyDesignEditor : EditorWindow
             EditorGUI.EndDisabledGroup();
 
             EditorGUI.BeginDisabledGroup(Selection.gameObjects.Length != 1 || !hasTriggerSelected);
-
+             
             oldColor = GUI.backgroundColor;
             GUI.backgroundColor = new Color(1.0f, 0.19f, 0.19f, 1.0f); // red
 
             if (GUILayout.Button("Remove Trigger"))
             {
+                Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
+                SpawnTrigger destroyedTrigger = tile.GetComponentInChildren<SpawnTrigger>();
 
+                DestroyImmediate(destroyedTrigger);
+
+                SpawnTrigger[] triggers = FindObjectsOfType<SpawnTrigger>();
+
+                foreach (SpawnTrigger trigger in triggers)
+                {
+                    trigger.UpdateSpawnerList();
+                }
             }
 
             GUI.backgroundColor = oldColor;
@@ -1226,10 +1227,6 @@ public class EasyDesignEditor : EditorWindow
             GUILayout.Label(" To ");
 
             targetState = (GameState)EditorGUILayout.EnumPopup(targetState);
-
-            GUILayout.Label("ID:");
-
-            stateIndex = EditorGUILayout.IntField(stateIndex);
 
             EditorGUILayout.EndHorizontal();
 
@@ -1369,6 +1366,16 @@ public class EasyDesignEditor : EditorWindow
             }
 
             GUI.backgroundColor = oldColor;
+
+            EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.Space();
+
+            EditorGUILayout.BeginHorizontal();
+
+            GUILayout.Label("ID:");
+
+            stateIndex = spawnIndex = EditorGUILayout.IntField(stateIndex);
 
             EditorGUILayout.EndHorizontal();
         }

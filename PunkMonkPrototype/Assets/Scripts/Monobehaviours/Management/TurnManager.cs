@@ -24,6 +24,8 @@ public class TurnManager : MonoBehaviour
 
     private bool isReady;
 
+    private int battleID;
+
     public enum TurnState { start, end }
 
     public delegate void TurnStateChanged(TurnState a_nextState, int a_turnNumber);
@@ -38,6 +40,12 @@ public class TurnManager : MonoBehaviour
     public bool Ready
     {
         get { return isReady; }
+    }
+
+    public int BattleID
+    {
+        get { return battleID; }
+        set { battleID = value; }
     }
 
     #endregion

@@ -8,25 +8,32 @@ public class StateTransitionPoint : MonoBehaviour
     [SerializeField] private GameState fromState;
 
     [HideInInspector]
-    [SerializeField] public bool drawText;
+    [SerializeField]
+    public bool drawText;
 
     [HideInInspector]
-    [SerializeField] public int index;
+    [SerializeField]
+    public int index;
 
     [HideInInspector]
-    [SerializeField] public int numberToKill;
+    [SerializeField]
+    public int numberToKill;
 
     [HideInInspector]
-    [SerializeField] private Hex earthHex;
+    [SerializeField]
+    private Hex earthHex;
 
     [HideInInspector]
-    [SerializeField] private Hex lightningHex;
+    [SerializeField]
+    private Hex lightningHex;
 
     [HideInInspector]
-    [SerializeField] private Transform earthHexT;
+    [SerializeField]
+    private Transform earthHexT;
 
     [HideInInspector]
-    [SerializeField] private Transform lightningHexT;
+    [SerializeField]
+    private Transform lightningHexT;
 
     public Hex LightningHex
     {
@@ -90,6 +97,7 @@ public class StateTransitionPoint : MonoBehaviour
                 player.EncounterKillLimit = numberToKill;
                 player.SetUnitSnapHexes(earthHex, lightningHex);
 
+                Manager.instance.TurnController.BattleID = index;
                 Manager.instance.StateController.ChangeGameState(targetState);
 
                 Destroy(this);

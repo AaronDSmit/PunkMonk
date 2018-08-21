@@ -35,7 +35,7 @@ public class Spawner : MonoBehaviour
 
     private void TurnEvent(TurnManager.TurnState newState, int turnNumber)
     {
-        if (newState == TurnManager.TurnState.start && turnNumber == turnToSpawn)
+        if (newState == TurnManager.TurnState.start && turnNumber == turnToSpawn && index == Manager.instance.TurnController.BattleID)
         {
             SpawnUnit();
         }

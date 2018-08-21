@@ -30,7 +30,7 @@ public class Spawner : MonoBehaviour
 
     private void Awake()
     {
-        Manager.instance.TurnController.SpawnTurnEvent += TurnEvent;
+        Manager.instance.TurnController.EveryTurnEvent += TurnEvent;
     }
 
     private void TurnEvent(TurnManager.TurnState newState, int turnNumber)

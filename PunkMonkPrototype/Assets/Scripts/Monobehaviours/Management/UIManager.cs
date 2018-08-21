@@ -103,6 +103,11 @@ public class UIManager : MonoBehaviour
         UpdateUnitInfo();
     }
 
+    public void EndPlayersTurn()
+    {
+        Manager.instance.TurnController.EndTurn(TEAM.player);
+    }
+
     #endregion
 
     #region Unity Life-cycle Methods
@@ -131,7 +136,7 @@ public class UIManager : MonoBehaviour
             }
         }
 
-        Manager.instance.TurnController.TurnEvent += TurnEvent;
+        Manager.instance.TurnController.PlayerTurnEvent += TurnEvent;
         Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
 
         buttons = GetComponentsInChildren<Button>();
@@ -149,7 +154,7 @@ public class UIManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        Manager.instance.TurnController.TurnEvent -= TurnEvent;
+        Manager.instance.TurnController.PlayerTurnEvent -= TurnEvent;
         Manager.instance.StateController.OnGameStateChanged -= GameStateChanged;
     }
 
@@ -176,20 +181,17 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private void TurnEvent(TurnState a_newState, TEAM a_team, int a_turnNumber)
+    private void TurnEvent(TurnManager.TurnState a_newState, int a_turnNumber)
     {
-        if (a_team == TEAM.player)
+        if (a_newState == TurnManager.TurnState.start)
         {
-            if (a_newState == TurnState.start)
-            {
-                battleUI.FadeIn();
-                endTurnButton.FadeIn();
-            }
-            else if (a_newState == TurnState.end)
-            {
-                battleUI.FadeOut();
-                endTurnButton.FadeOut();
-            }
+            battleUI.FadeIn();
+            endTurnButton.FadeIn();
+        }
+        else if (a_newState == TurnManager.TurnState.end)
+        {
+            battleUI.FadeOut();
+            endTurnButton.FadeOut();
         }
     }
 

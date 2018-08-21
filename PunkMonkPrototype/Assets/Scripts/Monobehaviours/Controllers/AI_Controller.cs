@@ -67,22 +67,22 @@ public class AI_Controller : MonoBehaviour
     private void Awake()
     {
         turnManager = Manager.instance.TurnController;
-        turnManager.TurnEvent += TurnEvent;
+        turnManager.AITurnEvent += TurnEvent;
     }
 
     private void OnDestroy()
     {
-        turnManager.TurnEvent -= TurnEvent;
+        turnManager.AITurnEvent -= TurnEvent;
     }
 
     #endregion
 
     #region Local Methods
 
-    private void TurnEvent(TurnState a_newState, TEAM a_team, int a_turnNumber)
+    private void TurnEvent(TurnManager.TurnState a_newState, int a_turnNumber)
     {
         // Check if it is the AI's turn
-        if (a_newState == TurnState.start && a_team == TEAM.ai)
+        if (a_newState == TurnManager.TurnState.start)
         {
             // Refresh all units
             foreach (Unit unit in agents)
@@ -109,7 +109,7 @@ public class AI_Controller : MonoBehaviour
 
     private void EndTurn()
     {
-        turnManager.EndTurn();
+        turnManager.EndTurn(TEAM.ai);
     }
 
     private void RemoveUnit(LivingEntity a_unit)

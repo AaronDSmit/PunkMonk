@@ -524,8 +524,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114047612527923128}
-        m_MethodName: EndTurn
+      - m_Target: {fileID: 114311836062467724}
+        m_MethodName: EndPlayersTurn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

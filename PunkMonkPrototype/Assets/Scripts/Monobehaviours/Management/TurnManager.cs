@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 // Needs to be all caps to avoid conflict with Properties
 public enum TEAM { player, ai, neutral }
-public enum TurnState { start, end }
 
 /// <summary>
 /// This script is used to handle turn changes. Turns have two phases, start and end.
@@ -28,8 +26,12 @@ public class TurnManager : MonoBehaviour
 
     private bool isReady;
 
-    public delegate void TurnStateChanged(TurnState newState, TEAM team, int turnNumber);
-    public event TurnStateChanged TurnEvent;
+    public enum TurnState { start, end }
+
+    public delegate void TurnStateChanged(TurnState a_nextState, int a_turnNumber);
+    public event TurnStateChanged PlayerTurnEvent;
+    public event TurnStateChanged AITurnEvent;
+    public event TurnStateChanged SpawnTurnEvent;
 
     #endregion
 
@@ -52,16 +54,29 @@ public class TurnManager : MonoBehaviour
         isReady = true;
     }
 
-    public void EndTurn()
+    public void EndTurn(TEAM a_endingTeam)
     {
-        if (TurnEvent != null)
+        if (currentTeam == a_endingTeam)
         {
-            TurnEvent(TurnState.end, currentTeam, turnCount);
+            if (currentTeam == TEAM.ai)
+            {
+                if (AITurnEvent != null)
+                {
+                    AITurnEvent(TurnState.end, turnCount);
+                }
+            }
+            else if (currentTeam == TEAM.player)
+            {
+                if (PlayerTurnEvent != null)
+                {
+                    PlayerTurnEvent(TurnState.end, turnCount);
+                }
+            }
+
+            currentTeam = (currentTeam == TEAM.player) ? TEAM.ai : TEAM.player;
+
+            StartTurn();
         }
-
-        currentTeam = (currentTeam == TEAM.player) ? TEAM.ai : TEAM.player;
-
-        StartTurn();
     }
 
     #endregion
@@ -94,9 +109,24 @@ public class TurnManager : MonoBehaviour
     {
         turnCount++;
 
-        if (TurnEvent != null)
+        if (currentTeam == TEAM.ai)
         {
-            TurnEvent(TurnState.start, currentTeam, turnCount);
+            if (AITurnEvent != null)
+            {
+                AITurnEvent(TurnState.start, turnCount);
+            }
+        }
+        else if (currentTeam == TEAM.player)
+        {
+            if (PlayerTurnEvent != null)
+            {
+                PlayerTurnEvent(TurnState.start, turnCount);
+            }
+        }
+
+        if (SpawnTurnEvent != null)
+        {
+            SpawnTurnEvent(TurnState.start, turnCount);
         }
     }
 

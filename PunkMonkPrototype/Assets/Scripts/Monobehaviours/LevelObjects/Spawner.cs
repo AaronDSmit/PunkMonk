@@ -30,12 +30,12 @@ public class Spawner : MonoBehaviour
 
     private void Awake()
     {
-        Manager.instance.TurnController.TurnEvent += TurnEvent;
+        Manager.instance.TurnController.SpawnTurnEvent += TurnEvent;
     }
 
-    private void TurnEvent(TurnState newState, TEAM team, int turnNumber)
+    private void TurnEvent(TurnManager.TurnState newState, int turnNumber)
     {
-        if (newState == TurnState.start && turnNumber == turnToSpawn)
+        if (newState == TurnManager.TurnState.start && turnNumber == turnToSpawn)
         {
             SpawnUnit();
         }

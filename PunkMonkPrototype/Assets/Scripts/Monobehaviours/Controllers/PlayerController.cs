@@ -85,7 +85,7 @@ public class PlayerController : MonoBehaviour
     {
         canInteract = false;
 
-        Manager.instance.TurnController.TurnEvent += TurnEvent;
+        Manager.instance.TurnController.PlayerTurnEvent += TurnEvent;
 
         Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
 
@@ -610,32 +610,29 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void TurnEvent(TurnState a_newState, TEAM a_team, int a_turnNumber)
+    private void TurnEvent(TurnManager.TurnState a_newState, int a_turnNumber)
     {
-        if (a_team == TEAM.player)
+        if (a_newState == TurnManager.TurnState.start)
         {
-            if (a_newState == TurnState.start)
+            myTurn = true;
+
+            earthUnit.Refresh();
+            lightningUnit.Refresh();
+
+            if (earthUnit)
             {
-                myTurn = true;
-
-                earthUnit.Refresh();
-                lightningUnit.Refresh();
-
-                if (earthUnit)
-                {
-                    SelectUnit(earthUnit);
-                }
-                else
-                {
-                    SelectUnit(lightningUnit);
-                }
+                SelectUnit(earthUnit);
             }
-            else if (a_newState == TurnState.end)
+            else
             {
-                myTurn = false;
-
-                DeselectUnit();
+                SelectUnit(lightningUnit);
             }
+        }
+        else if (a_newState == TurnManager.TurnState.end)
+        {
+            myTurn = false;
+
+            DeselectUnit();
         }
     }
 

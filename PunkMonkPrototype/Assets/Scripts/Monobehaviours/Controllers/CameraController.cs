@@ -47,8 +47,7 @@ public class CameraController : MonoBehaviour
 
 
     bool cinemachine = false;
-
-    GameObject camera;
+    new GameObject camera = null;
 
     GameObject basicEarthGlamCam;
     GameObject specialEarthGlamCam;

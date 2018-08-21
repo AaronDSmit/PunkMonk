@@ -63,11 +63,15 @@ public class EarthUnit : Unit
         //store the target position
         specialTargetPosition = targetTiles[0].transform.position;
 
+
         //make sure the target's y is the same as the start's y
         specialTargetPosition.y = specialStartPosition.y;
 
         //get the vector between the start position and the target position
         specialVecBetween = specialTargetPosition - specialStartPosition;
+
+        //start the glamCam
+        cameraController.PlayEarthSpecialAttackGlamCam(specialStartPosition, specialVecBetween);
 
         //Start the Update Loop
         specialAttack = true;
@@ -160,6 +164,9 @@ public class EarthUnit : Unit
                 }
             }
         }
+
+        //turn off glamCam  
+        cameraController.TurnOffGlamCam();
 
         //call the finished call back function
         specialFinishedFunc();

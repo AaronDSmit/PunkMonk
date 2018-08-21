@@ -8,13 +8,11 @@ public class AI_Scorer
 {
     private CalculationCanvasType calculationCanvas;
     private AI_Agent agent;
-    private WorldState worldState;
 
-    public AI_Scorer(CalculationCanvasType a_calculationCanvas, AI_Agent a_agent, WorldState a_worldState)
+    public AI_Scorer(CalculationCanvasType a_calculationCanvas, AI_Agent a_agent)
     {
         calculationCanvas = a_calculationCanvas;
         agent = a_agent;
-        worldState = a_worldState;
     }
 
     public float GetScore(Unit a_player)
@@ -62,7 +60,7 @@ public class AI_Scorer
                     switch (node.worldValue)
                     {
                         case WorldValue.distToPlayer:
-                            node.Value = worldState.DistanceToPlayer; // Set to distance to the player
+                            node.Value = 1; // Set to distance to the player
                             break;
                         default:
                             break;

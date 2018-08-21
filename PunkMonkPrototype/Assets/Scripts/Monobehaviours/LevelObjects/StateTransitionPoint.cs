@@ -90,7 +90,7 @@ public class StateTransitionPoint : MonoBehaviour
                 player.EncounterKillLimit = numberToKill;
                 player.SetUnitSnapHexes(earthHex, lightningHex);
 
-                Manager.instance.StateController.ChangeStateAfterFade(targetState);
+                Manager.instance.StateController.ChangeGameState(targetState);
 
                 Destroy(this);
             }

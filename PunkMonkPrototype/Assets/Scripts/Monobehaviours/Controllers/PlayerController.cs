@@ -631,8 +631,8 @@ public class PlayerController : MonoBehaviour
         // ensure this script knows it's in over-world state
         if (a_newstate == GameState.battle)
         {
-            earthUnit.TeleportToHex(earthSnapHex);
-            lightningUnit.TeleportToHex(lightningSnapHex);
+            earthUnit.WalkDirectlyToTile(earthSnapHex);
+            lightningUnit.WalkDirectlyToTile(lightningSnapHex);
 
             canInteract = true;
             SelectUnit(earthUnit);

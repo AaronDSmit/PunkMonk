@@ -12,17 +12,23 @@ public class Unit : LivingEntity
     #region Inspector Variables
 
     [Tooltip("A list of actions that this Unit can perform")]
-    [SerializeField] protected Action[] actions;
+    [SerializeField]
+    protected Action[] actions;
     [Tooltip("The distance in tiles that this unit can move in one turn")]
-    [SerializeField] private int moveRange;
+    [SerializeField]
+    private int moveRange;
     [Tooltip("The distance in tiles this character can attack")]
-    [SerializeField] protected int attackRange;
+    [SerializeField]
+    protected int attackRange;
     [Tooltip("The distance in tiles this units special attack")]
-    [SerializeField] protected int specialAttackRange;
+    [SerializeField]
+    protected int specialAttackRange;
     [Tooltip("The time it takes this unit to rotate in seconds")]
-    [SerializeField] protected float rotationTime;
+    [SerializeField]
+    protected float rotationTime;
     [Tooltip("How the fast this unit walks from tile to tile")]
-    [SerializeField] protected float walkSpeed;
+    [SerializeField]
+    protected float walkSpeed;
 
     #endregion
 
@@ -120,6 +126,34 @@ public class Unit : LivingEntity
 
         // The raycast hit nothing, we have a clear shot
         return true;
+    }
+
+    public void WalkDirectlyToTile(Hex a_targetHex)
+    {
+        StartCoroutine(WalkDirectlyTo(a_targetHex));
+    }
+
+    private IEnumerator WalkDirectlyTo(Hex a_targetHex)
+    {
+        Vector3 targetPos = a_targetHex.transform.position;
+        targetPos.y = transform.position.y;
+        Vector3 vecBetween = targetPos - transform.position;
+        vecBetween.y = 0.0f;
+
+        while (vecBetween.magnitude > 0.1f)
+        {
+            transform.position += vecBetween.normalized * (walkSpeed / 2) * Time.deltaTime;
+
+            vecBetween = targetPos - transform.position;
+            vecBetween.y = 0.0f;
+
+            yield return null;
+        }
+
+        currentTile.Exit();
+        currentTile = a_targetHex;
+        currentTile.Enter(this);
+        transform.position = targetPos;
     }
 
     public void TeleportToHex(Hex a_targetHex)

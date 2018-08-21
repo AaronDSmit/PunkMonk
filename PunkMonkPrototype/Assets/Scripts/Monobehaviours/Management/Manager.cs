@@ -7,6 +7,21 @@ using UnityEngine;
 /// </summary>
 public class Manager : MonoBehaviour
 {
+    #region Unity Inspector Fields
+
+    [SerializeField]
+    private Texture2D cursorTextureHover;
+
+    [SerializeField]
+    private Texture2D cursorTextureClick;
+
+    [SerializeField]
+    private CursorMode cursorMode = CursorMode.Auto;
+
+    [SerializeField]
+    private Vector2 hotSpot = Vector2.zero;
+
+    #endregion
 
     #region Reference Fields
 
@@ -61,6 +76,11 @@ public class Manager : MonoBehaviour
             turnManager = GetComponent<TurnManager>();
 
             StartCoroutine(InitManagers());
+
+            if (cursorTextureHover)
+            {
+                Cursor.SetCursor(cursorTextureHover, hotSpot, cursorMode);
+            }
         }
         else
         {
@@ -71,6 +91,19 @@ public class Manager : MonoBehaviour
 
         //Don't destroy the GameStateManager in scene
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Cursor.SetCursor(cursorTextureClick, hotSpot, cursorMode);
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            Cursor.SetCursor(cursorTextureHover, hotSpot, cursorMode);
+        }
     }
 
     #endregion

@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 54947815300235462}
   m_Layer: 9
   m_Name: WatcherUnit
-  m_TagString: EarthUnit
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

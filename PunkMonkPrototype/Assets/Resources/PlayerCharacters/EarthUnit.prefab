@@ -243,6 +243,7 @@ MonoBehaviour:
     m_RotationOrder: 0
   basicDamage: 100
   basicDamgeDelayTimer: 0
+  coneRange: 4
 --- !u!136 &136876744524752574
 CapsuleCollider:
   m_ObjectHideFlags: 1

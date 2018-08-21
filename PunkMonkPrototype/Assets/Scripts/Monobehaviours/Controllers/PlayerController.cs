@@ -26,9 +26,9 @@ public class PlayerController : MonoBehaviour
 
     private Unit selectedUnit;
 
-    private Unit earthUnit;
+    private EarthUnit earthUnit;
 
-    private Unit lightningUnit;
+    private LightningUnit lightningUnit;
 
     private Hex tileUnderMouse;
     private Hex previousTileUnderMouse;
@@ -93,7 +93,7 @@ public class PlayerController : MonoBehaviour
 
         if (earthGO)
         {
-            earthUnit = GameObject.FindGameObjectWithTag("EarthUnit").GetComponent<Unit>();
+            earthUnit = GameObject.FindGameObjectWithTag("EarthUnit").GetComponent<EarthUnit>();
         }
         else
         {
@@ -104,7 +104,7 @@ public class PlayerController : MonoBehaviour
 
         if (lightningGO)
         {
-            lightningUnit = GameObject.FindGameObjectWithTag("LightningUnit").GetComponent<Unit>();
+            lightningUnit = GameObject.FindGameObjectWithTag("LightningUnit").GetComponent<LightningUnit>();
         }
         else
         {
@@ -123,7 +123,7 @@ public class PlayerController : MonoBehaviour
             Vector3 spawnPosEarth = spawnHexEarth.transform.position;
             spawnPosEarth.y = 0.1f;
 
-            earthUnit = Instantiate(Resources.Load<Unit>("PlayerCharacters/EarthUnit"), spawnPosEarth, Quaternion.identity);
+            earthUnit = Instantiate(Resources.Load<EarthUnit>("PlayerCharacters/EarthUnit"), spawnPosEarth, Quaternion.identity);
             earthUnit.Spawn(spawnHexEarth);
 
             return earthUnit;
@@ -147,7 +147,7 @@ public class PlayerController : MonoBehaviour
             Vector3 spawnPosLightning = spawnHexLightning.transform.position;
             spawnPosLightning.y = 0.1f;
 
-            lightningUnit = Instantiate(Resources.Load<Unit>("PlayerCharacters/LightningUnit"), spawnPosLightning, Quaternion.identity);
+            lightningUnit = Instantiate(Resources.Load<LightningUnit>("PlayerCharacters/LightningUnit"), spawnPosLightning, Quaternion.identity);
             lightningUnit.Spawn(spawnHexLightning);
 
             lightningUnit.GetComponent<OverworldFollower>().Init();
@@ -704,7 +704,7 @@ public class PlayerController : MonoBehaviour
             snapAngle = 360 + snapAngle;
         }
 
-        MakeCone(snapAngle, 6);
+        MakeCone(snapAngle, earthUnit.ConeRange);
 
         //Debug.DrawLine(selectedUnit.CurrentTile.transform.position + Vector3.up * 0.2f, selectedUnit.CurrentTile.transform.position + new Vector3(Mathf.Sin(Mathf.Deg2Rad * snapAngle), 0.0f, Mathf.Cos(Mathf.Deg2Rad * snapAngle)) * 2 + Vector3.up * 0.2f, Color.magenta);
 

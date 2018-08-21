@@ -28,8 +28,22 @@ public class EarthUnit : Unit
     [SerializeField]
     private float basicDamage;
     [SerializeField] private float basicDamgeDelayTimer = 1;
+    [SerializeField] private int coneRange = 4;
 
     private Hex[] basicTiles;
+
+    public int ConeRange
+    {
+        get
+        {
+            return coneRange;
+        }
+
+        set
+        {
+            coneRange = value;
+        }
+    }
 
     protected override void Awake()
     {

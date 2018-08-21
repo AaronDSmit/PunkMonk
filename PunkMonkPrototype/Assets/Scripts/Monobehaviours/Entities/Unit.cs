@@ -105,6 +105,7 @@ public class Unit : LivingEntity
         return true;
     }
 
+
     protected bool HasClearShot(Hex a_currentTile, Unit a_targetUnit)
     {
         // Unit height should be replaced with 

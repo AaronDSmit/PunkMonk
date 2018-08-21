@@ -48,6 +48,7 @@ public class CameraController : MonoBehaviour
 
     bool cinemachine = false;
 
+    GameObject camera;
 
     GameObject basicEarthGlamCam;
     GameObject specialEarthGlamCam;
@@ -58,6 +59,7 @@ public class CameraController : MonoBehaviour
     private void Awake()
     {
         Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
+        camera = transform.GetChild(0).gameObject;
     }
 
     private void Start()
@@ -278,21 +280,34 @@ public class CameraController : MonoBehaviour
 
     public void PlayEarthBasicAttackGlamCam(Vector3 a_pos, Vector3 a_vecBetween)
     {
+        cinemachine = true;
+        oldCamPosition = camera.transform.position;
 
+        Vector3 halfwayVec = a_pos + -a_vecBetween.normalized * a_vecBetween.magnitude * 0.5f * glamCamDistance;
+
+        halfwayVec.y = a_vecBetween.magnitude * glamCamDistance;
+
+
+        basicEarthGlamCam.transform.position = halfwayVec;
+
+        basicEarthGlamCam.SetActive(true);
     }
 
     public void PlayEarthSpecialAttackGlamCam(Vector3 a_pos, Vector3 a_vecBetween)
     {
         cinemachine = true;
-        oldCamPosition = transform.GetChild(0).position;
-        oldCamRotation = transform.GetChild(0).rotation;
+        oldCamPosition = camera.transform.position;
+        oldCamRotation = camera.transform.rotation;
 
         Vector3 rightPerp = a_pos + Vector3.Cross(a_vecBetween.normalized, Vector3.up) * glamCamDistance;
 
+        rightPerp.y = 1.0f;
 
-        transform.position = rightPerp;
+        specialEarthGlamCam.transform.position = rightPerp;
+
+
         specialEarthGlamCam.SetActive(true);
-        
+
     }
 
     public void PlayLightningBasicAttackGlamCam(Vector3 a_vecBetween)
@@ -326,8 +341,7 @@ public class CameraController : MonoBehaviour
             specialLightningGlamCam.SetActive(false);
         }
 
-        transform.GetChild(0).position = oldCamPosition;
-        transform.GetChild(0).rotation = oldCamRotation;
+        camera.transform.position = oldCamPosition;
 
         cinemachine = false;
 

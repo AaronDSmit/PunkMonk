@@ -6,7 +6,8 @@ public class EarthUnit : Unit
 {
     [Header("Special Attack")]
 
-    [SerializeField] private float specialDamage;
+    [SerializeField]
+    private float specialDamage;
     [SerializeField] private float specialheight;
     [SerializeField] private float specialJumpTime;
     [SerializeField] private float specialDamgeDelayTimer;
@@ -20,11 +21,13 @@ public class EarthUnit : Unit
     private Vector3 specialVecBetween;
     private Hex[] specialTiles;
     private System.Action specialFinishedFunc;
+    private float specialGlamCamTimer = 0;
 
     [Header("Basic Attack")]
 
-    [SerializeField] private float basicDamage;
-    [SerializeField] private float basicDamgeDelayTimer;
+    [SerializeField]
+    private float basicDamage;
+    [SerializeField] private float basicDamgeDelayTimer = 1;
 
     private Hex[] basicTiles;
 
@@ -40,6 +43,15 @@ public class EarthUnit : Unit
 
         //store the target tile
         basicTiles = targetTiles;
+
+        Vector3 tilePos = new Vector3(targetTiles[0].transform.position.x, transform.position.y, targetTiles[0].transform.position.z);
+
+        if (Random.Range(0, 100) <= 50)
+        {
+            cameraController.PlayEarthBasicAttackGlamCam(transform.position, tilePos - transform.position);
+            StartCoroutine(BasicAttackDamageDelay(basicDamgeDelayTimer, finished, 2));
+            return;
+        }
 
         //call the basicAttackDamageDelay coroutine 
         StartCoroutine(BasicAttackDamageDelay(basicDamgeDelayTimer, finished));
@@ -71,7 +83,15 @@ public class EarthUnit : Unit
         specialVecBetween = specialTargetPosition - specialStartPosition;
 
         //start the glamCam
-        cameraController.PlayEarthSpecialAttackGlamCam(specialStartPosition, specialVecBetween);
+        if (Random.Range(0, 100) <= 50)
+        {
+            cameraController.PlayEarthSpecialAttackGlamCam(specialStartPosition, specialVecBetween);
+            specialGlamCamTimer = 2;
+        }
+        else
+        {
+            specialGlamCamTimer = 0;
+        }
 
         //Start the Update Loop
         specialAttack = true;
@@ -84,45 +104,53 @@ public class EarthUnit : Unit
         //if special Attack is true
         if (specialAttack)
         {
-         
+            specialGlamCamTimer -= Time.deltaTime;
 
-            //Update the timer
-            specialTimer += Time.deltaTime;
-
-            //set the new xz position is equal to the current distance though the z animationCurve
-            transform.position = specialStartPosition + specialVecBetween.normalized * ZCurve.Evaluate(specialTimer / specialJumpTime) * (specialVecBetween.magnitude);
-
-            //set the new y position to the current distance though the y animationCurve
-            transform.position = new Vector3(transform.position.x, specialStartPosition.y + YCurve.Evaluate(specialTimer / specialJumpTime) * specialheight, transform.position.z);
-
-            //if the current timer is grater then the overall time
-            if (specialTimer > specialJumpTime)
+            if (specialGlamCamTimer <= 0)
             {
-                //finish the animation
-                specialAttack = false;
+                //Update the timer
+                specialTimer += Time.deltaTime;
 
-                //reset Timer
-                specialTimer -= specialJumpTime;
 
-                //make sure we are at the target position
-                transform.position = specialTargetPosition;
+                //set the new xz position is equal to the current distance though the z animationCurve
+                transform.position = specialStartPosition + specialVecBetween.normalized * ZCurve.Evaluate(specialTimer / specialJumpTime) * (specialVecBetween.magnitude);
 
-                //call the specialAttackDamageDelay coroutine 
-                StartCoroutine(SpecialAttackDamageDelay(specialDamgeDelayTimer));
+                //set the new y position to the current distance though the y animationCurve
+                transform.position = new Vector3(transform.position.x, specialStartPosition.y + YCurve.Evaluate(specialTimer / specialJumpTime) * specialheight, transform.position.z);
 
-                //exit current tile
-                currentTile.Exit();
-                currentTile = specialTiles[0];
+                //if the current timer is grater then the overall time
+                if (specialTimer > specialJumpTime)
+                {
+                    //finish the animation
+                    specialAttack = false;
 
-                //enter target tile
-                currentTile.Enter(this);
+                    //reset Timer
+                    specialTimer -= specialJumpTime;
 
+                    //make sure we are at the target position
+                    transform.position = specialTargetPosition;
+
+                    //call the specialAttackDamageDelay coroutine 
+                    StartCoroutine(SpecialAttackDamageDelay(specialDamgeDelayTimer));
+
+                    //exit current tile
+                    currentTile.Exit();
+                    currentTile = specialTiles[0];
+
+                    //enter target tile
+                    currentTile.Enter(this);
+                }
             }
         }
     }
 
-    private IEnumerator BasicAttackDamageDelay(float a_timer, System.Action a_finished)
+    private IEnumerator BasicAttackDamageDelay(float a_timer, System.Action a_finished, float glamCamDelay = 0)
     {
+        //wait for glamCam to catch up
+        yield return new WaitForSeconds(glamCamDelay);
+
+
+
         //wait for timer before runing code
         yield return new WaitForSeconds(a_timer);
 
@@ -140,6 +168,11 @@ public class EarthUnit : Unit
                 }
             }
         }
+
+        cameraController.TurnOffGlamCam();
+
+
+
         //call the finished call back function
         a_finished();
     }
@@ -147,6 +180,7 @@ public class EarthUnit : Unit
 
     private IEnumerator SpecialAttackDamageDelay(float a_timer)
     {
+
         //wait for timer before runing code
         yield return new WaitForSeconds(a_timer);
 
@@ -167,6 +201,7 @@ public class EarthUnit : Unit
 
         //turn off glamCam  
         cameraController.TurnOffGlamCam();
+
 
         //call the finished call back function
         specialFinishedFunc();

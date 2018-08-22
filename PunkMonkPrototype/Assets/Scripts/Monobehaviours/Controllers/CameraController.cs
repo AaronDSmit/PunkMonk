@@ -13,6 +13,13 @@ public enum CameraDirection
     S
 }
 
+public enum GlamCamType
+{
+    EARTH_BASIC,
+    EARTH_SPECIAL,
+    LIGHNING_BASIC,
+    LIGHNING_SPECIAL
+}
 
 
 public class CameraController : MonoBehaviour
@@ -54,6 +61,15 @@ public class CameraController : MonoBehaviour
     GameObject basicLightningGlamCam;
     GameObject specialLightningGlamCam;
 
+    CinemachineVirtualCamera specialLightningCinemachine;
+
+    public CinemachineVirtualCamera SpecialLightningCinemachine
+    {
+        get
+        {
+            return specialLightningCinemachine;
+        }
+    }
 
     private void Awake()
     {
@@ -72,11 +88,13 @@ public class CameraController : MonoBehaviour
         basicLightningGlamCam = transform.GetChild(3).gameObject;
         specialLightningGlamCam = transform.GetChild(4).gameObject;
 
+        specialLightningCinemachine = specialLightningGlamCam.GetComponent<CinemachineVirtualCamera>();
+
         basicEarthGlamCam.GetComponent<CinemachineVirtualCamera>().LookAt = GameObject.FindGameObjectWithTag("EarthUnit").transform.GetChild(0);
         specialEarthGlamCam.GetComponent<CinemachineVirtualCamera>().LookAt = GameObject.FindGameObjectWithTag("EarthUnit").transform.GetChild(0);
 
         basicLightningGlamCam.GetComponent<CinemachineVirtualCamera>().LookAt = GameObject.FindGameObjectWithTag("LightningUnit").transform.GetChild(0);
-        specialLightningGlamCam.GetComponent<CinemachineVirtualCamera>().LookAt = GameObject.FindGameObjectWithTag("LightningUnit").transform.GetChild(0);
+        specialLightningCinemachine.LookAt = GameObject.FindGameObjectWithTag("LightningUnit").transform.GetChild(0);
 
 
         basicEarthGlamCam.SetActive(false);
@@ -277,7 +295,29 @@ public class CameraController : MonoBehaviour
     }
 
 
-    public void PlayEarthBasicAttackGlamCam(Vector3 a_pos, Vector3 a_vecBetween)
+    public void PlayGlamCam(Vector3 a_pos, Vector3 a_vecBetween, GlamCamType a_glamCamType)
+    {
+        switch (a_glamCamType)
+        {
+            case GlamCamType.EARTH_BASIC:
+                PlayEarthBasicAttackGlamCam(a_pos, a_vecBetween);
+                break;
+            case GlamCamType.EARTH_SPECIAL:
+                PlayEarthSpecialAttackGlamCam(a_pos, a_vecBetween);
+                break;
+            case GlamCamType.LIGHNING_BASIC:
+                PlayLightningBasicAttackGlamCam(a_pos, a_vecBetween);
+                break;
+            case GlamCamType.LIGHNING_SPECIAL:
+                PlayLightingSpecialAttackGlamCam(a_pos, a_vecBetween);
+                break;
+            default:
+                return;
+                break;
+        }
+    }
+
+    private void PlayEarthBasicAttackGlamCam(Vector3 a_pos, Vector3 a_vecBetween)
     {
         cinemachine = true;
         oldCamPosition = camera.transform.position;
@@ -292,7 +332,7 @@ public class CameraController : MonoBehaviour
         basicEarthGlamCam.SetActive(true);
     }
 
-    public void PlayEarthSpecialAttackGlamCam(Vector3 a_pos, Vector3 a_vecBetween)
+    private void PlayEarthSpecialAttackGlamCam(Vector3 a_pos, Vector3 a_vecBetween)
     {
         cinemachine = true;
         oldCamPosition = camera.transform.position;
@@ -309,13 +349,35 @@ public class CameraController : MonoBehaviour
 
     }
 
-    public void PlayLightningBasicAttackGlamCam(Vector3 a_vecBetween)
+    private void PlayLightningBasicAttackGlamCam(Vector3 a_pos, Vector3 a_vecBetween)
     {
+        cinemachine = true;
+        oldCamPosition = camera.transform.position;
+        oldCamRotation = camera.transform.rotation;
+
+        Vector3 finalPos = a_pos + (a_vecBetween * 1.1f) + ((a_vecBetween.normalized + Vector3.Cross(a_vecBetween.normalized, Vector3.up)).normalized * glamCamDistance);
+
+        finalPos.y = 2;
+
+        basicLightningGlamCam.transform.position = finalPos;
+
+        basicLightningGlamCam.SetActive(true);
 
     }
-    public void PlayLightingSpecialAttackGlamCam(Vector3 a_vecBetween)
-    {
 
+    private void PlayLightingSpecialAttackGlamCam(Vector3 a_pos, Vector3 a_vecBetween)
+    {
+        cinemachine = true;
+        oldCamPosition = camera.transform.position;
+        oldCamRotation = camera.transform.rotation;
+
+        Vector3 finalPos = a_pos + -a_vecBetween.normalized + (-(a_vecBetween.normalized + Vector3.Cross(a_vecBetween.normalized, Vector3.up)).normalized * glamCamDistance);
+
+        finalPos.y = 2;
+
+        specialLightningGlamCam.transform.position = finalPos;
+
+        specialLightningGlamCam.SetActive(true);
     }
 
     public void TurnOffGlamCam()

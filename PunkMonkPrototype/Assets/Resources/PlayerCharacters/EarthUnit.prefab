@@ -153,6 +153,7 @@ MonoBehaviour:
   specialAttackRange: 5
   rotationTime: 0
   walkSpeed: 5
+  glamCam: 1
   specialDamage: 1
   specialheight: 5
   specialJumpTime: 3

@@ -154,6 +154,7 @@ MonoBehaviour:
   specialAttackRange: 5
   rotationTime: 0
   walkSpeed: 5
+  glamCam: 1
   lightningPrefab: {fileID: 106988, guid: 15dec7b07032b2f4aa6f855bfbe120f7, type: 2}
   basicDamage: 100
   basicDamgeDelayTimer: 0.9

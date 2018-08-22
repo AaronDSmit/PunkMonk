@@ -55,6 +55,9 @@ public class LightningUnit : Unit
         //call the start call back function
         start();
 
+        canAttack = false;
+
+
         //store the target tile
         basicTile = targetTiles[0];
 
@@ -65,12 +68,19 @@ public class LightningUnit : Unit
 
         basicLightningTimer = 3f;
 
-        basicLightningGO = Instantiate(lightningPrefab);
-        basicLightningGO.transform.GetChild(0).position = basicTile.transform.position + (transform.up * 0.8f);
-        basicLightningGO.transform.GetChild(1).position = transform.position + (transform.up * 0.8f);
+        Vector3 tilePos = basicTile.transform.position;
 
+        tilePos.y = transform.position.y;
 
-        Destroy(basicLightningGO, basicElectricityLifetime);
+        if (glamCam)
+        {
+            if (Random.Range(0, 100) <= 50)
+            {
+                cameraController.PlayGlamCam(transform.position, tilePos - transform.position, GlamCamType.LIGHNING_BASIC);
+                StartCoroutine(BasicAttackDamageDelay(basicDamgeDelayTimer, 2));
+                return;
+            }
+        }
 
         //call the basicAttackDamageDelay coroutine 
         StartCoroutine(BasicAttackDamageDelay(basicDamgeDelayTimer));
@@ -81,10 +91,9 @@ public class LightningUnit : Unit
     {
         start();
 
+        CanSpecialAttack = true;
 
         specialFinishedFunc = finished;
-
-        specialLightningGO = Instantiate(lightningPrefab);
 
 
         if (specialAIController == null)
@@ -153,16 +162,39 @@ public class LightningUnit : Unit
 
         }
 
-        specialLightningGO.transform.GetChild(0).position = specialFinalTargets[0].transform.position + (transform.up * 0.8f);
-        specialLightningGO.transform.GetChild(1).position = specialFinalTargets[1].transform.position + (transform.up * 0.8f);
+        Vector3 tilePos = specialFinalTargets[1].transform.position;
+        tilePos.y = transform.position.y;
+
+        cameraController.SpecialLightningCinemachine.LookAt = specialFinalTargets[1].transform;
+
+        if (glamCam)
+        {
+            if (Random.Range(0, 100) <= 50)
+            {
+                cameraController.PlayGlamCam(transform.position, tilePos - transform.position, GlamCamType.LIGHNING_SPECIAL);
+                StartCoroutine(SpecialAttackDamageDelay(basicDamgeDelayTimer, 2));
+                return;
+            }
+        }
+
 
         StartCoroutine(SpecialAttackDamageDelay(specialLightningLifeTime));
 
     }
 
 
-    private IEnumerator SpecialAttackDamageDelay(float a_timer)
+    private IEnumerator SpecialAttackDamageDelay(float a_timer, float glamCamDelay = 0)
     {
+
+        yield return new WaitForSeconds(glamCamDelay);
+
+        specialLightningGO = Instantiate(lightningPrefab);
+
+        specialLightningGO.transform.GetChild(0).position = specialFinalTargets[0].transform.position + (transform.up * 0.8f);
+        specialLightningGO.transform.GetChild(1).position = specialFinalTargets[1].transform.position + (transform.up * 0.8f);
+
+
+
         for (int i = 1; i < specialFinalTargets.Count - 1; i++)
         {
             yield return new WaitForSeconds(a_timer);
@@ -185,6 +217,8 @@ public class LightningUnit : Unit
         yield return new WaitForSeconds(a_timer);
 
         StartCoroutine(SpecialAttackDamageDelay(specialDelayTime, specialFinalDamage, specialFinalTargets[specialFinalTargets.Count - 1]));
+
+        cameraController.TurnOffGlamCam();
 
 
         specialFinishedFunc();
@@ -213,8 +247,16 @@ public class LightningUnit : Unit
     }
 
 
-    private IEnumerator BasicAttackDamageDelay(float a_timer)
+    private IEnumerator BasicAttackDamageDelay(float a_timer, float glamCamDelay = 0)
     {
+        yield return new WaitForSeconds(glamCamDelay);
+
+        yield return new WaitForEndOfFrame();
+        basicLightningGO = Instantiate(lightningPrefab);
+
+        basicLightningGO.transform.GetChild(0).position = basicTile.transform.position + (transform.up * 0.8f);
+        basicLightningGO.transform.GetChild(1).position = transform.position + (transform.up * 0.8f);
+
         yield return new WaitForEndOfFrame();
         GameObject tempGameobject1 = Instantiate(basicLightningGO);
 
@@ -244,8 +286,12 @@ public class LightningUnit : Unit
             }
         }
 
+        cameraController.TurnOffGlamCam();
+
+
         Destroy(tempGameobject1);
         Destroy(tempGameobject2);
+        Destroy(basicLightningGO);
 
         //call the finished call back function
         basicFinishedFunc();

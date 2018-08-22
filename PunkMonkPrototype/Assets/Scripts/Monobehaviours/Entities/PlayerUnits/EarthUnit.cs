@@ -55,18 +55,23 @@ public class EarthUnit : Unit
         //call the start call back function
         start();
 
+        canAttack = false;
+
         //store the target tile
         basicTiles = targetTiles;
 
         Vector3 tilePos = new Vector3(targetTiles[0].transform.position.x, transform.position.y, targetTiles[0].transform.position.z);
 
-        if (Random.Range(0, 100) <= 50)
-        {
-            cameraController.PlayEarthBasicAttackGlamCam(transform.position, tilePos - transform.position);
-            StartCoroutine(BasicAttackDamageDelay(basicDamgeDelayTimer, finished, 2));
-            return;
-        }
 
+        if (glamCam)
+        {
+            if (Random.Range(0, 100) <= 50)
+            {
+                cameraController.PlayGlamCam(transform.position, tilePos - transform.position, GlamCamType.EARTH_BASIC);
+                StartCoroutine(BasicAttackDamageDelay(basicDamgeDelayTimer, finished, 2));
+                return;
+            }
+        }
         //call the basicAttackDamageDelay coroutine 
         StartCoroutine(BasicAttackDamageDelay(basicDamgeDelayTimer, finished));
 
@@ -76,6 +81,9 @@ public class EarthUnit : Unit
     {
         //call the start call back function
         start();
+
+        CanSpecialAttack = false;
+
 
         //store the target tile
         specialTiles = targetTiles;
@@ -97,16 +105,19 @@ public class EarthUnit : Unit
         specialVecBetween = specialTargetPosition - specialStartPosition;
 
         //start the glamCam
-        if (Random.Range(0, 100) <= 50)
+        if (glamCam)
         {
-            cameraController.PlayEarthSpecialAttackGlamCam(specialStartPosition, specialVecBetween);
-            specialGlamCamTimer = 2;
-        }
-        else
-        {
-            specialGlamCamTimer = 0;
-        }
+            if (Random.Range(0, 100) <= 50)
+            {
+                cameraController.PlayGlamCam(specialStartPosition, specialVecBetween, GlamCamType.EARTH_SPECIAL);
+                specialGlamCamTimer = 2;
+            }
 
+            else
+            {
+                specialGlamCamTimer = 0;
+            }
+        }
         //Start the Update Loop
         specialAttack = true;
     }

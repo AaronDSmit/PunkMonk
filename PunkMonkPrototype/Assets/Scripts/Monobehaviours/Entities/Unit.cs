@@ -31,7 +31,9 @@ public class Unit : LivingEntity
     [Tooltip("The position that projectiles spawn from")]
     [SerializeField]
     protected Transform projectilePosition;
-
+    [Tooltip("Toggles on and off the glamCam")]
+    [SerializeField]
+    protected bool glamCam;
 
     #endregion
 

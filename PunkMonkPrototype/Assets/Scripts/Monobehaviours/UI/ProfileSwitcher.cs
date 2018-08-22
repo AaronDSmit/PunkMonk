@@ -19,12 +19,6 @@ public class ProfileSwitcher : MonoBehaviour
     [SerializeField]
     private Vector2 secondaryScale = Vector2.one;
 
-    [SerializeField]
-    private RectTransform earthProfile;
-
-    [SerializeField]
-    private RectTransform lightningProfile;
-
     #endregion
 
     #region Local Fields
@@ -32,6 +26,10 @@ public class ProfileSwitcher : MonoBehaviour
     private Vector2 primaryPos;
 
     private Vector2 secondaryPos;
+
+    private RectTransform earthProfile;
+
+    private RectTransform lightningProfile;
 
     #endregion
 

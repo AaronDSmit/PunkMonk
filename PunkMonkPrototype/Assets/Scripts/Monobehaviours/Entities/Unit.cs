@@ -99,36 +99,14 @@ public class Unit : LivingEntity
                 // We hit the target unit, we have a clear shot
                 return true;
             }
+            else if (hitInfo.collider.gameObject != gameObject)
+            {
+                // If we hit something other than this gameobject
+                return false;
+            }
         }
 
         return false;
-    }
-
-    protected bool HasClearShot(Hex a_currentTile, Unit a_targetUnit)
-    {
-        // Unit height should be replaced with 
-        float unitHeight = 1.8f;
-        // StartPos should be the transform from where the Unit shoots from
-        Vector3 startPos = a_currentTile.transform.position + Vector3.up * (unitHeight / 2.0f);
-        // TargetPos is the centre of the target unit
-        Vector3 targetPos = a_targetUnit.CurrentTile.transform.position + Vector3.up * (unitHeight / 2.0f);
-        Ray ray = new Ray(startPos, targetPos - startPos);
-        RaycastHit hitInfo;
-
-        if (Physics.Raycast(ray, out hitInfo))
-        {
-            // Check if we hit the target unit
-            if (hitInfo.collider.gameObject == a_targetUnit.gameObject)
-            {
-                // We hit the target unit, we have a clear shit
-                return true;
-            }
-            // We hit something, no clear shot
-            return false;
-        }
-
-        // The raycast hit nothing, we have a clear shot
-        return true;
     }
 
     public void WalkDirectlyToTile(Hex a_targetHex)

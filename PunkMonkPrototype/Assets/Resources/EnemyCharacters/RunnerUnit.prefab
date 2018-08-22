@@ -170,18 +170,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   team: 1
-  maxHealth: 100
+  maxHealth: 3
   dissolveMat: {fileID: 2100000, guid: 25b0cd8d1848b1f4a83e3fa96f6d0869, type: 2}
   deathAnimationTime: 1
   actions:
   - {fileID: 11400000, guid: 85a01b7788e76f845875da8b3c3553d2, type: 2}
-  moveRange: 1
+  moveRange: 2
   attackRange: 1
   specialAttackRange: 0
   rotationTime: 0
   walkSpeed: 10
   projectilePosition: {fileID: 4797146379296584}
-  damage: 34
+  glamCam: 0
+  damage: 1
   damgeDelayTimer: 0
 --- !u!136 &136694835722273770
 CapsuleCollider:

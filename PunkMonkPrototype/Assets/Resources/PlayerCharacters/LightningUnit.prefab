@@ -171,7 +171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   team: 0
-  maxHealth: 100
+  maxHealth: 5
   dissolveMat: {fileID: 2100000, guid: 25b0cd8d1848b1f4a83e3fa96f6d0869, type: 2}
   deathAnimationTime: 1
   actions:
@@ -186,15 +186,15 @@ MonoBehaviour:
   projectilePosition: {fileID: 4970049176054302}
   glamCam: 1
   lightningPrefab: {fileID: 106988, guid: 15dec7b07032b2f4aa6f855bfbe120f7, type: 2}
-  basicDamage: 100
+  basicDamage: 1
   basicDamgeDelayTimer: 0.9
   basicElectricityLifetime: 1
   specialRehitEnemies: 1
   specialRange: 5
   specialAmountOfBounces: 3
   specialLightningLifeTime: 1
-  specialBounceDamage: 1
-  specialFinalDamage: 1
+  specialBounceDamage: 2
+  specialFinalDamage: 2
   specialDelayTime: 1
 --- !u!114 &114441757422822586
 MonoBehaviour:

@@ -549,12 +549,6 @@ public class PlayerController : MonoBehaviour
         {
             earthDead = true;
         }
-
-        if (LightningDead && earthDead)
-        {
-            // Respawn at checkpoint
-            Manager.instance.CheckPointController.ResetToLastCheckPoint();
-        }
     }
 
     private void CancelCurrentAction()
@@ -685,6 +679,13 @@ public class PlayerController : MonoBehaviour
     {
         if (a_newState == TurnManager.TurnState.start)
         {
+            if (LightningDead && earthDead)
+            {
+                // Respawn at checkpoint
+                Manager.instance.CheckPointController.ResetToLastCheckPoint();
+                return;
+            }
+
             myTurn = true;
 
             earthUnit.Refresh();

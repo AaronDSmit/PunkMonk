@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 // Needs to be all caps to avoid conflict with Properties
 public enum TEAM { player, ai, neutral }
@@ -26,12 +24,14 @@ public class TurnManager : MonoBehaviour
 
     private bool isReady;
 
+    private int battleID;
+
     public enum TurnState { start, end }
 
     public delegate void TurnStateChanged(TurnState a_nextState, int a_turnNumber);
     public event TurnStateChanged PlayerTurnEvent;
     public event TurnStateChanged AITurnEvent;
-    public event TurnStateChanged SpawnTurnEvent;
+    public event TurnStateChanged EveryTurnEvent;
 
     #endregion
 
@@ -40,6 +40,12 @@ public class TurnManager : MonoBehaviour
     public bool Ready
     {
         get { return isReady; }
+    }
+
+    public int BattleID
+    {
+        get { return battleID; }
+        set { battleID = value; }
     }
 
     #endregion
@@ -124,9 +130,9 @@ public class TurnManager : MonoBehaviour
             }
         }
 
-        if (SpawnTurnEvent != null)
+        if (EveryTurnEvent != null)
         {
-            SpawnTurnEvent(TurnState.start, turnCount);
+            EveryTurnEvent(TurnState.start, turnCount);
         }
     }
 

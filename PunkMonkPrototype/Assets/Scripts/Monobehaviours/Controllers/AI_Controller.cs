@@ -27,6 +27,8 @@ public class AI_Controller : MonoBehaviour
 
     private List<AI_Agent> agents = new List<AI_Agent>();
 
+    public static AI_Controller instance;
+
     #endregion
 
     #region Properties
@@ -66,8 +68,21 @@ public class AI_Controller : MonoBehaviour
 
     private void Awake()
     {
-        turnManager = Manager.instance.TurnController;
-        turnManager.AITurnEvent += TurnEvent;
+        if (instance == null)
+        {
+            instance = this;
+
+            turnManager = Manager.instance.TurnController;
+            turnManager.AITurnEvent += TurnEvent;
+        }
+        else
+        {
+            Debug.LogError("More than 1 AI_Controller is in the scene, deleting it");
+
+            //stop the game from having more than one AI_Controller
+            Destroy(gameObject);
+            return;
+        }
     }
 
     private void OnDestroy()

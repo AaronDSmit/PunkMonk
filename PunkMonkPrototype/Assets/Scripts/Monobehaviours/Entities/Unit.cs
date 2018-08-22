@@ -28,6 +28,10 @@ public class Unit : LivingEntity
     [Tooltip("How the fast this unit walks from tile to tile")]
     [SerializeField]
     protected float walkSpeed;
+    [Tooltip("The position that projectiles spawn from")]
+    [SerializeField]
+    protected Transform projectilePosition;
+
 
     #endregion
 
@@ -42,6 +46,8 @@ public class Unit : LivingEntity
     protected System.Action finishedWalking;
 
     protected CameraController cameraController;
+
+    public Vector3 ShootPos { get { return projectilePosition.position; } }
 
     protected override void Awake()
     {
@@ -75,33 +81,28 @@ public class Unit : LivingEntity
         }
     }
 
-    protected bool HasClearShot(Unit a_currentUnit, Unit a_targetUnit)
+    protected bool HasClearShot(Unit a_targetUnit)
     {
-        // Unit height should be replaced with 
-        float unitHeight = 1.8f;
         // StartPos should be the transform from where the Unit shoots from
-        Vector3 startPos = a_currentUnit.CurrentTile.transform.position + Vector3.up * (unitHeight / 2.0f);
+        Vector3 startPos = ShootPos;
         // TargetPos is the centre of the target unit
-        Vector3 targetPos = a_targetUnit.CurrentTile.transform.position + Vector3.up * (unitHeight / 2.0f);
-        Ray ray = new Ray(startPos, targetPos - startPos);
-        RaycastHit hitInfo;
+        Vector3 targetPos = a_targetUnit.CurrentTile.transform.position + Vector3.up * 0.8f;
+        Vector3 vecBetween = targetPos - startPos;
+        Ray ray = new Ray(startPos, vecBetween);
+        RaycastHit[] hits = Physics.RaycastAll(ray, vecBetween.magnitude, LayerMask.GetMask(new string[]{"Unit", "Level", "Ground" }));
 
-        if (Physics.Raycast(ray, out hitInfo))
+        foreach (RaycastHit hitInfo in hits)
         {
             // Check if we hit the target unit
             if (hitInfo.collider.gameObject == a_targetUnit.gameObject)
             {
-                // We hit the target unit, we have a clear shit
+                // We hit the target unit, we have a clear shot
                 return true;
             }
-            // We hit something, no clear shot
-            return false;
         }
 
-        // The raycast hit nothing, we have a clear shot
-        return true;
+        return false;
     }
-
 
     protected bool HasClearShot(Hex a_currentTile, Unit a_targetUnit)
     {

@@ -143,7 +143,7 @@ public class AI_Agent : Unit
         yield return new WaitUntil(() => isPerformingAction == false);
 
         // Attack the player, checking if it is in range && if we have a clear shot
-        if (HexUtility.Distance(currentTile, players[playerToAttack].CurrentTile) <= attackRange)// && HasClearShot(this, players[playerToAttack]))
+        if (HexUtility.Distance(currentTile, players[playerToAttack].CurrentTile) <= attackRange && HasClearShot(players[playerToAttack]))
         {
             isPerformingAction = true;
             BasicAttack(new Hex[] { players[playerToAttack].CurrentTile }, null, FinishedAction);

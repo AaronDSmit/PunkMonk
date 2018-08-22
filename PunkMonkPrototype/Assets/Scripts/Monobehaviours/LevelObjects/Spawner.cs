@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum UnitType { runner, watcher }
+
 public class Spawner : MonoBehaviour
 {
     [HideInInspector]
@@ -27,6 +29,14 @@ public class Spawner : MonoBehaviour
     [HideInInspector]
     [SerializeField]
     public Hex currentHex;
+
+    [HideInInspector]
+    [SerializeField]
+    private UnitType spawnType;
+
+    [HideInInspector]
+    [SerializeField]
+    public bool hasVolt;
 
     private void Awake()
     {
@@ -62,7 +72,7 @@ public class Spawner : MonoBehaviour
         set { turnToSpawn = value; }
     }
 
-    public Unit UntiToSpawn
+    public Unit UnitToSpawn
     {
         get { return unitToSpawn; }
         set { unitToSpawn = value; }
@@ -72,5 +82,12 @@ public class Spawner : MonoBehaviour
     {
         get { return textColour; }
         set { textColour = value; }
+    }
+
+    public UnitType SpawnType
+    {
+        get { return spawnType; }
+
+        set { spawnType = value; }
     }
 }

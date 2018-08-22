@@ -38,6 +38,7 @@ public class StateManager : MonoBehaviour
 
     public bool MidLoad
     {
+        get { return midLoad; }
         set { midLoad = value; }
     }
 
@@ -146,6 +147,8 @@ public class StateManager : MonoBehaviour
     private IEnumerator ChangeMidLoad(GameState a_targetState)
     {
         yield return new WaitUntil(() => midLoad);
+
+        yield return new WaitForEndOfFrame();
 
         midLoad = false;
 

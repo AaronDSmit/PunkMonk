@@ -29,11 +29,7 @@ public class StateTransitionPoint : MonoBehaviour
 
     [HideInInspector]
     [SerializeField]
-    private Transform earthHexT;
-
-    [HideInInspector]
-    [SerializeField]
-    private Transform lightningHexT;
+    private Hex checkPoint;
 
     public Hex LightningHex
     {
@@ -45,32 +41,24 @@ public class StateTransitionPoint : MonoBehaviour
         get { return earthHex; }
     }
 
+    public Hex CheckPoint
+    {
+        get { return checkPoint; }
+    }
+
+    public void SetCheckPoint(Hex a_checkPointhHex)
+    {
+        checkPoint = a_checkPointhHex;
+    }
+
     public void SetEarthHex(Hex a_earthHex)
     {
         earthHex = a_earthHex;
-
-        if (earthHexT)
-        {
-            DestroyImmediate(earthHexT.gameObject);
-        }
-
-        earthHexT = new GameObject("Earth Hex").transform;
-        earthHexT.parent = transform;
-        earthHexT.position = earthHex.transform.position;
     }
 
     public void SetLightninghHex(Hex a_lightningHex)
     {
         lightningHex = a_lightningHex;
-
-        if (lightningHexT)
-        {
-            DestroyImmediate(lightningHexT.gameObject);
-        }
-
-        lightningHexT = new GameObject("Earth Hex").transform;
-        lightningHexT.parent = transform;
-        lightningHexT.position = lightningHexT.transform.position;
     }
 
     public GameState TargetState
@@ -94,13 +82,19 @@ public class StateTransitionPoint : MonoBehaviour
             if (Manager.instance.StateController.CurrentGameState == fromState)
             {
                 PlayerController player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+
                 player.EncounterKillLimit = numberToKill;
                 player.SetUnitSnapHexes(earthHex, lightningHex);
+
+                if (checkPoint != null)
+                {
+                    Manager.instance.CheckPointController.SetCheckPoint(this, checkPoint.transform.position);
+                }
 
                 Manager.instance.TurnController.BattleID = index;
                 Manager.instance.StateController.ChangeGameState(targetState);
 
-                Destroy(this);
+                enabled = false;
             }
         }
     }

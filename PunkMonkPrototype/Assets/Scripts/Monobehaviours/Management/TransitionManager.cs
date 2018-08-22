@@ -49,6 +49,7 @@ public class TransitionManager : MonoBehaviour
                 PlayerController player = playerGo.GetComponent<PlayerController>();
 
                 earthUnit = player.SpawnEarthUnit();
+
                 LightningUnit = player.SpawnLightningUnit();
 
                 player.Init();

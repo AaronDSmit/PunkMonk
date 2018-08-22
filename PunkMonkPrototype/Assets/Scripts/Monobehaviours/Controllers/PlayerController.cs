@@ -66,6 +66,10 @@ public class PlayerController : MonoBehaviour
 
     private bool trackingKills = false;
 
+    private bool LightningDead = false;
+
+    private bool earthDead = false;
+
     #endregion
 
     #region Properties
@@ -112,53 +116,95 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public Unit SpawnEarthUnit()
+    public Unit SpawnEarthUnit(Hex spawnHex = null)
     {
-        GameObject earthGO = GameObject.FindGameObjectWithTag("EarthUnitSpawn");
-
-        if (earthGO)
+        // use spawn points by default
+        if (spawnHex == null)
         {
-            Hex spawnHexEarth = earthGO.transform.parent.GetComponent<Hex>();
+            GameObject earthGO = GameObject.FindGameObjectWithTag("EarthUnitSpawn");
 
-            Vector3 spawnPosEarth = spawnHexEarth.transform.position;
+            if (earthGO)
+            {
+                Hex spawnHexEarth = earthGO.transform.parent.GetComponent<Hex>();
+
+                Vector3 spawnPosEarth = spawnHexEarth.transform.position;
+                spawnPosEarth.y = 0.1f;
+
+                earthUnit = Instantiate(Resources.Load<EarthUnit>("PlayerCharacters/EarthUnit"), spawnPosEarth, Quaternion.identity);
+                earthUnit.Spawn(spawnHexEarth);
+
+                earthUnit.OnDeath += PlayerUnitDied;
+
+                return earthUnit;
+            }
+            else
+            {
+                Debug.LogError("No Earth  spawn point found!");
+
+                return null;
+            }
+        }
+        else
+        {
+            // spawn at checkpoint pos
+
+            Vector3 spawnPosEarth = spawnHex.transform.position;
             spawnPosEarth.y = 0.1f;
 
             earthUnit = Instantiate(Resources.Load<EarthUnit>("PlayerCharacters/EarthUnit"), spawnPosEarth, Quaternion.identity);
-            earthUnit.Spawn(spawnHexEarth);
+            earthUnit.Spawn(spawnHex);
+
+            earthUnit.OnDeath += PlayerUnitDied;
 
             return earthUnit;
         }
-        else
-        {
-            Debug.LogError("No Earth  spawn point found!");
-
-            return null;
-        }
     }
 
-    public Unit SpawnLightningUnit()
+    public Unit SpawnLightningUnit(Hex spawnHex = null)
     {
-        GameObject lightningGO = GameObject.FindGameObjectWithTag("LightningUnitSpawn");
-
-        if (lightningGO)
+        // use spawn points by default
+        if (spawnHex == null)
         {
-            Hex spawnHexLightning = lightningGO.transform.parent.GetComponent<Hex>();
+            GameObject lightningGO = GameObject.FindGameObjectWithTag("LightningUnitSpawn");
 
-            Vector3 spawnPosLightning = spawnHexLightning.transform.position;
+            if (lightningGO)
+            {
+                Hex spawnHexLightning = lightningGO.transform.parent.GetComponent<Hex>();
+
+                Vector3 spawnPosLightning = spawnHexLightning.transform.position;
+                spawnPosLightning.y = 0.1f;
+
+                lightningUnit = Instantiate(Resources.Load<LightningUnit>("PlayerCharacters/LightningUnit"), spawnPosLightning, Quaternion.identity);
+                lightningUnit.Spawn(spawnHexLightning);
+
+                lightningUnit.GetComponent<OverworldFollower>().Init();
+
+                lightningUnit.OnDeath += PlayerUnitDied;
+
+                return lightningUnit;
+            }
+            else
+            {
+                Debug.LogError("No lightning spawn point found!");
+
+                return null;
+            }
+        }
+        else
+        {
+            // spawn at checkpoint pos
+
+            Vector3 spawnPosLightning = spawnHex.transform.position;
             spawnPosLightning.y = 0.1f;
 
             lightningUnit = Instantiate(Resources.Load<LightningUnit>("PlayerCharacters/LightningUnit"), spawnPosLightning, Quaternion.identity);
-            lightningUnit.Spawn(spawnHexLightning);
+            lightningUnit.Spawn(spawnHex);
 
             lightningUnit.GetComponent<OverworldFollower>().Init();
 
-            return lightningUnit;
-        }
-        else
-        {
-            Debug.LogError("No lightning spawn point found!");
+            lightningUnit.OnDeath += PlayerUnitDied;
 
-            return null;
+            return lightningUnit;
         }
     }
 
@@ -188,6 +234,12 @@ public class PlayerController : MonoBehaviour
 
         trackingKills = (EncounterKillLimit > 0);
         encounterKillCount = 0;
+    }
+
+    public void ResetUnitDeaths()
+    {
+        earthDead = false;
+        LightningDead = false;
     }
 
     public void SelectAction(int actionIndex)
@@ -486,6 +538,25 @@ public class PlayerController : MonoBehaviour
         #endregion
     }
 
+    private void PlayerUnitDied(LivingEntity a_unit)
+    {
+        if (a_unit.CompareTag("LightningUnit"))
+        {
+            LightningDead = true;
+        }
+
+        if (a_unit.CompareTag("EarthUnit"))
+        {
+            earthDead = true;
+        }
+
+        if (LightningDead && earthDead)
+        {
+            // Respawn at checkpoint
+            Manager.instance.CheckPointController.ResetToLastCheckPoint();
+        }
+    }
+
     private void CancelCurrentAction()
     {
         lineRenderer.positionCount = 0;
@@ -649,16 +720,14 @@ public class PlayerController : MonoBehaviour
         }
         else if (a_oldstate == GameState.battle)
         {
-
-            Debug.Log("PC: state changed");
             DeselectUnit();
 
-            if (!earthUnit)
+            if (earthDead)
             {
                 SpawnEarthUnit();
             }
 
-            if (!lightningUnit)
+            if (LightningDead)
             {
                 SpawnLightningUnit();
             }

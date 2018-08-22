@@ -4,10 +4,7 @@ using System.Collections.Generic;
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.SceneManagement;
-using UnityEditor.AnimatedValues;
 #endif
-
-public enum Unit_type { runner, watcher }
 
 public class EasyDesignEditor : EditorWindow
 {
@@ -50,7 +47,7 @@ public class EasyDesignEditor : EditorWindow
     [SerializeField] private float inaccessibleAlpha;
 
     // GameFlow
-    [SerializeField] private Unit_type enemyType;
+    [SerializeField] private UnitType enemyType;
     [SerializeField] private bool hasVolt = false;
     [SerializeField] private int turnToSpawn;
     [SerializeField] private int everyXTurns;
@@ -58,8 +55,9 @@ public class EasyDesignEditor : EditorWindow
     [SerializeField] private GameState targetState = GameState.overworld;
     [SerializeField] private GameState currentState = GameState.battle;
     [SerializeField] private int numberToKill;
-    [SerializeField] private int stateIndex;
-    [SerializeField] private int spawnIndex;
+    [SerializeField] private int currentID = 0;
+    [SerializeField] private string spawnerButtonName;
+    [SerializeField] private Spawner[] selectedSpawners;
 
     // Settings
     [SerializeField] private bool healthyMode = true;
@@ -807,7 +805,7 @@ public class EasyDesignEditor : EditorWindow
             EditorGUI.BeginDisabledGroup(!hasTileSelected || hasSpawnerSelected);
 
             oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = new Color(0.64f, 0.26f, 0.26f, 1.0f); // brown
+            GUI.backgroundColor = new Color(0.8f, 0.66f, 0.49f, 1.0f); // brown
 
             if (GameObject.FindGameObjectWithTag("EarthUnitSpawn") == null)
             {
@@ -821,7 +819,7 @@ public class EasyDesignEditor : EditorWindow
                     };
 
                     Spawner spawner = spawnerGO.AddComponent<Spawner>();
-                    spawner.TextColour = new Color(1.0f, 0.2f, 0.2f, 1.0f); // brown
+                    spawner.TextColour = new Color(0.8f, 0.66f, 0.49f, 1.0f); // brown
                     spawner.drawText = true;
                     spawner.index = -1;
 
@@ -846,7 +844,7 @@ public class EasyDesignEditor : EditorWindow
             GUI.backgroundColor = oldColor;
 
             oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = new Color(0.39f, 0.39f, 0.78f, 1.0f); // blue
+            GUI.backgroundColor = new Color(0.55f, 0.89f, 0.93f, 1.0f); // blue
 
             if (GameObject.FindGameObjectWithTag("LightningUnitSpawn") == null)
             {
@@ -860,7 +858,7 @@ public class EasyDesignEditor : EditorWindow
                     };
 
                     Spawner spawner = spawnerGO.AddComponent<Spawner>();
-                    spawner.TextColour = new Color(0.0f, 0.0f, 1.0f, 1.0f); // blue
+                    spawner.TextColour = new Color(0.55f, 0.89f, 0.93f, 1.0f); // blue
                     spawner.drawText = true;
                     spawner.index = -1;
 
@@ -896,40 +894,36 @@ public class EasyDesignEditor : EditorWindow
 
             GUILayout.Label("Enemy Spawn Points", centeredText);
 
-            EditorGUI.BeginDisabledGroup(Selection.gameObjects.Length != 1 || !hasTileSelected);
+            EditorGUI.BeginDisabledGroup(!hasTileSelected);
 
             EditorGUILayout.BeginHorizontal();
 
             // if the selected tile has a Spawner change it rather than add a new one
-            if (Selection.gameObjects.Length == 1 && Selection.gameObjects[0].GetComponentInChildren<Spawner>())
+            if (hasSpawnerSelected)
             {
                 oldColor = GUI.backgroundColor;
                 GUI.backgroundColor = new Color(1.0f, 0.58f, 0.19f, 1.0f); // orange
 
-                if (GUILayout.Button("Change Spawner"))
+                if (GUILayout.Button("Change " + spawnerButtonName))
                 {
-                    Spawner spawner = Selection.gameObjects[0].GetComponentInChildren<Spawner>();
-                    spawner.index = spawnIndex;
-
-                    if (enemyType == Unit_type.watcher)
+                    foreach (Spawner spawner in selectedSpawners)
                     {
-                        spawner.UntiToSpawn = Resources.Load<AI_Agent>("EnemyCharacters/WatcherUnit");
-                        spawner.TextColour = Color.red;
-                    }
-                    else if (enemyType == Unit_type.runner)
-                    {
-                        spawner.UntiToSpawn = Resources.Load<AI_Agent>("EnemyCharacters/RunnerUnit");
-                        spawner.TextColour = Color.red;
+                        spawner.index = currentID;
+                        spawner.TurnToSpawn = turnToSpawn;
+
+                        if (enemyType == UnitType.watcher)
+                        {
+                            spawner.UnitToSpawn = Resources.Load<AI_Agent>("EnemyCharacters/WatcherUnit");
+                            spawner.TextColour = Color.magenta;
+                        }
+                        else if (enemyType == UnitType.runner)
+                        {
+                            spawner.UnitToSpawn = Resources.Load<AI_Agent>("EnemyCharacters/RunnerUnit");
+                            spawner.TextColour = Color.red;
+                        }
                     }
 
-                    spawner.TurnToSpawn = turnToSpawn;
-
-                    SpawnTrigger[] triggers = FindObjectsOfType<SpawnTrigger>();
-
-                    foreach (SpawnTrigger trigger in triggers)
-                    {
-                        trigger.UpdateSpawnerList();
-                    }
+                    UpdateTriggerConnections();
                 }
 
                 GUI.backgroundColor = oldColor;
@@ -939,38 +933,40 @@ public class EasyDesignEditor : EditorWindow
                 oldColor = GUI.backgroundColor;
                 GUI.backgroundColor = new Color(0.39f, 0.78f, 0.19f, 1.0f); // green
 
-                if (GUILayout.Button("Add Spawner"))
+                Hex[] selectedTiles = Selection.GetFiltered<Hex>(SelectionMode.Deep);
+
+                string buttonName = (selectedTiles.Length == 1) ? "Add Spawner" : "Add Spawners";
+
+                if (GUILayout.Button(buttonName))
                 {
-                    Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
-
-                    GameObject spawnerGO = new GameObject("EnemySpawner");
-                    Spawner spawner = spawnerGO.AddComponent<Spawner>();
-                    spawner.drawText = true;
-                    spawner.currentHex = tile;
-                    spawner.index = spawnIndex;
-
-                    if (enemyType == Unit_type.watcher)
+                    foreach (Hex tile in selectedTiles)
                     {
-                        spawner.UntiToSpawn = Resources.Load<Unit>("EnemyCharacters/WatcherUnit");
-                        spawner.TextColour = Color.red;
-                    }
-                    else if (enemyType == Unit_type.runner)
-                    {
-                        spawner.UntiToSpawn = Resources.Load<Unit>("EnemyCharacters/RunnerUnit");
-                        spawner.TextColour = Color.red;
+                        GameObject spawnerGO = new GameObject("EnemySpawner");
+                        Spawner spawner = spawnerGO.AddComponent<Spawner>();
+                        spawner.drawText = true;
+                        spawner.currentHex = tile;
+                        spawner.index = currentID;
+
+                        if (enemyType == UnitType.watcher)
+                        {
+                            spawner.UnitToSpawn = Resources.Load<Unit>("EnemyCharacters/WatcherUnit");
+                            spawner.TextColour = Color.red;
+                        }
+                        else if (enemyType == UnitType.runner)
+                        {
+                            spawner.UnitToSpawn = Resources.Load<Unit>("EnemyCharacters/RunnerUnit");
+                            spawner.TextColour = Color.red;
+                        }
+
+                        spawner.transform.parent = tile.transform;
+                        spawner.transform.position = tile.transform.position;
+                        spawner.transform.localEulerAngles = new Vector3(180, 0.0f, 0.0f);
+                        spawner.TurnToSpawn = turnToSpawn;
                     }
 
-                    spawner.transform.parent = tile.transform;
-                    spawner.transform.position = tile.transform.position;
-                    spawner.transform.localEulerAngles = new Vector3(180, 0.0f, 0.0f);
-                    spawner.TurnToSpawn = turnToSpawn;
+                    UpdateSpawnerSelection();
 
-                    SpawnTrigger[] triggers = FindObjectsOfType<SpawnTrigger>();
 
-                    foreach (SpawnTrigger trigger in triggers)
-                    {
-                        trigger.UpdateSpawnerList();
-                    }
                 }
 
                 GUI.backgroundColor = oldColor;
@@ -988,7 +984,7 @@ public class EasyDesignEditor : EditorWindow
 
             GUILayout.Label("Enemy: ");
 
-            enemyType = (Unit_type)EditorGUILayout.EnumPopup(enemyType);
+            enemyType = (UnitType)EditorGUILayout.EnumPopup(enemyType);
 
             GUILayout.Label("Has volt: ");
 
@@ -1005,7 +1001,7 @@ public class EasyDesignEditor : EditorWindow
             oldColor = GUI.backgroundColor;
             GUI.backgroundColor = new Color(1.0f, 0.19f, 0.19f, 1.0f); // red
 
-            if (GUILayout.Button("Remove Spawner"))
+            if (GUILayout.Button("Remove " + spawnerButtonName))
             {
                 GameObject[] selectedObjects = Selection.gameObjects;
 
@@ -1022,17 +1018,14 @@ public class EasyDesignEditor : EditorWindow
                     }
                 }
 
-                SpawnTrigger[] triggers = FindObjectsOfType<SpawnTrigger>();
-
-                foreach (SpawnTrigger trigger in triggers)
-                {
-                    trigger.UpdateSpawnerList();
-                }
+                UpdateTriggerConnections();
+                UpdateSpawnerSelection();
+                currentID = 0;
             }
 
             EditorGUI.EndDisabledGroup();
 
-            if (GUILayout.Button("Remove All Spawner’s"))
+            if (GUILayout.Button("Remove All Spawners"))
             {
                 Spawner[] spawnPoints = grid.GetComponentsInChildren<Spawner>();
 
@@ -1043,6 +1036,10 @@ public class EasyDesignEditor : EditorWindow
                         DestroyImmediate(spawner.gameObject);
                     }
                 }
+
+                UpdateTriggerConnections();
+                UpdateSpawnerSelection();
+                currentID = 0;
             }
 
             GUI.backgroundColor = oldColor;
@@ -1066,7 +1063,7 @@ public class EasyDesignEditor : EditorWindow
                 if (GUILayout.Button("Change Trigger"))
                 {
                     SpawnTrigger spawnTrigger = Selection.gameObjects[0].GetComponentInChildren<SpawnTrigger>();
-                    spawnTrigger.index = spawnIndex;
+                    spawnTrigger.index = currentID;
                     spawnTrigger.UpdateSpawnerList();
                 }
 
@@ -1098,7 +1095,7 @@ public class EasyDesignEditor : EditorWindow
             EditorGUI.EndDisabledGroup();
 
             EditorGUI.BeginDisabledGroup(Selection.gameObjects.Length != 1 || !hasTriggerSelected);
-             
+
             oldColor = GUI.backgroundColor;
             GUI.backgroundColor = new Color(1.0f, 0.19f, 0.19f, 1.0f); // red
 
@@ -1109,12 +1106,8 @@ public class EasyDesignEditor : EditorWindow
 
                 DestroyImmediate(destroyedTrigger);
 
-                SpawnTrigger[] triggers = FindObjectsOfType<SpawnTrigger>();
-
-                foreach (SpawnTrigger trigger in triggers)
-                {
-                    trigger.UpdateSpawnerList();
-                }
+                UpdateTriggerConnections();
+                UpdateSpawnerSelection();
             }
 
             GUI.backgroundColor = oldColor;
@@ -1251,7 +1244,7 @@ public class EasyDesignEditor : EditorWindow
                     sceneTransition.CurrentState = currentState;
                     sceneTransition.numberToKill = numberToKill;
 
-                    sceneTransition.index = stateIndex;
+                    sceneTransition.index = currentID;
                 }
 
                 GUI.backgroundColor = oldColor;
@@ -1273,7 +1266,7 @@ public class EasyDesignEditor : EditorWindow
                     sceneTransition.numberToKill = numberToKill;
 
                     sceneTransition.drawText = true;
-                    sceneTransition.index = stateIndex;
+                    sceneTransition.index = currentID;
 
                     BoxCollider trigger = transitionGO.AddComponent<BoxCollider>();
                     trigger.isTrigger = true;
@@ -1292,7 +1285,7 @@ public class EasyDesignEditor : EditorWindow
             EditorGUILayout.BeginHorizontal();
 
             oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = new Color(0.64f, 0.26f, 0.26f, 1.0f); // brown
+            GUI.backgroundColor = new Color(0.8f, 0.66f, 0.49f, 1.0f); // brown
 
             if (GUILayout.Button("Earth Hex"))
             {
@@ -1302,7 +1295,7 @@ public class EasyDesignEditor : EditorWindow
 
                 foreach (StateTransitionPoint point in transitions)
                 {
-                    if (point.index == stateIndex)
+                    if (point.index == currentID)
                     {
                         point.SetEarthHex(tile);
                     }
@@ -1312,7 +1305,7 @@ public class EasyDesignEditor : EditorWindow
             GUI.backgroundColor = oldColor;
 
             oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = new Color(0.39f, 0.39f, 0.78f, 1.0f); // blue
+            GUI.backgroundColor = new Color(0.55f, 0.89f, 0.93f, 1.0f); // blue
 
             if (GUILayout.Button("Lightning Hex"))
             {
@@ -1322,7 +1315,7 @@ public class EasyDesignEditor : EditorWindow
 
                 foreach (StateTransitionPoint point in transitions)
                 {
-                    if (point.index == stateIndex)
+                    if (point.index == currentID)
                     {
                         point.SetLightninghHex(tile);
                     }
@@ -1332,6 +1325,27 @@ public class EasyDesignEditor : EditorWindow
             GUI.backgroundColor = oldColor;
 
             EditorGUILayout.EndHorizontal();
+
+            // Check point
+            oldColor = GUI.backgroundColor;
+            GUI.backgroundColor = new Color(0.93f, 0.58f, 0.04f, 1.0f); // yellow
+
+            if (GUILayout.Button("Check Point Hex"))
+            {
+                Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
+
+                StateTransitionPoint[] transitions = FindObjectsOfType<StateTransitionPoint>();
+
+                foreach (StateTransitionPoint point in transitions)
+                {
+                    if (point.index == currentID)
+                    {
+                        point.SetCheckPoint(tile);
+                    } 
+                }
+            }
+
+            GUI.backgroundColor = oldColor;
 
             EditorGUILayout.Space();
 
@@ -1375,7 +1389,7 @@ public class EasyDesignEditor : EditorWindow
 
             GUILayout.Label("ID:");
 
-            stateIndex = spawnIndex = EditorGUILayout.IntField(stateIndex);
+            currentID = EditorGUILayout.IntField(currentID);
 
             EditorGUILayout.EndHorizontal();
         }
@@ -1403,7 +1417,26 @@ public class EasyDesignEditor : EditorWindow
         }
     }
 
-    private void OnInspectorUpdate()
+    private void UpdateSpawnerSelection()
+    {
+        selectedSpawners = Selection.GetFiltered<Spawner>(SelectionMode.Deep);
+
+        hasSpawnerSelected = (selectedSpawners.Length > 0);
+
+        spawnerButtonName = (selectedSpawners.Length > 1) ? "Spawners" : "Spawner";
+    }
+
+    private void UpdateTriggerConnections()
+    {
+        SpawnTrigger[] triggers = FindObjectsOfType<SpawnTrigger>();
+
+        foreach (SpawnTrigger trigger in triggers)
+        {
+            trigger.UpdateSpawnerList();
+        }
+    }
+
+    private void OnSelectionChange()
     {
         if (Selection.gameObjects.Length > 0)
         {
@@ -1413,7 +1446,20 @@ public class EasyDesignEditor : EditorWindow
 
             hasStateTransitionSelected = (Selection.gameObjects[0].GetComponentsInChildren<StateTransitionPoint>().Length > 0);
 
-            hasSpawnerSelected = (Selection.gameObjects[0].GetComponentsInChildren<Spawner>().Length > 0);
+            UpdateSpawnerSelection();
+
+            if (hasSpawnerSelected)
+            {
+                enemyType = selectedSpawners[0].SpawnType;
+                turnToSpawn = selectedSpawners[0].TurnToSpawn;
+                hasVolt = selectedSpawners[0].hasVolt;
+
+                currentID = selectedSpawners[0].index;
+            }
+            else
+            {
+                currentID = 0;
+            }
 
             hasTriggerSelected = (Selection.gameObjects[0].GetComponentsInChildren<SpawnTrigger>().Length > 0);
 
@@ -1426,21 +1472,28 @@ public class EasyDesignEditor : EditorWindow
             hasStateTransitionSelected = false;
             hasSpawnerSelected = false;
             hasTriggerSelected = false;
+
             Repaint();
         }
+    }
 
-        GameObject gridGo = GameObject.FindGameObjectWithTag("Manager");
-
-        if (gridGo && grid == null)
+    private void OnInspectorUpdate()
+    {
+        if (grid == null)
         {
-            grid = GameObject.FindGameObjectWithTag("Grid").GetComponent<GridManager>();
+            GameObject gridGo = GameObject.FindGameObjectWithTag("Manager");
 
-            if (grid && grid.transform.childCount > 0)
+            if (gridGo)
             {
-                string[] mapSize = grid.transform.GetChild(grid.transform.childCount - 1).name.Split(',');
+                grid = GameObject.FindGameObjectWithTag("Grid").GetComponent<GridManager>();
 
-                mapWidth = int.Parse(mapSize[0]) + 1;
-                mapHeight = int.Parse(mapSize[1]) + 1;
+                if (grid && grid.transform.childCount > 0)
+                {
+                    string[] mapSize = grid.transform.GetChild(grid.transform.childCount - 1).name.Split(',');
+
+                    mapWidth = int.Parse(mapSize[0]) + 1;
+                    mapHeight = int.Parse(mapSize[1]) + 1;
+                }
             }
         }
     }

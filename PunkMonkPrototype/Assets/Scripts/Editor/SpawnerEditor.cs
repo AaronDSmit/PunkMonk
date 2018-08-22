@@ -32,9 +32,9 @@ public class SpawnerEditor : Editor
             turnNumStyle.alignment = TextAnchor.LowerRight;
             turnNumStyle.contentOffset = new Vector2(-12, -20);
 
-            if (spawner.UntiToSpawn)
+            if (spawner.UnitToSpawn)
             {
-                Handles.Label(spawner.transform.position, spawner.UntiToSpawn.name[0].ToString(), style);
+                Handles.Label(spawner.transform.position, spawner.UnitToSpawn.name[0].ToString(), style);
 
                 if (spawner.TurnToSpawn > 0)
                 {

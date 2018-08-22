@@ -10,19 +10,20 @@ public class OverworldController : MonoBehaviour
 
     private bool inOverworld;
 
-    [SerializeField] private float movementSpeed;
+    [SerializeField]
+    private float movementSpeed = 0;
 
     private void Awake()
     {
         Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
     }
 
-    private void GameStateChanged(GameState _oldstate, GameState _newstate)
+    private void GameStateChanged(GameState a_oldstate, GameState a_newstate)
     {
         // ensure this script knows it's in over-world state
-        inOverworld = (_newstate == GameState.overworld);
+        inOverworld = (a_newstate == GameState.overworld);
 
-        if(inOverworld)
+        if (inOverworld)
         {
             Init();
         }

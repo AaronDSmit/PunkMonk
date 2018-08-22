@@ -29,6 +29,7 @@ public class Manager : MonoBehaviour
     private UIManager uiManager;
     private TransitionManager transitionManager;
     private TurnManager turnManager;
+    private CheckPointManager checkPointManager;
 
     #endregion
 
@@ -60,6 +61,11 @@ public class Manager : MonoBehaviour
         get { return turnManager; }
     }
 
+    public CheckPointManager CheckPointController
+    {
+        get { return checkPointManager; }
+    }
+
     #endregion
 
     #region Unity Life-cycle Methods
@@ -74,6 +80,7 @@ public class Manager : MonoBehaviour
             transitionManager = GetComponent<TransitionManager>();
             uiManager = GetComponent<UIManager>();
             turnManager = GetComponent<TurnManager>();
+            checkPointManager = GetComponent<CheckPointManager>();
 
             StartCoroutine(InitManagers());
 

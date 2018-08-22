@@ -41,6 +41,12 @@ public class StateTransitionPointEditor : Editor
                 Gizmos.color = new Color(0.0f, 0.0f, 1.0f, 1.0f); // blue
                 DrawArrow.ForGizmo(stateTransitionPoint.transform.position, stateTransitionPoint.LightningHex.transform.position - stateTransitionPoint.transform.position);
             }
+
+            if (stateTransitionPoint.CheckPoint)
+            {
+                Gizmos.color = new Color(0.93f, 0.58f, 0.04f, 1.0f); // yellow
+                DrawArrow.ForGizmo(stateTransitionPoint.transform.position, stateTransitionPoint.CheckPoint.transform.position - stateTransitionPoint.transform.position);
+            }
         }
     }
 }

@@ -183,6 +183,7 @@ MonoBehaviour:
   rotationTime: 0
   walkSpeed: 5
   projectilePosition: {fileID: 4535602620240850}
+  glamCam: 1
   specialDamage: 1
   specialheight: 5
   specialJumpTime: 3

@@ -55,7 +55,7 @@ public class EarthUnit : Unit
         //call the start call back function
         start();
 
-        canAttack = false;
+        CanAttack = false;
 
         //store the target tile
         basicTiles = targetTiles;

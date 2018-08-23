@@ -199,7 +199,10 @@ public class GridManager : MonoBehaviour
     {
         Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
 
-        gridRenderer = overlay.GetComponent<Renderer>();
+        if (overlay)
+        {
+            gridRenderer = overlay.GetComponent<Renderer>();
+        }
     }
 
     #endregion

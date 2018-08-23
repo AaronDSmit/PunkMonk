@@ -11,9 +11,20 @@
 
 public abstract class Entity : MonoBehaviour
 {
-    [SerializeField] protected TEAM team;
+    #region Unity Inspector Fields
+
+    [SerializeField]
+    protected TEAM team;
+
+    #endregion
+
+    #region Local Fields
 
     protected Hex currentTile;
+
+    #endregion
+
+    #region Properties
 
     public TEAM Team { get { return team; } }
 
@@ -22,6 +33,11 @@ public abstract class Entity : MonoBehaviour
         get { return currentTile; }
     }
 
-    // damage can be left out if you only want to apply an element.
+    #endregion
+
+    #region Public Methods
+
     public abstract void TakeDamage(float a_damageAmount);
+
+    #endregion
 }

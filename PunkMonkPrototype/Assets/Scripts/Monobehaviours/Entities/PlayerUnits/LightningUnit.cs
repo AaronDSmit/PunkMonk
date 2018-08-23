@@ -55,8 +55,7 @@ public class LightningUnit : Unit
         //call the start call back function
         start();
 
-        canAttack = false;
-
+        CanAttack = false;
 
         //store the target tile
         basicTile = targetTiles[0];
@@ -91,7 +90,7 @@ public class LightningUnit : Unit
     {
         start();
 
-        CanSpecialAttack = true;
+        CanSpecialAttack = false;
 
         specialFinishedFunc = finished;
 

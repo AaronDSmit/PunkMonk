@@ -59,6 +59,13 @@ public class EasyDesignEditor : EditorWindow
     [SerializeField] private string spawnerButtonName;
     [SerializeField] private Spawner[] selectedSpawners;
 
+    [SerializeField] private Color greenColour = new Color(0.54f, 1.0f, 0.24f);
+    [SerializeField] private Color redColour = new Color(0.83f, 0.18f, 0.18f);
+    [SerializeField] private Color orangeColour = new Color(1.0f, 0.62f, 0.21f);
+    [SerializeField] private Color blueColour = new Color(0.55f, 0.9f, 0.89f);
+    [SerializeField] private Color brownColour = new Color(0.84f, 0.64f, 0.49f);
+    [SerializeField] private Color yellowColour = new Color(0.93f, 0.58f, 0.04f);
+
     // Settings
     [SerializeField] private bool healthyMode = true;
 
@@ -221,7 +228,7 @@ public class EasyDesignEditor : EditorWindow
             mapSizeSet = (mapWidth != 0 && mapHeight != 0);
 
             oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = new Color(0.39f, 0.78f, 0.19f, 1.0f); // green
+            GUI.backgroundColor = greenColour;
 
             if (!mapSizeSet)
             {
@@ -230,7 +237,7 @@ public class EasyDesignEditor : EditorWindow
             else if (confirmMapGeneration)
             {
                 oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = new Color(1.0f, 0.58f, 0.19f, 1.0f); // orange
+                GUI.backgroundColor = orangeColour;
 
                 EditorGUILayout.BeginVertical("Box");
 
@@ -257,7 +264,7 @@ public class EasyDesignEditor : EditorWindow
                 }
 
                 oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = new Color(1.0f, 0.19f, 0.19f, 1.0f); // red
+                GUI.backgroundColor = redColour;
 
                 if (GUILayout.Button("No..."))
                 {
@@ -290,7 +297,7 @@ public class EasyDesignEditor : EditorWindow
             EditorGUILayout.BeginHorizontal();
 
             oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = new Color(0.39f, 0.78f, 0.19f, 1.0f); // green
+            GUI.backgroundColor = greenColour;
 
             if (GUILayout.Button("Traversable"))
             {
@@ -310,7 +317,7 @@ public class EasyDesignEditor : EditorWindow
             GUI.backgroundColor = oldColor;
 
             oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = new Color(1.0f, 0.19f, 0.19f, 1.0f); // red
+            GUI.backgroundColor = redColour;
 
             if (GUILayout.Button("Inaccessible"))
             {
@@ -344,12 +351,12 @@ public class EasyDesignEditor : EditorWindow
             EditorGUILayout.BeginHorizontal();
 
             oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = new Color(0.39f, 0.78f, 0.19f, 1.0f); // green
+            GUI.backgroundColor = greenColour;
 
             if (!setAllNodesInaccessible && setAllNodesTraversable)
             {
                 oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = new Color(1.0f, 0.58f, 0.19f, 1.0f); // orange
+                GUI.backgroundColor = orangeColour;
 
                 EditorGUILayout.BeginVertical("Box");
 
@@ -372,7 +379,7 @@ public class EasyDesignEditor : EditorWindow
                 }
 
                 oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = new Color(1.0f, 0.19f, 0.19f, 1.0f); // red
+                GUI.backgroundColor = redColour;
 
                 if (GUILayout.Button("No..."))
                 {
@@ -396,12 +403,12 @@ public class EasyDesignEditor : EditorWindow
             GUI.backgroundColor = oldColor;
 
             oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = new Color(1.0f, 0.19f, 0.19f, 1.0f); // red
+            GUI.backgroundColor = redColour;
 
             if (!setAllNodesTraversable && setAllNodesInaccessible)
             {
                 oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = new Color(1.0f, 0.58f, 0.19f, 1.0f); // orange
+                GUI.backgroundColor = orangeColour;
 
                 EditorGUILayout.BeginVertical("Box");
 
@@ -412,7 +419,7 @@ public class EasyDesignEditor : EditorWindow
                 EditorGUILayout.BeginHorizontal();
 
                 oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = new Color(0.39f, 0.78f, 0.19f, 1.0f); // green
+                GUI.backgroundColor = greenColour;
 
                 if (GUILayout.Button("yes!"))
                 {
@@ -460,12 +467,12 @@ public class EasyDesignEditor : EditorWindow
             EditorGUILayout.BeginHorizontal();
 
             oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = new Color(0.39f, 0.78f, 0.19f, 1.0f); // green
+            GUI.backgroundColor = greenColour;
 
             if (!autoAllNodesInaccessible && autoAllNodesTraversable)
             {
                 oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = new Color(1.0f, 0.58f, 0.19f, 1.0f); // orange
+                GUI.backgroundColor = orangeColour;
 
                 EditorGUILayout.BeginVertical("Box");
 
@@ -488,7 +495,7 @@ public class EasyDesignEditor : EditorWindow
                 }
 
                 oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = new Color(1.0f, 0.19f, 0.19f, 1.0f); // red
+                GUI.backgroundColor = redColour;
 
                 if (GUILayout.Button("No..."))
                 {
@@ -512,12 +519,12 @@ public class EasyDesignEditor : EditorWindow
             GUI.backgroundColor = oldColor;
 
             oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = new Color(1.0f, 0.19f, 0.19f, 1.0f); // red
+            GUI.backgroundColor = redColour;
 
             if (!autoAllNodesTraversable && autoAllNodesInaccessible)
             {
                 oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = new Color(1.0f, 0.58f, 0.19f, 1.0f); // orange
+                GUI.backgroundColor = orangeColour;
 
                 EditorGUILayout.BeginVertical("Box");
 
@@ -528,7 +535,7 @@ public class EasyDesignEditor : EditorWindow
                 EditorGUILayout.BeginHorizontal();
 
                 oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = new Color(0.39f, 0.78f, 0.19f, 1.0f); // green
+                GUI.backgroundColor = greenColour;
 
                 if (GUILayout.Button("yes!"))
                 {
@@ -578,12 +585,12 @@ public class EasyDesignEditor : EditorWindow
             EditorGUILayout.BeginHorizontal();
 
             oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = new Color(0.39f, 0.78f, 0.19f, 1.0f); // green
+            GUI.backgroundColor = greenColour;
 
             if (!fillNodesInaccessible && fillNodesTraversable)
             {
                 oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = new Color(1.0f, 0.58f, 0.19f, 1.0f); // orange
+                GUI.backgroundColor = orangeColour;
 
                 EditorGUILayout.BeginVertical("Box");
 
@@ -624,7 +631,7 @@ public class EasyDesignEditor : EditorWindow
                 }
 
                 oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = new Color(1.0f, 0.19f, 0.19f, 1.0f); // red
+                GUI.backgroundColor = redColour;
 
                 if (GUILayout.Button("No..."))
                 {
@@ -648,12 +655,12 @@ public class EasyDesignEditor : EditorWindow
             GUI.backgroundColor = oldColor;
 
             oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = new Color(1.0f, 0.19f, 0.19f, 1.0f); // red
+            GUI.backgroundColor = redColour;
 
             if (!fillNodesTraversable && fillNodesInaccessible)
             {
                 oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = new Color(1.0f, 0.58f, 0.19f, 1.0f); // orange
+                GUI.backgroundColor = orangeColour;
 
                 EditorGUILayout.BeginVertical("Box");
 
@@ -664,7 +671,7 @@ public class EasyDesignEditor : EditorWindow
                 EditorGUILayout.BeginHorizontal();
 
                 oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = new Color(0.39f, 0.78f, 0.19f, 1.0f); // green
+                GUI.backgroundColor = greenColour;
 
                 if (GUILayout.Button("yes!"))
                 {
@@ -732,7 +739,7 @@ public class EasyDesignEditor : EditorWindow
             EditorGUI.BeginDisabledGroup(Selection.gameObjects.Length == 0);
 
             oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = new Color(0.39f, 0.78f, 0.19f, 1.0f); // green
+            GUI.backgroundColor = greenColour;
 
             if (GUILayout.Button("Snap Objects"))
             {
@@ -805,7 +812,7 @@ public class EasyDesignEditor : EditorWindow
             EditorGUI.BeginDisabledGroup(!hasTileSelected || hasSpawnerSelected);
 
             oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = new Color(0.8f, 0.66f, 0.49f, 1.0f); // brown
+            GUI.backgroundColor = brownColour;
 
             if (GameObject.FindGameObjectWithTag("EarthUnitSpawn") == null)
             {
@@ -819,7 +826,7 @@ public class EasyDesignEditor : EditorWindow
                     };
 
                     Spawner spawner = spawnerGO.AddComponent<Spawner>();
-                    spawner.TextColour = new Color(0.8f, 0.66f, 0.49f, 1.0f); // brown
+                    spawner.TextColour = brownColour;
                     spawner.drawText = true;
                     spawner.index = -1;
 
@@ -844,7 +851,7 @@ public class EasyDesignEditor : EditorWindow
             GUI.backgroundColor = oldColor;
 
             oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = new Color(0.55f, 0.89f, 0.93f, 1.0f); // blue
+            GUI.backgroundColor = blueColour;
 
             if (GameObject.FindGameObjectWithTag("LightningUnitSpawn") == null)
             {
@@ -858,7 +865,7 @@ public class EasyDesignEditor : EditorWindow
                     };
 
                     Spawner spawner = spawnerGO.AddComponent<Spawner>();
-                    spawner.TextColour = new Color(0.55f, 0.89f, 0.93f, 1.0f); // blue
+                    spawner.TextColour = blueColour;
                     spawner.drawText = true;
                     spawner.index = -1;
 
@@ -902,7 +909,7 @@ public class EasyDesignEditor : EditorWindow
             if (hasSpawnerSelected)
             {
                 oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = new Color(1.0f, 0.58f, 0.19f, 1.0f); // orange
+                GUI.backgroundColor = orangeColour;
 
                 if (GUILayout.Button("Change " + spawnerButtonName))
                 {
@@ -931,7 +938,7 @@ public class EasyDesignEditor : EditorWindow
             else
             {
                 oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = new Color(0.39f, 0.78f, 0.19f, 1.0f); // green
+                GUI.backgroundColor = greenColour;
 
                 Hex[] selectedTiles = Selection.GetFiltered<Hex>(SelectionMode.Deep);
 
@@ -999,7 +1006,7 @@ public class EasyDesignEditor : EditorWindow
             EditorGUI.BeginDisabledGroup(!hasSpawnerSelected);
 
             oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = new Color(1.0f, 0.19f, 0.19f, 1.0f); // red
+            GUI.backgroundColor = redColour;
 
             if (GUILayout.Button("Remove " + spawnerButtonName))
             {
@@ -1058,7 +1065,7 @@ public class EasyDesignEditor : EditorWindow
             if (Selection.gameObjects.Length == 1 && Selection.gameObjects[0].GetComponentInChildren<SpawnTrigger>())
             {
                 oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = new Color(1.0f, 0.58f, 0.19f, 1.0f); // orange
+                GUI.backgroundColor = orangeColour;
 
                 if (GUILayout.Button("Change Trigger"))
                 {
@@ -1072,7 +1079,7 @@ public class EasyDesignEditor : EditorWindow
             else
             {
                 oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = new Color(0.39f, 0.78f, 0.19f, 1.0f); // green
+                GUI.backgroundColor = greenColour;
 
                 if (GUILayout.Button("Add Trigger"))
                 {
@@ -1097,7 +1104,7 @@ public class EasyDesignEditor : EditorWindow
             EditorGUI.BeginDisabledGroup(Selection.gameObjects.Length != 1 || !hasTriggerSelected);
 
             oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = new Color(1.0f, 0.19f, 0.19f, 1.0f); // red
+            GUI.backgroundColor = redColour;
 
             if (GUILayout.Button("Remove Trigger"))
             {
@@ -1130,7 +1137,7 @@ public class EasyDesignEditor : EditorWindow
             if (Selection.gameObjects.Length == 1 && Selection.gameObjects[0].GetComponentInChildren<SceneTransitionPoint>())
             {
                 oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = new Color(1.0f, 0.58f, 0.19f, 1.0f); // orange
+                GUI.backgroundColor = orangeColour;
 
                 if (GUILayout.Button("Change Transition"))
                 {
@@ -1143,7 +1150,7 @@ public class EasyDesignEditor : EditorWindow
             else
             {
                 oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = new Color(0.39f, 0.78f, 0.19f, 1.0f); // green
+                GUI.backgroundColor = greenColour;
 
                 if (GUILayout.Button("Add Transition"))
                 {
@@ -1178,7 +1185,7 @@ public class EasyDesignEditor : EditorWindow
             EditorGUI.BeginDisabledGroup(!hasTransitionSelected || !hasTileSelected);
 
             oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = new Color(1.0f, 0.19f, 0.19f, 1.0f); // red
+            GUI.backgroundColor = redColour;
 
             if (GUILayout.Button("Remove Scene Transition"))
             {
@@ -1235,7 +1242,7 @@ public class EasyDesignEditor : EditorWindow
             if (Selection.gameObjects.Length == 1 && Selection.gameObjects[0].GetComponentInChildren<StateTransitionPoint>())
             {
                 oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = new Color(1.0f, 0.58f, 0.19f, 1.0f); // orange
+                GUI.backgroundColor = orangeColour;
 
                 if (GUILayout.Button("Change Transition"))
                 {
@@ -1252,7 +1259,7 @@ public class EasyDesignEditor : EditorWindow
             else
             {
                 oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = new Color(0.39f, 0.78f, 0.19f, 1.0f); // green
+                GUI.backgroundColor = greenColour;
 
                 if (GUILayout.Button("Add Transition"))
                 {
@@ -1285,7 +1292,7 @@ public class EasyDesignEditor : EditorWindow
             EditorGUILayout.BeginHorizontal();
 
             oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = new Color(0.8f, 0.66f, 0.49f, 1.0f); // brown
+            GUI.backgroundColor = brownColour;
 
             if (GUILayout.Button("Earth Hex"))
             {
@@ -1305,7 +1312,7 @@ public class EasyDesignEditor : EditorWindow
             GUI.backgroundColor = oldColor;
 
             oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = new Color(0.55f, 0.89f, 0.93f, 1.0f); // blue
+            GUI.backgroundColor = blueColour;
 
             if (GUILayout.Button("Lightning Hex"))
             {
@@ -1328,7 +1335,7 @@ public class EasyDesignEditor : EditorWindow
 
             // Check point
             oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = new Color(0.93f, 0.58f, 0.04f, 1.0f); // yellow
+            GUI.backgroundColor = yellowColour;
 
             if (GUILayout.Button("Check Point Hex"))
             {
@@ -1341,7 +1348,7 @@ public class EasyDesignEditor : EditorWindow
                     if (point.index == currentID)
                     {
                         point.SetCheckPoint(tile);
-                    } 
+                    }
                 }
             }
 
@@ -1354,7 +1361,7 @@ public class EasyDesignEditor : EditorWindow
             EditorGUILayout.BeginHorizontal();
 
             oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = new Color(1.0f, 0.19f, 0.19f, 1.0f); // red
+            GUI.backgroundColor = redColour;
 
             EditorGUI.BeginDisabledGroup(!hasStateTransitionSelected || !hasTileSelected);
 
@@ -1494,6 +1501,8 @@ public class EasyDesignEditor : EditorWindow
                     mapWidth = int.Parse(mapSize[0]) + 1;
                     mapHeight = int.Parse(mapSize[1]) + 1;
                 }
+
+                Repaint();
             }
         }
     }

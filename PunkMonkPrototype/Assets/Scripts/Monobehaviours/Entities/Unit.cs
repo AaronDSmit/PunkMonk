@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class Unit : LivingEntity
 {
-    #region Inspector Variables
+    #region Unity Inspector Fields
 
     [Tooltip("A list of actions that this Unit can perform")]
     [SerializeField]
@@ -37,29 +37,83 @@ public class Unit : LivingEntity
 
     #endregion
 
-    protected bool canMove;
-
-    protected bool canAttack;
-
-    private bool canSpecialAttack;
-
-    protected bool isSelected;
-
-    protected System.Action finishedWalking;
+    #region Reference Fields
 
     protected CameraController cameraController;
 
+    #endregion
+
+    #region Local Fields
+
+    private bool canMove;
+
+    private bool canAttack;
+
+    private bool canSpecialAttack;
+
+    private bool isSelected;
+
+    protected System.Action finishedWalking;
+
+    #endregion
+
+    #region Properties
+
     public Vector3 ShootPos { get { return projectilePosition.position; } }
 
-    protected override void Awake()
+    public Action GetAction(int a_index)
     {
-        base.Awake();
+        return actions[a_index];
+    }
 
-        cameraController = GameObject.FindGameObjectWithTag("CameraRig").GetComponent<CameraController>();
+    public int MoveRange
+    {
+        get { return moveRange; }
+    }
 
-        canAttack = true;
-        canMove = true;
-        canSpecialAttack = true;
+    public int AttackRange
+    {
+        get { return attackRange; }
+    }
+
+    public int SpecialAttackRange
+    {
+        get { return specialAttackRange; }
+    }
+
+    public bool CanMove
+    {
+        get { return canMove; }
+
+        set { canMove = value; }
+    }
+
+    public bool CanAttack
+    {
+        get { return canAttack; }
+
+        set { canAttack = value; }
+    }
+
+    public bool CanSpecialAttack
+    {
+        get { return canSpecialAttack; }
+
+        set { canSpecialAttack = value; }
+    }
+
+    #endregion
+
+    #region Public Methods
+
+    public void BasicAttack(Hex[] a_targetTiles, System.Action a_start, System.Action a_finished)
+    {
+        StartCoroutine(DelayedBasicAction(a_targetTiles, a_start, a_finished));
+    }
+
+    public void SpecialAttack(Hex[] a_targetTiles, System.Action a_start, System.Action a_finished)
+    {
+        StartCoroutine(DelayedSpecialAction(a_targetTiles, a_start, a_finished));
     }
 
     public void Highlight(bool a_isHighlited, Color a_outlineColour)
@@ -83,60 +137,9 @@ public class Unit : LivingEntity
         }
     }
 
-    protected bool HasClearShot(Unit a_targetUnit)
-    {
-        // StartPos should be the transform from where the Unit shoots from
-        Vector3 startPos = ShootPos;
-        // TargetPos is the centre of the target unit
-        Vector3 targetPos = a_targetUnit.CurrentTile.transform.position + Vector3.up * 0.8f;
-        Vector3 vecBetween = targetPos - startPos;
-        Ray ray = new Ray(startPos, vecBetween);
-        RaycastHit[] hits = Physics.RaycastAll(ray, vecBetween.magnitude, LayerMask.GetMask(new string[]{"Unit", "Level", "Ground" }));
-
-        foreach (RaycastHit hitInfo in hits)
-        {
-            // Check if we hit the target unit
-            if (hitInfo.collider.gameObject == a_targetUnit.gameObject)
-            {
-                // We hit the target unit, we have a clear shot
-                return true;
-            }
-            else if (hitInfo.collider.gameObject != gameObject)
-            {
-                // If we hit something other than this gameobject
-                return false;
-            }
-        }
-
-        return false;
-    }
-
     public void WalkDirectlyToTile(Hex a_targetHex)
     {
         StartCoroutine(WalkDirectlyTo(a_targetHex));
-    }
-
-    private IEnumerator WalkDirectlyTo(Hex a_targetHex)
-    {
-        Vector3 targetPos = a_targetHex.transform.position;
-        targetPos.y = transform.position.y;
-        Vector3 vecBetween = targetPos - transform.position;
-        vecBetween.y = 0.0f;
-
-        while (vecBetween.magnitude > 0.1f)
-        {
-            transform.position += vecBetween.normalized * (walkSpeed / 2) * Time.deltaTime;
-
-            vecBetween = targetPos - transform.position;
-            vecBetween.y = 0.0f;
-
-            yield return null;
-        }
-
-        currentTile.Exit();
-        currentTile = a_targetHex;
-        currentTile.Enter(this);
-        transform.position = targetPos;
     }
 
     public void TeleportToHex(Hex a_targetHex)
@@ -163,6 +166,7 @@ public class Unit : LivingEntity
             myRenderer.material.SetFloat("_UseHighlight", 0);
         }
     }
+
     public virtual void Spawn(Hex a_startingTile)
     {
         currentTile = a_startingTile;
@@ -190,6 +194,76 @@ public class Unit : LivingEntity
     {
         CanAttack = true;
         CanMove = true;
+    }
+
+    #endregion
+
+    #region Unity Life-cycle Methods
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        cameraController = GameObject.FindGameObjectWithTag("CameraRig").GetComponent<CameraController>();
+
+        canAttack = true;
+        canMove = true;
+        canSpecialAttack = true;
+    }
+
+    #endregion
+
+    #region Local Methods
+
+    protected bool HasClearShot(Unit a_targetUnit)
+    {
+        // StartPos should be the transform from where the Unit shoots from
+        Vector3 startPos = ShootPos;
+        // TargetPos is the centre of the target unit
+        Vector3 targetPos = a_targetUnit.CurrentTile.transform.position + Vector3.up * 0.8f;
+        Vector3 vecBetween = targetPos - startPos;
+        Ray ray = new Ray(startPos, vecBetween);
+        RaycastHit[] hits = Physics.RaycastAll(ray, vecBetween.magnitude, LayerMask.GetMask(new string[] { "Unit", "Level", "Ground" }));
+
+        foreach (RaycastHit hitInfo in hits)
+        {
+            // Check if we hit the target unit
+            if (hitInfo.collider.gameObject == a_targetUnit.gameObject)
+            {
+                // We hit the target unit, we have a clear shot
+                return true;
+            }
+            else if (hitInfo.collider.gameObject != gameObject)
+            {
+                // If we hit something other than this gameobject
+                return false;
+            }
+        }
+
+        return false;
+    }
+
+    private IEnumerator WalkDirectlyTo(Hex a_targetHex)
+    {
+        Vector3 targetPos = a_targetHex.transform.position;
+        targetPos.y = transform.position.y;
+        Vector3 vecBetween = targetPos - transform.position;
+        vecBetween.y = 0.0f;
+
+        while (vecBetween.magnitude > 0.1f)
+        {
+            transform.position += vecBetween.normalized * (walkSpeed / 2) * Time.deltaTime;
+
+            vecBetween = targetPos - transform.position;
+            vecBetween.y = 0.0f;
+
+            yield return null;
+        }
+
+        currentTile.Exit();
+        currentTile = a_targetHex;
+        currentTile.Enter(this);
+        transform.position = targetPos;
     }
 
     protected IEnumerator Rotate(Vector3 a_targetPos)
@@ -252,30 +326,11 @@ public class Unit : LivingEntity
         finishedWalking();
     }
 
-    #region Basic Attack
-    public void BasicAttack(Hex[] a_targetTiles, System.Action a_start, System.Action a_finished)
-    {
-        StartCoroutine(DelayedBasicAction(a_targetTiles, a_start, a_finished));
-    }
-
     private IEnumerator DelayedBasicAction(Hex[] a_targetTiles, System.Action a_start, System.Action a_finished)
     {
         yield return StartCoroutine(Rotate(a_targetTiles[0].transform.position));
 
         DoBasicAttack(a_targetTiles, a_start, a_finished);
-    }
-
-    protected virtual void DoBasicAttack(Hex[] a_targetTiles, System.Action a_start, System.Action a_finished)
-    {
-        // keep empty
-    }
-
-    #endregion
-
-    #region Special Attack
-    public void SpecialAttack(Hex[] a_targetTiles, System.Action a_start, System.Action a_finished)
-    {
-        StartCoroutine(DelayedSpecialAction(a_targetTiles, a_start, a_finished));
     }
 
     private IEnumerator DelayedSpecialAction(Hex[] a_targetTiles, System.Action a_start, System.Action a_finished)
@@ -285,54 +340,14 @@ public class Unit : LivingEntity
         DoSpecialAttack(a_targetTiles, a_start, a_finished);
     }
 
+    protected virtual void DoBasicAttack(Hex[] a_targetTiles, System.Action a_start, System.Action a_finished)
+    {
+        // keep empty
+    }
+
     protected virtual void DoSpecialAttack(Hex[] a_targetTiles, System.Action a_start, System.Action a_finished)
     {
         // Keep empty
-    }
-
-    #endregion
-
-    #region Getters / Setters
-
-    public Action GetAction(int a_index)
-    {
-        return actions[a_index];
-    }
-
-    public int MoveRange
-    {
-        get { return moveRange; }
-    }
-
-    public int AttackRange
-    {
-        get { return attackRange; }
-    }
-
-    public int SpecialAttackRange
-    {
-        get { return specialAttackRange; }
-    }
-
-    public bool CanMove
-    {
-        get { return canMove; }
-
-        set { canMove = value; }
-    }
-
-    public bool CanAttack
-    {
-        get { return canAttack; }
-
-        set { canAttack = value; }
-    }
-
-    public bool CanSpecialAttack
-    {
-        get { return canSpecialAttack; }
-
-        set { canSpecialAttack = value; }
     }
 
     #endregion

@@ -28,6 +28,12 @@ public class FadingUI : MonoBehaviour
 
     #endregion
 
+    #region Local Fields
+
+    private bool[] buttonInitialState;
+
+    #endregion
+
     #region Properties
 
     public bool IsVisible { get; private set; }
@@ -77,9 +83,13 @@ public class FadingUI : MonoBehaviour
     {
         if (disableButtons)
         {
-            foreach (Button button in buttons)
+            buttonInitialState = new bool[buttons.Length];
+
+            for (int i = 0; i < buttons.Length; i++)
             {
-                button.interactable = false;
+                // Save the previous button state before setting it to false
+                buttonInitialState[i] = buttons[i].interactable;
+                buttons[i].interactable = false;
             }
         }
 
@@ -109,9 +119,9 @@ public class FadingUI : MonoBehaviour
 
         if (disableButtons)
         {
-            foreach (Button button in buttons)
+            for (int i = 0; i < buttons.Length; i++)
             {
-                button.interactable = true;
+                buttons[i].interactable = buttonInitialState[i];
             }
         }
 

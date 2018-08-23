@@ -4,15 +4,31 @@ using UnityEngine;
 
 public class EarthUnit : Unit
 {
+    [Header("Basic Attack")]
+
+    [SerializeField]
+    private int basicDamage;
+
+    [SerializeField]
+    private float basicDamgeDelayTimer = 1;
+
+    [SerializeField]
+    private int coneRange = 4;
+
     [Header("Special Attack")]
 
     [SerializeField]
-    private float specialDamage;
-    [SerializeField] private float specialheight;
-    [SerializeField] private float specialJumpTime;
-    [SerializeField] private float specialDamgeDelayTimer;
-    [SerializeField] private AnimationCurve YCurve;
-    [SerializeField] private AnimationCurve ZCurve;
+    private int specialDamage;
+    [SerializeField]
+    private float specialheight;
+    [SerializeField]
+    private float specialJumpTime;
+    [SerializeField]
+    private float specialDamgeDelayTimer;
+    [SerializeField]
+    private AnimationCurve YCurve;
+    [SerializeField]
+    private AnimationCurve ZCurve;
 
     private Vector3 specialTargetPosition;
     private Vector3 specialStartPosition;
@@ -22,13 +38,6 @@ public class EarthUnit : Unit
     private Hex[] specialTiles;
     private System.Action specialFinishedFunc;
     private float specialGlamCamTimer = 0;
-
-    [Header("Basic Attack")]
-
-    [SerializeField]
-    private float basicDamage;
-    [SerializeField] private float basicDamgeDelayTimer = 1;
-    [SerializeField] private int coneRange = 4;
 
     private Hex[] basicTiles;
 
@@ -84,6 +93,7 @@ public class EarthUnit : Unit
 
         CanSpecialAttack = false;
 
+        CurrentVolt--;
 
         //store the target tile
         specialTiles = targetTiles;

@@ -9,7 +9,7 @@ public class AI_Agent : Unit
 {
     #region Unity Inspector Fields
 
-    [SerializeField] private float damage = 100;
+    [SerializeField] private int damage = 100;
     [SerializeField] private float damgeDelayTimer = 0;
 
     #endregion

@@ -7,13 +7,13 @@ public class LivingEntity : Entity
     #region Unity Inspector Fields
 
     [SerializeField]
-    protected float maxHealth = 100;
-
-    [SerializeField]
     private Material dissolveMat = null;
 
     [SerializeField]
     private float deathAnimationTime = 1.0f;
+
+    [SerializeField]
+    protected int maxHealth = 5;
 
     #endregion
 
@@ -21,11 +21,13 @@ public class LivingEntity : Entity
 
     protected Renderer myRenderer;
 
+    protected SegmentedHealthBar healthBar;
+
     #endregion
 
     #region Local Fields
 
-    private float currentHealth;
+    private int currentHealth;
 
     private bool dead;
 
@@ -41,12 +43,12 @@ public class LivingEntity : Entity
         get { return dead; }
     }
 
-    public float CurrentHealth
+    public int CurrentHealth
     {
         get { return currentHealth; }
     }
 
-    public float MaxHealth
+    public int MaxHealth
     {
         get { return maxHealth; }
     }
@@ -60,14 +62,14 @@ public class LivingEntity : Entity
 
     #region Public Methods
 
-    public override void TakeDamage(float a_damageAmount)
+    public override void TakeDamage(int a_damageAmount)
     {
         currentHealth -= a_damageAmount;
 
-        //if (hpBar != null)
-        //{
-        //    hpBar.UpdateValue(LifePercent);
-        //}
+        if (healthBar != null)
+        {
+            healthBar.CurrentHealth = currentHealth;
+        }
 
         if (currentHealth <= 0.0f && !dead)
         {
@@ -84,6 +86,8 @@ public class LivingEntity : Entity
         currentHealth = maxHealth;
 
         myRenderer = GetComponentInChildren<Renderer>();
+        healthBar = GetComponentInChildren<SegmentedHealthBar>();
+
         dead = false;
     }
 

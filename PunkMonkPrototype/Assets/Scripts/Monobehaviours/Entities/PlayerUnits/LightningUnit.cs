@@ -9,7 +9,7 @@ public class LightningUnit : Unit
     [Header("Basic Attack")]
 
     [SerializeField]
-    private float basicDamage = 1;
+    private int basicDamage = 1;
     [SerializeField] private float basicDamgeDelayTimer = 3;
     [SerializeField] private float basicElectricityLifetime = 3;
 
@@ -26,8 +26,8 @@ public class LightningUnit : Unit
     [SerializeField] private int specialRange = 3;
     [SerializeField] private int specialAmountOfBounces = 3;
     [SerializeField] private float specialLightningLifeTime = 1;
-    [SerializeField] private float specialBounceDamage = 1;
-    [SerializeField] private float specialFinalDamage = 1;
+    [SerializeField] private int specialBounceDamage = 1;
+    [SerializeField] private int specialFinalDamage = 1;
     [SerializeField] private float specialDelayTime = 1;
 
     private List<AI_Agent> specialEnemies;
@@ -230,7 +230,7 @@ public class LightningUnit : Unit
     }
 
 
-    private IEnumerator SpecialAttackDamageDelay(float a_timer, float a_damage, Entity a_unit)
+    private IEnumerator SpecialAttackDamageDelay(float a_timer, int a_damage, Entity a_unit)
     {
 
         yield return new WaitForSeconds(a_timer);

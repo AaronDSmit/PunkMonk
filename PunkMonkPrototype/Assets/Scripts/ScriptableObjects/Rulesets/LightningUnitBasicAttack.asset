@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactableLayers:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 288
   withinRangeHighlightColour: {r: 0.101960786, g: 0.54901963, b: 0.8666667, a: 0.3529412}
   validHighlightColour: {r: 0.32156864, g: 0.8392157, b: 0.2784314, a: 0.43137255}
   invalidHighlightColour: {r: 0.8392157, g: 0.2784314, b: 0.2784314, a: 0.43137255}

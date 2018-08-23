@@ -37,7 +37,7 @@ public abstract class Entity : MonoBehaviour
 
     #region Public Methods
 
-    public abstract void TakeDamage(float a_damageAmount);
+    public abstract void TakeDamage(int a_damageAmount);
 
     #endregion
 }

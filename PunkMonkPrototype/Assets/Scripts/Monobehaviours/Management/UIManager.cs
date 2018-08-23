@@ -19,9 +19,6 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Button specialAttack;
 
-    [SerializeField]
-    private FadingUI endTurnButton;
-
     #endregion
 
     #region Reference Fields
@@ -177,7 +174,6 @@ public class UIManager : MonoBehaviour
         if (a_oldstate == GameState.battle)
         {
             battleUI.FadeOut();
-            endTurnButton.FadeOut();
         }
     }
 
@@ -186,12 +182,10 @@ public class UIManager : MonoBehaviour
         if (a_newState == TurnManager.TurnState.start)
         {
             battleUI.FadeIn();
-            endTurnButton.FadeIn();
         }
         else if (a_newState == TurnManager.TurnState.end)
         {
             battleUI.FadeOut();
-            endTurnButton.FadeOut();
         }
     }
 

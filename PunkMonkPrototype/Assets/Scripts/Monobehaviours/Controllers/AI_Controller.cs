@@ -13,6 +13,14 @@ public class AI_Controller : MonoBehaviour
     [SerializeField]
     private Color currentUnitColour = Color.black;
 
+    [Tooltip("The time in seconds at the start of the turn before making decisions")]
+    [SerializeField]
+    private float delayBeforeStarting = 1.0f;
+
+    [Tooltip("The time in seconds at the end of the turn before ending the turn")]
+    [SerializeField]
+    private float delayBeforeEnding = 1.0f;
+
     #endregion
 
     #region Reference Fields
@@ -109,6 +117,8 @@ public class AI_Controller : MonoBehaviour
 
     private IEnumerator DoTurn()
     {
+        yield return new WaitForSeconds(delayBeforeStarting);
+
         foreach (AI_Agent agent in agents)
         {
             agent.Highlight(true, currentUnitColour);
@@ -118,6 +128,8 @@ public class AI_Controller : MonoBehaviour
 
             agent.Highlight(false, currentUnitColour);
         }
+
+        yield return new WaitForSeconds(delayBeforeEnding);
 
         EndTurn();
     }

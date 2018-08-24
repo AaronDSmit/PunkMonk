@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum GameState { mainmenu, overworld, battle, loading, cinematic, pausemenu }
+public enum GameState { mainmenu, overworld, battle, loading, cinematic, pausemenu, transition }
 
 /// <summary>
-/// This script is used to handle state changes
+/// This script is used to handle state changes, the state can be changed instantly, after a delay and during a blackout of the screen.
 /// </summary>
 public class StateManager : MonoBehaviour
 {
@@ -19,6 +19,9 @@ public class StateManager : MonoBehaviour
     private GameState previousState = GameState.pausemenu;
 
     [SerializeField]
+    private GameState nextState = GameState.pausemenu;
+
+    [SerializeField]
     private List<GameState> stateHistory;
 
     #endregion
@@ -29,8 +32,12 @@ public class StateManager : MonoBehaviour
 
     private bool isReady;
 
-    public delegate void Game_stateChanged(GameState _oldState, GameState _newState);
-    public event Game_stateChanged OnGameStateChanged;
+    public delegate void GameStateChanged(GameState _oldState, GameState _newState);
+
+    // Called right after changing the game state
+    public event GameStateChanged OnGameStateChanged;
+
+    public static float stateTransitionTime = 1.0f;
 
     #endregion
 
@@ -59,6 +66,11 @@ public class StateManager : MonoBehaviour
         get { return currentState; }
     }
 
+    public GameState NextGameState
+    {
+        get { return nextState; }
+    }
+
     #endregion
 
     #region Public Methods
@@ -77,7 +89,7 @@ public class StateManager : MonoBehaviour
         ChangeGameState(GameState.overworld);
     }
 
-    // This function changes the current game state to the target game state and calls the event on any script that is listening
+    // Change the current game state to the target game state and calls the event on any script that is listening
     public void ChangeGameState(GameState a_targetState)
     {
         // Don't change to target state if that is already the current state
@@ -111,8 +123,16 @@ public class StateManager : MonoBehaviour
         }
     }
 
+    // Changes game state to transition and then change the game state after a delay in seconds
+    public void ChangeGameStateAfterDelay(GameState a_targetState, float a_delay)
+    {
+        StartCoroutine(DelayedStateChange(a_targetState, a_delay));
+    }
+
+    // Change the game state during a blackout of the screen
     public void ChangeStateAfterFade(GameState a_targetState)
     {
+        // UI will fade to black when the state is changed to loading and will fade back once the new state is set
         ChangeGameState(GameState.loading);
 
         StartCoroutine(ChangeMidLoad(a_targetState));
@@ -146,11 +166,26 @@ public class StateManager : MonoBehaviour
 
     private IEnumerator ChangeMidLoad(GameState a_targetState)
     {
+        // The UI is fading to black and will set midLoad to true once the screen is black
         yield return new WaitUntil(() => midLoad);
 
-        yield return new WaitForEndOfFrame();
+        // the reason it waits is that other scripts could also be waiting for midLoad to be true
+        yield return new WaitForSeconds(0.1f);
 
         midLoad = false;
+
+        // can now change state since the screen is black, the UI will fade from black at this point as well
+
+        ChangeGameState(a_targetState);
+    }
+
+    private IEnumerator DelayedStateChange(GameState a_targetState, float a_delay)
+    {
+        // next state is needed by scripts looking for the state after a transition
+        nextState = a_targetState;
+        ChangeGameState(GameState.transition);
+
+        yield return new WaitForSeconds(a_delay);
 
         ChangeGameState(a_targetState);
     }

@@ -252,53 +252,57 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    private void GameStateChanged(GameState _oldstate, GameState _newstate)
+    private void GameStateChanged(GameState a_oldstate, GameState a_newstate)
     {
-        // ensure this script knows it's in over-world state
-        if (_newstate == GameState.battle)
+        // Show or hide the grid during state transition rather than on state change
+        if (a_newstate == GameState.transition)
         {
-            Hex[] tiles = GetComponentsInChildren<Hex>();
-
-            foreach (Hex tile in tiles)
+            // we're not in battle but transitioning to battle
+            if (Manager.instance.StateController.NextGameState == GameState.battle)
             {
-                tile.ShowOverlay(true);
-            }
+                Hex[] tiles = GetComponentsInChildren<Hex>();
 
-            if (overlay)
-            {
-                overlay.SetActive(true);
-
-                if (fadeIn)
+                foreach (Hex tile in tiles)
                 {
-                    StartCoroutine(FadeGrid(0, 1, 3));
+                    tile.ShowOverlay(true);
                 }
 
-                if (dropIn)
+                if (overlay)
                 {
-                    overlay.transform.position = new Vector3(overlay.transform.position.x, starting, overlay.transform.position.z);
-                    StartCoroutine(SlideVertical(target, overshoot));
+                    overlay.SetActive(true);
+
+                    if (fadeIn)
+                    {
+                        StartCoroutine(FadeGrid(0, 1, StateManager.stateTransitionTime));
+                    }
+
+                    if (dropIn)
+                    {
+                        overlay.transform.position = new Vector3(overlay.transform.position.x, starting, overlay.transform.position.z);
+                        StartCoroutine(SlideVertical(target, overshoot));
+                    }
                 }
             }
-        }
-        else if (_oldstate == GameState.battle)
-        {
-            Hex[] tiles = GetComponentsInChildren<Hex>();
-
-            foreach (Hex tile in tiles)
+            else if (a_oldstate == GameState.battle)
             {
-                tile.ShowOverlay(false);
-            }
+                Hex[] tiles = GetComponentsInChildren<Hex>();
 
-            if (overlay)
-            {
-                if (fadeIn)
+                foreach (Hex tile in tiles)
                 {
-                    StartCoroutine(FadeGrid(1, 0, 3));
+                    tile.ShowOverlay(false);
                 }
 
-                if (dropIn)
+                if (overlay)
                 {
-                    StartCoroutine(SlideVertical(starting, overshoot));
+                    if (fadeIn)
+                    {
+                        StartCoroutine(FadeGrid(1, 0, StateManager.stateTransitionTime));
+                    }
+
+                    if (dropIn)
+                    {
+                        StartCoroutine(SlideVertical(starting, overshoot));
+                    }
                 }
             }
         }

@@ -251,6 +251,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   borderWidth: 0.1
+  healthColour: {r: 0, g: 1, b: 0, a: 1}
+  missingHealthColour: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &114897149115229756
 MonoBehaviour:
   m_ObjectHideFlags: 1

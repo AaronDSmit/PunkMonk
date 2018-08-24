@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class OverworldController : MonoBehaviour
 {
-    private Unit earthUnit;
+    private Unit earthUnit = null;
 
     private Unit lightningUnit = null;
 
@@ -22,11 +22,6 @@ public class OverworldController : MonoBehaviour
     {
         // ensure this script knows it's in over-world state
         inOverworld = (a_newstate == GameState.overworld);
-
-        if (inOverworld)
-        {
-            Init();
-        }
     }
 
     private void Update()
@@ -48,7 +43,7 @@ public class OverworldController : MonoBehaviour
     // Process Mouse Input
     private void ProcessMouseInput()
     {
-        if (inOverworld)
+        if (inOverworld && earthUnit && lightningUnit)
         {
             if (Input.GetMouseButton(0))
             {

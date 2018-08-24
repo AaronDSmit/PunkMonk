@@ -14,10 +14,11 @@ public class SegmentedHealthBar : MonoBehaviour
     private RectTransform segments = null;
     private HorizontalLayoutGroup groupLayout = null;
     private GameObject mainHealthBar = null;
+    private FadingUI fade;
 
-    public int MaxHealth { get { return maxHealth; } set { maxHealth = Mathf.Clamp(value, 1, 100); Refresh(); } }
+    public int MaxHealth { get { return maxHealth; } set { maxHealth = Mathf.Clamp(value, 1, 100); Refresh(true); } }
 
-    public int CurrentHealth { get { return currentHealth; } set { currentHealth = Mathf.Clamp(value, 0, maxHealth); Refresh(); } }
+    public int CurrentHealth { get { return currentHealth; } set { currentHealth = Mathf.Clamp(value, 0, maxHealth); Refresh(false); } }
 
     private void Awake()
     {
@@ -25,9 +26,20 @@ public class SegmentedHealthBar : MonoBehaviour
         segments = transform.GetChild(1).GetComponent<RectTransform>();
         groupLayout = segments.GetComponent<HorizontalLayoutGroup>();
         mainHealthBar = segments.transform.GetChild(0).gameObject;
+        fade = GetComponent<FadingUI>();
     }
 
-    private void Refresh()
+    public void Show()
+    {
+        fade.FadeIn();
+    }
+
+    public void Hide()
+    {
+        fade.FadeOut();
+    }
+
+    private void Refresh(bool a_updateFade)
     {
         // First insure there is the correct amount of health bar segments
         if (segments.childCount < maxHealth)
@@ -70,5 +82,13 @@ public class SegmentedHealthBar : MonoBehaviour
         newSize.y -= borderWidth;
         segments.sizeDelta = newSize;
 
+        if (a_updateFade)
+        {
+            fade.UpdateReferences(false);
+        }
+        else
+        {
+            fade.UpdateReferences(true);
+        }
     }
 }

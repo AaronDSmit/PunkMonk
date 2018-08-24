@@ -32,31 +32,33 @@ public class FadingUI : MonoBehaviour
 
     private bool[] buttonInitialState;
 
+    private System.Action finishedFading;
+
     #endregion
 
     #region Properties
 
     public bool IsVisible { get; private set; }
 
+    public bool IsFading { get; private set; }
+
     #endregion
 
     #region Public Methods
 
-    public void FadeOut()
+    public void FadeOut(System.Action a_finishedFading = null)
     {
+        finishedFading = a_finishedFading;
         StartCoroutine(AnimateFade(true));
     }
 
-    public void FadeIn()
+    public void FadeIn(System.Action a_finishedFading = null)
     {
+        finishedFading = a_finishedFading;
         StartCoroutine(AnimateFade(false));
     }
 
-    #endregion
-
-    #region Unity Life-cycle Methods
-
-    private void Awake()
+    public void UpdateReferences(bool a_hide)
     {
         buttons = GetComponentsInChildren<Button>();
 
@@ -66,13 +68,22 @@ public class FadingUI : MonoBehaviour
 
         foreach (Image image in images)
         {
-            image.color = new Color(image.color.r, image.color.g, image.color.b, 0.0f);
+            image.color = new Color(image.color.r, image.color.g, image.color.b, (a_hide) ? 0.0f : 1.0f);
         }
 
         foreach (Text text in texts)
         {
-            text.color = new Color(text.color.r, text.color.g, text.color.b, 0.0f);
+            text.color = new Color(text.color.r, text.color.g, text.color.b, (a_hide) ? 0.0f : 1.0f);
         }
+    }
+
+    #endregion
+
+    #region Unity Life-cycle Methods
+
+    private void Awake()
+    {
+        UpdateReferences(true);
     }
 
     #endregion
@@ -92,6 +103,8 @@ public class FadingUI : MonoBehaviour
                 buttons[i].interactable = false;
             }
         }
+
+        IsFading = true;
 
         float currentLerpTime = 0;
         float t = 0;
@@ -126,6 +139,12 @@ public class FadingUI : MonoBehaviour
         }
 
         IsVisible = !a_fadeOut;
+        IsFading = false;
+
+        if (finishedFading != null)
+        {
+            finishedFading();
+        }
     }
 
     #endregion

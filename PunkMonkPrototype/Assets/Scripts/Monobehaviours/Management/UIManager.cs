@@ -11,13 +11,13 @@ public class UIManager : MonoBehaviour
     #region Unity Inspector Fields
 
     [SerializeField]
-    private Button move;
+    private Button move = null;
 
     [SerializeField]
-    private Button attack;
+    private Button attack = null;
 
     [SerializeField]
-    private Button specialAttack;
+    private Button specialAttack = null;
 
     #endregion
 
@@ -41,7 +41,7 @@ public class UIManager : MonoBehaviour
 
     #region Local Fields
 
-    private bool[] buttonInitialState;
+    private bool[] buttonState;
 
     private bool isReady;
 
@@ -70,22 +70,69 @@ public class UIManager : MonoBehaviour
 
     public void UpdateSelectedUnit(Unit a_selectedUnit)
     {
-        if (selectedUnit != null)
+        if (a_selectedUnit != selectedUnit)
         {
-            profiles.Switch(a_selectedUnit.CompareTag("EarthUnit"));
-        }
+            if (selectedUnit != null)
+            {
+                profiles.Switch(a_selectedUnit.CompareTag("EarthUnit"));
 
-        selectedUnit = a_selectedUnit;
-        UpdateUnitInfo();
+                selectedUnit.OnCanMoveChanged -= CanMove;
+                selectedUnit.OnCanAttackChanged -= CanAttack;
+                selectedUnit.OnCanSpecialChanged -= CanSpecialAttack;
+            }
+
+            selectedUnit = a_selectedUnit;
+
+            selectedUnit.OnCanMoveChanged += CanMove;
+            selectedUnit.OnCanAttackChanged += CanAttack;
+            selectedUnit.OnCanSpecialChanged += CanSpecialAttack;
+
+            CanMove(selectedUnit.CanMove);
+            CanAttack(selectedUnit.CanAttack);
+            CanSpecialAttack(selectedUnit.CanSpecialAttack);
+        }
+    }
+
+    public void CanMove(bool a_value)
+    {
+        if (battleUI.IsFading)
+        {
+            buttonState[0] = a_value;
+        }
+        else
+        {
+            move.interactable = buttonState[0] = a_value;
+        }
+    }
+
+    public void CanAttack(bool a_value)
+    {
+        if (battleUI.IsFading)
+        {
+            buttonState[1] = a_value;
+        }
+        else
+        {
+            attack.interactable = buttonState[1] = a_value;
+        }
+    }
+
+    public void CanSpecialAttack(bool a_value)
+    {
+        if (battleUI.IsFading)
+        {
+            buttonState[2] = a_value;
+        }
+        else
+        {
+            specialAttack.interactable = buttonState[2] = a_value;
+        }
     }
 
     public void LockUI()
     {
         for (int i = 0; i < buttons.Length; i++)
         {
-            // save previous state
-            buttonInitialState[i] = buttons[i].interactable;
-
             buttons[i].interactable = false;
         }
     }
@@ -94,10 +141,8 @@ public class UIManager : MonoBehaviour
     {
         for (int i = 0; i < buttons.Length; i++)
         {
-            buttons[i].interactable = buttonInitialState[i];
+            buttons[i].interactable = buttonState[i];
         }
-
-        UpdateUnitInfo();
     }
 
     public void EndPlayersTurn()
@@ -138,11 +183,11 @@ public class UIManager : MonoBehaviour
 
         buttons = GetComponentsInChildren<Button>();
 
-        buttonInitialState = new bool[buttons.Length];
+        buttonState = new bool[buttons.Length];
 
         for (int i = 0; i < buttons.Length; i++)
         {
-            buttonInitialState[i] = buttons[i].interactable;
+            buttonState[i] = buttons[i].interactable;
         }
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
@@ -181,21 +226,11 @@ public class UIManager : MonoBehaviour
     {
         if (a_newState == TurnManager.TurnState.start)
         {
-            battleUI.FadeIn();
+            battleUI.FadeIn(UnlockUI);
         }
         else if (a_newState == TurnManager.TurnState.end)
         {
             battleUI.FadeOut();
-        }
-    }
-
-    private void UpdateUnitInfo()
-    {
-        if (selectedUnit)
-        {
-            move.interactable = selectedUnit.CanMove;
-            attack.interactable = selectedUnit.CanAttack;
-            specialAttack.interactable = selectedUnit.CanSpecialAttack;
         }
     }
 

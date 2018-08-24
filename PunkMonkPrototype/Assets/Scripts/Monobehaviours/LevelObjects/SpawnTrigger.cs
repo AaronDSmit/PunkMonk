@@ -12,6 +12,8 @@ public class SpawnTrigger : MonoBehaviour
     [SerializeField]
     public int index;
 
+    public bool triggered = false;
+
     public void UpdateSpawnerList()
     {
         Spawner[] allSpawners = FindObjectsOfType<Spawner>();
@@ -28,7 +30,7 @@ public class SpawnTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (Manager.instance.StateController.CurrentGameState == GameState.battle)
+        if (!triggered && Manager.instance.StateController.CurrentGameState == GameState.battle)
         {
             if (other.CompareTag("EarthUnit") || other.CompareTag("LightningUnit"))
             {
@@ -38,7 +40,7 @@ public class SpawnTrigger : MonoBehaviour
                 }
             }
 
-            enabled = false;
+            triggered = true;
         }
     }
 }

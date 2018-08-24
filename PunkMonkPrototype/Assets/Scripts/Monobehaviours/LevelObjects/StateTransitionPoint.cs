@@ -31,6 +31,8 @@ public class StateTransitionPoint : MonoBehaviour
     [SerializeField]
     private Hex checkPoint;
 
+    public bool triggered = false;
+
     public Hex LightningHex
     {
         get { return lightningHex; }
@@ -77,7 +79,7 @@ public class StateTransitionPoint : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("EarthUnit") || other.CompareTag("LightningUnit"))
+        if (!triggered && (other.CompareTag("EarthUnit") || other.CompareTag("LightningUnit")))
         {
             if (Manager.instance.StateController.CurrentGameState == fromState)
             {
@@ -92,9 +94,9 @@ public class StateTransitionPoint : MonoBehaviour
                 }
 
                 Manager.instance.TurnController.BattleID = index;
-                Manager.instance.StateController.ChangeGameState(targetState);
+                Manager.instance.StateController.ChangeGameStateAfterDelay(targetState, StateManager.stateTransitionTime + 0.1f);
 
-                enabled = false;
+                triggered = true;
             }
         }
     }

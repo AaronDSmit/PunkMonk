@@ -39,7 +39,7 @@ public class CheckPointManager : MonoBehaviour
         player.GetComponent<OverworldController>().Init();
         cameraRig.Init();
 
-        lastEncounter.enabled = true;
+        lastEncounter.triggered = false;
 
         // find all spawn triggers belonging to the last encounter and enable them again
         SpawnTrigger[] spawnTriggers = FindObjectsOfType<SpawnTrigger>();
@@ -48,7 +48,7 @@ public class CheckPointManager : MonoBehaviour
         {
             if (spawn.index == lastEncounter.index)
             {
-                spawn.enabled = true;
+                spawn.triggered = false;
             }
         }
     }

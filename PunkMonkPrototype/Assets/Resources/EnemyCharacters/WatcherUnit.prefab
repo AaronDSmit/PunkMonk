@@ -105,6 +105,7 @@ GameObject:
   - component: {fileID: 223074344841445328}
   - component: {fileID: 114824117660068202}
   - component: {fileID: 114231761331884010}
+  - component: {fileID: 114900388418994774}
   m_Layer: 9
   m_Name: HealthBarCanvas
   m_TagString: Untagged
@@ -388,6 +389,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   borderWidth: 0.1
+  healthColour: {r: 0, g: 1, b: 0, a: 1}
+  missingHealthColour: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &114317779847197324
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -402,18 +405,18 @@ MonoBehaviour:
   team: 1
   dissolveMat: {fileID: 2100000, guid: 25b0cd8d1848b1f4a83e3fa96f6d0869, type: 2}
   deathAnimationTime: 1
-  maxHealth: 100
+  maxHealth: 4
   maxVolt: 3
   actions:
   - {fileID: 11400000, guid: 85a01b7788e76f845875da8b3c3553d2, type: 2}
   moveRange: 1
-  attackRange: 1
+  attackRange: 2
   specialAttackRange: 0
   rotationTime: 0
   walkSpeed: 10
   projectilePosition: {fileID: 4614584380952806}
   glamCam: 0
-  damage: 34
+  damage: 1
   damgeDelayTimer: 0
 --- !u!114 &114642226152107846
 MonoBehaviour:
@@ -502,6 +505,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3c9182d03ed0da488cd333a26ec05aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114900388418994774
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1291150950390762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c041160ac00b2134ca69850543fce266, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeTime: 1
+  disableButtons: 1
 --- !u!114 &114987928666245050
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -55,6 +55,11 @@ public class Unit : LivingEntity
 
     protected System.Action finishedWalking;
 
+    public delegate void VariableChanged(bool a_value);
+    public event VariableChanged OnCanMoveChanged;
+    public event VariableChanged OnCanAttackChanged;
+    public event VariableChanged OnCanSpecialChanged;
+
     #endregion
 
     #region Properties
@@ -85,21 +90,45 @@ public class Unit : LivingEntity
     {
         get { return canMove; }
 
-        set { canMove = value; }
+        set
+        {
+            canMove = value;
+
+            if (OnCanMoveChanged != null)
+            {
+                OnCanMoveChanged(canMove);
+            }
+        }
     }
 
     public bool CanAttack
     {
         get { return canAttack; }
 
-        set { canAttack = value; }
+        set
+        {
+            canAttack = value;
+
+            if (OnCanAttackChanged != null)
+            {
+                OnCanAttackChanged(canAttack);
+            }
+        }
     }
 
     public bool CanSpecialAttack
     {
         get { return canSpecialAttack; }
 
-        set { canSpecialAttack = value; }
+        set
+        {
+            canSpecialAttack = value;
+
+            if (OnCanSpecialChanged != null)
+            {
+                OnCanSpecialChanged(canSpecialAttack);
+            }
+        }
     }
 
     #endregion
@@ -220,6 +249,8 @@ public class Unit : LivingEntity
 
         cameraController = GameObject.FindGameObjectWithTag("CameraRig").GetComponent<CameraController>();
 
+        Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
+
         canAttack = true;
         canMove = true;
         canSpecialAttack = true;
@@ -228,6 +259,23 @@ public class Unit : LivingEntity
     #endregion
 
     #region Local Methods
+
+    private void GameStateChanged(GameState a_oldstate, GameState a_newstate)
+    {
+        if (IsDead)
+        {
+            return;
+        }
+
+        if (a_newstate == GameState.battle)
+        {
+            healthBar.Show();
+        }
+        else if (a_oldstate == GameState.battle)
+        {
+            healthBar.Hide();
+        }
+    }
 
     protected bool HasClearShot(Unit a_targetUnit)
     {
@@ -264,9 +312,11 @@ public class Unit : LivingEntity
         Vector3 vecBetween = targetPos - transform.position;
         vecBetween.y = 0.0f;
 
+        float speed = vecBetween.magnitude / StateManager.stateTransitionTime;
+
         while (vecBetween.magnitude > 0.1f)
         {
-            transform.position += vecBetween.normalized * (walkSpeed / 2) * Time.deltaTime;
+            transform.position += vecBetween.normalized * speed * Time.deltaTime;
 
             vecBetween = targetPos - transform.position;
             vecBetween.y = 0.0f;

@@ -141,6 +141,7 @@ GameObject:
   - component: {fileID: 223837857524798944}
   - component: {fileID: 114027166466672916}
   - component: {fileID: 114493721125594754}
+  - component: {fileID: 114861297253389826}
   m_Layer: 9
   m_Name: HealthBarCanvas
   m_TagString: Untagged
@@ -463,6 +464,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   borderWidth: 0.1
+  healthColour: {r: 0, g: 1, b: 0, a: 1}
+  missingHealthColour: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &114500654350852916
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -593,6 +596,19 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114861297253389826
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1729654408624958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c041160ac00b2134ca69850543fce266, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeTime: 1
+  disableButtons: 1
 --- !u!114 &114909767602722322
 MonoBehaviour:
   m_ObjectHideFlags: 1

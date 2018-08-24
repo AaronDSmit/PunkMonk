@@ -57,6 +57,8 @@ public class EasyDesignEditor : EditorWindow
     [SerializeField] private int currentID = 0;
     [SerializeField] private string spawnerButtonName;
     [SerializeField] private Spawner[] selectedSpawners;
+    [SerializeField] private StateTransitionPoint[] selectedTransitionPoints;
+
 
     [SerializeField] private Color greenColour = new Color(0.54f, 1.0f, 0.24f);
     [SerializeField] private Color redColour = new Color(0.83f, 0.18f, 0.18f);
@@ -1137,116 +1139,11 @@ public class EasyDesignEditor : EditorWindow
 
                 EditorGUILayout.Space();
 
-                GUILayout.Label("Scene Transition:", centeredText);
-
-                EditorGUI.BeginDisabledGroup(Selection.gameObjects.Length != 1 || !hasTileSelected);
-
-                EditorGUILayout.BeginHorizontal();
-
-                // if the selected tile has a scene transition change it rather than add a new one
-                if (Selection.gameObjects.Length == 1 && Selection.gameObjects[0].GetComponentInChildren<SceneTransitionPoint>())
-                {
-                    oldColor = GUI.backgroundColor;
-                    GUI.backgroundColor = orangeColour;
-
-                    if (GUILayout.Button("Change Transition"))
-                    {
-                        SceneTransitionPoint transition = Selection.gameObjects[0].GetComponentInChildren<SceneTransitionPoint>();
-                        transition.NextLevelIndex = loadLevel;
-                    }
-
-                    GUI.backgroundColor = oldColor;
-                }
-                else
-                {
-                    oldColor = GUI.backgroundColor;
-                    GUI.backgroundColor = greenColour;
-
-                    if (GUILayout.Button("Add Transition"))
-                    {
-                        Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
-
-                        GameObject transitionGO = new GameObject("SceneTransition");
-
-                        SceneTransitionPoint transition = transitionGO.AddComponent<SceneTransitionPoint>();
-                        transition.NextLevelIndex = loadLevel;
-                        transition.drawText = true;
-
-                        BoxCollider trigger = transitionGO.AddComponent<BoxCollider>();
-                        trigger.isTrigger = true;
-
-                        transition.transform.parent = tile.transform;
-                        transition.transform.position = tile.transform.position;
-                    }
-
-                    GUI.backgroundColor = oldColor;
-                }
-
-                GUILayout.Label("Load Level :");
-
-                loadLevel = EditorGUILayout.IntField(loadLevel);
-
-                EditorGUILayout.EndHorizontal();
-
-                EditorGUI.EndDisabledGroup();
-
-                EditorGUILayout.BeginHorizontal();
-
-                EditorGUI.BeginDisabledGroup(!hasTransitionSelected || !hasTileSelected);
-
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = redColour;
-
-                if (GUILayout.Button("Remove Scene Transition"))
-                {
-                    GameObject[] selectedObjects = Selection.gameObjects;
-
-                    SceneTransitionPoint transition = selectedObjects[0].GetComponentInChildren<SceneTransitionPoint>();
-
-                    DestroyImmediate(transition.gameObject);
-                }
-
-                EditorGUI.EndDisabledGroup();
-
-                if (GUILayout.Button("Remove All Scene Transitions"))
-                {
-                    SceneTransitionPoint[] transitions = grid.GetComponentsInChildren<SceneTransitionPoint>();
-
-                    foreach (SceneTransitionPoint transition in transitions)
-                    {
-                        DestroyImmediate(transition.gameObject);
-                    }
-                }
-
-                GUI.backgroundColor = oldColor;
-
-                EditorGUILayout.EndHorizontal();
-
-                EditorGUILayout.Space();
-
                 GUILayout.Label("State Transition:", centeredText);
 
                 EditorGUI.BeginDisabledGroup(Selection.gameObjects.Length != 1 || !hasTileSelected);
 
                 EditorGUILayout.BeginHorizontal();
-
-                GUILayout.Label("From ");
-
-                currentState = (GameState)EditorGUILayout.EnumPopup(currentState);
-
-                GUILayout.Label(" To ");
-
-                targetState = (GameState)EditorGUILayout.EnumPopup(targetState);
-
-                EditorGUILayout.EndHorizontal();
-
-                EditorGUILayout.BeginHorizontal();
-
-                if (targetState == GameState.battle)
-                {
-                    GUILayout.Label("Enemies to kill ");
-                    numberToKill = EditorGUILayout.IntField(numberToKill);
-                }
 
                 // if the selected tile has a scene transition change it rather than add a new one
                 if (Selection.gameObjects.Length == 1 && Selection.gameObjects[0].GetComponentInChildren<StateTransitionPoint>())
@@ -1294,6 +1191,24 @@ public class EasyDesignEditor : EditorWindow
 
                     GUI.backgroundColor = oldColor;
                 }
+
+                if (targetState == GameState.battle)
+                {
+                    GUILayout.Label("Enemies to kill ");
+                    numberToKill = EditorGUILayout.IntField(numberToKill);
+                }
+
+                EditorGUILayout.EndHorizontal();
+
+                EditorGUILayout.BeginHorizontal();
+
+                GUILayout.Label("From ");
+
+                currentState = (GameState)EditorGUILayout.EnumPopup(currentState);
+
+                GUILayout.Label(" To ");
+
+                targetState = (GameState)EditorGUILayout.EnumPopup(targetState);
 
                 EditorGUILayout.EndHorizontal();
 
@@ -1402,6 +1317,93 @@ public class EasyDesignEditor : EditorWindow
 
                 EditorGUILayout.Space();
 
+                GUILayout.Label("Scene Transition:", centeredText);
+
+                EditorGUI.BeginDisabledGroup(Selection.gameObjects.Length != 1 || !hasTileSelected);
+
+                EditorGUILayout.BeginHorizontal();
+
+                // if the selected tile has a scene transition change it rather than add a new one
+                if (Selection.gameObjects.Length == 1 && Selection.gameObjects[0].GetComponentInChildren<SceneTransitionPoint>())
+                {
+                    oldColor = GUI.backgroundColor;
+                    GUI.backgroundColor = orangeColour;
+
+                    if (GUILayout.Button("Change Transition"))
+                    {
+                        SceneTransitionPoint transition = Selection.gameObjects[0].GetComponentInChildren<SceneTransitionPoint>();
+                        transition.NextLevelIndex = loadLevel;
+                    }
+
+                    GUI.backgroundColor = oldColor;
+                }
+                else
+                {
+                    oldColor = GUI.backgroundColor;
+                    GUI.backgroundColor = greenColour;
+
+                    if (GUILayout.Button("Add Transition"))
+                    {
+                        Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
+
+                        GameObject transitionGO = new GameObject("SceneTransition");
+
+                        SceneTransitionPoint transition = transitionGO.AddComponent<SceneTransitionPoint>();
+                        transition.NextLevelIndex = loadLevel;
+                        transition.drawText = true;
+
+                        BoxCollider trigger = transitionGO.AddComponent<BoxCollider>();
+                        trigger.isTrigger = true;
+
+                        transition.transform.parent = tile.transform;
+                        transition.transform.position = tile.transform.position;
+                    }
+
+                    GUI.backgroundColor = oldColor;
+                }
+
+                GUILayout.Label("Load Level :");
+
+                loadLevel = EditorGUILayout.IntField(loadLevel);
+
+                EditorGUILayout.EndHorizontal();
+
+                EditorGUI.EndDisabledGroup();
+
+                EditorGUILayout.BeginHorizontal();
+
+                EditorGUI.BeginDisabledGroup(!hasTransitionSelected || !hasTileSelected);
+
+                oldColor = GUI.backgroundColor;
+                GUI.backgroundColor = redColour;
+
+                if (GUILayout.Button("Remove Scene Transition"))
+                {
+                    GameObject[] selectedObjects = Selection.gameObjects;
+
+                    SceneTransitionPoint transition = selectedObjects[0].GetComponentInChildren<SceneTransitionPoint>();
+
+                    DestroyImmediate(transition.gameObject);
+                }
+
+                EditorGUI.EndDisabledGroup();
+
+                if (GUILayout.Button("Remove All Scene Transitions"))
+                {
+                    SceneTransitionPoint[] transitions = grid.GetComponentsInChildren<SceneTransitionPoint>();
+
+                    foreach (SceneTransitionPoint transition in transitions)
+                    {
+                        DestroyImmediate(transition.gameObject);
+                    }
+                }
+
+                GUI.backgroundColor = oldColor;
+
+                EditorGUILayout.EndHorizontal();
+
+                EditorGUILayout.Space();
+
                 EditorGUILayout.BeginHorizontal();
 
                 GUILayout.Label("ID:");
@@ -1435,15 +1437,6 @@ public class EasyDesignEditor : EditorWindow
         }
     }
 
-    private void UpdateSpawnerSelection()
-    {
-        selectedSpawners = Selection.GetFiltered<Spawner>(SelectionMode.Deep);
-
-        hasSpawnerSelected = (selectedSpawners.Length > 0);
-
-        spawnerButtonName = (selectedSpawners.Length > 1) ? "Spawners" : "Spawner";
-    }
-
     private void UpdateTriggerConnections()
     {
         SpawnTrigger[] triggers = FindObjectsOfType<SpawnTrigger>();
@@ -1454,6 +1447,22 @@ public class EasyDesignEditor : EditorWindow
         }
     }
 
+    private void UpdateSpawnerSelection()
+    {
+        selectedSpawners = Selection.GetFiltered<Spawner>(SelectionMode.Deep);
+
+        hasSpawnerSelected = (selectedSpawners.Length > 0);
+
+        spawnerButtonName = (selectedSpawners.Length > 1) ? "Spawners" : "Spawner";
+    }
+
+    private void UpdateStateTransitionSelection()
+    {
+        selectedTransitionPoints = Selection.GetFiltered<StateTransitionPoint>(SelectionMode.Deep);
+
+        hasStateTransitionSelected = (selectedTransitionPoints.Length > 0);
+    }
+
     private void OnSelectionChange()
     {
         if (Selection.gameObjects.Length > 0)
@@ -1462,7 +1471,16 @@ public class EasyDesignEditor : EditorWindow
 
             hasTransitionSelected = (Selection.gameObjects[0].GetComponentsInChildren<SceneTransitionPoint>().Length > 0);
 
-            hasStateTransitionSelected = (Selection.gameObjects[0].GetComponentsInChildren<StateTransitionPoint>().Length > 0);
+            UpdateStateTransitionSelection();
+
+            if (hasStateTransitionSelected)
+            {
+                numberToKill = selectedTransitionPoints[0].numberToKill;
+                currentState = selectedTransitionPoints[0].CurrentState;
+                targetState = selectedTransitionPoints[0].TargetState;
+
+                currentID = selectedTransitionPoints[0].index;
+            }
 
             UpdateSpawnerSelection();
 
@@ -1473,10 +1491,6 @@ public class EasyDesignEditor : EditorWindow
                 hasVolt = selectedSpawners[0].hasVolt;
 
                 currentID = selectedSpawners[0].index;
-            }
-            else
-            {
-                currentID = 0;
             }
 
             hasTriggerSelected = (Selection.gameObjects[0].GetComponentsInChildren<SpawnTrigger>().Length > 0);

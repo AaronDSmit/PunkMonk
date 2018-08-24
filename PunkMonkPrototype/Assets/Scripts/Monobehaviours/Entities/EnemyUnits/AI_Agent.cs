@@ -45,6 +45,8 @@ public class AI_Agent : Unit
     {
         base.Spawn(a_startingTile);
 
+        healthBar.Show();
+
         // Get the AI Controller and tell it that this agent was spawned
         ai_Controller = GameObject.FindGameObjectWithTag("AI_Controller").GetComponent<AI_Controller>();
         players = ai_Controller.AddUnit(this);

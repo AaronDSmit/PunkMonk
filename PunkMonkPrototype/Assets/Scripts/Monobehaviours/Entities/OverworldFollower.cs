@@ -49,7 +49,7 @@ public class OverworldFollower : MonoBehaviour
 
     private void Update()
     {
-        if (inOverworld)
+        if (inOverworld && earthUnit)
         {
             if (Vector3.Distance(transform.position, earthUnit.transform.position) > 2)
             {
@@ -72,11 +72,6 @@ public class OverworldFollower : MonoBehaviour
     {
         // ensure this script knows it's in over-world state
         inOverworld = (_newstate == GameState.overworld);
-
-        if (inOverworld)
-        {
-            Init();
-        }
     }
 
     #endregion

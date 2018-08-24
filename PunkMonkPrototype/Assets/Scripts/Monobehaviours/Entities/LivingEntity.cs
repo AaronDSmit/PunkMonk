@@ -140,6 +140,11 @@ public class LivingEntity : Entity
         {
             dead = true;
 
+            if(healthBar)
+            {
+                Destroy(healthBar.gameObject);
+            }
+
             if (OnDeath != null)
             {
                 OnDeath(this);

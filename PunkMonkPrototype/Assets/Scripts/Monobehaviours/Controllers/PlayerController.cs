@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
     private Unit unitUnderMouse;
     private Unit previousUnitUnderMouse;
 
-    private CameraController cam;
+    private CameraController cameraRig;
 
     #endregion
 
@@ -133,6 +133,13 @@ public class PlayerController : MonoBehaviour
                 earthUnit = Instantiate(Resources.Load<EarthUnit>("PlayerCharacters/EarthUnit"), spawnPosEarth, Quaternion.identity);
                 earthUnit.Spawn(spawnHexEarth);
 
+                cameraRig.Init();
+
+                if (lightningUnit)
+                {
+                    lightningUnit.GetComponent<OverworldFollower>().Init();
+                }
+
                 earthUnit.OnDeath += PlayerUnitDied;
 
                 return earthUnit;
@@ -220,9 +227,11 @@ public class PlayerController : MonoBehaviour
         {
             encounterKillCount++;
 
+            // end encounter if you've reached the kill goal
             if (encounterKillCount >= EncounterKillLimit)
             {
-                Manager.instance.StateController.ChangeStateAfterFade(GameState.overworld);
+                Manager.instance.StateController.ChangeGameStateAfterDelay(GameState.overworld, 1.0f);
+                return;
             }
         }
     }
@@ -305,7 +314,7 @@ public class PlayerController : MonoBehaviour
 
         tilesAffectByAction = new List<Hex>();
 
-        cam = GameObject.FindGameObjectWithTag("CameraRig").GetComponent<CameraController>();
+        cameraRig = GameObject.FindGameObjectWithTag("CameraRig").GetComponent<CameraController>();
 
         if (selectionRuleset == null)
         {
@@ -605,7 +614,7 @@ public class PlayerController : MonoBehaviour
             selectedUnit.Select(true, currentRuleset.ValidHighlightColour);
         }
 
-        cam.LookAtPosition(selectedUnit.transform.position);
+        cameraRig.LookAtPosition(selectedUnit.transform.position);
     }
 
     private void DeselectUnit()
@@ -679,24 +688,31 @@ public class PlayerController : MonoBehaviour
     {
         if (a_newState == TurnManager.TurnState.start)
         {
+            // Re-spawn at checkpoint if both are dead
+
             if (LightningDead && earthDead)
             {
-                // Respawn at checkpoint
                 Manager.instance.CheckPointController.ResetToLastCheckPoint();
                 return;
             }
 
             myTurn = true;
 
-            earthUnit.Refresh();
-            lightningUnit.Refresh();
-
-            if (earthUnit)
+            if (earthUnit && lightningUnit)
             {
+                earthUnit.Refresh();
+                lightningUnit.Refresh();
+
+                SelectUnit(earthUnit);
+            }
+            else if (earthUnit)
+            {
+                earthUnit.Refresh();
                 SelectUnit(earthUnit);
             }
             else
             {
+                lightningUnit.Refresh();
                 SelectUnit(lightningUnit);
             }
         }
@@ -710,27 +726,35 @@ public class PlayerController : MonoBehaviour
 
     private void GameStateChanged(GameState a_oldstate, GameState a_newstate)
     {
-        // ensure this script knows it's in over-world state
-        if (a_newstate == GameState.battle)
+
+        if (a_newstate == GameState.transition && Manager.instance.StateController.NextGameState == GameState.battle)
         {
             earthUnit.WalkDirectlyToTile(earthSnapHex);
             lightningUnit.WalkDirectlyToTile(lightningSnapHex);
+        }
 
+
+        // ensure this script knows it's in over-world state
+        if (a_newstate == GameState.battle)
+        {
             canInteract = true;
             SelectUnit(earthUnit);
         }
         else if (a_oldstate == GameState.battle)
         {
             DeselectUnit();
+            canInteract = false;
 
             if (earthDead)
             {
                 SpawnEarthUnit();
+                GetComponent<OverworldController>().Init();
             }
 
             if (LightningDead)
             {
                 SpawnLightningUnit();
+                GetComponent<OverworldController>().Init();
             }
         }
     }

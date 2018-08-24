@@ -91,6 +91,12 @@ public class LivingEntity : Entity
         dead = false;
     }
 
+    protected virtual void Start()
+    {
+        healthBar.MaxHealth = MaxHealth;
+        healthBar.CurrentHealth = CurrentHealth;
+    }
+
     #endregion
 
     #region Local Methods

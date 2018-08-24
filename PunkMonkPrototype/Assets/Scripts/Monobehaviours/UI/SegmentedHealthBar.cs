@@ -4,6 +4,8 @@ using UnityEngine.UI;
 public class SegmentedHealthBar : MonoBehaviour
 {
     [SerializeField] float borderWidth = 0.1f;
+    [SerializeField] Color healthColour = Color.green;
+    [SerializeField] Color missingHealthColour = new Color(0, 0, 0, 0);
 
     private int maxHealth = 4;
     private int currentHealth = 4;
@@ -28,30 +30,45 @@ public class SegmentedHealthBar : MonoBehaviour
     private void Refresh()
     {
         // First insure there is the correct amount of health bar segments
-        if (bg.childCount > maxHealth)
+        if (segments.childCount < maxHealth)
         {
             // Add health bars
-            for (int i = bg.childCount; i < maxHealth; ++i)
+            for (int i = segments.childCount; i < maxHealth; ++i)
             {
-                Instantiate(mainHealthBar);
+                Instantiate(mainHealthBar, segments);
             }
         }
-        else if (bg.childCount < maxHealth)
+        else if (segments.childCount > maxHealth)
         {
             // Remove unnecessary health segments
-            for (int i = bg.childCount; i < maxHealth; --i)
+            for (int i = segments.childCount - 1; i >= maxHealth; --i)
             {
-                Destroy(bg.GetChild(i));
+                Destroy(segments.GetChild(i).gameObject);
             }
+        }
+
+        // Set the segments invisible for the missing health
+        for (int i = 0; i < maxHealth; i++)
+        {
+            //segments.GetChild(i).GetComponent<Image>().enabled = (i < currentHealth);
+            Color newColour = Color.black;
+            if (i < currentHealth)
+            {
+                newColour = healthColour;
+            }
+            else
+            {
+                newColour = missingHealthColour;
+            }
+            segments.GetChild(i).GetComponent<Image>().color = newColour;
         }
 
         // Set the position and scale of each segment using the Horizontal Layout Group
-
         groupLayout.spacing = borderWidth / 2.0f;
-        Vector3 newScale = bg.localScale;
-        newScale.x -= borderWidth;
-        newScale.y -= borderWidth;
-        segments.localScale = newScale;
+        Vector3 newSize = bg.sizeDelta;
+        newSize.x -= borderWidth;
+        newSize.y -= borderWidth;
+        segments.sizeDelta = newSize;
 
     }
 }

@@ -43,7 +43,6 @@ public class EasyDesignEditor : EditorWindow
 
     [SerializeField] private Color traversableColour;
     [SerializeField] private Color inaccessibleColour;
-    [SerializeField] private Color connectionColour;
     [SerializeField] private float inaccessibleAlpha;
 
     // GameFlow
@@ -100,8 +99,6 @@ public class EasyDesignEditor : EditorWindow
 
         traversableColour = new Color(0.0f, 1.0f, 0.0f, 0.35f);
         inaccessibleColour = new Color(1.0f, 0.0f, 0.0f, 0.35f);
-        connectionColour = new Color(1.0f, 1.0f, 1.0f, 0.35f);
-
         inaccessibleAlpha = 0.4f;
 
         EditorApplication.playModeStateChanged += PlayModeChanged;
@@ -169,1251 +166,1265 @@ public class EasyDesignEditor : EditorWindow
             return;
         }
 
-        // If there's no grid manager then don't draw any of the inspector
-        if (grid == null)
-        {
-            EditorGUILayout.HelpBox("No GridManager script found!", MessageType.Error);
-
-            return;
-        }
+        GUI.skin = skin; // use a custom skin
 
         // If in play mode then don't draw any of the inspector
         if (EditorApplication.isPlaying)
         {
-            EditorGUILayout.HelpBox("You can't use this program during play mode", MessageType.Info);
+            Color oldColor = GUI.backgroundColor;
+            GUI.backgroundColor = new Color(0.5f, 0.5f, 0.5f, 1.0f); // grey
 
-            return;
+            EditorGUILayout.BeginVertical("Box"); // outer box
+
+            GUI.backgroundColor = oldColor;
+
+
+
+            GUILayout.FlexibleSpace();
+            EditorGUILayout.EndVertical(); // outer box
         }
-
-        GUI.skin = skin; // use a custom skin
-
-        // Create toolbar using custom tab style
-        string[] tabs = { "Grid", "GameFlow", "Settings" };
-        selectedTab = GUILayout.Toolbar(selectedTab, tabs);
-
-        Color oldColor = GUI.backgroundColor;
-        GUI.backgroundColor = new Color(0.5f, 0.5f, 0.5f, 1.0f); // grey
-
-        EditorGUILayout.BeginVertical("Box"); // outer box
-
-        GUI.backgroundColor = oldColor;
-
-        if (healthyMode && EditorApplication.timeSinceStartup > 3600)
+        else
         {
+            // If there's no grid manager then don't draw any of the inspector
+            if (grid == null)
+            {
+                EditorGUILayout.HelpBox("No GridManager script found!", MessageType.Error);
+
+                return;
+            }
+
+            // Create toolbar using custom tab style
+            string[] tabs = { "Grid", "GameFlow", "Settings" };
+            selectedTab = GUILayout.Toolbar(selectedTab, tabs);
+
+            Color oldColor = GUI.backgroundColor;
+            GUI.backgroundColor = new Color(0.5f, 0.5f, 0.5f, 1.0f); // grey
+
+            EditorGUILayout.BeginVertical("Box"); // outer box
+
+            GUI.backgroundColor = oldColor;
+
+            if (healthyMode && EditorApplication.timeSinceStartup > 3600)
+            {
+                EditorGUILayout.Space();
+
+                EditorGUILayout.HelpBox("You have been working for an hour, perhaps close Unity and take a short break.", MessageType.Warning);
+            }
+
             EditorGUILayout.Space();
 
-            EditorGUILayout.HelpBox("You have been working for an hour, perhaps close Unity and take a short break.", MessageType.Warning);
-        }
+            #region GridManager Generation
 
-        EditorGUILayout.Space();
-
-        #region GridManager Generation
-
-        if (selectedTab == 0)
-        {
-            #region Grid Generation
-
-            GUILayout.Label("Grid Generation:", centeredText);
-
-            EditorGUILayout.BeginHorizontal();
-
-            GUILayout.Label("X-Axis:", GUILayout.ExpandWidth(false));
-            mapWidth = EditorGUILayout.IntField(mapWidth, GUILayout.ExpandWidth(false));
-
-            GUILayout.Label("Z-Axis:", GUILayout.ExpandWidth(false));
-            mapHeight = EditorGUILayout.IntField(mapHeight, GUILayout.ExpandWidth(false));
-
-            EditorGUILayout.EndHorizontal();
-
-            mapSizeSet = (mapWidth != 0 && mapHeight != 0);
-
-            oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = greenColour;
-
-            if (!mapSizeSet)
+            if (selectedTab == 0)
             {
-                EditorGUILayout.HelpBox("Axis's can't be 0", MessageType.Warning);
-            }
-            else if (confirmMapGeneration)
-            {
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = orangeColour;
+                #region Grid Generation
 
-                EditorGUILayout.BeginVertical("Box");
-
-                GUI.backgroundColor = oldColor;
-
-                GUILayout.Label("Create New Map?", centeredText);
+                GUILayout.Label("Grid Generation:", centeredText);
 
                 EditorGUILayout.BeginHorizontal();
 
-                if (GUILayout.Button("Yes!"))
-                {
-                    HexUtility.UpdateScale(HexScale);
+                GUILayout.Label("X-Axis:", GUILayout.ExpandWidth(false));
+                mapWidth = EditorGUILayout.IntField(mapWidth, GUILayout.ExpandWidth(false));
 
-                    if (grid.GenerateGrid(mapWidth, mapHeight, traversableColour))
+                GUILayout.Label("Z-Axis:", GUILayout.ExpandWidth(false));
+                mapHeight = EditorGUILayout.IntField(mapHeight, GUILayout.ExpandWidth(false));
+
+                EditorGUILayout.EndHorizontal();
+
+                mapSizeSet = (mapWidth != 0 && mapHeight != 0);
+
+                oldColor = GUI.backgroundColor;
+                GUI.backgroundColor = greenColour;
+
+                if (!mapSizeSet)
+                {
+                    EditorGUILayout.HelpBox("Axis's can't be 0", MessageType.Warning);
+                }
+                else if (confirmMapGeneration)
+                {
+                    oldColor = GUI.backgroundColor;
+                    GUI.backgroundColor = orangeColour;
+
+                    EditorGUILayout.BeginVertical("Box");
+
+                    GUI.backgroundColor = oldColor;
+
+                    GUILayout.Label("Create New Map?", centeredText);
+
+                    EditorGUILayout.BeginHorizontal();
+
+                    if (GUILayout.Button("Yes!"))
+                    {
+                        HexUtility.UpdateScale(HexScale);
+
+                        if (grid.GenerateGrid(mapWidth, mapHeight, traversableColour))
+                        {
+                            confirmMapGeneration = false;
+                        }
+                        else
+                        {
+                            EditorGUILayout.HelpBox("There was an error generating the grid.", MessageType.Error);
+                        }
+
+                        confirmMapGeneration = false;
+                    }
+
+                    oldColor = GUI.backgroundColor;
+                    GUI.backgroundColor = redColour;
+
+                    if (GUILayout.Button("No..."))
                     {
                         confirmMapGeneration = false;
                     }
-                    else
-                    {
-                        EditorGUILayout.HelpBox("There was an error generating the grid.", MessageType.Error);
-                    }
 
-                    confirmMapGeneration = false;
+                    GUI.backgroundColor = oldColor;
+
+                    EditorGUILayout.EndHorizontal();
+
+                    EditorGUILayout.EndVertical();
                 }
-
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = redColour;
-
-                if (GUILayout.Button("No..."))
+                else if (GUILayout.Button("Generate Grid"))
                 {
-                    confirmMapGeneration = false;
+                    confirmMapGeneration = true;
                 }
 
                 GUI.backgroundColor = oldColor;
 
-                EditorGUILayout.EndHorizontal();
+                #endregion
 
-                EditorGUILayout.EndVertical();
-            }
-            else if (GUILayout.Button("Generate Grid"))
-            {
-                confirmMapGeneration = true;
-            }
+                EditorGUILayout.Space();
 
-            GUI.backgroundColor = oldColor;
+                #region Set Selected Tiles To Traversable/Inaccessible
 
-            #endregion
+                GUILayout.Label("Set Selected Tiles To", centeredText);
 
-            EditorGUILayout.Space();
-
-            #region Set Selected Tiles To Traversable/Inaccessible
-
-            GUILayout.Label("Set Selected Tiles To", centeredText);
-
-            EditorGUI.BeginDisabledGroup(!hasTileSelected);
-
-            EditorGUILayout.BeginHorizontal();
-
-            oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = greenColour;
-
-            if (GUILayout.Button("Traversable"))
-            {
-                GameObject[] selectedObjects = Selection.gameObjects;
-
-                foreach (GameObject obj in selectedObjects)
-                {
-                    Hex[] tiles = obj.GetComponentsInChildren<Hex>();
-
-                    foreach (Hex tile in tiles)
-                    {
-                        tile.SetTraversable(true, traversableColour);
-                    }
-                }
-            }
-
-            GUI.backgroundColor = oldColor;
-
-            oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = redColour;
-
-            if (GUILayout.Button("Inaccessible"))
-            {
-                GameObject[] selectedObjects = Selection.gameObjects;
-
-                foreach (GameObject obj in selectedObjects)
-                {
-                    Hex[] tiles = obj.GetComponentsInChildren<Hex>();
-
-                    foreach (Hex tile in tiles)
-                    {
-                        tile.SetTraversable(false, inaccessibleColour);
-                    }
-                }
-            }
-
-            GUI.backgroundColor = oldColor;
-
-            EditorGUILayout.EndHorizontal();
-
-            EditorGUI.EndDisabledGroup();
-
-            #endregion
-
-            EditorGUILayout.Space();
-
-            #region Set All Tiles To Traversable/Inaccessible
-
-            GUILayout.Label("Set All Tiles To", centeredText);
-
-            EditorGUILayout.BeginHorizontal();
-
-            oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = greenColour;
-
-            if (!setAllNodesInaccessible && setAllNodesTraversable)
-            {
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = orangeColour;
-
-                EditorGUILayout.BeginVertical("Box");
-
-                GUI.backgroundColor = oldColor;
-
-                GUILayout.Label("All Traversable?", centeredText);
-
-                EditorGUILayout.BeginHorizontal();
-
-                if (GUILayout.Button("Yes!"))
-                {
-                    Hex[] tiles = grid.GetComponentsInChildren<Hex>();
-
-                    foreach (Hex tile in tiles)
-                    {
-                        tile.SetTraversable(true, traversableColour);
-                    }
-
-                    setAllNodesTraversable = false;
-                }
-
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = redColour;
-
-                if (GUILayout.Button("No..."))
-                {
-                    setAllNodesTraversable = false;
-                }
-
-                GUI.backgroundColor = oldColor;
-
-                EditorGUILayout.EndHorizontal();
-
-                EditorGUILayout.EndVertical();
-            }
-            else if (!setAllNodesInaccessible)
-            {
-                if (GUILayout.Button("Traversable"))
-                {
-                    setAllNodesTraversable = true;
-                }
-            }
-
-            GUI.backgroundColor = oldColor;
-
-            oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = redColour;
-
-            if (!setAllNodesTraversable && setAllNodesInaccessible)
-            {
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = orangeColour;
-
-                EditorGUILayout.BeginVertical("Box");
-
-                GUI.backgroundColor = oldColor;
-
-                GUILayout.Label("All Inaccessible?", centeredText);
+                EditorGUI.BeginDisabledGroup(!hasTileSelected);
 
                 EditorGUILayout.BeginHorizontal();
 
                 oldColor = GUI.backgroundColor;
                 GUI.backgroundColor = greenColour;
 
-                if (GUILayout.Button("yes!"))
-                {
-                    Hex[] tiles = grid.GetComponentsInChildren<Hex>();
-
-                    foreach (Hex tile in tiles)
-                    {
-                        tile.SetTraversable(false, inaccessibleColour);
-                    }
-
-                    setAllNodesInaccessible = false;
-                }
-
-                GUI.backgroundColor = oldColor;
-
-                if (GUILayout.Button("No..."))
-                {
-                    setAllNodesInaccessible = false;
-                }
-
-                EditorGUILayout.EndHorizontal();
-
-                EditorGUILayout.EndVertical();
-            }
-            else if (!setAllNodesTraversable)
-            {
-                if (GUILayout.Button("Inaccessible"))
-                {
-                    setAllNodesInaccessible = true;
-                }
-            }
-
-            GUI.backgroundColor = oldColor;
-
-            EditorGUILayout.EndHorizontal();
-
-            #endregion
-
-            EditorGUILayout.Space();
-
-            #region Auto Traversable/Inaccessible
-
-            GUILayout.Label("Automatically Set Tiles To", centeredText);
-
-            EditorGUILayout.BeginHorizontal();
-
-            oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = greenColour;
-
-            if (!autoAllNodesInaccessible && autoAllNodesTraversable)
-            {
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = orangeColour;
-
-                EditorGUILayout.BeginVertical("Box");
-
-                GUI.backgroundColor = oldColor;
-
-                GUILayout.Label("Automatically Traversable?", centeredText);
-
-                EditorGUILayout.BeginHorizontal();
-
-                if (GUILayout.Button("Yes!"))
-                {
-                    Hex[] tiles = grid.GetComponentsInChildren<Hex>();
-
-                    foreach (Hex tile in tiles)
-                    {
-                        tile.TraversableCheck(traversableColour);
-                    }
-
-                    autoAllNodesTraversable = false;
-                }
-
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = redColour;
-
-                if (GUILayout.Button("No..."))
-                {
-                    autoAllNodesTraversable = false;
-                }
-
-                GUI.backgroundColor = oldColor;
-
-                EditorGUILayout.EndHorizontal();
-
-                EditorGUILayout.EndVertical();
-            }
-            else if (!autoAllNodesInaccessible)
-            {
                 if (GUILayout.Button("Traversable"))
                 {
-                    autoAllNodesTraversable = true;
-                }
-            }
+                    GameObject[] selectedObjects = Selection.gameObjects;
 
-            GUI.backgroundColor = oldColor;
-
-            oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = redColour;
-
-            if (!autoAllNodesTraversable && autoAllNodesInaccessible)
-            {
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = orangeColour;
-
-                EditorGUILayout.BeginVertical("Box");
-
-                GUI.backgroundColor = oldColor;
-
-                GUILayout.Label("Automatically Inaccessible?", centeredText);
-
-                EditorGUILayout.BeginHorizontal();
-
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = greenColour;
-
-                if (GUILayout.Button("yes!"))
-                {
-                    Hex[] tiles = grid.GetComponentsInChildren<Hex>();
-
-                    foreach (Hex tile in tiles)
+                    foreach (GameObject obj in selectedObjects)
                     {
-                        tile.InaccessibleCheck(inaccessibleColour);
-                    }
+                        Hex[] tiles = obj.GetComponentsInChildren<Hex>();
 
-                    autoAllNodesInaccessible = false;
-                }
-
-                GUI.backgroundColor = oldColor;
-
-                if (GUILayout.Button("No..."))
-                {
-                    autoAllNodesInaccessible = false;
-                }
-
-                EditorGUILayout.EndHorizontal();
-
-                EditorGUILayout.EndVertical();
-            }
-            else if (!autoAllNodesTraversable)
-            {
-                if (GUILayout.Button("Inaccessible"))
-                {
-                    autoAllNodesInaccessible = true;
-                }
-            }
-
-            GUI.backgroundColor = oldColor;
-
-            EditorGUILayout.EndHorizontal();
-
-            #endregion
-
-            EditorGUILayout.Space();
-
-            #region Fill Tiles Traversable/Inaccessible
-
-            GUILayout.Label("Fill Area", centeredText);
-
-            EditorGUI.BeginDisabledGroup(!hasTileSelected || Selection.gameObjects.Length != 1);
-
-            EditorGUILayout.BeginHorizontal();
-
-            oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = greenColour;
-
-            if (!fillNodesInaccessible && fillNodesTraversable)
-            {
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = orangeColour;
-
-                EditorGUILayout.BeginVertical("Box");
-
-                GUI.backgroundColor = oldColor;
-
-                GUILayout.Label("Fil Traversable?", centeredText);
-
-                EditorGUILayout.BeginHorizontal();
-
-                if (GUILayout.Button("Yes!"))
-                {
-                    Hex hex = Selection.gameObjects[0].GetComponent<Hex>();
-                    Hex currentHex;
-
-                    List<Hex> openList = new List<Hex>();
-                    List<Hex> closeList = new List<Hex>();
-
-                    openList.Add(hex);
-
-                    while (openList.Count > 0)
-                    {
-                        currentHex = openList[0];
-                        openList.RemoveAt(0);
-                        closeList.Add(currentHex);
-
-                        currentHex.SetTraversable(true, traversableColour);
-
-                        foreach (Hex neighbour in currentHex.Neighbours)
+                        foreach (Hex tile in tiles)
                         {
-                            if (!neighbour.IsTraversable && !openList.Contains(neighbour) && !closeList.Contains(neighbour))
+                            tile.SetTraversable(true, traversableColour);
+                        }
+                    }
+                }
+
+                GUI.backgroundColor = oldColor;
+
+                oldColor = GUI.backgroundColor;
+                GUI.backgroundColor = redColour;
+
+                if (GUILayout.Button("Inaccessible"))
+                {
+                    GameObject[] selectedObjects = Selection.gameObjects;
+
+                    foreach (GameObject obj in selectedObjects)
+                    {
+                        Hex[] tiles = obj.GetComponentsInChildren<Hex>();
+
+                        foreach (Hex tile in tiles)
+                        {
+                            tile.SetTraversable(false, inaccessibleColour);
+                        }
+                    }
+                }
+
+                GUI.backgroundColor = oldColor;
+
+                EditorGUILayout.EndHorizontal();
+
+                EditorGUI.EndDisabledGroup();
+
+                #endregion
+
+                EditorGUILayout.Space();
+
+                #region Set All Tiles To Traversable/Inaccessible
+
+                GUILayout.Label("Set All Tiles To", centeredText);
+
+                EditorGUILayout.BeginHorizontal();
+
+                oldColor = GUI.backgroundColor;
+                GUI.backgroundColor = greenColour;
+
+                if (!setAllNodesInaccessible && setAllNodesTraversable)
+                {
+                    oldColor = GUI.backgroundColor;
+                    GUI.backgroundColor = orangeColour;
+
+                    EditorGUILayout.BeginVertical("Box");
+
+                    GUI.backgroundColor = oldColor;
+
+                    GUILayout.Label("All Traversable?", centeredText);
+
+                    EditorGUILayout.BeginHorizontal();
+
+                    if (GUILayout.Button("Yes!"))
+                    {
+                        Hex[] tiles = grid.GetComponentsInChildren<Hex>();
+
+                        foreach (Hex tile in tiles)
+                        {
+                            tile.SetTraversable(true, traversableColour);
+                        }
+
+                        setAllNodesTraversable = false;
+                    }
+
+                    oldColor = GUI.backgroundColor;
+                    GUI.backgroundColor = redColour;
+
+                    if (GUILayout.Button("No..."))
+                    {
+                        setAllNodesTraversable = false;
+                    }
+
+                    GUI.backgroundColor = oldColor;
+
+                    EditorGUILayout.EndHorizontal();
+
+                    EditorGUILayout.EndVertical();
+                }
+                else if (!setAllNodesInaccessible)
+                {
+                    if (GUILayout.Button("Traversable"))
+                    {
+                        setAllNodesTraversable = true;
+                    }
+                }
+
+                GUI.backgroundColor = oldColor;
+
+                oldColor = GUI.backgroundColor;
+                GUI.backgroundColor = redColour;
+
+                if (!setAllNodesTraversable && setAllNodesInaccessible)
+                {
+                    oldColor = GUI.backgroundColor;
+                    GUI.backgroundColor = orangeColour;
+
+                    EditorGUILayout.BeginVertical("Box");
+
+                    GUI.backgroundColor = oldColor;
+
+                    GUILayout.Label("All Inaccessible?", centeredText);
+
+                    EditorGUILayout.BeginHorizontal();
+
+                    oldColor = GUI.backgroundColor;
+                    GUI.backgroundColor = greenColour;
+
+                    if (GUILayout.Button("yes!"))
+                    {
+                        Hex[] tiles = grid.GetComponentsInChildren<Hex>();
+
+                        foreach (Hex tile in tiles)
+                        {
+                            tile.SetTraversable(false, inaccessibleColour);
+                        }
+
+                        setAllNodesInaccessible = false;
+                    }
+
+                    GUI.backgroundColor = oldColor;
+
+                    if (GUILayout.Button("No..."))
+                    {
+                        setAllNodesInaccessible = false;
+                    }
+
+                    EditorGUILayout.EndHorizontal();
+
+                    EditorGUILayout.EndVertical();
+                }
+                else if (!setAllNodesTraversable)
+                {
+                    if (GUILayout.Button("Inaccessible"))
+                    {
+                        setAllNodesInaccessible = true;
+                    }
+                }
+
+                GUI.backgroundColor = oldColor;
+
+                EditorGUILayout.EndHorizontal();
+
+                #endregion
+
+                EditorGUILayout.Space();
+
+                #region Auto Traversable/Inaccessible
+
+                GUILayout.Label("Automatically Set Tiles To", centeredText);
+
+                EditorGUILayout.BeginHorizontal();
+
+                oldColor = GUI.backgroundColor;
+                GUI.backgroundColor = greenColour;
+
+                if (!autoAllNodesInaccessible && autoAllNodesTraversable)
+                {
+                    oldColor = GUI.backgroundColor;
+                    GUI.backgroundColor = orangeColour;
+
+                    EditorGUILayout.BeginVertical("Box");
+
+                    GUI.backgroundColor = oldColor;
+
+                    GUILayout.Label("Automatically Traversable?", centeredText);
+
+                    EditorGUILayout.BeginHorizontal();
+
+                    if (GUILayout.Button("Yes!"))
+                    {
+                        Hex[] tiles = grid.GetComponentsInChildren<Hex>();
+
+                        foreach (Hex tile in tiles)
+                        {
+                            tile.TraversableCheck(traversableColour);
+                        }
+
+                        autoAllNodesTraversable = false;
+                    }
+
+                    oldColor = GUI.backgroundColor;
+                    GUI.backgroundColor = redColour;
+
+                    if (GUILayout.Button("No..."))
+                    {
+                        autoAllNodesTraversable = false;
+                    }
+
+                    GUI.backgroundColor = oldColor;
+
+                    EditorGUILayout.EndHorizontal();
+
+                    EditorGUILayout.EndVertical();
+                }
+                else if (!autoAllNodesInaccessible)
+                {
+                    if (GUILayout.Button("Traversable"))
+                    {
+                        autoAllNodesTraversable = true;
+                    }
+                }
+
+                GUI.backgroundColor = oldColor;
+
+                oldColor = GUI.backgroundColor;
+                GUI.backgroundColor = redColour;
+
+                if (!autoAllNodesTraversable && autoAllNodesInaccessible)
+                {
+                    oldColor = GUI.backgroundColor;
+                    GUI.backgroundColor = orangeColour;
+
+                    EditorGUILayout.BeginVertical("Box");
+
+                    GUI.backgroundColor = oldColor;
+
+                    GUILayout.Label("Automatically Inaccessible?", centeredText);
+
+                    EditorGUILayout.BeginHorizontal();
+
+                    oldColor = GUI.backgroundColor;
+                    GUI.backgroundColor = greenColour;
+
+                    if (GUILayout.Button("yes!"))
+                    {
+                        Hex[] tiles = grid.GetComponentsInChildren<Hex>();
+
+                        foreach (Hex tile in tiles)
+                        {
+                            tile.InaccessibleCheck(inaccessibleColour);
+                        }
+
+                        autoAllNodesInaccessible = false;
+                    }
+
+                    GUI.backgroundColor = oldColor;
+
+                    if (GUILayout.Button("No..."))
+                    {
+                        autoAllNodesInaccessible = false;
+                    }
+
+                    EditorGUILayout.EndHorizontal();
+
+                    EditorGUILayout.EndVertical();
+                }
+                else if (!autoAllNodesTraversable)
+                {
+                    if (GUILayout.Button("Inaccessible"))
+                    {
+                        autoAllNodesInaccessible = true;
+                    }
+                }
+
+                GUI.backgroundColor = oldColor;
+
+                EditorGUILayout.EndHorizontal();
+
+                #endregion
+
+                EditorGUILayout.Space();
+
+                #region Fill Tiles Traversable/Inaccessible
+
+                GUILayout.Label("Fill Area", centeredText);
+
+                EditorGUI.BeginDisabledGroup(!hasTileSelected || Selection.gameObjects.Length != 1);
+
+                EditorGUILayout.BeginHorizontal();
+
+                oldColor = GUI.backgroundColor;
+                GUI.backgroundColor = greenColour;
+
+                if (!fillNodesInaccessible && fillNodesTraversable)
+                {
+                    oldColor = GUI.backgroundColor;
+                    GUI.backgroundColor = orangeColour;
+
+                    EditorGUILayout.BeginVertical("Box");
+
+                    GUI.backgroundColor = oldColor;
+
+                    GUILayout.Label("Fil Traversable?", centeredText);
+
+                    EditorGUILayout.BeginHorizontal();
+
+                    if (GUILayout.Button("Yes!"))
+                    {
+                        Hex hex = Selection.gameObjects[0].GetComponent<Hex>();
+                        Hex currentHex;
+
+                        List<Hex> openList = new List<Hex>();
+                        List<Hex> closeList = new List<Hex>();
+
+                        openList.Add(hex);
+
+                        while (openList.Count > 0)
+                        {
+                            currentHex = openList[0];
+                            openList.RemoveAt(0);
+                            closeList.Add(currentHex);
+
+                            currentHex.SetTraversable(true, traversableColour);
+
+                            foreach (Hex neighbour in currentHex.Neighbours)
                             {
-                                openList.Add(neighbour);
+                                if (!neighbour.IsTraversable && !openList.Contains(neighbour) && !closeList.Contains(neighbour))
+                                {
+                                    openList.Add(neighbour);
+                                }
                             }
                         }
+
+                        fillNodesTraversable = false;
                     }
 
-                    fillNodesTraversable = false;
+                    oldColor = GUI.backgroundColor;
+                    GUI.backgroundColor = redColour;
+
+                    if (GUILayout.Button("No..."))
+                    {
+                        fillNodesTraversable = false;
+                    }
+
+                    GUI.backgroundColor = oldColor;
+
+                    EditorGUILayout.EndHorizontal();
+
+                    EditorGUILayout.EndVertical();
                 }
+                else if (!fillNodesInaccessible)
+                {
+                    if (GUILayout.Button("Traversable"))
+                    {
+                        fillNodesTraversable = true;
+                    }
+                }
+
+                GUI.backgroundColor = oldColor;
 
                 oldColor = GUI.backgroundColor;
                 GUI.backgroundColor = redColour;
 
-                if (GUILayout.Button("No..."))
+                if (!fillNodesTraversable && fillNodesInaccessible)
                 {
-                    fillNodesTraversable = false;
+                    oldColor = GUI.backgroundColor;
+                    GUI.backgroundColor = orangeColour;
+
+                    EditorGUILayout.BeginVertical("Box");
+
+                    GUI.backgroundColor = oldColor;
+
+                    GUILayout.Label("Fill Inaccessible?", centeredText);
+
+                    EditorGUILayout.BeginHorizontal();
+
+                    oldColor = GUI.backgroundColor;
+                    GUI.backgroundColor = greenColour;
+
+                    if (GUILayout.Button("yes!"))
+                    {
+                        Hex hex = Selection.gameObjects[0].GetComponent<Hex>();
+                        Hex currentHex;
+
+                        List<Hex> openList = new List<Hex>();
+                        List<Hex> closeList = new List<Hex>();
+
+                        openList.Add(hex);
+
+                        while (openList.Count > 0)
+                        {
+                            currentHex = openList[0];
+                            openList.RemoveAt(0);
+                            closeList.Add(currentHex);
+
+                            currentHex.SetTraversable(false, inaccessibleColour);
+
+                            foreach (Hex neighbour in currentHex.Neighbours)
+                            {
+                                if (neighbour.IsTraversable && !openList.Contains(neighbour) && !closeList.Contains(neighbour))
+                                {
+                                    openList.Add(neighbour);
+                                }
+                            }
+                        }
+
+                        fillNodesInaccessible = false;
+                    }
+
+                    GUI.backgroundColor = oldColor;
+
+                    if (GUILayout.Button("No..."))
+                    {
+                        fillNodesInaccessible = false;
+                    }
+
+                    EditorGUILayout.EndHorizontal();
+
+                    EditorGUILayout.EndVertical();
+                }
+                else if (!fillNodesTraversable)
+                {
+                    if (GUILayout.Button("Inaccessible"))
+                    {
+                        fillNodesInaccessible = true;
+                    }
                 }
 
                 GUI.backgroundColor = oldColor;
 
                 EditorGUILayout.EndHorizontal();
 
-                EditorGUILayout.EndVertical();
-            }
-            else if (!fillNodesInaccessible)
-            {
-                if (GUILayout.Button("Traversable"))
-                {
-                    fillNodesTraversable = true;
-                }
-            }
+                EditorGUI.EndDisabledGroup();
 
-            GUI.backgroundColor = oldColor;
+                #endregion
 
-            oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = redColour;
+                EditorGUILayout.Space();
 
-            if (!fillNodesTraversable && fillNodesInaccessible)
-            {
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = orangeColour;
+                #region Assest Assist
 
-                EditorGUILayout.BeginVertical("Box");
+                GUILayout.Label("Greybox Assist:", centeredText);
 
-                GUI.backgroundColor = oldColor;
-
-                GUILayout.Label("Fill Inaccessible?", centeredText);
-
-                EditorGUILayout.BeginHorizontal();
+                EditorGUI.BeginDisabledGroup(Selection.gameObjects.Length == 0);
 
                 oldColor = GUI.backgroundColor;
                 GUI.backgroundColor = greenColour;
 
-                if (GUILayout.Button("yes!"))
+                if (GUILayout.Button("Snap Objects"))
                 {
-                    Hex hex = Selection.gameObjects[0].GetComponent<Hex>();
-                    Hex currentHex;
-
-                    List<Hex> openList = new List<Hex>();
-                    List<Hex> closeList = new List<Hex>();
-
-                    openList.Add(hex);
-
-                    while (openList.Count > 0)
+                    foreach (Transform transform in Selection.GetTransforms(SelectionMode.TopLevel))
                     {
-                        currentHex = openList[0];
-                        openList.RemoveAt(0);
-                        closeList.Add(currentHex);
+                        Vector3 position = grid.GetHexFromPosition(transform.position).transform.position;
 
-                        currentHex.SetTraversable(false, inaccessibleColour);
+                        position.y = transform.position.y;
+                        transform.position = position;
+                    }
+                }
 
-                        foreach (Hex neighbour in currentHex.Neighbours)
+                if (GUILayout.Button("Select Hexes"))
+                {
+                    GameObject[] hexSelection = new GameObject[Selection.GetTransforms(SelectionMode.TopLevel).Length];
+                    int i = 0;
+
+                    foreach (Transform transform in Selection.GetTransforms(SelectionMode.TopLevel))
+                    {
+                        if (transform.parent != null && transform.parent.GetComponent<Hex>())
                         {
-                            if (neighbour.IsTraversable && !openList.Contains(neighbour) && !closeList.Contains(neighbour))
-                            {
-                                openList.Add(neighbour);
-                            }
+                            hexSelection[i++] = transform.parent.gameObject;
                         }
                     }
 
-                    fillNodesInaccessible = false;
+                    Selection.objects = hexSelection;
                 }
 
                 GUI.backgroundColor = oldColor;
 
-                if (GUILayout.Button("No..."))
-                {
-                    fillNodesInaccessible = false;
-                }
+                EditorGUI.EndDisabledGroup();
+
+                #endregion
+
+                EditorGUILayout.Space();
+
+                GUILayout.Label("Visual Settings:", centeredText);
+
+                //traversableColour = EditorGUILayout.ColorField("Traversable", traversableColour);
+                //inaccessibleColour = EditorGUILayout.ColorField("Inaccessible", inaccessibleColour);
+                //connectionColour = EditorGUILayout.ColorField("Connection", connectionColour);
+
+                EditorGUILayout.BeginHorizontal();
+
+                GUILayout.Label("Inaccessible Alpha");
+                inaccessibleAlpha = EditorGUILayout.Slider(inaccessibleAlpha, 0.0f, 1.0f);
 
                 EditorGUILayout.EndHorizontal();
 
-                EditorGUILayout.EndVertical();
+                EditorGUILayout.BeginHorizontal();
+
+                GUILayout.Label("Hex Scale:");
+                HexScale = EditorGUILayout.FloatField(HexScale);
+
+                EditorGUILayout.EndHorizontal();
             }
-            else if (!fillNodesTraversable)
-            {
-                if (GUILayout.Button("Inaccessible"))
-                {
-                    fillNodesInaccessible = true;
-                }
-            }
-
-            GUI.backgroundColor = oldColor;
-
-            EditorGUILayout.EndHorizontal();
-
-            EditorGUI.EndDisabledGroup();
 
             #endregion
 
-            EditorGUILayout.Space();
+            #region GameFlow
 
-            #region Assest Assist
-
-            GUILayout.Label("Greybox Assist:", centeredText);
-
-            EditorGUI.BeginDisabledGroup(Selection.gameObjects.Length == 0);
-
-            oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = greenColour;
-
-            if (GUILayout.Button("Snap Objects"))
+            else if (selectedTab == 1)
             {
-                foreach (Transform transform in Selection.GetTransforms(SelectionMode.TopLevel))
+                #region Player Spawn points 
+
+                GUILayout.Label("Player Spawn Points", centeredText);
+
+                EditorGUILayout.BeginHorizontal();
+
+                EditorGUI.BeginDisabledGroup(!hasTileSelected || hasSpawnerSelected);
+
+                oldColor = GUI.backgroundColor;
+                GUI.backgroundColor = brownColour;
+
+                if (GameObject.FindGameObjectWithTag("EarthUnitSpawn") == null)
                 {
-                    Vector3 position = grid.GetHexFromPosition(transform.position).transform.position;
-
-                    position.y = transform.position.y;
-                    transform.position = position;
-                }
-            }
-
-            if (GUILayout.Button("Select Hexes"))
-            {
-                GameObject[] hexSelection = new GameObject[Selection.GetTransforms(SelectionMode.TopLevel).Length];
-                int i = 0;
-
-                foreach (Transform transform in Selection.GetTransforms(SelectionMode.TopLevel))
-                {
-                    if (transform.parent != null && transform.parent.GetComponent<Hex>())
+                    if (GUILayout.Button("Add Earth Spawn"))
                     {
-                        hexSelection[i++] = transform.parent.gameObject;
+                        Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
+
+                        GameObject spawnerGO = new GameObject("Earth Spawner")
+                        {
+                            tag = "EarthUnitSpawn"
+                        };
+
+                        Spawner spawner = spawnerGO.AddComponent<Spawner>();
+                        spawner.TextColour = brownColour;
+                        spawner.drawText = true;
+                        spawner.index = -1;
+
+                        spawner.transform.parent = tile.transform;
+                        spawner.transform.position = tile.transform.position;
+                        spawner.TurnToSpawn = 0;
+                    }
+                }
+                else
+                {
+                    if (GUILayout.Button("Move Earth Spawn"))
+                    {
+                        Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
+                        Spawner spawner = GameObject.FindGameObjectWithTag("EarthUnitSpawn").GetComponent<Spawner>();
+
+                        spawner.transform.parent = tile.transform;
+                        spawner.transform.position = tile.transform.position;
+                        spawner.TurnToSpawn = 0;
                     }
                 }
 
-                Selection.objects = hexSelection;
-            }
+                GUI.backgroundColor = oldColor;
 
-            GUI.backgroundColor = oldColor;
-
-            EditorGUI.EndDisabledGroup();
-
-            #endregion
-
-            EditorGUILayout.Space();
-
-            GUILayout.Label("Visual Settings:", centeredText);
-
-            //traversableColour = EditorGUILayout.ColorField("Traversable", traversableColour);
-            //inaccessibleColour = EditorGUILayout.ColorField("Inaccessible", inaccessibleColour);
-            //connectionColour = EditorGUILayout.ColorField("Connection", connectionColour);
-
-            EditorGUILayout.BeginHorizontal();
-
-            GUILayout.Label("Inaccessible Alpha");
-            inaccessibleAlpha = EditorGUILayout.Slider(inaccessibleAlpha, 0.0f, 1.0f);
-
-            EditorGUILayout.EndHorizontal();
-
-            EditorGUILayout.BeginHorizontal();
-
-            GUILayout.Label("Hex Scale:");
-            HexScale = EditorGUILayout.FloatField(HexScale);
-
-            EditorGUILayout.EndHorizontal();
-        }
-
-        #endregion
-
-        #region GameFlow
-
-        else if (selectedTab == 1)
-        {
-            #region Player Spawn points 
-
-            GUILayout.Label("Player Spawn Points", centeredText);
-
-            EditorGUILayout.BeginHorizontal();
-
-            EditorGUI.BeginDisabledGroup(!hasTileSelected || hasSpawnerSelected);
-
-            oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = brownColour;
-
-            if (GameObject.FindGameObjectWithTag("EarthUnitSpawn") == null)
-            {
-                if (GUILayout.Button("Add Earth Spawn"))
-                {
-                    Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
-
-                    GameObject spawnerGO = new GameObject("Earth Spawner")
-                    {
-                        tag = "EarthUnitSpawn"
-                    };
-
-                    Spawner spawner = spawnerGO.AddComponent<Spawner>();
-                    spawner.TextColour = brownColour;
-                    spawner.drawText = true;
-                    spawner.index = -1;
-
-                    spawner.transform.parent = tile.transform;
-                    spawner.transform.position = tile.transform.position;
-                    spawner.TurnToSpawn = 0;
-                }
-            }
-            else
-            {
-                if (GUILayout.Button("Move Earth Spawn"))
-                {
-                    Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
-                    Spawner spawner = GameObject.FindGameObjectWithTag("EarthUnitSpawn").GetComponent<Spawner>();
-
-                    spawner.transform.parent = tile.transform;
-                    spawner.transform.position = tile.transform.position;
-                    spawner.TurnToSpawn = 0;
-                }
-            }
-
-            GUI.backgroundColor = oldColor;
-
-            oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = blueColour;
-
-            if (GameObject.FindGameObjectWithTag("LightningUnitSpawn") == null)
-            {
-                if (GUILayout.Button("Add Lightning spawn"))
-                {
-                    Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
-
-                    GameObject spawnerGO = new GameObject("Lightning Spawner")
-                    {
-                        tag = "LightningUnitSpawn"
-                    };
-
-                    Spawner spawner = spawnerGO.AddComponent<Spawner>();
-                    spawner.TextColour = blueColour;
-                    spawner.drawText = true;
-                    spawner.index = -1;
-
-                    spawner.transform.parent = tile.transform;
-                    spawner.transform.position = tile.transform.position;
-                    spawner.TurnToSpawn = 0;
-                }
-            }
-            else
-            {
-                if (GUILayout.Button("Move Lightning Spawn"))
-                {
-                    Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
-                    Spawner spawner = GameObject.FindGameObjectWithTag("LightningUnitSpawn").GetComponent<Spawner>();
-
-                    spawner.transform.parent = tile.transform;
-                    spawner.transform.position = tile.transform.position;
-                    spawner.TurnToSpawn = 0;
-                }
-            }
-
-            GUI.backgroundColor = oldColor;
-
-            EditorGUI.EndDisabledGroup();
-
-            EditorGUILayout.EndHorizontal();
-
-            #endregion
-
-            EditorGUILayout.Space();
-
-            #region Enemy Spawn Points
-
-            GUILayout.Label("Enemy Spawn Points", centeredText);
-
-            EditorGUI.BeginDisabledGroup(!hasTileSelected);
-
-            EditorGUILayout.BeginHorizontal();
-
-            // if the selected tile has a Spawner change it rather than add a new one
-            if (hasSpawnerSelected)
-            {
                 oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = orangeColour;
+                GUI.backgroundColor = blueColour;
 
-                if (GUILayout.Button("Change " + spawnerButtonName))
+                if (GameObject.FindGameObjectWithTag("LightningUnitSpawn") == null)
                 {
-                    foreach (Spawner spawner in selectedSpawners)
+                    if (GUILayout.Button("Add Lightning spawn"))
                     {
-                        spawner.index = currentID;
-                        spawner.TurnToSpawn = turnToSpawn;
+                        Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
 
-                        if (enemyType == UnitType.watcher)
+                        GameObject spawnerGO = new GameObject("Lightning Spawner")
                         {
-                            spawner.UnitToSpawn = Resources.Load<AI_Agent>("EnemyCharacters/WatcherUnit");
-                            spawner.TextColour = Color.magenta;
+                            tag = "LightningUnitSpawn"
+                        };
+
+                        Spawner spawner = spawnerGO.AddComponent<Spawner>();
+                        spawner.TextColour = blueColour;
+                        spawner.drawText = true;
+                        spawner.index = -1;
+
+                        spawner.transform.parent = tile.transform;
+                        spawner.transform.position = tile.transform.position;
+                        spawner.TurnToSpawn = 0;
+                    }
+                }
+                else
+                {
+                    if (GUILayout.Button("Move Lightning Spawn"))
+                    {
+                        Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
+                        Spawner spawner = GameObject.FindGameObjectWithTag("LightningUnitSpawn").GetComponent<Spawner>();
+
+                        spawner.transform.parent = tile.transform;
+                        spawner.transform.position = tile.transform.position;
+                        spawner.TurnToSpawn = 0;
+                    }
+                }
+
+                GUI.backgroundColor = oldColor;
+
+                EditorGUI.EndDisabledGroup();
+
+                EditorGUILayout.EndHorizontal();
+
+                #endregion
+
+                EditorGUILayout.Space();
+
+                #region Enemy Spawn Points
+
+                GUILayout.Label("Enemy Spawn Points", centeredText);
+
+                EditorGUI.BeginDisabledGroup(!hasTileSelected);
+
+                EditorGUILayout.BeginHorizontal();
+
+                // if the selected tile has a Spawner change it rather than add a new one
+                if (hasSpawnerSelected)
+                {
+                    oldColor = GUI.backgroundColor;
+                    GUI.backgroundColor = orangeColour;
+
+                    if (GUILayout.Button("Change " + spawnerButtonName))
+                    {
+                        foreach (Spawner spawner in selectedSpawners)
+                        {
+                            spawner.index = currentID;
+                            spawner.TurnToSpawn = turnToSpawn;
+                            spawner.hasVolt = hasVolt;
+
+                            if (enemyType == UnitType.watcher)
+                            {
+                                spawner.UnitToSpawn = Resources.Load<AI_Agent>("EnemyCharacters/WatcherUnit");
+                                spawner.TextColour = Color.magenta;
+                            }
+                            else if (enemyType == UnitType.runner)
+                            {
+                                spawner.UnitToSpawn = Resources.Load<AI_Agent>("EnemyCharacters/RunnerUnit");
+                                spawner.TextColour = Color.red;
+                            }
                         }
-                        else if (enemyType == UnitType.runner)
+
+                        UpdateTriggerConnections();
+                    }
+
+                    GUI.backgroundColor = oldColor;
+                }
+                else
+                {
+                    oldColor = GUI.backgroundColor;
+                    GUI.backgroundColor = greenColour;
+
+                    Hex[] selectedTiles = Selection.GetFiltered<Hex>(SelectionMode.Deep);
+
+                    string buttonName = (selectedTiles.Length == 1) ? "Add Spawner" : "Add Spawners";
+
+                    if (GUILayout.Button(buttonName))
+                    {
+                        foreach (Hex tile in selectedTiles)
                         {
-                            spawner.UnitToSpawn = Resources.Load<AI_Agent>("EnemyCharacters/RunnerUnit");
-                            spawner.TextColour = Color.red;
+                            GameObject spawnerGO = new GameObject("EnemySpawner");
+                            Spawner spawner = spawnerGO.AddComponent<Spawner>();
+                            spawner.drawText = true;
+                            spawner.currentHex = tile;
+                            spawner.index = currentID;
+                            spawner.hasVolt = hasVolt;
+
+                            if (enemyType == UnitType.watcher)
+                            {
+                                spawner.UnitToSpawn = Resources.Load<Unit>("EnemyCharacters/WatcherUnit");
+                                spawner.TextColour = Color.red;
+                            }
+                            else if (enemyType == UnitType.runner)
+                            {
+                                spawner.UnitToSpawn = Resources.Load<Unit>("EnemyCharacters/RunnerUnit");
+                                spawner.TextColour = Color.red;
+                            }
+
+                            spawner.transform.parent = tile.transform;
+                            spawner.transform.position = tile.transform.position;
+                            spawner.transform.localEulerAngles = new Vector3(180, 0.0f, 0.0f);
+                            spawner.TurnToSpawn = turnToSpawn;
+                        }
+
+                        UpdateSpawnerSelection();
+
+
+                    }
+
+                    GUI.backgroundColor = oldColor;
+                }
+
+                EditorGUI.EndDisabledGroup();
+
+                GUILayout.Label("Turn:");
+
+                turnToSpawn = EditorGUILayout.IntField(turnToSpawn);
+
+                EditorGUILayout.EndHorizontal();
+
+                EditorGUILayout.BeginHorizontal();
+
+                GUILayout.Label("Enemy: ");
+
+                enemyType = (UnitType)EditorGUILayout.EnumPopup(enemyType);
+
+                GUILayout.Label("Has volt: ");
+
+                skin.toggle.padding = new RectOffset(0, 0, 100, 0);
+
+                hasVolt = EditorGUILayout.Toggle(hasVolt);
+
+                EditorGUILayout.EndHorizontal();
+
+                EditorGUILayout.Space();
+
+                EditorGUILayout.BeginHorizontal();
+
+                EditorGUI.BeginDisabledGroup(!hasSpawnerSelected);
+
+                oldColor = GUI.backgroundColor;
+                GUI.backgroundColor = redColour;
+
+                if (GUILayout.Button("Remove " + spawnerButtonName))
+                {
+                    GameObject[] selectedObjects = Selection.gameObjects;
+
+                    foreach (GameObject obj in selectedObjects)
+                    {
+                        Hex[] tiles = obj.GetComponentsInChildren<Hex>();
+
+                        foreach (Hex tile in tiles)
+                        {
+                            if (tile.GetComponentInChildren<Spawner>())
+                            {
+                                DestroyImmediate(tile.GetComponentInChildren<Spawner>().gameObject);
+                            }
                         }
                     }
 
                     UpdateTriggerConnections();
-                }
-
-                GUI.backgroundColor = oldColor;
-            }
-            else
-            {
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = greenColour;
-
-                Hex[] selectedTiles = Selection.GetFiltered<Hex>(SelectionMode.Deep);
-
-                string buttonName = (selectedTiles.Length == 1) ? "Add Spawner" : "Add Spawners";
-
-                if (GUILayout.Button(buttonName))
-                {
-                    foreach (Hex tile in selectedTiles)
-                    {
-                        GameObject spawnerGO = new GameObject("EnemySpawner");
-                        Spawner spawner = spawnerGO.AddComponent<Spawner>();
-                        spawner.drawText = true;
-                        spawner.currentHex = tile;
-                        spawner.index = currentID;
-
-                        if (enemyType == UnitType.watcher)
-                        {
-                            spawner.UnitToSpawn = Resources.Load<Unit>("EnemyCharacters/WatcherUnit");
-                            spawner.TextColour = Color.red;
-                        }
-                        else if (enemyType == UnitType.runner)
-                        {
-                            spawner.UnitToSpawn = Resources.Load<Unit>("EnemyCharacters/RunnerUnit");
-                            spawner.TextColour = Color.red;
-                        }
-
-                        spawner.transform.parent = tile.transform;
-                        spawner.transform.position = tile.transform.position;
-                        spawner.transform.localEulerAngles = new Vector3(180, 0.0f, 0.0f);
-                        spawner.TurnToSpawn = turnToSpawn;
-                    }
-
                     UpdateSpawnerSelection();
-
-
+                    currentID = 0;
                 }
 
-                GUI.backgroundColor = oldColor;
-            }
+                EditorGUI.EndDisabledGroup();
 
-            EditorGUI.EndDisabledGroup();
-
-            GUILayout.Label("Turn:");
-
-            turnToSpawn = EditorGUILayout.IntField(turnToSpawn);
-
-            EditorGUILayout.EndHorizontal();
-
-            EditorGUILayout.BeginHorizontal();
-
-            GUILayout.Label("Enemy: ");
-
-            enemyType = (UnitType)EditorGUILayout.EnumPopup(enemyType);
-
-            GUILayout.Label("Has volt: ");
-
-            hasVolt = EditorGUILayout.Toggle(hasVolt);
-
-            EditorGUILayout.EndHorizontal();
-
-            EditorGUILayout.Space();
-
-            EditorGUILayout.BeginHorizontal();
-
-            EditorGUI.BeginDisabledGroup(!hasSpawnerSelected);
-
-            oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = redColour;
-
-            if (GUILayout.Button("Remove " + spawnerButtonName))
-            {
-                GameObject[] selectedObjects = Selection.gameObjects;
-
-                foreach (GameObject obj in selectedObjects)
+                if (GUILayout.Button("Remove All Spawners"))
                 {
-                    Hex[] tiles = obj.GetComponentsInChildren<Hex>();
+                    Spawner[] spawnPoints = grid.GetComponentsInChildren<Spawner>();
 
-                    foreach (Hex tile in tiles)
+                    foreach (Spawner spawner in spawnPoints)
                     {
-                        if (tile.GetComponentInChildren<Spawner>())
+                        if (spawner.name == "EnemySpawner")
                         {
-                            DestroyImmediate(tile.GetComponentInChildren<Spawner>().gameObject);
+                            DestroyImmediate(spawner.gameObject);
                         }
                     }
-                }
 
-                UpdateTriggerConnections();
-                UpdateSpawnerSelection();
-                currentID = 0;
-            }
-
-            EditorGUI.EndDisabledGroup();
-
-            if (GUILayout.Button("Remove All Spawners"))
-            {
-                Spawner[] spawnPoints = grid.GetComponentsInChildren<Spawner>();
-
-                foreach (Spawner spawner in spawnPoints)
-                {
-                    if (spawner.name == "EnemySpawner")
-                    {
-                        DestroyImmediate(spawner.gameObject);
-                    }
-                }
-
-                UpdateTriggerConnections();
-                UpdateSpawnerSelection();
-                currentID = 0;
-            }
-
-            GUI.backgroundColor = oldColor;
-
-            EditorGUILayout.EndHorizontal();
-
-            EditorGUILayout.Space();
-
-            GUILayout.Label("Spawn Triggers:", centeredText);
-
-            EditorGUI.BeginDisabledGroup(Selection.gameObjects.Length != 1);
-
-            EditorGUILayout.BeginHorizontal();
-
-            // if the selected tile has a Spawner change it rather than add a new one
-            if (Selection.gameObjects.Length == 1 && Selection.gameObjects[0].GetComponentInChildren<SpawnTrigger>())
-            {
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = orangeColour;
-
-                if (GUILayout.Button("Change Trigger"))
-                {
-                    SpawnTrigger spawnTrigger = Selection.gameObjects[0].GetComponentInChildren<SpawnTrigger>();
-                    spawnTrigger.index = currentID;
-                    spawnTrigger.UpdateSpawnerList();
+                    UpdateTriggerConnections();
+                    UpdateSpawnerSelection();
+                    currentID = 0;
                 }
 
                 GUI.backgroundColor = oldColor;
-            }
-            else
-            {
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = greenColour;
 
-                if (GUILayout.Button("Add Trigger"))
+                EditorGUILayout.EndHorizontal();
+
+                EditorGUILayout.Space();
+
+                GUILayout.Label("Spawn Triggers:", centeredText);
+
+                EditorGUI.BeginDisabledGroup(Selection.gameObjects.Length != 1);
+
+                EditorGUILayout.BeginHorizontal();
+
+                // if the selected tile has a Spawner change it rather than add a new one
+                if (Selection.gameObjects.Length == 1 && Selection.gameObjects[0].GetComponentInChildren<SpawnTrigger>())
+                {
+                    oldColor = GUI.backgroundColor;
+                    GUI.backgroundColor = orangeColour;
+
+                    if (GUILayout.Button("Change Trigger"))
+                    {
+                        SpawnTrigger spawnTrigger = Selection.gameObjects[0].GetComponentInChildren<SpawnTrigger>();
+                        spawnTrigger.index = currentID;
+                        spawnTrigger.UpdateSpawnerList();
+                    }
+
+                    GUI.backgroundColor = oldColor;
+                }
+                else
+                {
+                    oldColor = GUI.backgroundColor;
+                    GUI.backgroundColor = greenColour;
+
+                    if (GUILayout.Button("Add Trigger"))
+                    {
+                        Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
+
+                        GameObject go = new GameObject("SpawnTrigger");
+                        go.transform.parent = tile.transform;
+                        go.transform.localPosition = Vector3.zero;
+
+                        BoxCollider collider = go.AddComponent<BoxCollider>();
+                        collider.isTrigger = true;
+
+                        SpawnTrigger spawnTrigger = go.AddComponent<SpawnTrigger>();
+                        spawnTrigger.UpdateSpawnerList();
+                    }
+
+                    GUI.backgroundColor = oldColor;
+                }
+
+                EditorGUI.EndDisabledGroup();
+
+                EditorGUI.BeginDisabledGroup(Selection.gameObjects.Length != 1 || !hasTriggerSelected);
+
+                oldColor = GUI.backgroundColor;
+                GUI.backgroundColor = redColour;
+
+                if (GUILayout.Button("Remove Trigger"))
+                {
+                    Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
+                    SpawnTrigger destroyedTrigger = tile.GetComponentInChildren<SpawnTrigger>();
+
+                    DestroyImmediate(destroyedTrigger);
+
+                    UpdateTriggerConnections();
+                    UpdateSpawnerSelection();
+                }
+
+                GUI.backgroundColor = oldColor;
+
+                EditorGUILayout.EndHorizontal();
+
+                EditorGUI.EndDisabledGroup();
+
+                #endregion
+
+                EditorGUILayout.Space();
+
+                GUILayout.Label("Scene Transition:", centeredText);
+
+                EditorGUI.BeginDisabledGroup(Selection.gameObjects.Length != 1 || !hasTileSelected);
+
+                EditorGUILayout.BeginHorizontal();
+
+                // if the selected tile has a scene transition change it rather than add a new one
+                if (Selection.gameObjects.Length == 1 && Selection.gameObjects[0].GetComponentInChildren<SceneTransitionPoint>())
+                {
+                    oldColor = GUI.backgroundColor;
+                    GUI.backgroundColor = orangeColour;
+
+                    if (GUILayout.Button("Change Transition"))
+                    {
+                        SceneTransitionPoint transition = Selection.gameObjects[0].GetComponentInChildren<SceneTransitionPoint>();
+                        transition.NextLevelIndex = loadLevel;
+                    }
+
+                    GUI.backgroundColor = oldColor;
+                }
+                else
+                {
+                    oldColor = GUI.backgroundColor;
+                    GUI.backgroundColor = greenColour;
+
+                    if (GUILayout.Button("Add Transition"))
+                    {
+                        Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
+
+                        GameObject transitionGO = new GameObject("SceneTransition");
+
+                        SceneTransitionPoint transition = transitionGO.AddComponent<SceneTransitionPoint>();
+                        transition.NextLevelIndex = loadLevel;
+                        transition.drawText = true;
+
+                        BoxCollider trigger = transitionGO.AddComponent<BoxCollider>();
+                        trigger.isTrigger = true;
+
+                        transition.transform.parent = tile.transform;
+                        transition.transform.position = tile.transform.position;
+                    }
+
+                    GUI.backgroundColor = oldColor;
+                }
+
+                GUILayout.Label("Load Level :");
+
+                loadLevel = EditorGUILayout.IntField(loadLevel);
+
+                EditorGUILayout.EndHorizontal();
+
+                EditorGUI.EndDisabledGroup();
+
+                EditorGUILayout.BeginHorizontal();
+
+                EditorGUI.BeginDisabledGroup(!hasTransitionSelected || !hasTileSelected);
+
+                oldColor = GUI.backgroundColor;
+                GUI.backgroundColor = redColour;
+
+                if (GUILayout.Button("Remove Scene Transition"))
+                {
+                    GameObject[] selectedObjects = Selection.gameObjects;
+
+                    SceneTransitionPoint transition = selectedObjects[0].GetComponentInChildren<SceneTransitionPoint>();
+
+                    DestroyImmediate(transition.gameObject);
+                }
+
+                EditorGUI.EndDisabledGroup();
+
+                if (GUILayout.Button("Remove All Scene Transitions"))
+                {
+                    SceneTransitionPoint[] transitions = grid.GetComponentsInChildren<SceneTransitionPoint>();
+
+                    foreach (SceneTransitionPoint transition in transitions)
+                    {
+                        DestroyImmediate(transition.gameObject);
+                    }
+                }
+
+                GUI.backgroundColor = oldColor;
+
+                EditorGUILayout.EndHorizontal();
+
+                EditorGUILayout.Space();
+
+                GUILayout.Label("State Transition:", centeredText);
+
+                EditorGUI.BeginDisabledGroup(Selection.gameObjects.Length != 1 || !hasTileSelected);
+
+                EditorGUILayout.BeginHorizontal();
+
+                GUILayout.Label("From ");
+
+                currentState = (GameState)EditorGUILayout.EnumPopup(currentState);
+
+                GUILayout.Label(" To ");
+
+                targetState = (GameState)EditorGUILayout.EnumPopup(targetState);
+
+                EditorGUILayout.EndHorizontal();
+
+                EditorGUILayout.BeginHorizontal();
+
+                if (targetState == GameState.battle)
+                {
+                    GUILayout.Label("Enemies to kill ");
+                    numberToKill = EditorGUILayout.IntField(numberToKill);
+                }
+
+                // if the selected tile has a scene transition change it rather than add a new one
+                if (Selection.gameObjects.Length == 1 && Selection.gameObjects[0].GetComponentInChildren<StateTransitionPoint>())
+                {
+                    oldColor = GUI.backgroundColor;
+                    GUI.backgroundColor = orangeColour;
+
+                    if (GUILayout.Button("Change Transition"))
+                    {
+                        StateTransitionPoint sceneTransition = Selection.gameObjects[0].GetComponentInChildren<StateTransitionPoint>();
+                        sceneTransition.TargetState = targetState;
+                        sceneTransition.CurrentState = currentState;
+                        sceneTransition.numberToKill = numberToKill;
+
+                        sceneTransition.index = currentID;
+                    }
+
+                    GUI.backgroundColor = oldColor;
+                }
+                else
+                {
+                    oldColor = GUI.backgroundColor;
+                    GUI.backgroundColor = greenColour;
+
+                    if (GUILayout.Button("Add Transition"))
+                    {
+                        Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
+
+                        GameObject transitionGO = new GameObject("stateTransition");
+
+                        StateTransitionPoint sceneTransition = transitionGO.AddComponent<StateTransitionPoint>();
+                        sceneTransition.TargetState = targetState;
+                        sceneTransition.CurrentState = currentState;
+                        sceneTransition.numberToKill = numberToKill;
+
+                        sceneTransition.drawText = true;
+                        sceneTransition.index = currentID;
+
+                        BoxCollider trigger = transitionGO.AddComponent<BoxCollider>();
+                        trigger.isTrigger = true;
+
+                        sceneTransition.transform.parent = tile.transform;
+                        sceneTransition.transform.position = tile.transform.position;
+                    }
+
+                    GUI.backgroundColor = oldColor;
+                }
+
+                EditorGUILayout.EndHorizontal();
+
+                EditorGUILayout.Space();
+
+                EditorGUILayout.BeginHorizontal();
+
+                oldColor = GUI.backgroundColor;
+                GUI.backgroundColor = brownColour;
+
+                if (GUILayout.Button("Earth Hex"))
                 {
                     Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
 
-                    GameObject go = new GameObject("SpawnTrigger");
-                    go.transform.parent = tile.transform;
-                    go.transform.localPosition = Vector3.zero;
+                    StateTransitionPoint[] transitions = FindObjectsOfType<StateTransitionPoint>();
 
-                    BoxCollider collider = go.AddComponent<BoxCollider>();
-                    collider.isTrigger = true;
-
-                    SpawnTrigger spawnTrigger = go.AddComponent<SpawnTrigger>();
-                    spawnTrigger.UpdateSpawnerList();
+                    foreach (StateTransitionPoint point in transitions)
+                    {
+                        if (point.index == currentID)
+                        {
+                            point.SetEarthHex(tile);
+                        }
+                    }
                 }
 
                 GUI.backgroundColor = oldColor;
+
+                oldColor = GUI.backgroundColor;
+                GUI.backgroundColor = blueColour;
+
+                if (GUILayout.Button("Lightning Hex"))
+                {
+                    Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
+
+                    StateTransitionPoint[] transitions = FindObjectsOfType<StateTransitionPoint>();
+
+                    foreach (StateTransitionPoint point in transitions)
+                    {
+                        if (point.index == currentID)
+                        {
+                            point.SetLightninghHex(tile);
+                        }
+                    }
+                }
+
+                GUI.backgroundColor = oldColor;
+
+                EditorGUILayout.EndHorizontal();
+
+                // Check point
+                oldColor = GUI.backgroundColor;
+                GUI.backgroundColor = yellowColour;
+
+                if (GUILayout.Button("Check Point Hex"))
+                {
+                    Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
+
+                    StateTransitionPoint[] transitions = FindObjectsOfType<StateTransitionPoint>();
+
+                    foreach (StateTransitionPoint point in transitions)
+                    {
+                        if (point.index == currentID)
+                        {
+                            point.SetCheckPoint(tile);
+                        }
+                    }
+                }
+
+                GUI.backgroundColor = oldColor;
+
+                EditorGUILayout.Space();
+
+                EditorGUI.EndDisabledGroup();
+
+                EditorGUILayout.BeginHorizontal();
+
+                oldColor = GUI.backgroundColor;
+                GUI.backgroundColor = redColour;
+
+                EditorGUI.BeginDisabledGroup(!hasStateTransitionSelected || !hasTileSelected);
+
+                if (GUILayout.Button("Remove State Transition"))
+                {
+                    GameObject[] selectedObjects = Selection.gameObjects;
+
+                    StateTransitionPoint transition = selectedObjects[0].GetComponentInChildren<StateTransitionPoint>();
+
+                    DestroyImmediate(transition.gameObject);
+                }
+
+                EditorGUI.EndDisabledGroup();
+
+                if (GUILayout.Button("Remove All State Transitions"))
+                {
+                    StateTransitionPoint[] transitions = grid.GetComponentsInChildren<StateTransitionPoint>();
+
+                    foreach (StateTransitionPoint transition in transitions)
+                    {
+                        DestroyImmediate(transition.gameObject);
+                    }
+                }
+
+                GUI.backgroundColor = oldColor;
+
+                EditorGUILayout.EndHorizontal();
+
+                EditorGUILayout.Space();
+
+                EditorGUILayout.BeginHorizontal();
+
+                GUILayout.Label("ID:");
+
+                currentID = EditorGUILayout.IntField(currentID);
+
+                EditorGUILayout.EndHorizontal();
             }
-
-            EditorGUI.EndDisabledGroup();
-
-            EditorGUI.BeginDisabledGroup(Selection.gameObjects.Length != 1 || !hasTriggerSelected);
-
-            oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = redColour;
-
-            if (GUILayout.Button("Remove Trigger"))
-            {
-                Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
-                SpawnTrigger destroyedTrigger = tile.GetComponentInChildren<SpawnTrigger>();
-
-                DestroyImmediate(destroyedTrigger);
-
-                UpdateTriggerConnections();
-                UpdateSpawnerSelection();
-            }
-
-            GUI.backgroundColor = oldColor;
-
-            EditorGUILayout.EndHorizontal();
-
-            EditorGUI.EndDisabledGroup();
 
             #endregion
 
-            EditorGUILayout.Space();
+            #region Settings
 
-            GUILayout.Label("Scene Transition:", centeredText);
-
-            EditorGUI.BeginDisabledGroup(Selection.gameObjects.Length != 1 || !hasTileSelected);
-
-            EditorGUILayout.BeginHorizontal();
-
-            // if the selected tile has a scene transition change it rather than add a new one
-            if (Selection.gameObjects.Length == 1 && Selection.gameObjects[0].GetComponentInChildren<SceneTransitionPoint>())
+            else if (selectedTab == 2)
             {
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = orangeColour;
-
-                if (GUILayout.Button("Change Transition"))
-                {
-                    SceneTransitionPoint transition = Selection.gameObjects[0].GetComponentInChildren<SceneTransitionPoint>();
-                    transition.NextLevelIndex = loadLevel;
-                }
-
-                GUI.backgroundColor = oldColor;
-            }
-            else
-            {
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = greenColour;
-
-                if (GUILayout.Button("Add Transition"))
-                {
-                    Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
-
-                    GameObject transitionGO = new GameObject("SceneTransition");
-
-                    SceneTransitionPoint transition = transitionGO.AddComponent<SceneTransitionPoint>();
-                    transition.NextLevelIndex = loadLevel;
-                    transition.drawText = true;
-
-                    BoxCollider trigger = transitionGO.AddComponent<BoxCollider>();
-                    trigger.isTrigger = true;
-
-                    transition.transform.parent = tile.transform;
-                    transition.transform.position = tile.transform.position;
-                }
-
-                GUI.backgroundColor = oldColor;
+                healthyMode = EditorGUILayout.Toggle("Healthy Mode: ", healthyMode);
             }
 
-            GUILayout.Label("Load Level :");
+            #endregion
 
-            loadLevel = EditorGUILayout.IntField(loadLevel);
-
-            EditorGUILayout.EndHorizontal();
-
-            EditorGUI.EndDisabledGroup();
-
-            EditorGUILayout.BeginHorizontal();
-
-            EditorGUI.BeginDisabledGroup(!hasTransitionSelected || !hasTileSelected);
-
-            oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = redColour;
-
-            if (GUILayout.Button("Remove Scene Transition"))
-            {
-                GameObject[] selectedObjects = Selection.gameObjects;
-
-                SceneTransitionPoint transition = selectedObjects[0].GetComponentInChildren<SceneTransitionPoint>();
-
-                DestroyImmediate(transition.gameObject);
-            }
-
-            EditorGUI.EndDisabledGroup();
-
-            if (GUILayout.Button("Remove All Scene Transitions"))
-            {
-                SceneTransitionPoint[] transitions = grid.GetComponentsInChildren<SceneTransitionPoint>();
-
-                foreach (SceneTransitionPoint transition in transitions)
-                {
-                    DestroyImmediate(transition.gameObject);
-                }
-            }
-
-            GUI.backgroundColor = oldColor;
-
-            EditorGUILayout.EndHorizontal();
-
-            EditorGUILayout.Space();
-
-            GUILayout.Label("State Transition:", centeredText);
-
-            EditorGUI.BeginDisabledGroup(Selection.gameObjects.Length != 1 || !hasTileSelected);
-
-            EditorGUILayout.BeginHorizontal();
-
-            GUILayout.Label("From ");
-
-            currentState = (GameState)EditorGUILayout.EnumPopup(currentState);
-
-            GUILayout.Label(" To ");
-
-            targetState = (GameState)EditorGUILayout.EnumPopup(targetState);
-
-            EditorGUILayout.EndHorizontal();
-
-            EditorGUILayout.BeginHorizontal();
-
-            if (targetState == GameState.battle)
-            {
-                GUILayout.Label("Enemies to kill ");
-                numberToKill = EditorGUILayout.IntField(numberToKill);
-            }
-
-            // if the selected tile has a scene transition change it rather than add a new one
-            if (Selection.gameObjects.Length == 1 && Selection.gameObjects[0].GetComponentInChildren<StateTransitionPoint>())
-            {
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = orangeColour;
-
-                if (GUILayout.Button("Change Transition"))
-                {
-                    StateTransitionPoint sceneTransition = Selection.gameObjects[0].GetComponentInChildren<StateTransitionPoint>();
-                    sceneTransition.TargetState = targetState;
-                    sceneTransition.CurrentState = currentState;
-                    sceneTransition.numberToKill = numberToKill;
-
-                    sceneTransition.index = currentID;
-                }
-
-                GUI.backgroundColor = oldColor;
-            }
-            else
-            {
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = greenColour;
-
-                if (GUILayout.Button("Add Transition"))
-                {
-                    Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
-
-                    GameObject transitionGO = new GameObject("stateTransition");
-
-                    StateTransitionPoint sceneTransition = transitionGO.AddComponent<StateTransitionPoint>();
-                    sceneTransition.TargetState = targetState;
-                    sceneTransition.CurrentState = currentState;
-                    sceneTransition.numberToKill = numberToKill;
-
-                    sceneTransition.drawText = true;
-                    sceneTransition.index = currentID;
-
-                    BoxCollider trigger = transitionGO.AddComponent<BoxCollider>();
-                    trigger.isTrigger = true;
-
-                    sceneTransition.transform.parent = tile.transform;
-                    sceneTransition.transform.position = tile.transform.position;
-                }
-
-                GUI.backgroundColor = oldColor;
-            }
-
-            EditorGUILayout.EndHorizontal();
-
-            EditorGUILayout.Space();
-
-            EditorGUILayout.BeginHorizontal();
-
-            oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = brownColour;
-
-            if (GUILayout.Button("Earth Hex"))
-            {
-                Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
-
-                StateTransitionPoint[] transitions = FindObjectsOfType<StateTransitionPoint>();
-
-                foreach (StateTransitionPoint point in transitions)
-                {
-                    if (point.index == currentID)
-                    {
-                        point.SetEarthHex(tile);
-                    }
-                }
-            }
-
-            GUI.backgroundColor = oldColor;
-
-            oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = blueColour;
-
-            if (GUILayout.Button("Lightning Hex"))
-            {
-                Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
-
-                StateTransitionPoint[] transitions = FindObjectsOfType<StateTransitionPoint>();
-
-                foreach (StateTransitionPoint point in transitions)
-                {
-                    if (point.index == currentID)
-                    {
-                        point.SetLightninghHex(tile);
-                    }
-                }
-            }
-
-            GUI.backgroundColor = oldColor;
-
-            EditorGUILayout.EndHorizontal();
-
-            // Check point
-            oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = yellowColour;
-
-            if (GUILayout.Button("Check Point Hex"))
-            {
-                Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
-
-                StateTransitionPoint[] transitions = FindObjectsOfType<StateTransitionPoint>();
-
-                foreach (StateTransitionPoint point in transitions)
-                {
-                    if (point.index == currentID)
-                    {
-                        point.SetCheckPoint(tile);
-                    }
-                }
-            }
-
-            GUI.backgroundColor = oldColor;
-
-            EditorGUILayout.Space();
-
-            EditorGUI.EndDisabledGroup();
-
-            EditorGUILayout.BeginHorizontal();
-
-            oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = redColour;
-
-            EditorGUI.BeginDisabledGroup(!hasStateTransitionSelected || !hasTileSelected);
-
-            if (GUILayout.Button("Remove State Transition"))
-            {
-                GameObject[] selectedObjects = Selection.gameObjects;
-
-                StateTransitionPoint transition = selectedObjects[0].GetComponentInChildren<StateTransitionPoint>();
-
-                DestroyImmediate(transition.gameObject);
-            }
-
-            EditorGUI.EndDisabledGroup();
-
-            if (GUILayout.Button("Remove All State Transitions"))
-            {
-                StateTransitionPoint[] transitions = grid.GetComponentsInChildren<StateTransitionPoint>();
-
-                foreach (StateTransitionPoint transition in transitions)
-                {
-                    DestroyImmediate(transition.gameObject);
-                }
-            }
-
-            GUI.backgroundColor = oldColor;
-
-            EditorGUILayout.EndHorizontal();
-
-            EditorGUILayout.Space();
-
-            EditorGUILayout.BeginHorizontal();
-
-            GUILayout.Label("ID:");
-
-            currentID = EditorGUILayout.IntField(currentID);
-
-            EditorGUILayout.EndHorizontal();
+            GUILayout.FlexibleSpace();
+            EditorGUILayout.EndVertical(); // outer box
         }
-
-        #endregion
-
-        #region Settings
-
-        else if (selectedTab == 2)
-        {
-            healthyMode = EditorGUILayout.Toggle("Healthy Mode: ", healthyMode);
-        }
-
-        #endregion
-
-        GUILayout.FlexibleSpace();
-        EditorGUILayout.EndVertical(); // outer box
 
         /// End of OnGUI repaint scene and mark it as dirty.
         if (EditorGUI.EndChangeCheck())

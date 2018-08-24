@@ -34,7 +34,6 @@ public class Spawner : MonoBehaviour
     [SerializeField]
     private UnitType spawnType;
 
-    [HideInInspector]
     [SerializeField]
     public bool hasVolt;
 
@@ -60,6 +59,8 @@ public class Spawner : MonoBehaviour
 
             Unit unit = Instantiate(unitToSpawn, spawnPos, Quaternion.identity);
             unit.Spawn(currentHex);
+
+            unit.CurrentVolt = (hasVolt) ? 1 : 0;
 
             PlayerController player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
             player.SubscribeToUnitDeath(unit);

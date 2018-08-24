@@ -31,9 +31,9 @@ public class LightningUnit : Unit
     [SerializeField] private float specialDelayTime = 1;
 
     private List<AI_Agent> specialEnemies;
-    private List<Entity> specialSortedList = new List<Entity>();
-    private List<Entity> specialFinalTargets = new List<Entity>();
-    private List<Entity> specialDirtyList = new List<Entity>();
+    private List<LivingEntity> specialSortedList = new List<LivingEntity>();
+    private List<LivingEntity> specialFinalTargets = new List<LivingEntity>();
+    private List<LivingEntity> specialDirtyList = new List<LivingEntity>();
     private GameObject specialLightningGO;
     private AI_Controller specialAIController;
     private System.Action specialFinishedFunc;
@@ -89,6 +89,8 @@ public class LightningUnit : Unit
     protected override void DoSpecialAttack(Hex[] targetTiles, System.Action start, System.Action finished)
     {
         start();
+
+        CurrentVolt--;
 
         CanSpecialAttack = false;
 
@@ -230,21 +232,18 @@ public class LightningUnit : Unit
     }
 
 
-    private IEnumerator SpecialAttackDamageDelay(float a_timer, int a_damage, Entity a_unit)
+    private IEnumerator SpecialAttackDamageDelay(float a_timer, int a_damage, LivingEntity a_unit)
     {
-
         yield return new WaitForSeconds(a_timer);
 
         if (a_unit != null)
         {
             if (a_unit.Team != TEAM.player)
             {
-                a_unit.TakeDamage(a_damage);
+                a_unit.TakeDamage(a_damage, this);
             }
         }
-
     }
-
 
     private IEnumerator BasicAttackDamageDelay(float a_timer, float glamCamDelay = 0)
     {
@@ -281,7 +280,7 @@ public class LightningUnit : Unit
             if (basicTile.CurrentUnit.Team != TEAM.player)
             {
                 //deal damage to that unit
-                basicTile.CurrentUnit.TakeDamage(basicDamage);
+                basicTile.CurrentUnit.TakeDamage(basicDamage, this);
             }
         }
 

@@ -10,9 +10,6 @@ public class Unit : LivingEntity
 {
     #region Unity Inspector Fields
 
-    [Tooltip("Maximum amount of volt, will start with this amount")]
-    [SerializeField]
-    protected int maxVolt = 3;
     [Tooltip("A list of actions that this Unit can perform")]
     [SerializeField]
     protected Action[] actions;
@@ -56,8 +53,6 @@ public class Unit : LivingEntity
 
     private bool isSelected;
 
-    private int currentVolt;
-
     protected System.Action finishedWalking;
 
     #endregion
@@ -69,17 +64,6 @@ public class Unit : LivingEntity
     public Action GetAction(int a_index)
     {
         return actions[a_index];
-    }
-
-    public int CurrentVolt
-    {
-        get { return currentVolt; }
-
-        set
-        {
-            currentVolt += value;
-            currentVolt = Mathf.Clamp(currentVolt, 0, maxVolt);
-        }
     }
 
     public int MoveRange
@@ -146,6 +130,11 @@ public class Unit : LivingEntity
             {
                 myRenderer.material.SetFloat("_HighlightAmount", 0.03f);
             }
+            else if (CompareTag("Enemy") && CurrentVolt > 0)
+            {
+                myRenderer.material.SetFloat("_HighlightAmount", 0.5f);
+                myRenderer.material.SetColor("_HighlightColour", new Color(1.0f, 0.62f, 0.21f));
+            }
             else
             {
                 myRenderer.material.SetInt("_UseHighlight", 0);
@@ -195,7 +184,7 @@ public class Unit : LivingEntity
 
         currentTile.Enter(this);
 
-        currentVolt = maxVolt;
+        CurrentVolt = maxVolt;
     }
 
     public void MoveTo(Hex a_targetTile, System.Action a_finished)

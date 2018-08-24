@@ -91,9 +91,9 @@ public class EarthUnit : Unit
         //call the start call back function
         start();
 
-        CanSpecialAttack = false;
-
         CurrentVolt--;
+
+        CanSpecialAttack = false;
 
         //store the target tile
         specialTiles = targetTiles;
@@ -199,7 +199,7 @@ public class EarthUnit : Unit
                 if (x.CurrentUnit.Team != TEAM.player)
                 {
                     //deal damage to that unit
-                    x.CurrentUnit.TakeDamage(basicDamage);
+                    x.CurrentUnit.TakeDamage(basicDamage, this);
                 }
             }
         }
@@ -229,7 +229,7 @@ public class EarthUnit : Unit
                 if (x.CurrentUnit.Team != TEAM.player)
                 {
                     //deal damage to that unit
-                    x.CurrentUnit.TakeDamage(specialDamage);
+                    x.CurrentUnit.TakeDamage(specialDamage, this);
                 }
             }
         }

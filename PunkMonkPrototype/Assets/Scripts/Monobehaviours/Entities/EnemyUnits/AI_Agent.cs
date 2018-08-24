@@ -169,7 +169,7 @@ public class AI_Agent : Unit
                 if (tile.CurrentUnit.Team != TEAM.ai)
                 {
                     //deal damage to that unit
-                    tile.CurrentUnit.TakeDamage(damage);
+                    tile.CurrentUnit.TakeDamage(damage, this);
                 }
             }
         }

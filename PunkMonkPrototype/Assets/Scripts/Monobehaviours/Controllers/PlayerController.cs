@@ -451,9 +451,9 @@ public class PlayerController : MonoBehaviour
                     previousUnitUnderMouse.Highlight(false, currentRuleset.HighlightColour);
 
                     previousUnitUnderMouse = unitUnderMouse;
-                }
 
-                unitUnderMouse.Highlight(true, currentRuleset.HighlightColour);
+                    unitUnderMouse.Highlight(true, currentRuleset.HighlightColour);
+                }
             }
         }
         else

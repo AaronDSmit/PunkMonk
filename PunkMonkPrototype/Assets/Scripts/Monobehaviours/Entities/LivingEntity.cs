@@ -15,6 +15,10 @@ public class LivingEntity : Entity
     [SerializeField]
     protected int maxHealth = 5;
 
+    [Tooltip("Maximum amount of volt, will start with this amount")]
+    [SerializeField]
+    protected int maxVolt = 3;
+
     #endregion
 
     #region Reference Fields
@@ -29,6 +33,8 @@ public class LivingEntity : Entity
 
     private int currentHealth;
 
+    private int currentVolt;
+
     private bool dead;
 
     public delegate void Dead(LivingEntity a_entity);
@@ -37,6 +43,27 @@ public class LivingEntity : Entity
     #endregion
 
     #region Properties
+
+    public int CurrentVolt
+    {
+        get { return currentVolt; }
+
+        set
+        {
+            currentVolt = Mathf.Clamp(value, 0, maxVolt);
+
+            if (CompareTag("Enemy") && currentVolt > 0)
+            {
+                myRenderer.material.SetFloat("_HighlightAmount", 0.5f);
+                myRenderer.material.SetColor("_HighlightColour", new Color(1.0f, 0.62f, 0.21f));
+                myRenderer.material.SetInt("_UseHighlight", 1);
+            }
+            else
+            {
+                myRenderer.material.SetInt("_UseHighlight", 0);
+            }
+        }
+    }
 
     public bool IsDead
     {
@@ -62,7 +89,7 @@ public class LivingEntity : Entity
 
     #region Public Methods
 
-    public override void TakeDamage(int a_damageAmount)
+    public override void TakeDamage(int a_damageAmount, Unit a_damageFrom)
     {
         currentHealth -= a_damageAmount;
 
@@ -73,6 +100,11 @@ public class LivingEntity : Entity
 
         if (currentHealth <= 0.0f && !dead)
         {
+            if (CurrentVolt > 0)
+            {
+                a_damageFrom.CurrentVolt++;
+            }
+
             Die();
         }
     }

@@ -786,7 +786,7 @@ MonoBehaviour:
   glamCamDistance: 5
   speed: 10
   overworldSpeed: 5
-  RotationalSpeed: 0
+  RotationalSpeed: 5
   scrollSpeed: 30
   inverseRotation: 0
 --- !u!114 &114817349998856782

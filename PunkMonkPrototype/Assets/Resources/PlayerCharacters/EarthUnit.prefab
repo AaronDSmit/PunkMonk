@@ -366,7 +366,7 @@ MonoBehaviour:
   coneRange: 4
   specialDamage: 1
   specialheight: 5
-  specialJumpTime: 3
+  specialJumpTime: 1.5
   specialDamgeDelayTimer: 0
   YCurve:
     serializedVersion: 2
@@ -390,28 +390,22 @@ MonoBehaviour:
       outSlope: 1.8700957
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.19324696
-      value: 0.66403276
+      time: 0.46825314
+      value: 0.8011652
       inSlope: -0.03175786
       outSlope: -0.03175786
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.2706938
-      value: 0.59964854
+      time: 0.8290272
+      value: 0.6079596
       inSlope: -1.9189715
       outSlope: -1.9189715
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.30446318
-      value: 0.5016133
+      time: 0.86279655
+      value: 0.5099244
       inSlope: -4.4633904
       outSlope: -4.4633904
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 0.38639912
-      value: -0.00081820507
-      inSlope: 0.017503379
-      outSlope: 0.017503379
       tangentMode: 0
     - serializedVersion: 2
       time: 1
@@ -428,26 +422,14 @@ MonoBehaviour:
     - serializedVersion: 2
       time: 0
       value: 0
-      inSlope: 3.8531802
-      outSlope: 3.8531802
+      inSlope: 1
+      outSlope: 1
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.2626596
-      value: 0.95266473
-      inSlope: 3.891172
-      outSlope: 3.891172
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 0.27605006
-      value: 0.9966875
-      inSlope: 0.045958515
-      outSlope: 0.045958515
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 0.5
-      value: 1.0062485
-      inSlope: 0
-      outSlope: 0
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2

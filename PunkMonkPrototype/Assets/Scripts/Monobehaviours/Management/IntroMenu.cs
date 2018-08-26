@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
@@ -14,7 +15,7 @@ public class IntroMenu : MonoBehaviour
     private Image FadePlane;
 
     [SerializeField]
-    private Text loading;
+    private TextMeshProUGUI loading;
 
     [SerializeField]
     private GameObject Credits;
@@ -35,6 +36,10 @@ public class IntroMenu : MonoBehaviour
 
     public void StartGame()
     {
+        Time.timeScale = 1.0f;
+
+        StopAllCoroutines();
+
         StartCoroutine(ChangeScenes());
     }
 
@@ -44,7 +49,7 @@ public class IntroMenu : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(LoadScene());
+        // StartCoroutine(LoadScene());
     }
 
     #endregion
@@ -67,7 +72,7 @@ public class IntroMenu : MonoBehaviour
     }
 
     // Fades the fadePlane image from a colour to another over x seconds.
-    private IEnumerator Fade(Color from, Color to, float time, Text _text)
+    private IEnumerator Fade(Color from, Color to, float time, TextMeshProUGUI _text)
     {
         float speed = 1 / time;
         float percent = 0;
@@ -81,26 +86,27 @@ public class IntroMenu : MonoBehaviour
         }
     }
 
-    private IEnumerator LoadScene()
-    {
-        async = SceneManager.LoadSceneAsync(1, LoadSceneMode.Single);
-        async.allowSceneActivation = false;
+    //private IEnumerator LoadScene()
+    //{
+    //    async = SceneManager.LoadSceneAsync(1, LoadSceneMode.Single);
+    //    async.allowSceneActivation = false;
 
-        while (async.progress <= 0.89f)
-        {
-            progress = async.progress;
-            yield return null;
-        }
-    }
+    //    while (async.progress <= 0.89f)
+    //    {
+    //        progress = async.progress;
+    //        yield return null;
+    //    }
+    //}
 
     private IEnumerator ChangeScenes()
     {
         StartCoroutine(Fade(Color.clear, Color.black, 1, FadePlane));
         StartCoroutine(Fade(Color.clear, Color.white, 1, loading));
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.2f);
 
-        async.allowSceneActivation = true;
+        SceneManager.LoadScene(1);
+        // async.allowSceneActivation = true;
     }
 
     #endregion

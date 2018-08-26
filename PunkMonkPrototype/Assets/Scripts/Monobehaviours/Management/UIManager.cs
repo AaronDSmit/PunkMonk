@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using TMPro;
 
 /// <summary>
 /// This script is used to manage UI transitions
@@ -9,6 +11,15 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     #region Unity Inspector Fields
+
+    [SerializeField]
+    private GameObject pauseMenu = null;
+
+    [SerializeField]
+    private FadingUI battleUI = null;
+
+    [SerializeField]
+    private Image fadePlane = null;
 
     [SerializeField]
     private Button move = null;
@@ -23,11 +34,7 @@ public class UIManager : MonoBehaviour
 
     #region Reference Fields
 
-    private FadingUI battleUI;
-
-    private Image fadePlane;
-
-    private Text loadingText;
+    private TextMeshProUGUI loadingText;
 
     private ProfileSwitcher profiles;
 
@@ -66,6 +73,31 @@ public class UIManager : MonoBehaviour
     public void SelectAction(int actionIndex)
     {
         player.SelectAction(actionIndex);
+    }
+
+    public void Continue()
+    {
+        Manager.instance.StateController.PauseGame();
+    }
+
+    public void Settings()
+    {
+
+    }
+
+    public void MainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
+    public void PauseMenu(bool a_show)
+    {
+        pauseMenu.SetActive(a_show);
     }
 
     public void UpdateSelectedUnit(Unit a_selectedUnit)
@@ -160,21 +192,17 @@ public class UIManager : MonoBehaviour
 
         if (canvas)
         {
-            battleUI = canvas.GetChild(0).GetComponent<FadingUI>();
-
             profiles = battleUI.transform.GetChild(0).GetComponent<ProfileSwitcher>();
-
-            fadePlane = canvas.Find("FadePlane").GetComponent<Image>();
-            loadingText = fadePlane.transform.GetComponentInChildren<Text>();
 
             if (fadePlane)
             {
                 fadePlane.color = new Color(fadePlane.color.r, fadePlane.color.g, fadePlane.color.b, 1.0f);
-            }
+                loadingText = fadePlane.transform.GetComponentInChildren<TextMeshProUGUI>();
 
-            if (loadingText)
-            {
-                loadingText.color = new Color(loadingText.color.r, loadingText.color.g, loadingText.color.b, 1.0f);
+                if (loadingText)
+                {
+                    loadingText.color = new Color(loadingText.color.r, loadingText.color.g, loadingText.color.b, 1.0f);
+                }
             }
         }
 
@@ -276,7 +304,7 @@ public class UIManager : MonoBehaviour
     }
 
     // Fades the fadePlane image from a colour to another over x seconds.
-    private IEnumerator Fade(Color from, Color to, float time, Text _text)
+    private IEnumerator Fade(Color from, Color to, float time, TextMeshProUGUI _text)
     {
         float speed = 1 / time;
         float percent = 0;

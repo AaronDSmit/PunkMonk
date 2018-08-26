@@ -16,9 +16,9 @@ public class SegmentedHealthBar : MonoBehaviour
     private GameObject mainHealthBar = null;
     private FadingUI fade;
 
-    public int MaxHealth { get { return maxHealth; } set { maxHealth = Mathf.Clamp(value, 1, 100); Refresh(true); } }
+    public int MaxHealth { get { return maxHealth; } set { maxHealth = Mathf.Clamp(value, 1, 100); Refresh(); } }
 
-    public int CurrentHealth { get { return currentHealth; } set { currentHealth = Mathf.Clamp(value, 0, maxHealth); Refresh(false); } }
+    public int CurrentHealth { get { return currentHealth; } set { currentHealth = Mathf.Clamp(value, 0, maxHealth); Refresh(); } }
 
     private void Awake()
     {
@@ -39,7 +39,7 @@ public class SegmentedHealthBar : MonoBehaviour
         fade.FadeOut();
     }
 
-    private void Refresh(bool a_updateFade)
+    private void Refresh()
     {
         // First insure there is the correct amount of health bar segments
         if (segments.childCount < maxHealth)
@@ -82,7 +82,7 @@ public class SegmentedHealthBar : MonoBehaviour
         newSize.y -= borderWidth;
         segments.sizeDelta = newSize;
 
-        if (a_updateFade)
+        if (Manager.instance.StateController.CurrentGameState == GameState.battle)
         {
             fade.UpdateReferences(false);
         }

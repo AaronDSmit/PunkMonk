@@ -336,6 +336,11 @@ public class PlayerController : MonoBehaviour
             ProcessKeyboardInput();
             ProcessMouseInput();
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Manager.instance.StateController.PauseGame();
+        }
     }
 
     #endregion

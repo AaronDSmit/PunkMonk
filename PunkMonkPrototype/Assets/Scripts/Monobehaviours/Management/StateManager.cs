@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum GameState { mainmenu, overworld, battle, loading, cinematic, pausemenu, transition }
+public enum GameState { mainmenu, overworld, battle, loading, cinematic, transition }
 
 /// <summary>
 /// This script is used to handle state changes, the state can be changed instantly, after a delay and during a blackout of the screen.
@@ -16,10 +16,10 @@ public class StateManager : MonoBehaviour
     private GameState currentState = GameState.mainmenu;
 
     [SerializeField]
-    private GameState previousState = GameState.pausemenu;
+    private GameState previousState = GameState.mainmenu;
 
     [SerializeField]
-    private GameState nextState = GameState.pausemenu;
+    private GameState nextState = GameState.mainmenu;
 
     [SerializeField]
     private List<GameState> stateHistory;
@@ -31,6 +31,8 @@ public class StateManager : MonoBehaviour
     private bool midLoad = false;
 
     private bool isReady;
+
+    private bool isPaused;
 
     public delegate void GameStateChanged(GameState _oldState, GameState _newState);
 
@@ -89,6 +91,22 @@ public class StateManager : MonoBehaviour
         ChangeGameState(GameState.overworld);
     }
 
+    public void PauseGame()
+    {
+        isPaused = !isPaused;
+
+        Manager.instance.UIController.PauseMenu(isPaused);
+
+        if (isPaused)
+        {
+            Time.timeScale = 0.0f;
+        }
+        else
+        {
+            Time.timeScale = 1.0f;
+        }
+    }
+
     // Change the current game state to the target game state and calls the event on any script that is listening
     public void ChangeGameState(GameState a_targetState)
     {
@@ -99,16 +117,6 @@ public class StateManager : MonoBehaviour
             currentState = a_targetState;
 
             stateHistory.Add(currentState);
-
-            if (currentState == GameState.pausemenu)
-            {
-                Time.timeScale = 0.0f;
-            }
-
-            if (previousState == GameState.pausemenu)
-            {
-                Time.timeScale = 1.0f;
-            }
 
             if (OnGameStateChanged != null)
             {
@@ -143,8 +151,6 @@ public class StateManager : MonoBehaviour
     {
         switch (a_state)
         {
-            case GameState.pausemenu:
-                return "Pause menu";
             case GameState.battle:
                 return "Battle";
             case GameState.cinematic:

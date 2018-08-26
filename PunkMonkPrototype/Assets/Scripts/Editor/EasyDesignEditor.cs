@@ -11,64 +11,127 @@ public class EasyDesignEditor : EditorWindow
     #region Variables
 
     // general variables
-    [SerializeField] private static EditorWindow window;
-    [SerializeField] private static Texture icon;
-    [SerializeField] private GUISkin skin;
-    [SerializeField] private GUIStyle centeredText;
-    [SerializeField] private static int selectedTab = 0;
-    [SerializeField] private static GridManager grid;
-    [SerializeField] private static float HexScale = 1;
+    [SerializeField]
+    private static EditorWindow window;
+    [SerializeField]
+    private static Texture icon;
+    [SerializeField]
+    private GUISkin skin;
+    [SerializeField]
+    private GUIStyle centeredText;
+    [SerializeField]
+    private static int selectedTab = 0;
+
+    [SerializeField]
+    private static int previousTab = 0;
+
+    [SerializeField]
+    private static GridManager grid;
+    [SerializeField]
+    private static float HexScale = 1;
 
     // GridManager Generation
-    [SerializeField] private int mapWidth;
-    [SerializeField] private int mapHeight;
-    [SerializeField] private static bool confirmMapGeneration = false;
-    [SerializeField] private static bool mapSizeSet;
+    [SerializeField]
+    private int mapWidth;
+    [SerializeField]
+    private int mapHeight;
+    [SerializeField]
+    private static bool confirmMapGeneration = false;
+    [SerializeField]
+
+    private static bool mapSizeSet;
 
     // Navigation
-    [SerializeField] private bool hasTileSelected = false;
-    [SerializeField] private bool hasTransitionSelected = false;
-    [SerializeField] private bool hasStateTransitionSelected = false;
-    [SerializeField] private bool hasSpawnerSelected = false;
-    [SerializeField] private bool hasTriggerSelected = false;
+    [SerializeField]
+    private bool hasTileSelected = false;
+    [SerializeField]
+    private bool hasTransitionSelected = false;
+    [SerializeField]
+    private bool hasStateTransitionSelected = false;
+    [SerializeField]
+    private bool hasSpawnerSelected = false;
+    [SerializeField]
+    private bool hasTriggerSelected = false;
 
-    [SerializeField] private bool setAllNodesTraversable = false;
-    [SerializeField] private bool setAllNodesInaccessible = false;
+    [SerializeField]
+    private bool setAllNodesTraversable = false;
+    [SerializeField]
+    private bool setAllNodesInaccessible = false;
 
-    [SerializeField] private bool autoAllNodesTraversable = false;
-    [SerializeField] private bool autoAllNodesInaccessible = false;
+    [SerializeField]
+    private bool autoAllNodesTraversable = false;
+    [SerializeField]
+    private bool autoAllNodesInaccessible = false;
 
-    [SerializeField] private bool fillNodesTraversable = false;
-    [SerializeField] private bool fillNodesInaccessible = false;
+    [SerializeField]
+    private bool fillNodesTraversable = false;
+    [SerializeField]
+    private bool fillNodesInaccessible = false;
 
-    [SerializeField] private Color traversableColour;
-    [SerializeField] private Color inaccessibleColour;
-    [SerializeField] private float inaccessibleAlpha;
+    [SerializeField]
+    private Color traversableColour;
+    [SerializeField]
+    private Color inaccessibleColour;
+    [SerializeField]
+    private float inaccessibleAlpha;
 
     // GameFlow
-    [SerializeField] private UnitType enemyType;
-    [SerializeField] private bool hasVolt = false;
-    [SerializeField] private int turnToSpawn;
-    [SerializeField] private int everyXTurns;
-    [SerializeField] private int loadLevel = 0;
-    [SerializeField] private GameState targetState = GameState.overworld;
-    [SerializeField] private GameState currentState = GameState.battle;
-    [SerializeField] private int numberToKill;
-    [SerializeField] private int currentID = 0;
-    [SerializeField] private string spawnerButtonName;
-    [SerializeField] private Spawner[] selectedSpawners;
-    [SerializeField] private StateTransitionPoint[] selectedTransitionPoints;
+    [SerializeField]
+    private UnitType enemyType;
+    [SerializeField]
+    private bool hasVolt = false;
+    [SerializeField]
+    private int turnToSpawn;
+    [SerializeField]
+    private int everyXTurns;
+    [SerializeField]
+    private int loadLevel = 0;
+    [SerializeField]
+    private GameState targetState = GameState.overworld;
+    [SerializeField]
+    private GameState currentState = GameState.battle;
+    [SerializeField]
+    private int numberToKill;
+    [SerializeField]
+    private int currentID = 0;
+    [SerializeField]
+    private string spawnerButtonName;
+    [SerializeField]
+    private Spawner[] selectedSpawners;
+    [SerializeField]
+    private StateTransitionPoint[] selectedTransitionPoints;
 
+    // Dialogue
+    [SerializeField]
+    private Conversation conversation;
 
-    [SerializeField] private Color greenColour = new Color(0.54f, 1.0f, 0.24f);
-    [SerializeField] private Color redColour = new Color(0.83f, 0.18f, 0.18f);
-    [SerializeField] private Color orangeColour = new Color(1.0f, 0.62f, 0.21f);
-    [SerializeField] private Color blueColour = new Color(0.55f, 0.9f, 0.89f);
-    [SerializeField] private Color brownColour = new Color(0.84f, 0.64f, 0.49f);
-    [SerializeField] private Color yellowColour = new Color(0.93f, 0.58f, 0.04f);
+    [SerializeField]
+    private int selectedSpeachIndex;
+
+    [SerializeField]
+    private Conversation loadedConversation;
+
+    private Vector2 scroll;
+
+    [SerializeField]
+    private bool confirmSave;
+
+    [SerializeField]
+    private Color greenColour = new Color(0.54f, 1.0f, 0.24f);
+    [SerializeField]
+    private Color redColour = new Color(0.83f, 0.18f, 0.18f);
+    [SerializeField]
+    private Color orangeColour = new Color(1.0f, 0.62f, 0.21f);
+    [SerializeField]
+    private Color blueColour = new Color(0.55f, 0.9f, 0.89f);
+    [SerializeField]
+    private Color brownColour = new Color(0.84f, 0.64f, 0.49f);
+    [SerializeField]
+    private Color yellowColour = new Color(0.93f, 0.58f, 0.04f);
 
     // Settings
-    [SerializeField] private bool healthyMode = true;
+    [SerializeField]
+    private bool healthyMode = true;
 
     #endregion
 
@@ -102,6 +165,10 @@ public class EasyDesignEditor : EditorWindow
         traversableColour = new Color(0.0f, 1.0f, 0.0f, 0.35f);
         inaccessibleColour = new Color(1.0f, 0.0f, 0.0f, 0.35f);
         inaccessibleAlpha = 0.4f;
+
+        conversation = CreateInstance<Conversation>();
+
+        selectedSpeachIndex = 0;
 
         EditorApplication.playModeStateChanged += PlayModeChanged;
     }
@@ -173,16 +240,10 @@ public class EasyDesignEditor : EditorWindow
         // If in play mode then don't draw any of the inspector
         if (EditorApplication.isPlaying)
         {
-            Color oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = new Color(0.5f, 0.5f, 0.5f, 1.0f); // grey
+            BeginColouredVerticalBox(new Color(0.5f, 0.5f, 0.5f, 1.0f));
 
-            EditorGUILayout.BeginVertical("Box"); // outer box
+            GUILayout.FlexibleSpace(); // outer box
 
-            GUI.backgroundColor = oldColor;
-
-
-
-            GUILayout.FlexibleSpace();
             EditorGUILayout.EndVertical(); // outer box
         }
         else
@@ -196,15 +257,16 @@ public class EasyDesignEditor : EditorWindow
             }
 
             // Create toolbar using custom tab style
-            string[] tabs = { "Grid", "GameFlow", "Settings" };
+            string[] tabs = { "Grid", "GameFlow", "Dialogue", "Settings" };
             selectedTab = GUILayout.Toolbar(selectedTab, tabs);
 
-            Color oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = new Color(0.5f, 0.5f, 0.5f, 1.0f); // grey
+            if (previousTab != selectedTab)
+            {
+                previousTab = selectedTab;
+                GUI.FocusControl("");
+            }
 
-            EditorGUILayout.BeginVertical("Box"); // outer box
-
-            GUI.backgroundColor = oldColor;
+            BeginColouredVerticalBox(new Color(0.5f, 0.5f, 0.5f, 1.0f)); // outer box
 
             if (healthyMode && EditorApplication.timeSinceStartup > 3600)
             {
@@ -235,27 +297,19 @@ public class EasyDesignEditor : EditorWindow
 
                 mapSizeSet = (mapWidth != 0 && mapHeight != 0);
 
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = greenColour;
-
                 if (!mapSizeSet)
                 {
                     EditorGUILayout.HelpBox("Axis's can't be 0", MessageType.Warning);
                 }
                 else if (confirmMapGeneration)
                 {
-                    oldColor = GUI.backgroundColor;
-                    GUI.backgroundColor = orangeColour;
-
-                    EditorGUILayout.BeginVertical("Box");
-
-                    GUI.backgroundColor = oldColor;
+                    BeginColouredVerticalBox(orangeColour);
 
                     GUILayout.Label("Create New Map?", centeredText);
 
                     EditorGUILayout.BeginHorizontal();
 
-                    if (GUILayout.Button("Yes!"))
+                    if (ColouredButton("Yes!", greenColour))
                     {
                         HexUtility.UpdateScale(HexScale);
 
@@ -271,26 +325,19 @@ public class EasyDesignEditor : EditorWindow
                         confirmMapGeneration = false;
                     }
 
-                    oldColor = GUI.backgroundColor;
-                    GUI.backgroundColor = redColour;
-
-                    if (GUILayout.Button("No..."))
+                    if (ColouredButton("No...", redColour))
                     {
                         confirmMapGeneration = false;
                     }
-
-                    GUI.backgroundColor = oldColor;
 
                     EditorGUILayout.EndHorizontal();
 
                     EditorGUILayout.EndVertical();
                 }
-                else if (GUILayout.Button("Generate Grid"))
+                else if (ColouredButton("Generate Grid", greenColour))
                 {
                     confirmMapGeneration = true;
                 }
-
-                GUI.backgroundColor = oldColor;
 
                 #endregion
 
@@ -304,10 +351,7 @@ public class EasyDesignEditor : EditorWindow
 
                 EditorGUILayout.BeginHorizontal();
 
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = greenColour;
-
-                if (GUILayout.Button("Traversable"))
+                if (ColouredButton("Traversable", greenColour))
                 {
                     GameObject[] selectedObjects = Selection.gameObjects;
 
@@ -322,12 +366,7 @@ public class EasyDesignEditor : EditorWindow
                     }
                 }
 
-                GUI.backgroundColor = oldColor;
-
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = redColour;
-
-                if (GUILayout.Button("Inaccessible"))
+                if (ColouredButton("Inaccessible", redColour))
                 {
                     GameObject[] selectedObjects = Selection.gameObjects;
 
@@ -341,8 +380,6 @@ public class EasyDesignEditor : EditorWindow
                         }
                     }
                 }
-
-                GUI.backgroundColor = oldColor;
 
                 EditorGUILayout.EndHorizontal();
 
@@ -358,23 +395,15 @@ public class EasyDesignEditor : EditorWindow
 
                 EditorGUILayout.BeginHorizontal();
 
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = greenColour;
-
                 if (!setAllNodesInaccessible && setAllNodesTraversable)
                 {
-                    oldColor = GUI.backgroundColor;
-                    GUI.backgroundColor = orangeColour;
-
-                    EditorGUILayout.BeginVertical("Box");
-
-                    GUI.backgroundColor = oldColor;
+                    BeginColouredVerticalBox(orangeColour);
 
                     GUILayout.Label("All Traversable?", centeredText);
 
                     EditorGUILayout.BeginHorizontal();
 
-                    if (GUILayout.Button("Yes!"))
+                    if (ColouredButton("Yes!", greenColour))
                     {
                         Hex[] tiles = grid.GetComponentsInChildren<Hex>();
 
@@ -386,15 +415,10 @@ public class EasyDesignEditor : EditorWindow
                         setAllNodesTraversable = false;
                     }
 
-                    oldColor = GUI.backgroundColor;
-                    GUI.backgroundColor = redColour;
-
-                    if (GUILayout.Button("No..."))
+                    if (ColouredButton("No...", redColour))
                     {
                         setAllNodesTraversable = false;
                     }
-
-                    GUI.backgroundColor = oldColor;
 
                     EditorGUILayout.EndHorizontal();
 
@@ -402,34 +426,21 @@ public class EasyDesignEditor : EditorWindow
                 }
                 else if (!setAllNodesInaccessible)
                 {
-                    if (GUILayout.Button("Traversable"))
+                    if (ColouredButton("Traversable", greenColour))
                     {
                         setAllNodesTraversable = true;
                     }
                 }
 
-                GUI.backgroundColor = oldColor;
-
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = redColour;
-
                 if (!setAllNodesTraversable && setAllNodesInaccessible)
                 {
-                    oldColor = GUI.backgroundColor;
-                    GUI.backgroundColor = orangeColour;
-
-                    EditorGUILayout.BeginVertical("Box");
-
-                    GUI.backgroundColor = oldColor;
+                    BeginColouredVerticalBox(orangeColour);
 
                     GUILayout.Label("All Inaccessible?", centeredText);
 
                     EditorGUILayout.BeginHorizontal();
 
-                    oldColor = GUI.backgroundColor;
-                    GUI.backgroundColor = greenColour;
-
-                    if (GUILayout.Button("yes!"))
+                    if (ColouredButton("yes!", greenColour))
                     {
                         Hex[] tiles = grid.GetComponentsInChildren<Hex>();
 
@@ -441,9 +452,7 @@ public class EasyDesignEditor : EditorWindow
                         setAllNodesInaccessible = false;
                     }
 
-                    GUI.backgroundColor = oldColor;
-
-                    if (GUILayout.Button("No..."))
+                    if (ColouredButton("No...", redColour))
                     {
                         setAllNodesInaccessible = false;
                     }
@@ -454,13 +463,11 @@ public class EasyDesignEditor : EditorWindow
                 }
                 else if (!setAllNodesTraversable)
                 {
-                    if (GUILayout.Button("Inaccessible"))
+                    if (ColouredButton("Inaccessible", redColour))
                     {
                         setAllNodesInaccessible = true;
                     }
                 }
-
-                GUI.backgroundColor = oldColor;
 
                 EditorGUILayout.EndHorizontal();
 
@@ -474,23 +481,15 @@ public class EasyDesignEditor : EditorWindow
 
                 EditorGUILayout.BeginHorizontal();
 
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = greenColour;
-
                 if (!autoAllNodesInaccessible && autoAllNodesTraversable)
                 {
-                    oldColor = GUI.backgroundColor;
-                    GUI.backgroundColor = orangeColour;
-
-                    EditorGUILayout.BeginVertical("Box");
-
-                    GUI.backgroundColor = oldColor;
+                    BeginColouredVerticalBox(orangeColour);
 
                     GUILayout.Label("Automatically Traversable?", centeredText);
 
                     EditorGUILayout.BeginHorizontal();
 
-                    if (GUILayout.Button("Yes!"))
+                    if (ColouredButton("Yes!", greenColour))
                     {
                         Hex[] tiles = grid.GetComponentsInChildren<Hex>();
 
@@ -502,15 +501,10 @@ public class EasyDesignEditor : EditorWindow
                         autoAllNodesTraversable = false;
                     }
 
-                    oldColor = GUI.backgroundColor;
-                    GUI.backgroundColor = redColour;
-
-                    if (GUILayout.Button("No..."))
+                    if (ColouredButton("No...", redColour))
                     {
                         autoAllNodesTraversable = false;
                     }
-
-                    GUI.backgroundColor = oldColor;
 
                     EditorGUILayout.EndHorizontal();
 
@@ -518,34 +512,21 @@ public class EasyDesignEditor : EditorWindow
                 }
                 else if (!autoAllNodesInaccessible)
                 {
-                    if (GUILayout.Button("Traversable"))
+                    if (ColouredButton("Traversable", greenColour))
                     {
                         autoAllNodesTraversable = true;
                     }
                 }
 
-                GUI.backgroundColor = oldColor;
-
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = redColour;
-
                 if (!autoAllNodesTraversable && autoAllNodesInaccessible)
                 {
-                    oldColor = GUI.backgroundColor;
-                    GUI.backgroundColor = orangeColour;
-
-                    EditorGUILayout.BeginVertical("Box");
-
-                    GUI.backgroundColor = oldColor;
+                    BeginColouredVerticalBox(orangeColour);
 
                     GUILayout.Label("Automatically Inaccessible?", centeredText);
 
                     EditorGUILayout.BeginHorizontal();
 
-                    oldColor = GUI.backgroundColor;
-                    GUI.backgroundColor = greenColour;
-
-                    if (GUILayout.Button("yes!"))
+                    if (ColouredButton("yes!", greenColour))
                     {
                         Hex[] tiles = grid.GetComponentsInChildren<Hex>();
 
@@ -557,9 +538,7 @@ public class EasyDesignEditor : EditorWindow
                         autoAllNodesInaccessible = false;
                     }
 
-                    GUI.backgroundColor = oldColor;
-
-                    if (GUILayout.Button("No..."))
+                    if (ColouredButton("No...", redColour))
                     {
                         autoAllNodesInaccessible = false;
                     }
@@ -570,13 +549,11 @@ public class EasyDesignEditor : EditorWindow
                 }
                 else if (!autoAllNodesTraversable)
                 {
-                    if (GUILayout.Button("Inaccessible"))
+                    if (ColouredButton("Inaccessible", redColour))
                     {
                         autoAllNodesInaccessible = true;
                     }
                 }
-
-                GUI.backgroundColor = oldColor;
 
                 EditorGUILayout.EndHorizontal();
 
@@ -592,23 +569,15 @@ public class EasyDesignEditor : EditorWindow
 
                 EditorGUILayout.BeginHorizontal();
 
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = greenColour;
-
                 if (!fillNodesInaccessible && fillNodesTraversable)
                 {
-                    oldColor = GUI.backgroundColor;
-                    GUI.backgroundColor = orangeColour;
-
-                    EditorGUILayout.BeginVertical("Box");
-
-                    GUI.backgroundColor = oldColor;
+                    BeginColouredVerticalBox(orangeColour);
 
                     GUILayout.Label("Fil Traversable?", centeredText);
 
                     EditorGUILayout.BeginHorizontal();
 
-                    if (GUILayout.Button("Yes!"))
+                    if (ColouredButton("Yes!", greenColour))
                     {
                         Hex hex = Selection.gameObjects[0].GetComponent<Hex>();
                         Hex currentHex;
@@ -638,15 +607,10 @@ public class EasyDesignEditor : EditorWindow
                         fillNodesTraversable = false;
                     }
 
-                    oldColor = GUI.backgroundColor;
-                    GUI.backgroundColor = redColour;
-
-                    if (GUILayout.Button("No..."))
+                    if (ColouredButton("No...", redColour))
                     {
                         fillNodesTraversable = false;
                     }
-
-                    GUI.backgroundColor = oldColor;
 
                     EditorGUILayout.EndHorizontal();
 
@@ -654,34 +618,21 @@ public class EasyDesignEditor : EditorWindow
                 }
                 else if (!fillNodesInaccessible)
                 {
-                    if (GUILayout.Button("Traversable"))
+                    if (ColouredButton("Traversable", greenColour))
                     {
                         fillNodesTraversable = true;
                     }
                 }
 
-                GUI.backgroundColor = oldColor;
-
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = redColour;
-
                 if (!fillNodesTraversable && fillNodesInaccessible)
                 {
-                    oldColor = GUI.backgroundColor;
-                    GUI.backgroundColor = orangeColour;
-
-                    EditorGUILayout.BeginVertical("Box");
-
-                    GUI.backgroundColor = oldColor;
+                    BeginColouredVerticalBox(orangeColour);
 
                     GUILayout.Label("Fill Inaccessible?", centeredText);
 
                     EditorGUILayout.BeginHorizontal();
 
-                    oldColor = GUI.backgroundColor;
-                    GUI.backgroundColor = greenColour;
-
-                    if (GUILayout.Button("yes!"))
+                    if (ColouredButton("Yes!", greenColour))
                     {
                         Hex hex = Selection.gameObjects[0].GetComponent<Hex>();
                         Hex currentHex;
@@ -711,9 +662,7 @@ public class EasyDesignEditor : EditorWindow
                         fillNodesInaccessible = false;
                     }
 
-                    GUI.backgroundColor = oldColor;
-
-                    if (GUILayout.Button("No..."))
+                    if (ColouredButton("No...", redColour))
                     {
                         fillNodesInaccessible = false;
                     }
@@ -724,13 +673,11 @@ public class EasyDesignEditor : EditorWindow
                 }
                 else if (!fillNodesTraversable)
                 {
-                    if (GUILayout.Button("Inaccessible"))
+                    if (ColouredButton("Inaccessible", redColour))
                     {
                         fillNodesInaccessible = true;
                     }
                 }
-
-                GUI.backgroundColor = oldColor;
 
                 EditorGUILayout.EndHorizontal();
 
@@ -740,16 +687,13 @@ public class EasyDesignEditor : EditorWindow
 
                 EditorGUILayout.Space();
 
-                #region Assest Assist
+                #region Asset Assist
 
                 GUILayout.Label("Greybox Assist:", centeredText);
 
                 EditorGUI.BeginDisabledGroup(Selection.gameObjects.Length == 0);
 
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = greenColour;
-
-                if (GUILayout.Button("Snap Objects"))
+                if (ColouredButton("Snap Objects", greenColour))
                 {
                     foreach (Transform transform in Selection.GetTransforms(SelectionMode.TopLevel))
                     {
@@ -760,7 +704,7 @@ public class EasyDesignEditor : EditorWindow
                     }
                 }
 
-                if (GUILayout.Button("Select Hexes"))
+                if (ColouredButton("Select Hexes", greenColour))
                 {
                     GameObject[] hexSelection = new GameObject[Selection.GetTransforms(SelectionMode.TopLevel).Length];
                     int i = 0;
@@ -775,8 +719,6 @@ public class EasyDesignEditor : EditorWindow
 
                     Selection.objects = hexSelection;
                 }
-
-                GUI.backgroundColor = oldColor;
 
                 EditorGUI.EndDisabledGroup();
 
@@ -819,12 +761,9 @@ public class EasyDesignEditor : EditorWindow
 
                 EditorGUI.BeginDisabledGroup(!hasTileSelected || hasSpawnerSelected);
 
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = brownColour;
-
                 if (GameObject.FindGameObjectWithTag("EarthUnitSpawn") == null)
                 {
-                    if (GUILayout.Button("Add Earth Spawn"))
+                    if (ColouredButton("Add Earth Spawn", brownColour))
                     {
                         Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
 
@@ -845,7 +784,7 @@ public class EasyDesignEditor : EditorWindow
                 }
                 else
                 {
-                    if (GUILayout.Button("Move Earth Spawn"))
+                    if (ColouredButton("Move Earth Spawn", brownColour))
                     {
                         Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
                         Spawner spawner = GameObject.FindGameObjectWithTag("EarthUnitSpawn").GetComponent<Spawner>();
@@ -856,14 +795,9 @@ public class EasyDesignEditor : EditorWindow
                     }
                 }
 
-                GUI.backgroundColor = oldColor;
-
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = blueColour;
-
                 if (GameObject.FindGameObjectWithTag("LightningUnitSpawn") == null)
                 {
-                    if (GUILayout.Button("Add Lightning spawn"))
+                    if (ColouredButton("Add Lightning spawn", blueColour))
                     {
                         Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
 
@@ -884,7 +818,7 @@ public class EasyDesignEditor : EditorWindow
                 }
                 else
                 {
-                    if (GUILayout.Button("Move Lightning Spawn"))
+                    if (ColouredButton("Move Lightning Spawn", blueColour))
                     {
                         Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
                         Spawner spawner = GameObject.FindGameObjectWithTag("LightningUnitSpawn").GetComponent<Spawner>();
@@ -894,8 +828,6 @@ public class EasyDesignEditor : EditorWindow
                         spawner.TurnToSpawn = 0;
                     }
                 }
-
-                GUI.backgroundColor = oldColor;
 
                 EditorGUI.EndDisabledGroup();
 
@@ -916,10 +848,7 @@ public class EasyDesignEditor : EditorWindow
                 // if the selected tile has a Spawner change it rather than add a new one
                 if (hasSpawnerSelected)
                 {
-                    oldColor = GUI.backgroundColor;
-                    GUI.backgroundColor = orangeColour;
-
-                    if (GUILayout.Button("Change " + spawnerButtonName))
+                    if (ColouredButton("Change " + spawnerButtonName, orangeColour))
                     {
                         foreach (Spawner spawner in selectedSpawners)
                         {
@@ -941,19 +870,14 @@ public class EasyDesignEditor : EditorWindow
 
                         UpdateTriggerConnections();
                     }
-
-                    GUI.backgroundColor = oldColor;
                 }
                 else
                 {
-                    oldColor = GUI.backgroundColor;
-                    GUI.backgroundColor = greenColour;
-
                     Hex[] selectedTiles = Selection.GetFiltered<Hex>(SelectionMode.Deep);
 
                     string buttonName = (selectedTiles.Length == 1) ? "Add Spawner" : "Add Spawners";
 
-                    if (GUILayout.Button(buttonName))
+                    if (ColouredButton(buttonName, greenColour))
                     {
                         foreach (Hex tile in selectedTiles)
                         {
@@ -985,8 +909,6 @@ public class EasyDesignEditor : EditorWindow
 
 
                     }
-
-                    GUI.backgroundColor = oldColor;
                 }
 
                 EditorGUI.EndDisabledGroup();
@@ -1005,9 +927,7 @@ public class EasyDesignEditor : EditorWindow
 
                 GUILayout.Label("Has volt: ");
 
-                skin.toggle.padding = new RectOffset(0, 0, 100, 0);
-
-                hasVolt = EditorGUILayout.Toggle(hasVolt);
+                hasVolt = EditorGUILayout.Toggle(hasVolt, skin.GetStyle("toggle"));
 
                 EditorGUILayout.EndHorizontal();
 
@@ -1017,10 +937,7 @@ public class EasyDesignEditor : EditorWindow
 
                 EditorGUI.BeginDisabledGroup(!hasSpawnerSelected);
 
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = redColour;
-
-                if (GUILayout.Button("Remove " + spawnerButtonName))
+                if (ColouredButton("Remove " + spawnerButtonName, redColour))
                 {
                     GameObject[] selectedObjects = Selection.gameObjects;
 
@@ -1044,7 +961,7 @@ public class EasyDesignEditor : EditorWindow
 
                 EditorGUI.EndDisabledGroup();
 
-                if (GUILayout.Button("Remove All Spawners"))
+                if (ColouredButton("Remove All Spawners", redColour))
                 {
                     Spawner[] spawnPoints = grid.GetComponentsInChildren<Spawner>();
 
@@ -1061,8 +978,6 @@ public class EasyDesignEditor : EditorWindow
                     currentID = 0;
                 }
 
-                GUI.backgroundColor = oldColor;
-
                 EditorGUILayout.EndHorizontal();
 
                 EditorGUILayout.Space();
@@ -1076,24 +991,17 @@ public class EasyDesignEditor : EditorWindow
                 // if the selected tile has a Spawner change it rather than add a new one
                 if (Selection.gameObjects.Length == 1 && Selection.gameObjects[0].GetComponentInChildren<SpawnTrigger>())
                 {
-                    oldColor = GUI.backgroundColor;
-                    GUI.backgroundColor = orangeColour;
 
-                    if (GUILayout.Button("Change Trigger"))
+                    if (ColouredButton("Change Trigger", orangeColour))
                     {
                         SpawnTrigger spawnTrigger = Selection.gameObjects[0].GetComponentInChildren<SpawnTrigger>();
                         spawnTrigger.index = currentID;
                         spawnTrigger.UpdateSpawnerList();
                     }
-
-                    GUI.backgroundColor = oldColor;
                 }
                 else
                 {
-                    oldColor = GUI.backgroundColor;
-                    GUI.backgroundColor = greenColour;
-
-                    if (GUILayout.Button("Add Trigger"))
+                    if (ColouredButton("Add Trigger", greenColour))
                     {
                         Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
 
@@ -1107,18 +1015,13 @@ public class EasyDesignEditor : EditorWindow
                         SpawnTrigger spawnTrigger = go.AddComponent<SpawnTrigger>();
                         spawnTrigger.UpdateSpawnerList();
                     }
-
-                    GUI.backgroundColor = oldColor;
                 }
 
                 EditorGUI.EndDisabledGroup();
 
                 EditorGUI.BeginDisabledGroup(Selection.gameObjects.Length != 1 || !hasTriggerSelected);
 
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = redColour;
-
-                if (GUILayout.Button("Remove Trigger"))
+                if (ColouredButton("Remove Trigger", redColour))
                 {
                     Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
                     SpawnTrigger destroyedTrigger = tile.GetComponentInChildren<SpawnTrigger>();
@@ -1128,8 +1031,6 @@ public class EasyDesignEditor : EditorWindow
                     UpdateTriggerConnections();
                     UpdateSpawnerSelection();
                 }
-
-                GUI.backgroundColor = oldColor;
 
                 EditorGUILayout.EndHorizontal();
 
@@ -1148,10 +1049,7 @@ public class EasyDesignEditor : EditorWindow
                 // if the selected tile has a scene transition change it rather than add a new one
                 if (Selection.gameObjects.Length == 1 && Selection.gameObjects[0].GetComponentInChildren<StateTransitionPoint>())
                 {
-                    oldColor = GUI.backgroundColor;
-                    GUI.backgroundColor = orangeColour;
-
-                    if (GUILayout.Button("Change Transition"))
+                    if (ColouredButton("Change Transition", orangeColour))
                     {
                         StateTransitionPoint sceneTransition = Selection.gameObjects[0].GetComponentInChildren<StateTransitionPoint>();
                         sceneTransition.TargetState = targetState;
@@ -1160,15 +1058,10 @@ public class EasyDesignEditor : EditorWindow
 
                         sceneTransition.index = currentID;
                     }
-
-                    GUI.backgroundColor = oldColor;
                 }
                 else
                 {
-                    oldColor = GUI.backgroundColor;
-                    GUI.backgroundColor = greenColour;
-
-                    if (GUILayout.Button("Add Transition"))
+                    if (ColouredButton("Add Transition", greenColour))
                     {
                         Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
 
@@ -1188,8 +1081,6 @@ public class EasyDesignEditor : EditorWindow
                         sceneTransition.transform.parent = tile.transform;
                         sceneTransition.transform.position = tile.transform.position;
                     }
-
-                    GUI.backgroundColor = oldColor;
                 }
 
                 if (targetState == GameState.battle)
@@ -1216,10 +1107,7 @@ public class EasyDesignEditor : EditorWindow
 
                 EditorGUILayout.BeginHorizontal();
 
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = brownColour;
-
-                if (GUILayout.Button("Earth Hex"))
+                if (ColouredButton("Earth Hex", brownColour))
                 {
                     Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
 
@@ -1234,12 +1122,7 @@ public class EasyDesignEditor : EditorWindow
                     }
                 }
 
-                GUI.backgroundColor = oldColor;
-
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = blueColour;
-
-                if (GUILayout.Button("Lightning Hex"))
+                if (ColouredButton("Lightning Hex", blueColour))
                 {
                     Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
 
@@ -1254,15 +1137,10 @@ public class EasyDesignEditor : EditorWindow
                     }
                 }
 
-                GUI.backgroundColor = oldColor;
-
                 EditorGUILayout.EndHorizontal();
 
                 // Check point
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = yellowColour;
-
-                if (GUILayout.Button("Check Point Hex"))
+                if (ColouredButton("Check Point Hex", yellowColour))
                 {
                     Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
 
@@ -1277,20 +1155,15 @@ public class EasyDesignEditor : EditorWindow
                     }
                 }
 
-                GUI.backgroundColor = oldColor;
-
                 EditorGUILayout.Space();
 
                 EditorGUI.EndDisabledGroup();
 
                 EditorGUILayout.BeginHorizontal();
 
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = redColour;
-
                 EditorGUI.BeginDisabledGroup(!hasStateTransitionSelected || !hasTileSelected);
 
-                if (GUILayout.Button("Remove State Transition"))
+                if (ColouredButton("Remove State Transition", redColour))
                 {
                     GameObject[] selectedObjects = Selection.gameObjects;
 
@@ -1301,7 +1174,7 @@ public class EasyDesignEditor : EditorWindow
 
                 EditorGUI.EndDisabledGroup();
 
-                if (GUILayout.Button("Remove All State Transitions"))
+                if (ColouredButton("Remove All State Transitions", redColour))
                 {
                     StateTransitionPoint[] transitions = grid.GetComponentsInChildren<StateTransitionPoint>();
 
@@ -1310,8 +1183,6 @@ public class EasyDesignEditor : EditorWindow
                         DestroyImmediate(transition.gameObject);
                     }
                 }
-
-                GUI.backgroundColor = oldColor;
 
                 EditorGUILayout.EndHorizontal();
 
@@ -1326,23 +1197,15 @@ public class EasyDesignEditor : EditorWindow
                 // if the selected tile has a scene transition change it rather than add a new one
                 if (Selection.gameObjects.Length == 1 && Selection.gameObjects[0].GetComponentInChildren<SceneTransitionPoint>())
                 {
-                    oldColor = GUI.backgroundColor;
-                    GUI.backgroundColor = orangeColour;
-
-                    if (GUILayout.Button("Change Transition"))
+                    if (ColouredButton("Change Transition", orangeColour))
                     {
                         SceneTransitionPoint transition = Selection.gameObjects[0].GetComponentInChildren<SceneTransitionPoint>();
                         transition.NextLevelIndex = loadLevel;
                     }
-
-                    GUI.backgroundColor = oldColor;
                 }
                 else
                 {
-                    oldColor = GUI.backgroundColor;
-                    GUI.backgroundColor = greenColour;
-
-                    if (GUILayout.Button("Add Transition"))
+                    if (ColouredButton("Add Transition", greenColour))
                     {
                         Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
 
@@ -1358,8 +1221,6 @@ public class EasyDesignEditor : EditorWindow
                         transition.transform.parent = tile.transform;
                         transition.transform.position = tile.transform.position;
                     }
-
-                    GUI.backgroundColor = oldColor;
                 }
 
                 GUILayout.Label("Load Level :");
@@ -1370,14 +1231,13 @@ public class EasyDesignEditor : EditorWindow
 
                 EditorGUI.EndDisabledGroup();
 
+                EditorGUILayout.Space();
+
                 EditorGUILayout.BeginHorizontal();
 
                 EditorGUI.BeginDisabledGroup(!hasTransitionSelected || !hasTileSelected);
 
-                oldColor = GUI.backgroundColor;
-                GUI.backgroundColor = redColour;
-
-                if (GUILayout.Button("Remove Scene Transition"))
+                if (ColouredButton("Remove Scene Transition", redColour))
                 {
                     GameObject[] selectedObjects = Selection.gameObjects;
 
@@ -1388,7 +1248,7 @@ public class EasyDesignEditor : EditorWindow
 
                 EditorGUI.EndDisabledGroup();
 
-                if (GUILayout.Button("Remove All Scene Transitions"))
+                if (ColouredButton("Remove All Scene Transitions", redColour))
                 {
                     SceneTransitionPoint[] transitions = grid.GetComponentsInChildren<SceneTransitionPoint>();
 
@@ -1397,8 +1257,6 @@ public class EasyDesignEditor : EditorWindow
                         DestroyImmediate(transition.gameObject);
                     }
                 }
-
-                GUI.backgroundColor = oldColor;
 
                 EditorGUILayout.EndHorizontal();
 
@@ -1415,11 +1273,184 @@ public class EasyDesignEditor : EditorWindow
 
             #endregion
 
-            #region Settings
+            #region Dialogue
 
             else if (selectedTab == 2)
             {
-                healthyMode = EditorGUILayout.Toggle("Healthy Mode: ", healthyMode);
+                if (ColouredButton("New", greenColour))
+                {
+                    conversation = CreateInstance<Conversation>();
+                    selectedSpeachIndex = 0;
+
+                    loadedConversation = null;
+                }
+
+                EditorGUILayout.BeginHorizontal();
+
+                EditorGUI.BeginDisabledGroup(loadedConversation == null);
+
+                if (ColouredButton("Load", greenColour))
+                {
+                    conversation = loadedConversation;
+
+                    selectedSpeachIndex = conversation.dialogue.Count - 1;
+                    loadedConversation = null;
+                }
+
+                EditorGUI.EndDisabledGroup();
+
+                loadedConversation = EditorGUILayout.ObjectField("", loadedConversation, typeof(Conversation), true) as Conversation;
+
+                EditorGUILayout.EndHorizontal();
+
+                EditorGUILayout.Space();
+
+                BeginColouredVerticalBox(new Color(0.3f, 0.3f, 0.3f));
+
+                EditorGUILayout.BeginHorizontal();
+
+                GUILayout.Label("Name");
+
+                conversation.name = EditorGUILayout.TextField(conversation.name, skin.GetStyle("textfield"));
+
+                EditorGUILayout.EndHorizontal();
+
+                EditorGUILayout.BeginHorizontal();
+
+                if (ColouredButton("Insert", greenColour))
+                {
+                    if (conversation.dialogue.Count == 0)
+                    {
+                        conversation.dialogue.Insert(selectedSpeachIndex, new Speach());
+                        selectedSpeachIndex++;
+                    }
+                    else
+                    {
+                        if (selectedSpeachIndex >= conversation.dialogue.Count)
+                        {
+                            selectedSpeachIndex = conversation.dialogue.Count - 1;
+                        }
+
+                        conversation.dialogue.Insert(selectedSpeachIndex, new Speach());
+                        selectedSpeachIndex++;
+                    }
+
+                    GUI.FocusControl("MyTextField");
+                }
+
+                selectedSpeachIndex = EditorGUILayout.IntField(selectedSpeachIndex, skin.GetStyle("textfield"), GUILayout.ExpandWidth(false));
+
+                EditorGUI.BeginDisabledGroup(conversation.dialogue.Count == 0);
+
+                if (ColouredButton("Remove", redColour))
+                {
+                    if (selectedSpeachIndex >= conversation.dialogue.Count)
+                    {
+                        selectedSpeachIndex = conversation.dialogue.Count - 1;
+                    }
+
+                    conversation.dialogue.RemoveAt(selectedSpeachIndex);
+                }
+
+                EditorGUI.EndDisabledGroup();
+
+                if (selectedSpeachIndex < 0)
+                {
+                    selectedSpeachIndex = 0;
+                }
+
+                EditorGUILayout.EndHorizontal();
+
+                scroll = EditorGUILayout.BeginScrollView(scroll);
+
+                for (int i = 0; i < conversation.dialogue.Count; i++)
+                {
+                    EditorGUILayout.BeginHorizontal();
+
+                    GUILayout.Label("" + i, centeredText);
+
+                    EditorGUILayout.BeginVertical();
+
+                    Color oldColor = GUI.backgroundColor;
+                    GUI.backgroundColor = (conversation.dialogue[i].speaker == Speach.Speaker.Clade) ? brownColour : blueColour;
+
+                    conversation.dialogue[i].speaker = (Speach.Speaker)EditorGUILayout.EnumPopup(conversation.dialogue[i].speaker);
+
+                    GUI.backgroundColor = oldColor;
+
+                    GUI.SetNextControlName("MyTextField");
+                    conversation.dialogue[i].text = EditorGUILayout.TextArea(conversation.dialogue[i].text, GUILayout.Height(50));
+
+                    EditorGUILayout.EndVertical();
+
+                    EditorGUILayout.EndHorizontal();
+                }
+
+                EditorGUILayout.EndScrollView();
+
+
+                EditorGUILayout.EndVertical();
+
+                if (confirmSave)
+                {
+                    BeginColouredVerticalBox(orangeColour);
+
+                    GUILayout.Label("Save over file?", centeredText);
+
+                    EditorGUILayout.BeginHorizontal();
+
+                    if (ColouredButton("Yes!", greenColour))
+                    {
+                        // A Conversation with the same name doesn't exit
+                        if (AssetDatabase.LoadAssetAtPath<Conversation>("Assets/Scripts/ScriptableObjects/Dialogue/" + conversation.name + ".asset") == null)
+                        {
+                            AssetDatabase.CreateAsset(conversation, "Assets/Scripts/ScriptableObjects/Dialogue/" + conversation.name + ".asset");
+                        }
+
+                        AssetDatabase.SaveAssets();
+                        AssetDatabase.Refresh();
+
+                        conversation = CreateInstance<Conversation>();
+                        selectedSpeachIndex = 0;
+
+                        confirmSave = false;
+                    }
+
+                    if (ColouredButton("No...", redColour))
+                    {
+                        confirmSave = false;
+                    }
+
+                    EditorGUILayout.EndHorizontal();
+
+                    EditorGUILayout.EndVertical();
+                }
+                else if (ColouredButton("Save Conversation", greenColour))
+                {
+                    if (AssetDatabase.LoadAssetAtPath<Conversation>("Assets/Scripts/ScriptableObjects/Dialogue/" + conversation.name + ".asset") != null)
+                    {
+                        confirmSave = true;
+                    }
+                    else
+                    {
+                        AssetDatabase.CreateAsset(conversation, "Assets/Scripts/ScriptableObjects/Dialogue/" + conversation.name + ".asset");
+
+                        AssetDatabase.SaveAssets();
+                        AssetDatabase.Refresh();
+
+                        conversation = CreateInstance<Conversation>();
+                        selectedSpeachIndex = 0;
+                    }
+                }
+            }
+
+            #endregion
+
+            #region Settings
+
+            else if (selectedTab == 3)
+            {
+                healthyMode = EditorGUILayout.Toggle("Healthy Mode: ", healthyMode, skin.GetStyle("toggle"));
             }
 
             #endregion
@@ -1435,6 +1466,28 @@ public class EasyDesignEditor : EditorWindow
 
             SceneView.RepaintAll();
         }
+    }
+
+    public bool ColouredButton(string a_name, Color a_colour)
+    {
+        Color oldColor = GUI.backgroundColor;
+        GUI.backgroundColor = a_colour;
+
+        bool output = GUILayout.Button(a_name);
+
+        GUI.backgroundColor = oldColor;
+
+        return output;
+    }
+
+    public void BeginColouredVerticalBox(Color a_colour)
+    {
+        Color oldColor = GUI.backgroundColor;
+        GUI.backgroundColor = a_colour;
+
+        EditorGUILayout.BeginVertical("Box");
+
+        GUI.backgroundColor = oldColor;
     }
 
     private void UpdateTriggerConnections()

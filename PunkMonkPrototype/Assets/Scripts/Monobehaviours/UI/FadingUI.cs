@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 /// <summary>
 /// This script is used to fade in or out any sprite or text UI. Can disable buttons during fade animation.
@@ -22,7 +23,7 @@ public class FadingUI : MonoBehaviour
 
     private Image[] images;
 
-    private Text[] texts;
+    private TextMeshProUGUI[] texts;
 
     private Button[] buttons;
 
@@ -64,14 +65,14 @@ public class FadingUI : MonoBehaviour
 
         images = GetComponentsInChildren<Image>();
 
-        texts = GetComponentsInChildren<Text>();
+        texts = GetComponentsInChildren<TextMeshProUGUI>();
 
         foreach (Image image in images)
         {
             image.color = new Color(image.color.r, image.color.g, image.color.b, (a_hide) ? 0.0f : 1.0f);
         }
 
-        foreach (Text text in texts)
+        foreach (TextMeshProUGUI text in texts)
         {
             text.color = new Color(text.color.r, text.color.g, text.color.b, (a_hide) ? 0.0f : 1.0f);
         }
@@ -98,9 +99,12 @@ public class FadingUI : MonoBehaviour
 
             for (int i = 0; i < buttons.Length; i++)
             {
-                // Save the previous button state before setting it to false
-                buttonInitialState[i] = buttons[i].interactable;
-                buttons[i].interactable = false;
+                if (buttons[i])
+                {
+                    // Save the previous button state before setting it to false
+                    buttonInitialState[i] = buttons[i].interactable;
+                    buttons[i].interactable = false;
+                }
             }
         }
 
@@ -119,12 +123,18 @@ public class FadingUI : MonoBehaviour
 
             foreach (Image image in images)
             {
-                image.color = new Color(image.color.r, image.color.g, image.color.b, Mathf.Lerp(from, to, t));
+                if (image)
+                {
+                    image.color = new Color(image.color.r, image.color.g, image.color.b, Mathf.Lerp(from, to, t));
+                }
             }
 
-            foreach (Text text in texts)
+            foreach (TextMeshProUGUI text in texts)
             {
-                text.color = new Color(text.color.r, text.color.g, text.color.b, Mathf.Lerp(from, to, t));
+                if (text)
+                {
+                    text.color = new Color(text.color.r, text.color.g, text.color.b, Mathf.Lerp(from, to, t));
+                }
             }
 
             yield return null;
@@ -134,7 +144,10 @@ public class FadingUI : MonoBehaviour
         {
             for (int i = 0; i < buttons.Length; i++)
             {
-                buttons[i].interactable = buttonInitialState[i];
+                if (buttons[i])
+                {
+                    buttons[i].interactable = buttonInitialState[i];
+                }
             }
         }
 

@@ -7,7 +7,7 @@ public class EarthUnit : Unit
     [Header("Basic Attack")]
 
     [SerializeField]
-    private int[] basicDamage;
+    private int basicDamage;
 
     [SerializeField]
     private float basicDamgeDelayTimer = 1;
@@ -18,7 +18,7 @@ public class EarthUnit : Unit
     [Header("Special Attack")]
 
     [SerializeField]
-    private int specialDamage;
+    private int[] specialDamage;
     [SerializeField]
     private float specialheight;
     [SerializeField]
@@ -207,7 +207,7 @@ public class EarthUnit : Unit
                 if (x.CurrentUnit.Team != TEAM.player)
                 {
                     //deal damage to that unit
-                    x.CurrentUnit.TakeDamage(basicDamage[HexUtility.Distance(basicTiles[0], x) - 1], this);
+                    x.CurrentUnit.TakeDamage(basicDamage, this);
                 }
             }
         }
@@ -237,7 +237,7 @@ public class EarthUnit : Unit
                 if (x.CurrentUnit.Team != TEAM.player)
                 {
                     //deal damage to that unit
-                    x.CurrentUnit.TakeDamage(specialDamage, this);
+                    x.CurrentUnit.TakeDamage(specialDamage[HexUtility.Distance(specialTiles[0], x) - 1], this);
                 }
             }
         }

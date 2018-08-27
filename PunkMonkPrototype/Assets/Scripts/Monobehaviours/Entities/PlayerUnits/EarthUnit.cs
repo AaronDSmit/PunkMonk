@@ -57,6 +57,16 @@ public class EarthUnit : Unit
         }
     }
 
+    public int BasicDamage
+    {
+        get { return basicDamage; }
+    }
+
+    public int GetSpecialDamage(int a_distance)
+    {
+        return specialDamage[a_distance];
+    }
+
     public int SpecialDamageArea
     {
         get { return specialDamageArea; }

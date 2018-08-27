@@ -51,6 +51,8 @@ public class Unit : LivingEntity
 
     private bool canSpecialAttack;
 
+    private bool hasUsedSpecialAttack;
+
     private bool isSelected;
 
     protected System.Action finishedWalking;
@@ -145,6 +147,11 @@ public class Unit : LivingEntity
         StartCoroutine(DelayedSpecialAction(a_targetTiles, a_start, a_finished));
     }
 
+    public void PreviewDamage(int a_damage)
+    {
+        healthBar.PreviewDamage(a_damage);
+    }
+
     public void Highlight(bool a_isHighlited, Color a_outlineColour)
     {
         if (a_isHighlited)
@@ -234,6 +241,7 @@ public class Unit : LivingEntity
     {
         CanAttack = true;
         CanMove = true;
+        hasUsedSpecialAttack = false;
         CanSpecialAttack = CurrentVolt > 0;
     }
 
@@ -241,7 +249,8 @@ public class Unit : LivingEntity
     {
         if (CurrentVolt > 0)
         {
-            canSpecialAttack = true;
+            // only set it to true if you haven't already used special attack
+            canSpecialAttack = !hasUsedSpecialAttack;
 
             if (OnCanSpecialChanged != null)
             {

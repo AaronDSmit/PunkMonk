@@ -5,7 +5,8 @@ public class SegmentedHealthBar : MonoBehaviour
 {
     [SerializeField] float borderWidth = 0.1f;
     [SerializeField] Color healthColour = Color.green;
-    [SerializeField] Color missingHealthColour = new Color(0, 0, 0, 0);
+    [SerializeField] Color missingHealthColour = new Color(0, 0, 0, 1);
+    [SerializeField] Color previewDamageHealthColour = new Color(1, 0, 0, 1);
 
     private int maxHealth = 4;
     private int currentHealth = 4;
@@ -40,6 +41,21 @@ public class SegmentedHealthBar : MonoBehaviour
     public void Hide()
     {
         fade.FadeOut();
+    }
+
+    public void PreviewDamage(int a_damage)
+    {
+        for (int i = 0; i < currentHealth; i++)
+        {
+            if (i < (currentHealth - a_damage))
+            {
+                segments.GetChild(i).GetComponent<Image>().color = healthColour;
+            }
+            else
+            {
+                segments.GetChild(i).GetComponent<Image>().color = previewDamageHealthColour;
+            }
+        }
     }
 
     private void Refresh()

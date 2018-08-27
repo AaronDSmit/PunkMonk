@@ -43,7 +43,10 @@ public class LightningUnit : Unit
 
     //TODO - Add partical effect for basic attack
 
-
+    public int BasicDamage
+    {
+        get { return basicDamage; }
+    }
 
     protected override void Awake()
     {

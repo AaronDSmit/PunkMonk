@@ -52,6 +52,8 @@ public class PlayerController : MonoBehaviour
 
     private List<Hex> tilesAffectByAction;
 
+    private List<Unit> enemiesAffectByAction;
+
     private UIManager UI;
 
     private GridManager grid;
@@ -116,17 +118,21 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Toggles between two player units, requires that both units are alive
     public void SwitchSelection()
     {
-        CancelCurrentAction();
+        if (!earthDead && !LightningDead)
+        {
+            CancelCurrentAction();
 
-        if (selectedUnit == earthUnit)
-        {
-            SelectUnit(lightningUnit);
-        }
-        else
-        {
-            SelectUnit(earthUnit);
+            if (selectedUnit == earthUnit)
+            {
+                SelectUnit(lightningUnit);
+            }
+            else
+            {
+                SelectUnit(earthUnit);
+            }
         }
     }
 
@@ -235,6 +241,7 @@ public class PlayerController : MonoBehaviour
         a_livingEntity.OnDeath += EnemyDied;
     }
 
+    // Track enemy units who have died
     public void EnemyDied(LivingEntity a_entity)
     {
         if (trackingKills)
@@ -249,6 +256,7 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
 
     public void SetUnitSnapHexes(Hex a_earthHex, Hex a_lightningHex)
     {
@@ -338,6 +346,8 @@ public class PlayerController : MonoBehaviour
 
         tilesAffectByAction = new List<Hex>();
 
+        enemiesAffectByAction = new List<Unit>();
+
         cameraRig = GameObject.FindGameObjectWithTag("CameraRig").GetComponent<CameraController>();
 
         if (selectionRuleset == null)
@@ -398,7 +408,6 @@ public class PlayerController : MonoBehaviour
     // Process Mouse Input
     private void ProcessMouseInput()
     {
-
         #region Tile / Unit hover Highlighting
 
         Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -477,6 +486,16 @@ public class PlayerController : MonoBehaviour
 
                         tilesAffectByAction.Clear();
                     }
+
+                    if (enemiesAffectByAction.Count > 0)
+                    {
+                        foreach (Unit unit in enemiesAffectByAction)
+                        {
+                            unit.PreviewDamage(0);
+                        }
+
+                        enemiesAffectByAction.Clear();
+                    }
                 }
             }
             else if (unitUnderMouse)
@@ -507,6 +526,16 @@ public class PlayerController : MonoBehaviour
             {
                 previousTileUnderMouse.MouseExit();
                 previousTileUnderMouse = null;
+            }
+
+            if (enemiesAffectByAction.Count > 0)
+            {
+                foreach (Unit unit in enemiesAffectByAction)
+                {
+                    unit.PreviewDamage(0);
+                }
+
+                enemiesAffectByAction.Clear();
             }
         }
 
@@ -600,27 +629,42 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    #region Callbacks
+
+    // Callback called when a unit starts their attack
     private void AttackStart()
     {
         UI.LockUI();
     }
 
+    // Callback called when a unit finishes their attack
     private void AttackEnd()
     {
         canInteract = true;
         UI.UnlockUI();
     }
 
+    // Callback called when a unit finishes their special attack
     private void SpecialAttackStart()
     {
         UI.LockUI();
     }
 
+    // Callback called when a unit finishes their special attack
     private void SpecialAttackEnd()
     {
         canInteract = true;
         UI.UnlockUI();
     }
+
+    // Callback called when a unit finishes walking to a tile
+    private void UnitFinishedWalking()
+    {
+        canInteract = true;
+        UI.UnlockUI();
+    }
+
+    #endregion
 
     private void SelectUnit(Unit a_newSelectedUnit)
     {
@@ -654,11 +698,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void UnitFinishedWalking()
-    {
-        canInteract = true;
-        UI.UnlockUI();
-    }
+
 
     private void HighlightTilesInRange(int a_range)
     {
@@ -709,6 +749,16 @@ public class PlayerController : MonoBehaviour
             }
 
             tilesAffectByAction.Clear();
+        }
+
+        if (enemiesAffectByAction.Count > 0)
+        {
+            foreach (Unit unit in enemiesAffectByAction)
+            {
+                unit.PreviewDamage(0);
+            }
+
+            enemiesAffectByAction.Clear();
         }
     }
 
@@ -823,9 +873,12 @@ public class PlayerController : MonoBehaviour
 
         tilesAffectByAction.Clear();
 
-        //Debug.DrawLine(selectedUnit.CurrentTile.transform.position + Vector3.up * 0.2f, a_hitInfo.point + Vector3.up * 0.2f, Color.yellow);
+        foreach (Unit unit in enemiesAffectByAction)
+        {
+            unit.PreviewDamage(0);
+        }
 
-        // angle = Vector3.SignedAngle(Vector3.forward, a_hitInfo.point - selectedUnit.CurrentTile.transform.position, Vector3.up);
+        enemiesAffectByAction.Clear();
 
         angle = Vector3.SignedAngle(Vector3.forward, a_targetTile.transform.position - selectedUnit.CurrentTile.transform.position, Vector3.up);
 
@@ -838,18 +891,19 @@ public class PlayerController : MonoBehaviour
 
         MakeCone(snapAngle, earthUnit.ConeRange);
 
-        //Debug.DrawLine(selectedUnit.CurrentTile.transform.position + Vector3.up * 0.2f, selectedUnit.CurrentTile.transform.position + new Vector3(Mathf.Sin(Mathf.Deg2Rad * snapAngle), 0.0f, Mathf.Cos(Mathf.Deg2Rad * snapAngle)) * 2 + Vector3.up * 0.2f, Color.magenta);
-
         foreach (Hex tile in tilesAffectByAction)
         {
-            if (!tile.IsTraversable)
+            if (tile.CurrentUnit != null && tile.CurrentUnit.CompareTag("Enemy"))
             {
-                tile.MouseEnter(currentRuleset.HighlightColour);
+                enemiesAffectByAction.Add(tile.CurrentUnit);
             }
-            else
-            {
-                tile.MouseEnter(currentRuleset.HighlightColour);
-            }
+
+            tile.MouseEnter(currentRuleset.HighlightColour);
+        }
+
+        foreach (Unit unit in enemiesAffectByAction)
+        {
+            unit.PreviewDamage(earthUnit.BasicDamage);
         }
     }
 
@@ -863,6 +917,13 @@ public class PlayerController : MonoBehaviour
 
         tilesAffectByAction.Clear();
 
+        foreach (Unit unit in enemiesAffectByAction)
+        {
+            unit.PreviewDamage(0);
+        }
+
+        enemiesAffectByAction.Clear();
+
         tilesAffectByAction.Add(a_targetTile);
 
         List<Hex> tilesInRange = grid.GetTilesWithinDistance(a_targetTile, earthUnit.SpecialDamageArea, false);
@@ -874,14 +935,18 @@ public class PlayerController : MonoBehaviour
 
         foreach (Hex tile in tilesAffectByAction)
         {
-            if (!tile.IsTraversable)
+            if (tile.CurrentUnit != null && tile.CurrentUnit.CompareTag("Enemy"))
             {
-                tile.MouseEnter(currentRuleset.HighlightColour);
+                enemiesAffectByAction.Add(tile.CurrentUnit);
             }
-            else
-            {
-                tile.MouseEnter(currentRuleset.HighlightColour);
-            }
+
+            tile.MouseEnter(currentRuleset.HighlightColour);
+        }
+
+        foreach (Unit unit in enemiesAffectByAction)
+        {
+            int damageIndex = HexUtility.Distance(a_targetTile, unit.CurrentTile) - 1;
+            unit.PreviewDamage(earthUnit.GetSpecialDamage(damageIndex));
         }
     }
 
@@ -981,11 +1046,28 @@ public class PlayerController : MonoBehaviour
 
         tilesAffectByAction.Clear();
 
+        foreach (Unit unit in enemiesAffectByAction)
+        {
+            unit.PreviewDamage(0);
+        }
+
+        enemiesAffectByAction.Clear();
+
         tilesAffectByAction.Add(a_targetTile);
 
         foreach (Hex tile in tilesAffectByAction)
         {
+            if (tile.CurrentUnit != null && tile.CurrentUnit.CompareTag("Enemy"))
+            {
+                enemiesAffectByAction.Add(tile.CurrentUnit);
+            }
+
             tile.MouseEnter(currentRuleset.HighlightColour);
+        }
+
+        foreach (Unit unit in enemiesAffectByAction)
+        {
+            unit.PreviewDamage(lightningUnit.BasicDamage);
         }
     }
 

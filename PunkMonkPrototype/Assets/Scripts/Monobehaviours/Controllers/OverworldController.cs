@@ -8,7 +8,14 @@ public class OverworldController : MonoBehaviour
 
     private Unit lightningUnit = null;
 
+    private OverworldFollower follower;
+
+    private Vector3 currentNode;
+
     private bool inOverworld;
+
+    [SerializeField]
+    private float newNodeDistance = 1;
 
     [SerializeField]
     private float movementSpeed = 0;
@@ -16,6 +23,12 @@ public class OverworldController : MonoBehaviour
     private void Awake()
     {
         Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
+    }
+
+    private void Start()
+    {
+        follower = lightningUnit.GetComponent<OverworldFollower>();
+        DropNode();
     }
 
     private void GameStateChanged(GameState a_oldstate, GameState a_newstate)
@@ -31,6 +44,10 @@ public class OverworldController : MonoBehaviour
         {
             ProcessKeyboardInput();
             ProcessMouseInput();
+            if(Vector3.Distance(earthUnit.transform.position, currentNode) >= newNodeDistance)
+            {
+                DropNode();
+            }
         }
     }
 
@@ -66,6 +83,12 @@ public class OverworldController : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void DropNode()
+    {
+        currentNode = earthUnit.transform.position;
+        follower.Nodes.Enqueue(currentNode);
     }
 
     // Initialisation function called when the scene is ready, sets up unit references

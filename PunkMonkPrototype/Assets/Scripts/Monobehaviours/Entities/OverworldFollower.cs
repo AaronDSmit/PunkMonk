@@ -19,7 +19,15 @@ public class OverworldFollower : MonoBehaviour
     private Unit earthUnit;
     private bool inOverworld;
     private Vector3 vecBetween;
+    private Queue<Vector3> nodes = new Queue<Vector3>();
 
+    public Queue<Vector3> Nodes
+    {
+        get
+        {
+            return nodes;
+        }
+    }
     #endregion
 
     #region Public Methods
@@ -49,17 +57,14 @@ public class OverworldFollower : MonoBehaviour
 
     private void Update()
     {
-        if (inOverworld && earthUnit)
+        if (inOverworld && nodes.Count > 1)
         {
-            if (Vector3.Distance(transform.position, earthUnit.transform.position) > 2)
+            vecBetween = nodes.Peek() - transform.position;
+            transform.position += vecBetween.normalized * movementSpeed * Time.deltaTime;
+
+            if (Vector3.Distance(transform.position, nodes.Peek()) < 0.1)
             {
-                vecBetween = earthUnit.transform.position - transform.position;
-                transform.position += vecBetween.normalized * movementSpeed * Time.deltaTime;
-            }
-            else if(Vector3.Distance(transform.position, earthUnit.transform.position) < 1) // push away if too close
-            {
-                vecBetween = transform.position - earthUnit.transform.position;
-                transform.position += vecBetween.normalized * movementSpeed * Time.deltaTime;
+                nodes.Dequeue();
             }
         }
     }

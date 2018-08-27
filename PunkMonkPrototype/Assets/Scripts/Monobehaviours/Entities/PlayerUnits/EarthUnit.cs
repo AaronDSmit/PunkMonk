@@ -13,7 +13,7 @@ public class EarthUnit : Unit
     private float basicDamgeDelayTimer = 1;
 
     [SerializeField]
-    private int coneRange = 4;
+    private int coneAreaLength = 4;
 
     [Header("Special Attack")]
 
@@ -25,6 +25,9 @@ public class EarthUnit : Unit
     private float specialJumpTime;
     [SerializeField]
     private float specialDamgeDelayTimer;
+    [SerializeField]
+    private int specialDamageArea = 1;
+
     [SerializeField]
     private AnimationCurve YCurve;
     [SerializeField]
@@ -45,13 +48,18 @@ public class EarthUnit : Unit
     {
         get
         {
-            return coneRange;
+            return coneAreaLength;
         }
 
         set
         {
-            coneRange = value;
+            coneAreaLength = value;
         }
+    }
+
+    public int SpecialDamageArea
+    {
+        get { return specialDamageArea; }
     }
 
     protected override void Awake()

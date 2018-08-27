@@ -293,7 +293,7 @@ MonoBehaviour:
   team: 1
   dissolveMat: {fileID: 2100000, guid: 25b0cd8d1848b1f4a83e3fa96f6d0869, type: 2}
   deathAnimationTime: 1
-  maxHealth: 5
+  maxHealth: 4
   maxVolt: 3
   actions:
   - {fileID: 11400000, guid: 85a01b7788e76f845875da8b3c3553d2, type: 2}
@@ -304,7 +304,7 @@ MonoBehaviour:
   walkSpeed: 10
   projectilePosition: {fileID: 4797146379296584}
   glamCam: 0
-  damage: 2
+  damage: 1
   damgeDelayTimer: 0
 --- !u!114 &114702815243546110
 MonoBehaviour:

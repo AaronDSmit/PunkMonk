@@ -52,6 +52,8 @@ public class UIManager : MonoBehaviour
 
     private bool isReady;
 
+    private CameraController cameraController;
+
     #endregion
 
     #region Properties
@@ -68,6 +70,14 @@ public class UIManager : MonoBehaviour
     public void Init()
     {
         isReady = true;
+    }
+
+    public void LinkToCamera()
+    {
+        cameraController = GameObject.FindGameObjectWithTag("CameraRig").GetComponent<CameraController>();
+
+        cameraController.onGlamCamStart += HideUI;
+        cameraController.onGlamCamEnd += ShowUI;
     }
 
     public void SelectAction(int actionIndex)
@@ -260,6 +270,16 @@ public class UIManager : MonoBehaviour
         {
             battleUI.FadeOut();
         }
+    }
+
+    private void HideUI()
+    {
+        battleUI.gameObject.SetActive(false);
+    }
+
+    private void ShowUI()
+    {
+        battleUI.gameObject.SetActive(true);
     }
 
     #region Coroutines

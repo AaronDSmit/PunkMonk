@@ -418,5 +418,11 @@ public class Unit : LivingEntity
         // Keep empty
     }
 
+    private void OnDestroy()
+    {
+        cameraController.onGlamCamStart -= healthBar.Hide;
+        cameraController.onGlamCamEnd -= healthBar.Show;
+    }
+
     #endregion
 }

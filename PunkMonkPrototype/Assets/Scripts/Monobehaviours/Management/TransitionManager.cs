@@ -82,6 +82,8 @@ public class TransitionManager : MonoBehaviour
             {
                 Debug.LogError("No CameraController found!");
             }
+
+            Manager.instance.UIController.LinkToCamera();
         }
     }
 

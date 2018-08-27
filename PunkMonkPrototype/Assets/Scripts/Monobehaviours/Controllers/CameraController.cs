@@ -149,11 +149,11 @@ public class CameraController : MonoBehaviour
                             transform.position += transform.right * speed * Time.deltaTime;
                         }
 
-                        if (Input.mousePosition.y <= mousePanThresholdYUp)
+                        if (Input.mousePosition.y <= mousePanThresholdYDown)
                         {
                             transform.position += -transform.forward * speed  * Time.deltaTime;
                         }
-                        else if (Input.mousePosition.y >= Screen.height - mousePanThresholdYDown)
+                        else if (Input.mousePosition.y >= Screen.height - mousePanThresholdYUp)
                         {
                             transform.position += transform.forward * speed * Time.deltaTime;
                         }

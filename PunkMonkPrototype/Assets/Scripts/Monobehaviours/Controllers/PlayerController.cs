@@ -116,6 +116,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
     public Unit SpawnEarthUnit(Hex spawnHex = null)
     {
         // use spawn points by default
@@ -249,6 +250,16 @@ public class PlayerController : MonoBehaviour
     {
         earthDead = false;
         LightningDead = false;
+    }
+
+    public void GiveLightningVolt(int a_value)
+    {
+        lightningUnit.CurrentVolt = a_value;
+    }
+
+    public void GiveEarthVolt(int a_value)
+    {
+        earthUnit.CurrentVolt = a_value;
     }
 
     public void SelectAction(int actionIndex)

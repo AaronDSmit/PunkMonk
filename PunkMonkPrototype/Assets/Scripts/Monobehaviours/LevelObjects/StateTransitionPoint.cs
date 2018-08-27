@@ -33,6 +33,9 @@ public class StateTransitionPoint : MonoBehaviour
 
     public bool triggered = false;
 
+    public int voltGivenToEarth;
+    public int voltGivenToLightning;
+
     public Hex LightningHex
     {
         get { return lightningHex; }
@@ -87,6 +90,10 @@ public class StateTransitionPoint : MonoBehaviour
 
                 player.EncounterKillLimit = numberToKill;
                 player.SetUnitSnapHexes(earthHex, lightningHex);
+
+                player.GiveEarthVolt(voltGivenToEarth);
+                player.GiveLightningVolt(voltGivenToLightning);
+
 
                 if (checkPoint != null)
                 {

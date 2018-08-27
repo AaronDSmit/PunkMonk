@@ -212,8 +212,6 @@ public class Unit : LivingEntity
         currentTile = a_startingTile;
 
         currentTile.Enter(this);
-
-        CurrentVolt = maxVolt;
     }
 
     public void MoveTo(Hex a_targetTile, System.Action a_finished)

@@ -101,6 +101,12 @@ public class EasyDesignEditor : EditorWindow
     [SerializeField]
     private StateTransitionPoint[] selectedTransitionPoints;
 
+    [SerializeField]
+    private int voltGivenToEarth;
+
+    [SerializeField]
+    private int voltGivenToLightning;
+
     // Dialogue
     [SerializeField]
     private Conversation conversation;
@@ -1055,6 +1061,8 @@ public class EasyDesignEditor : EditorWindow
                         sceneTransition.TargetState = targetState;
                         sceneTransition.CurrentState = currentState;
                         sceneTransition.numberToKill = numberToKill;
+                        sceneTransition.voltGivenToEarth = voltGivenToEarth;
+                        sceneTransition.voltGivenToLightning = voltGivenToLightning;
 
                         sceneTransition.index = currentID;
                     }
@@ -1071,6 +1079,8 @@ public class EasyDesignEditor : EditorWindow
                         sceneTransition.TargetState = targetState;
                         sceneTransition.CurrentState = currentState;
                         sceneTransition.numberToKill = numberToKill;
+                        sceneTransition.voltGivenToEarth = voltGivenToEarth;
+                        sceneTransition.voltGivenToLightning = voltGivenToLightning;
 
                         sceneTransition.drawText = true;
                         sceneTransition.index = currentID;
@@ -1100,6 +1110,22 @@ public class EasyDesignEditor : EditorWindow
                 GUILayout.Label(" To ");
 
                 targetState = (GameState)EditorGUILayout.EnumPopup(targetState);
+
+                EditorGUILayout.EndHorizontal();
+
+                EditorGUILayout.BeginHorizontal();
+
+                GUILayout.Label("Give Clade Volt: ");
+
+                voltGivenToEarth = EditorGUILayout.IntField(voltGivenToEarth);
+
+                EditorGUILayout.EndHorizontal();
+
+                EditorGUILayout.BeginHorizontal();
+
+                GUILayout.Label("Give Gen Volt: ");
+
+                voltGivenToLightning = EditorGUILayout.IntField(voltGivenToLightning);
 
                 EditorGUILayout.EndHorizontal();
 

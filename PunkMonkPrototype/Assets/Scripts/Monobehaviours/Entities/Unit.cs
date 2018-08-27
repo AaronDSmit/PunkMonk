@@ -237,6 +237,17 @@ public class Unit : LivingEntity
         CanSpecialAttack = CurrentVolt > 0;
     }
 
+    public void HasKilled()
+    {
+        if (CurrentVolt > 0)
+        {
+            if (OnCanSpecialChanged != null)
+            {
+                OnCanSpecialChanged(canSpecialAttack);
+            }
+        }
+    }
+
     #endregion
 
     #region Unity Life-cycle Methods
@@ -272,10 +283,14 @@ public class Unit : LivingEntity
         if (a_newstate == GameState.battle)
         {
             healthBar.Show();
+            if (hasVoltBar)
+                voltBar.Show();
         }
         else if (a_oldstate == GameState.battle)
         {
             healthBar.Hide();
+            if (hasVoltBar)
+                voltBar.Hide();
         }
     }
 

@@ -18,6 +18,9 @@ public class LivingEntity : Entity
     [Tooltip("Maximum amount of volt, will start with this amount")]
     [SerializeField]
     protected int maxVolt = 3;
+    [Tooltip("If this unit has a volt bar or not")]
+    [SerializeField]
+    protected bool hasVoltBar = false;
 
     #endregion
 
@@ -26,6 +29,7 @@ public class LivingEntity : Entity
     protected Renderer myRenderer;
 
     protected SegmentedHealthBar healthBar;
+    protected SegmentedHealthBar voltBar;
 
     #endregion
 
@@ -33,7 +37,7 @@ public class LivingEntity : Entity
 
     private int currentHealth;
 
-    private int currentVolt;
+    private int currentVolt = 1;
 
     private bool dead;
 
@@ -50,7 +54,14 @@ public class LivingEntity : Entity
 
         set
         {
+            // Set the volt, making sure it isn't above 
             currentVolt = Mathf.Clamp(value, 0, maxVolt);
+
+            // Update the volt bar
+            if (hasVoltBar)
+            {
+                voltBar.CurrentHealth = CurrentVolt;
+            }
 
             if (CompareTag("Enemy") && currentVolt > 0)
             {
@@ -103,6 +114,7 @@ public class LivingEntity : Entity
             if (CurrentVolt > 0)
             {
                 a_damageFrom.CurrentVolt++;
+                a_damageFrom.HasKilled();
             }
 
             Die();
@@ -118,15 +130,21 @@ public class LivingEntity : Entity
         currentHealth = maxHealth;
 
         myRenderer = GetComponentInChildren<Renderer>();
-        healthBar = GetComponentInChildren<SegmentedHealthBar>();
+        SegmentedHealthBar[] healthBars = GetComponentsInChildren<SegmentedHealthBar>();
+        healthBar = healthBars[0];
+        voltBar = hasVoltBar ? healthBars[1] : null;
 
-        dead = false;
     }
 
     protected virtual void Start()
     {
         healthBar.MaxHealth = MaxHealth;
         healthBar.CurrentHealth = CurrentHealth;
+        if (hasVoltBar)
+        {
+            voltBar.MaxHealth = maxVolt;
+            voltBar.CurrentHealth = CurrentVolt;
+        }
     }
 
     #endregion
@@ -140,10 +158,12 @@ public class LivingEntity : Entity
         {
             dead = true;
 
-            if(healthBar)
+            if (healthBar)
             {
                 Destroy(healthBar.gameObject);
             }
+            if (voltBar)
+                Destroy(voltBar.gameObject);
 
             if (OnDeath != null)
             {

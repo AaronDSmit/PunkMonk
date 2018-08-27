@@ -26,7 +26,7 @@ public class SegmentedHealthBar : MonoBehaviour
         segments = transform.GetChild(1).GetComponent<RectTransform>();
         groupLayout = segments.GetComponent<HorizontalLayoutGroup>();
         mainHealthBar = segments.transform.GetChild(0).gameObject;
-        fade = GetComponent<FadingUI>();
+        fade = transform.parent.GetComponent<FadingUI>();
     }
 
     public void Show()

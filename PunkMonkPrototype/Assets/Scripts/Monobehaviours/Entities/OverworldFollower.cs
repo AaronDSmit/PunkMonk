@@ -60,7 +60,7 @@ public class OverworldFollower : MonoBehaviour
         if (inOverworld && nodes.Count > 1)
         {
             vecBetween = nodes.Peek() - transform.position;
-            transform.position += vecBetween.normalized * movementSpeed * Time.deltaTime;
+            transform.position += vecBetween.normalized * movementSpeed * Mathf.Clamp(nodes.Count, 1, 3) * Time.deltaTime;
 
             if (Vector3.Distance(transform.position, nodes.Peek()) < 0.1)
             {

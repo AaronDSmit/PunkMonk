@@ -742,8 +742,7 @@ public class PlayerController : MonoBehaviour
 
     private void GameStateChanged(GameState a_oldstate, GameState a_newstate)
     {
-
-        if (a_newstate == GameState.transition && Manager.instance.StateController.NextGameState == GameState.battle)
+        if (a_newstate == GameState.transition && Manager.instance.StateController.StateAfterTransition == GameState.battle)
         {
             earthUnit.WalkDirectlyToTile(earthSnapHex);
             lightningUnit.WalkDirectlyToTile(lightningSnapHex);
@@ -756,7 +755,7 @@ public class PlayerController : MonoBehaviour
             canInteract = true;
             SelectUnit(earthUnit);
         }
-        else if (a_oldstate == GameState.battle)
+        else if (Manager.instance.StateController.StateBeforeTransition == GameState.battle)
         {
             DeselectUnit();
             canInteract = false;

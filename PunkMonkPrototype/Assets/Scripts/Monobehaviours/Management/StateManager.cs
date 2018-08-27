@@ -19,7 +19,10 @@ public class StateManager : MonoBehaviour
     private GameState previousState = GameState.mainmenu;
 
     [SerializeField]
-    private GameState nextState = GameState.mainmenu;
+    private GameState stateBeforeTransition = GameState.mainmenu;
+
+    [SerializeField]
+    private GameState stateAfterTransition = GameState.mainmenu;
 
     [SerializeField]
     private List<GameState> stateHistory;
@@ -56,6 +59,11 @@ public class StateManager : MonoBehaviour
         get { return isReady; }
     }
 
+    public GameState StateBeforeTransition
+    {
+        get { return stateBeforeTransition; }
+    }
+
     // Returns previous game state
     public GameState PreviousState
     {
@@ -68,9 +76,9 @@ public class StateManager : MonoBehaviour
         get { return currentState; }
     }
 
-    public GameState NextGameState
+    public GameState StateAfterTransition
     {
-        get { return nextState; }
+        get { return stateAfterTransition; }
     }
 
     #endregion
@@ -188,7 +196,8 @@ public class StateManager : MonoBehaviour
     private IEnumerator DelayedStateChange(GameState a_targetState, float a_delay)
     {
         // next state is needed by scripts looking for the state after a transition
-        nextState = a_targetState;
+        stateBeforeTransition = currentState;
+        stateAfterTransition = a_targetState;
         ChangeGameState(GameState.transition);
 
         yield return new WaitForSeconds(a_delay);

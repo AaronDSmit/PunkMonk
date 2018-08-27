@@ -279,7 +279,10 @@ public class UIManager : MonoBehaviour
 
     private void ShowUI()
     {
-        battleUI.gameObject.SetActive(true);
+        if(Manager.instance.StateController.CurrentGameState == GameState.battle)
+        {
+            battleUI.gameObject.SetActive(true);
+        }
     }
 
     #region Coroutines

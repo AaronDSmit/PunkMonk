@@ -31,7 +31,10 @@ public class SegmentedHealthBar : MonoBehaviour
 
     public void Show()
     {
-        fade.FadeIn();
+        if (Manager.instance.StateController.CurrentGameState == GameState.battle)
+        {
+            fade.FadeIn();
+        }
     }
 
     public void Hide()

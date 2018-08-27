@@ -703,14 +703,14 @@ public class PlayerController : MonoBehaviour
 
             myTurn = true;
 
-            if (earthUnit && lightningUnit)
+            if (!earthDead && !LightningDead)
             {
                 earthUnit.Refresh();
                 lightningUnit.Refresh();
 
                 SelectUnit(earthUnit);
             }
-            else if (earthUnit)
+            else if (!earthDead)
             {
                 earthUnit.Refresh();
                 SelectUnit(earthUnit);

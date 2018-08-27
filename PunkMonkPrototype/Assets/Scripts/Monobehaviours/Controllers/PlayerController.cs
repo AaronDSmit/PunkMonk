@@ -777,9 +777,11 @@ public class PlayerController : MonoBehaviour
                 GetTilesAffectByEarthSpecialAttack(a_targetTile);
                 break;
             case PlayerAttack.lightningBasic:
+
                 GetTilesAffectByLightningAttack(a_targetTile);
                 break;
             case PlayerAttack.lightningSpecial:
+
                 GetTilesAffectByLightningSpecialAttack(a_targetTile);
                 break;
         }
@@ -842,7 +844,7 @@ public class PlayerController : MonoBehaviour
 
         tilesAffectByAction.Add(a_targetTile);
 
-        List<Hex> tilesInRange = grid.GetTilesWithinDistance(a_targetTile, 1, false);
+        List<Hex> tilesInRange = grid.GetTilesWithinDistance(a_targetTile, earthUnit.SpecialDamageArea, false);
 
         for (int i = 0; i < tilesInRange.Count; i++)
         {

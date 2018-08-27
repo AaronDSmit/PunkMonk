@@ -75,6 +75,8 @@ public class OverworldFollower : MonoBehaviour
 
     private void GameStateChanged(GameState _oldstate, GameState _newstate)
     {
+        nodes.Clear();
+
         // ensure this script knows it's in over-world state
         inOverworld = (_newstate == GameState.overworld);
     }

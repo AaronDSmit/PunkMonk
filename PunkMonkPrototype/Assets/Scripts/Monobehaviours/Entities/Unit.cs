@@ -254,6 +254,10 @@ public class Unit : LivingEntity
         canAttack = true;
         canMove = true;
         canSpecialAttack = true;
+
+
+        cameraController.onGlamCamStart += healthBar.Hide;
+        cameraController.onGlamCamEnd += healthBar.Show;
     }
 
     #endregion
@@ -412,6 +416,12 @@ public class Unit : LivingEntity
     protected virtual void DoSpecialAttack(Hex[] a_targetTiles, System.Action a_start, System.Action a_finished)
     {
         // Keep empty
+    }
+
+    private void OnDestroy()
+    {
+        cameraController.onGlamCamStart -= healthBar.Hide;
+        cameraController.onGlamCamEnd -= healthBar.Show;
     }
 
     #endregion

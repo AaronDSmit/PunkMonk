@@ -7,7 +7,7 @@ public class EarthUnit : Unit
     [Header("Basic Attack")]
 
     [SerializeField]
-    private int basicDamage;
+    private int[] basicDamage;
 
     [SerializeField]
     private float basicDamgeDelayTimer = 1;
@@ -199,7 +199,7 @@ public class EarthUnit : Unit
                 if (x.CurrentUnit.Team != TEAM.player)
                 {
                     //deal damage to that unit
-                    x.CurrentUnit.TakeDamage(basicDamage, this);
+                    x.CurrentUnit.TakeDamage(basicDamage[HexUtility.Distance(basicTiles[0], x) - 1], this);
                 }
             }
         }

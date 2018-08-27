@@ -302,7 +302,10 @@ public class CameraController : MonoBehaviour
 
     public void PlayGlamCam(Vector3 a_pos, Vector3 a_vecBetween, GlamCamType a_glamCamType)
     {
-        onGlamCamStart();
+        if (onGlamCamStart != null)
+        {
+            onGlamCamStart();
+        }
 
         switch (a_glamCamType)
         {
@@ -320,7 +323,6 @@ public class CameraController : MonoBehaviour
                 break;
             default:
                 return;
-                break;
         }
     }
 
@@ -412,7 +414,11 @@ public class CameraController : MonoBehaviour
         camera.transform.position = oldCamPosition;
 
         cinemachine = false;
-        onGlamCamEnd();
+
+        if (onGlamCamEnd != null)
+        {
+            onGlamCamEnd();
+        }
 
     }
 

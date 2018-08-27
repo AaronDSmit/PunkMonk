@@ -5,16 +5,16 @@
 /// </summary>
 public class FaceCamera : MonoBehaviour
 {
-    private GameObject camera;
+    private GameObject mainCamera;
 
     private void Awake()
     {
-        camera = Camera.main.gameObject;
+        mainCamera = Camera.main.gameObject;
     }
 
     void LateUpdate ()
     {
-        transform.LookAt(transform.position + camera.transform.rotation * Vector3.forward, camera.transform.rotation * Vector3.up);
+        transform.LookAt(transform.position + mainCamera.transform.rotation * Vector3.forward, mainCamera.transform.rotation * Vector3.up);
         //transform.LookAt(camera.transform.position);
     }
 }

@@ -42,6 +42,8 @@ public class CameraController : MonoBehaviour
     private Vector3 oldCamPosition;
     private Quaternion oldCamRotation;
 
+   
+
     public delegate void GlamCamEvent();
 
     public GlamCamEvent onGlamCamStart;
@@ -54,6 +56,11 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float RotationalSpeed;
     [SerializeField] private float scrollSpeed;
     [SerializeField] private bool inverseRotation;
+    [SerializeField] private int mousePanThresholdYUp = 100;
+    [SerializeField] private int mousePanThresholdYDown = 100;
+    [SerializeField] private int mousePanThresholdXLeft = 100;
+    [SerializeField] private int mousePanThresholdXRight = 100;
+
 
     private Vector3 dir;
 
@@ -132,6 +139,25 @@ public class CameraController : MonoBehaviour
                     else
                     {
                         ProcessKeyboardInput();
+
+                        if (Input.mousePosition.x <= mousePanThresholdXLeft)
+                        {
+                            transform.position += -transform.right * speed * Time.deltaTime;
+                        }
+                        else if(Input.mousePosition.x >= Screen.width - mousePanThresholdXRight)
+                        {
+                            transform.position += transform.right * speed * Time.deltaTime;
+                        }
+
+                        if (Input.mousePosition.y <= mousePanThresholdYUp)
+                        {
+                            transform.position += -transform.forward * speed  * Time.deltaTime;
+                        }
+                        else if (Input.mousePosition.y >= Screen.height - mousePanThresholdYDown)
+                        {
+                            transform.position += transform.forward * speed * Time.deltaTime;
+                        }
+
                     }
                 }
                 else

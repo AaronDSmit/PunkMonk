@@ -56,6 +56,9 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float RotationalSpeed;
     [SerializeField] private float scrollSpeed;
     [SerializeField] private bool inverseRotation;
+
+    [SerializeField] private bool screenPan = true;
+
     [SerializeField] private int mousePanThresholdYUp = 100;
     [SerializeField] private int mousePanThresholdYDown = 100;
     [SerializeField] private int mousePanThresholdXLeft = 100;
@@ -140,24 +143,26 @@ public class CameraController : MonoBehaviour
                     {
                         ProcessKeyboardInput();
 
-                        if (Input.mousePosition.x <= mousePanThresholdXLeft)
+                        if (screenPan)
                         {
-                            transform.position += -transform.right * speed * Time.deltaTime;
-                        }
-                        else if(Input.mousePosition.x >= Screen.width - mousePanThresholdXRight)
-                        {
-                            transform.position += transform.right * speed * Time.deltaTime;
-                        }
+                            if (Input.mousePosition.x <= mousePanThresholdXLeft)
+                            {
+                                transform.position += -transform.right * speed * Time.deltaTime;
+                            }
+                            else if (Input.mousePosition.x >= Screen.width - mousePanThresholdXRight)
+                            {
+                                transform.position += transform.right * speed * Time.deltaTime;
+                            }
 
-                        if (Input.mousePosition.y <= mousePanThresholdYDown)
-                        {
-                            transform.position += -transform.forward * speed  * Time.deltaTime;
+                            if (Input.mousePosition.y <= mousePanThresholdYDown)
+                            {
+                                transform.position += -transform.forward * speed * Time.deltaTime;
+                            }
+                            else if (Input.mousePosition.y >= Screen.height - mousePanThresholdYUp)
+                            {
+                                transform.position += transform.forward * speed * Time.deltaTime;
+                            }
                         }
-                        else if (Input.mousePosition.y >= Screen.height - mousePanThresholdYUp)
-                        {
-                            transform.position += transform.forward * speed * Time.deltaTime;
-                        }
-
                     }
                 }
                 else

@@ -1533,6 +1533,15 @@ public class EasyDesignEditor : EditorWindow
         hasSpawnerSelected = (selectedSpawners.Length > 0);
 
         spawnerButtonName = (selectedSpawners.Length > 1) ? "Spawners" : "Spawner";
+
+        if (hasSpawnerSelected)
+        {
+            enemyType = selectedSpawners[0].SpawnType;
+            turnToSpawn = selectedSpawners[0].TurnToSpawn;
+            hasVolt = selectedSpawners[0].hasVolt;
+
+            currentID = selectedSpawners[0].index;
+        }
     }
 
     private void UpdateStateTransitionSelection()
@@ -1540,6 +1549,18 @@ public class EasyDesignEditor : EditorWindow
         selectedTransitionPoints = Selection.GetFiltered<StateTransitionPoint>(SelectionMode.Deep);
 
         hasStateTransitionSelected = (selectedTransitionPoints.Length > 0);
+
+        if(hasStateTransitionSelected)
+        {
+            numberToKill = selectedTransitionPoints[0].numberToKill;
+            currentState = selectedTransitionPoints[0].CurrentState;
+            targetState = selectedTransitionPoints[0].TargetState;
+
+            currentID = selectedTransitionPoints[0].index;
+
+            voltGivenToEarth = selectedTransitionPoints[0].voltGivenToEarth;
+            voltGivenToLightning = selectedTransitionPoints[0].voltGivenToLightning;
+        }
     }
 
     private void OnSelectionChange()
@@ -1552,25 +1573,7 @@ public class EasyDesignEditor : EditorWindow
 
             UpdateStateTransitionSelection();
 
-            if (hasStateTransitionSelected)
-            {
-                numberToKill = selectedTransitionPoints[0].numberToKill;
-                currentState = selectedTransitionPoints[0].CurrentState;
-                targetState = selectedTransitionPoints[0].TargetState;
-
-                currentID = selectedTransitionPoints[0].index;
-            }
-
             UpdateSpawnerSelection();
-
-            if (hasSpawnerSelected)
-            {
-                enemyType = selectedSpawners[0].SpawnType;
-                turnToSpawn = selectedSpawners[0].TurnToSpawn;
-                hasVolt = selectedSpawners[0].hasVolt;
-
-                currentID = selectedSpawners[0].index;
-            }
 
             hasTriggerSelected = (Selection.gameObjects[0].GetComponentsInChildren<SpawnTrigger>().Length > 0);
 

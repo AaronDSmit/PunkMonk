@@ -104,12 +104,16 @@ public class Hex : Entity
     // disable or enable all spriteRenders on the Hex
     public void ShowOverlay(bool a_showOverlay)
     {
-        if (!child)
+        if (!isTraversable)
         {
-            child = transform.GetChild(0).gameObject;
+            border.color = new Color(border.color.r, border.color.g, border.color.b, inaccessibleAlpha);
+        }
+        else
+        {
+            border.color = new Color(border.color.r, border.color.g, border.color.b, 1.0f);
         }
 
-        child.SetActive(a_showOverlay);
+        border.gameObject.SetActive(a_showOverlay);
     }
 
     public void Highlight(Color a_colour)

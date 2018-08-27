@@ -441,6 +441,14 @@ public class PlayerController : MonoBehaviour
                 if (currentRuleset.WithinRange && currentRuleset.actionType == ActionType.attack || currentRuleset.actionType == ActionType.specialAttack)
                 {
                     ProcessActionHighlighting(tileUnderMouse, hitInfo);
+                    if (currentRuleset.IsValid)
+                    {
+                        lineRenderer.positionCount = 2;
+                        lineRenderer.SetPosition(0, selectedUnit.transform.position + Vector3.up * 1.5f);
+                        lineRenderer.SetPosition(1, tileUnderMouse.transform.position + Vector3.up * 0.5f);
+                    }
+                    else
+                        lineRenderer.positionCount = 0;
                 }
                 else if (currentRuleset.IsValid && currentRuleset.actionType == ActionType.movement)
                 {

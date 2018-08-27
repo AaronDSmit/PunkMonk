@@ -94,6 +94,7 @@ public class LightningUnit : Unit
         start();
 
         CurrentVolt--;
+        hasUsedSpecialAttack = true;
 
         CanSpecialAttack = false;
 

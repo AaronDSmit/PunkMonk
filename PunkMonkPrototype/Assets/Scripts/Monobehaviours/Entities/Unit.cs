@@ -51,7 +51,7 @@ public class Unit : LivingEntity
 
     private bool canSpecialAttack;
 
-    private bool hasUsedSpecialAttack;
+    protected bool hasUsedSpecialAttack;
 
     private bool isSelected;
 
@@ -389,7 +389,7 @@ public class Unit : LivingEntity
             Vector3 targetPos = a_path[index].transform.position;
             targetPos.y = transform.position.y;
 
-            // yield return StartCoroutine(Turn(targetPos));
+            yield return StartCoroutine(Rotate(targetPos));
 
             float distance = Vector3.Distance(transform.position, targetPos);
 

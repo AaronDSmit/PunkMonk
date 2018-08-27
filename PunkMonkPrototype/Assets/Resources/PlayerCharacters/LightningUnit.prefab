@@ -517,7 +517,7 @@ MonoBehaviour:
   moveRange: 3
   attackRange: 5
   specialAttackRange: 5
-  rotationTime: 0
+  rotationTime: 0.2
   walkSpeed: 5
   projectilePosition: {fileID: 4970049176054302}
   glamCam: 1
@@ -573,6 +573,7 @@ MonoBehaviour:
   borderWidth: 0.1
   healthColour: {r: 0, g: 0.83448267, b: 1, a: 1}
   missingHealthColour: {r: 0, g: 0, b: 0, a: 0}
+  previewDamageHealthColour: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &114356526073963496
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -598,6 +599,7 @@ MonoBehaviour:
   borderWidth: 0.1
   healthColour: {r: 0, g: 1, b: 0, a: 1}
   missingHealthColour: {r: 0, g: 0, b: 0, a: 0}
+  previewDamageHealthColour: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &114434601809276096
 MonoBehaviour:
   m_ObjectHideFlags: 1

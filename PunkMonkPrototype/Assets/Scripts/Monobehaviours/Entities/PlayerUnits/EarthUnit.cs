@@ -110,6 +110,7 @@ public class EarthUnit : Unit
         start();
 
         CurrentVolt--;
+        hasUsedSpecialAttack = true;
 
         CanSpecialAttack = false;
 

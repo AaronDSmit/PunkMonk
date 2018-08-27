@@ -789,6 +789,10 @@ MonoBehaviour:
   RotationalSpeed: 5
   scrollSpeed: 30
   inverseRotation: 0
+  mousePanThresholdYUp: 30
+  mousePanThresholdYDown: 100
+  mousePanThresholdXLeft: 100
+  mousePanThresholdXRight: 100
 --- !u!114 &114817349998856782
 MonoBehaviour:
   m_ObjectHideFlags: 1

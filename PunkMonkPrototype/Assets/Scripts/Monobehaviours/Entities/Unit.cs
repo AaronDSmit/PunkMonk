@@ -241,6 +241,8 @@ public class Unit : LivingEntity
     {
         if (CurrentVolt > 0)
         {
+            canSpecialAttack = true;
+
             if (OnCanSpecialChanged != null)
             {
                 OnCanSpecialChanged(canSpecialAttack);

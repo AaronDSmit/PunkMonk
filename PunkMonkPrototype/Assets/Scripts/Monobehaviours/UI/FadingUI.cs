@@ -59,6 +59,32 @@ public class FadingUI : MonoBehaviour
         StartCoroutine(AnimateFade(false));
     }
 
+    public void ShowInstant()
+    {
+        foreach (Image image in images)
+        {
+            image.color = new Color(image.color.r, image.color.g, image.color.b, 1.0f);
+        }
+
+        foreach (TextMeshProUGUI text in texts)
+        {
+            text.color = new Color(text.color.r, text.color.g, text.color.b, 1.0f);
+        }
+    }
+
+    public void HideInstant()
+    {
+        foreach (Image image in images)
+        {
+            image.color = new Color(image.color.r, image.color.g, image.color.b, 0.0f);
+        }
+
+        foreach (TextMeshProUGUI text in texts)
+        {
+            text.color = new Color(text.color.r, text.color.g, text.color.b, 0.0f);
+        }
+    }
+
     public void UpdateReferences(bool a_hide)
     {
         buttons = GetComponentsInChildren<Button>();

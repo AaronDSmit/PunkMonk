@@ -171,6 +171,11 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void SwitchPlayerSelection()
+    {
+        player.SwitchSelection();
+    }
+
     public void LockUI()
     {
         for (int i = 0; i < buttons.Length; i++)
@@ -274,14 +279,14 @@ public class UIManager : MonoBehaviour
 
     private void HideUI()
     {
-        battleUI.gameObject.SetActive(false);
+        battleUI.HideInstant();
     }
 
     private void ShowUI()
     {
-        if(Manager.instance.StateController.CurrentGameState == GameState.battle)
+        if (Manager.instance.StateController.CurrentGameState == GameState.battle)
         {
-            battleUI.gameObject.SetActive(true);
+            battleUI.ShowInstant();
         }
     }
 

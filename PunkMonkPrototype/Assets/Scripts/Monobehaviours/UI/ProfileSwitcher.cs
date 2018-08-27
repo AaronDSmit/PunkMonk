@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// This script is used to animate the movement of the profile picture of the currently selected unit
@@ -31,6 +32,10 @@ public class ProfileSwitcher : MonoBehaviour
 
     private RectTransform lightningProfile;
 
+    private Button earthProfileButton;
+
+    private Button lightningProfileButton;
+
     #endregion
 
     #region Public Methods
@@ -46,6 +51,9 @@ public class ProfileSwitcher : MonoBehaviour
 
             StartCoroutine(MoveProfile(lightningProfile, primaryPos, secondaryPos));
             StartCoroutine(Scale(lightningProfile, primaryScale, secondaryScale));
+
+            earthProfileButton.interactable = false;
+            lightningProfileButton.interactable = true;
         }
         else
         {
@@ -56,6 +64,9 @@ public class ProfileSwitcher : MonoBehaviour
 
             StartCoroutine(MoveProfile(earthProfile, primaryPos, secondaryPos));
             StartCoroutine(Scale(earthProfile, primaryScale, secondaryScale));
+
+            earthProfileButton.interactable = true;
+            lightningProfileButton.interactable = false;
         }
     }
 
@@ -67,6 +78,9 @@ public class ProfileSwitcher : MonoBehaviour
     {
         earthProfile = transform.GetChild(0).GetComponent<RectTransform>();
         lightningProfile = transform.GetChild(1).GetComponent<RectTransform>();
+
+        earthProfileButton = earthProfile.GetComponent<Button>();
+        lightningProfileButton = lightningProfile.GetComponent<Button>();
 
         primaryPos = earthProfile.anchoredPosition;
         secondaryPos = lightningProfile.anchoredPosition;

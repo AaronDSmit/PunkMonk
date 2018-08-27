@@ -116,6 +116,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void SwitchSelection()
+    {
+        CancelCurrentAction();
+
+        if (selectedUnit == earthUnit)
+        {
+            SelectUnit(lightningUnit);
+        }
+        else
+        {
+            SelectUnit(earthUnit);
+        }
+    }
 
     public Unit SpawnEarthUnit(Hex spawnHex = null)
     {
@@ -363,16 +376,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            CancelCurrentAction();
-
-            if (selectedUnit == earthUnit)
-            {
-                SelectUnit(lightningUnit);
-            }
-            else
-            {
-                SelectUnit(earthUnit);
-            }
+            SwitchSelection();
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -747,7 +751,6 @@ public class PlayerController : MonoBehaviour
             earthUnit.WalkDirectlyToTile(earthSnapHex);
             lightningUnit.WalkDirectlyToTile(lightningSnapHex);
         }
-
 
         // ensure this script knows it's in over-world state
         if (a_newstate == GameState.battle)

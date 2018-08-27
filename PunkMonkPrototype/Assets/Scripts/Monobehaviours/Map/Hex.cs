@@ -16,13 +16,16 @@ using UnityEngine;
 public class Hex : Entity
 {
     [HideInInspector]
-    [SerializeField] private Hex[] neighbours;
+    [SerializeField]
+    private Hex[] neighbours;
 
     [HideInInspector]
-    [SerializeField] private List<Hex> allNeighbours;
+    [SerializeField]
+    private List<Hex> allNeighbours;
 
     [HideInInspector]
-    [SerializeField] private bool isTraversable = true;
+    [SerializeField]
+    private bool isTraversable = true;
 
     [HideInInspector]
     [SerializeField]
@@ -33,6 +36,8 @@ public class Hex : Entity
     public float inaccessibleAlpha;
 
     private GameObject child;
+
+    private SpriteRenderer border;
 
     private SpriteRenderer highlight;
 
@@ -241,14 +246,11 @@ public class Hex : Entity
         {
             child = transform.GetChild(0).gameObject;
 
-            if (!isTraversable)
-            {
-                SpriteRenderer border = GetComponentsInChildren<SpriteRenderer>()[0];
-                border.color = new Color(border.color.r, border.color.g, border.color.b, inaccessibleAlpha);
-            }
-
+            border = GetComponentsInChildren<SpriteRenderer>()[0];
             highlight = GetComponentsInChildren<SpriteRenderer>()[1];
             hover = GetComponentsInChildren<SpriteRenderer>()[2];
+
+            ShowOverlay(false);
 
             highlight.enabled = false;
 

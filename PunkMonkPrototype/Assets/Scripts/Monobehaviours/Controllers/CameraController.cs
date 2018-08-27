@@ -42,6 +42,11 @@ public class CameraController : MonoBehaviour
     private Vector3 oldCamPosition;
     private Quaternion oldCamRotation;
 
+    public delegate void GlamCamEvent();
+
+    public GlamCamEvent onGlamCamStart;
+    public GlamCamEvent onGlamCamEnd;
+
     [SerializeField] private float glamCamDistance;
 
     [SerializeField] private float speed;
@@ -297,6 +302,8 @@ public class CameraController : MonoBehaviour
 
     public void PlayGlamCam(Vector3 a_pos, Vector3 a_vecBetween, GlamCamType a_glamCamType)
     {
+        onGlamCamStart();
+
         switch (a_glamCamType)
         {
             case GlamCamType.EARTH_BASIC:
@@ -405,6 +412,7 @@ public class CameraController : MonoBehaviour
         camera.transform.position = oldCamPosition;
 
         cinemachine = false;
+        onGlamCamEnd();
 
     }
 

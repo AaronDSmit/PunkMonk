@@ -234,6 +234,9 @@ public class EarthUnit : Unit
             }
         }
 
+        //change the position of the camera to the position of the unit
+        cameraController.transform.position = transform.position;
+
         //turn off glamCam  
         cameraController.TurnOffGlamCam();
 

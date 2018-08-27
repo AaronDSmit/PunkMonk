@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 114577567348803362}
   - component: {fileID: 114737204623812846}
   m_Layer: 9
-  m_Name: WorldCanvas
+  m_Name: UnitHealthAndVoltCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -707,7 +707,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 100
   m_TargetDisplay: 0
 --- !u!224 &224083037557001722
 RectTransform:

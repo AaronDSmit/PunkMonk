@@ -258,7 +258,7 @@ public class GridManager : MonoBehaviour
         if (a_newstate == GameState.transition)
         {
             // we're not in battle but transitioning to battle
-            if (Manager.instance.StateController.NextGameState == GameState.battle)
+            if (Manager.instance.StateController.StateAfterTransition == GameState.battle)
             {
                 Hex[] tiles = GetComponentsInChildren<Hex>();
 

@@ -15,7 +15,7 @@ public class LivingEntity : Entity
     [SerializeField]
     protected int maxHealth = 5;
 
-    [Tooltip("Maximum amount of volt, will start with this amount")]
+    [Tooltip("Maximum amount of volt")]
     [SerializeField]
     protected int maxVolt = 3;
     [Tooltip("If this unit has a volt bar or not")]

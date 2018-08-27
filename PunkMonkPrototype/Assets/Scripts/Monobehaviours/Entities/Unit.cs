@@ -264,8 +264,7 @@ public class Unit : LivingEntity
 
         canAttack = true;
         canMove = true;
-        canSpecialAttack = true;
-
+        canSpecialAttack = false;
 
         cameraController.onGlamCamStart += healthBar.Hide;
         cameraController.onGlamCamEnd += healthBar.Show;

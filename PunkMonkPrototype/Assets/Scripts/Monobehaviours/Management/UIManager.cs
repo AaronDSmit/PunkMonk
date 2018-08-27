@@ -224,7 +224,13 @@ public class UIManager : MonoBehaviour
         Manager.instance.TurnController.PlayerTurnEvent += TurnEvent;
         Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
 
-        buttons = GetComponentsInChildren<Button>();
+        buttons = new Button[]
+            {
+                move,
+                attack,
+                specialAttack
+            };
+
 
         buttonState = new bool[buttons.Length];
 

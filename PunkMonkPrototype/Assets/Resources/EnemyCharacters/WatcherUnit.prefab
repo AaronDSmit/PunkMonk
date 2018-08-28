@@ -336,7 +336,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1418683867353226}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.59313, y: 1.414247, z: 18.6771}
+  m_LocalPosition: {x: 11.25, y: 1.414247, z: 20.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4492361031502412}
@@ -598,7 +598,7 @@ MonoBehaviour:
   deathAnimationTime: 1
   maxHealth: 4
   maxVolt: 3
-  hasVoltBar: 0
+  hasVoltBar: 1
   actions:
   - {fileID: 11400000, guid: 85a01b7788e76f845875da8b3c3553d2, type: 2}
   moveRange: 1

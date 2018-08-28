@@ -412,7 +412,7 @@ public class Unit : LivingEntity
 
             float distance = Vector3.Distance(transform.position, targetPos);
 
-            while (distance > 0.1f)
+            while (distance > 0.4f)
             {
                 distance = Vector3.Distance(transform.position, targetPos);
 

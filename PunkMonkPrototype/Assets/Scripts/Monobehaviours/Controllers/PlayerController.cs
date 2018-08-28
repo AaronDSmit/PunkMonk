@@ -279,12 +279,12 @@ public class PlayerController : MonoBehaviour
 
     public void GiveLightningVolt(int a_value)
     {
-        lightningUnit.CurrentVolt = a_value;
+        lightningUnit.CurrentVolt += a_value;
     }
 
     public void GiveEarthVolt(int a_value)
     {
-        earthUnit.CurrentVolt = a_value;
+        earthUnit.CurrentVolt += a_value;
     }
 
     public void SelectAction(int actionIndex)

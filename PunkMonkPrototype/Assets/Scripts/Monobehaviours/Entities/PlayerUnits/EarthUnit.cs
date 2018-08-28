@@ -102,7 +102,7 @@ public class EarthUnit : Unit
 
         if (glamCam)
         {
-            if (Random.Range(0, 100) <= 50)
+            if (Random.Range(0, 100) <= glamCamChance)
             {
                 cameraController.PlayGlamCam(transform.position, tilePos - transform.position, GlamCamType.EARTH_BASIC);
                 StartCoroutine(BasicAttackDamageDelay(basicDamgeDelayTimer, finished, 2));
@@ -146,7 +146,7 @@ public class EarthUnit : Unit
         //start the glamCam
         if (glamCam)
         {
-            if (Random.Range(0, 100) <= 50)
+            if (Random.Range(0, 100) <= glamCamChance)
             {
                 cameraController.PlayGlamCam(specialStartPosition, specialVecBetween, GlamCamType.EARTH_SPECIAL);
                 specialGlamCamTimer = 2;

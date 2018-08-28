@@ -36,13 +36,36 @@ public class ProfileSwitcher : MonoBehaviour
 
     private Button lightningProfileButton;
 
+    private bool earthSelected;
+
+    #endregion
+
+    #region Properties
+
+    public Transform CurrentProfile
+    {
+        get
+        {
+            if (earthSelected)
+            {
+                return earthProfile.transform;
+            }
+            else
+            {
+                return lightningProfile.transform;
+            }
+        }
+    }
+
     #endregion
 
     #region Public Methods
 
     public void Switch(bool a_earthSelected)
     {
-        if (a_earthSelected)
+        earthSelected = a_earthSelected;
+
+        if (earthSelected)
         {
             earthProfile.transform.SetAsLastSibling();
 

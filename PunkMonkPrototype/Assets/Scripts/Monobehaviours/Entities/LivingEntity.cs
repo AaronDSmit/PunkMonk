@@ -37,7 +37,7 @@ public class LivingEntity : Entity
 
     private int currentHealth;
 
-    private int currentVolt = 1;
+    private int currentVolt = 0;
 
     private bool dead;
 
@@ -140,6 +140,7 @@ public class LivingEntity : Entity
     {
         healthBar.MaxHealth = MaxHealth;
         healthBar.CurrentHealth = CurrentHealth;
+
         if (hasVoltBar)
         {
             voltBar.MaxHealth = maxVolt;

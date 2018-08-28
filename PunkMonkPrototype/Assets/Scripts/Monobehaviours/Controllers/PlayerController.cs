@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public enum PlayerAttack { earthBasic, earthSpecial, lightningBasic, lightningSpecial }
 
@@ -417,7 +418,7 @@ public class PlayerController : MonoBehaviour
         Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hitInfo;
 
-        if (Physics.Raycast(mouseRay, out hitInfo, Mathf.Infinity, currentRuleset.interactableLayers))
+        if (!EventSystem.current.IsPointerOverGameObject(-1) && Physics.Raycast(mouseRay, out hitInfo, Mathf.Infinity, currentRuleset.interactableLayers))
         {
             #region Remove Previous highlighting
 

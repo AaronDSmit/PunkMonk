@@ -36,7 +36,7 @@ public class ProfileSwitcher : MonoBehaviour
 
     private Button lightningProfileButton;
 
-    private bool earthSelected;
+    private bool earthSelected = true;
 
     #endregion
 

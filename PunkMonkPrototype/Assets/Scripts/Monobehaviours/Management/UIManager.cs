@@ -52,7 +52,7 @@ public class UIManager : MonoBehaviour
 
     private CameraController cameraController;
 
-    
+
 
 
     #endregion
@@ -154,15 +154,8 @@ public class UIManager : MonoBehaviour
         else
         {
             move.interactable = buttonState[0] = a_value;
-            
-            if(buttonState[0])
-            {
-                profiles.CurrentProfile.GetChild(1).GetChild(0).GetComponent<Image>().sprite = hexIconFilled;
-            }
-            else
-            {
-                profiles.CurrentProfile.GetChild(1).GetChild(0).GetComponent<Image>().sprite = hexIconEmpty;
-            }
+
+            profiles.CurrentProfile.GetChild(1).GetChild(0).GetComponent<Image>().sprite = (buttonState[0]) ? hexIconFilled : hexIconEmpty;
         }
     }
 

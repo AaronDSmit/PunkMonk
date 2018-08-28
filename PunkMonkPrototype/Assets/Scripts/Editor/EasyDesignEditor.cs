@@ -38,7 +38,6 @@ public class EasyDesignEditor : EditorWindow
     [SerializeField]
     private static bool confirmMapGeneration = false;
     [SerializeField]
-
     private static bool mapSizeSet;
 
     // Navigation
@@ -100,6 +99,12 @@ public class EasyDesignEditor : EditorWindow
     private Spawner[] selectedSpawners;
     [SerializeField]
     private StateTransitionPoint[] selectedTransitionPoints;
+
+    [SerializeField]
+    private HexDirection earthDirection;
+
+    [SerializeField]
+    private HexDirection lightningDirection;
 
     [SerializeField]
     private int voltGivenToEarth;
@@ -1143,10 +1148,17 @@ public class EasyDesignEditor : EditorWindow
                     {
                         if (point.index == currentID)
                         {
-                            point.SetEarthHex(tile);
+                            point.EarthHex = tile;
+                            point.EarthDirection = earthDirection;
                         }
                     }
                 }
+
+                earthDirection = (HexDirection)EditorGUILayout.EnumPopup(earthDirection);
+
+                EditorGUILayout.EndHorizontal();
+
+                EditorGUILayout.BeginHorizontal();
 
                 if (ColouredButton("Lightning Hex", blueColour))
                 {
@@ -1158,10 +1170,13 @@ public class EasyDesignEditor : EditorWindow
                     {
                         if (point.index == currentID)
                         {
-                            point.SetLightninghHex(tile);
+                            point.LightningHex = tile;
+                            point.LightningDirection = lightningDirection;
                         }
                     }
                 }
+
+                lightningDirection = (HexDirection)EditorGUILayout.EnumPopup(lightningDirection);
 
                 EditorGUILayout.EndHorizontal();
 
@@ -1550,7 +1565,7 @@ public class EasyDesignEditor : EditorWindow
 
         hasStateTransitionSelected = (selectedTransitionPoints.Length > 0);
 
-        if(hasStateTransitionSelected)
+        if (hasStateTransitionSelected)
         {
             numberToKill = selectedTransitionPoints[0].numberToKill;
             currentState = selectedTransitionPoints[0].CurrentState;

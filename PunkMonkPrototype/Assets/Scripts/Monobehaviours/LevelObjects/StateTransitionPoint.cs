@@ -25,7 +25,15 @@ public class StateTransitionPoint : MonoBehaviour
 
     [HideInInspector]
     [SerializeField]
+    private HexDirection earthDirection;
+
+    [HideInInspector]
+    [SerializeField]
     private Hex lightningHex;
+
+    [HideInInspector]
+    [SerializeField]
+    private HexDirection lightningDirection;
 
     [HideInInspector]
     [SerializeField]
@@ -39,12 +47,27 @@ public class StateTransitionPoint : MonoBehaviour
     public Hex LightningHex
     {
         get { return lightningHex; }
+        set { lightningHex = value; }
     }
 
     public Hex EarthHex
     {
         get { return earthHex; }
+        set { earthHex = value; }
     }
+
+    public HexDirection EarthDirection
+    {
+        get { return earthDirection; }
+        set { earthDirection = value; }
+    }
+
+    public HexDirection LightningDirection
+    {
+        get { return lightningDirection; }
+        set { lightningDirection = value; }
+    }
+
 
     public Hex CheckPoint
     {
@@ -54,16 +77,6 @@ public class StateTransitionPoint : MonoBehaviour
     public void SetCheckPoint(Hex a_checkPointhHex)
     {
         checkPoint = a_checkPointhHex;
-    }
-
-    public void SetEarthHex(Hex a_earthHex)
-    {
-        earthHex = a_earthHex;
-    }
-
-    public void SetLightninghHex(Hex a_lightningHex)
-    {
-        lightningHex = a_lightningHex;
     }
 
     public GameState TargetState
@@ -89,11 +102,10 @@ public class StateTransitionPoint : MonoBehaviour
                 PlayerController player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
                 player.EncounterKillLimit = numberToKill;
-                player.SetUnitSnapHexes(earthHex, lightningHex);
+                player.SetUnitStartingHexes(earthHex, earthDirection, lightningHex, lightningDirection);
 
                 player.GiveEarthVolt(voltGivenToEarth);
                 player.GiveLightningVolt(voltGivenToLightning);
-
 
                 if (checkPoint != null)
                 {

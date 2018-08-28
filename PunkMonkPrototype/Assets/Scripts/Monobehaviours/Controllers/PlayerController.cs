@@ -58,9 +58,11 @@ public class PlayerController : MonoBehaviour
 
     private GridManager grid;
 
-    private Hex earthSnapHex;
+    private Hex earthStartingHex;
+    private HexDirection earthStartingDirection;
 
-    private Hex lightningSnapHex;
+    private Hex lightningStartingHex;
+    private HexDirection lightningStartingDirection;
 
     private int encounterKillLimit = 0;
 
@@ -257,11 +259,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
-    public void SetUnitSnapHexes(Hex a_earthHex, Hex a_lightningHex)
+    public void SetUnitStartingHexes(Hex a_earthHex, HexDirection a_earthDir, Hex a_lightningHex, HexDirection a_lightningDir)
     {
-        earthSnapHex = a_earthHex;
-        lightningSnapHex = a_lightningHex;
+        earthStartingHex = a_earthHex;
+        earthStartingDirection = a_earthDir;
+
+        lightningStartingHex = a_lightningHex;
+        lightningStartingDirection = a_lightningDir;
 
         trackingKills = (EncounterKillLimit > 0);
         encounterKillCount = 0;
@@ -806,8 +810,8 @@ public class PlayerController : MonoBehaviour
     {
         if (a_newstate == GameState.transition && Manager.instance.StateController.StateAfterTransition == GameState.battle)
         {
-            earthUnit.WalkDirectlyToTile(earthSnapHex);
-            lightningUnit.WalkDirectlyToTile(lightningSnapHex);
+            earthUnit.WalkDirectlyToTile(earthStartingHex, earthStartingDirection);
+            lightningUnit.WalkDirectlyToTile(lightningStartingHex, lightningStartingDirection);
         }
 
         // ensure this script knows it's in over-world state

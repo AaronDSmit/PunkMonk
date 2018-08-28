@@ -43,7 +43,8 @@ public class SegmentedHealthBar : MonoBehaviour
         fade.FadeOut();
     }
 
-    public void PreviewDamage(int a_damage)
+    // returns whether or not the unit will die if they receive that amount of damage
+    public bool PreviewDamage(int a_damage)
     {
         for (int i = 0; i < currentHealth; i++)
         {
@@ -56,6 +57,8 @@ public class SegmentedHealthBar : MonoBehaviour
                 segments.GetChild(i).GetComponent<Image>().color = previewDamageHealthColour;
             }
         }
+
+        return (currentHealth - a_damage <= 0);
     }
 
     private void Refresh()

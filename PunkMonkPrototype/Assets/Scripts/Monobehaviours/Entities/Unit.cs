@@ -147,9 +147,9 @@ public class Unit : LivingEntity
         StartCoroutine(DelayedSpecialAction(a_targetTiles, a_start, a_finished));
     }
 
-    public void PreviewDamage(int a_damage)
+    public bool PreviewDamage(int a_damage)
     {
-        healthBar.PreviewDamage(a_damage);
+        return healthBar.PreviewDamage(a_damage);
     }
 
     public void Highlight(bool a_isHighlited, Color a_outlineColour)
@@ -178,9 +178,9 @@ public class Unit : LivingEntity
         }
     }
 
-    public void WalkDirectlyToTile(Hex a_targetHex)
+    public void WalkDirectlyToTile(Hex a_targetHex, HexDirection a_direction)
     {
-        StartCoroutine(WalkDirectlyTo(a_targetHex));
+        StartCoroutine(WalkDirectlyTo(a_targetHex, a_direction));
     }
 
     public void TeleportToHex(Hex a_targetHex)
@@ -332,10 +332,13 @@ public class Unit : LivingEntity
         return false;
     }
 
-    private IEnumerator WalkDirectlyTo(Hex a_targetHex)
+    private IEnumerator WalkDirectlyTo(Hex a_targetHex, HexDirection a_direction)
     {
         Vector3 targetPos = a_targetHex.transform.position;
         targetPos.y = transform.position.y;
+
+        yield return StartCoroutine(Rotate(targetPos));
+
         Vector3 vecBetween = targetPos - transform.position;
         vecBetween.y = 0.0f;
 
@@ -350,6 +353,13 @@ public class Unit : LivingEntity
 
             yield return null;
         }
+
+        // lastly turn to face the starting direction
+
+        Vector3 targetDir = a_targetHex.GetNeighbour(a_direction).transform.position;
+        targetDir.y = transform.position.y;
+
+        yield return StartCoroutine(Rotate(targetDir));
 
         currentTile.Exit();
         currentTile = a_targetHex;

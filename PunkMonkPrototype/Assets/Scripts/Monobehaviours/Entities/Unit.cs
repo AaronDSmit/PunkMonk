@@ -34,6 +34,9 @@ public class Unit : LivingEntity
     [Tooltip("Toggles on and off the glamCam")]
     [SerializeField]
     protected bool glamCam;
+    [Range(0, 100)]
+    [SerializeField]
+    protected float glamCamChance = 10;
 
     #endregion
 

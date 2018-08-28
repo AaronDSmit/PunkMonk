@@ -30,6 +30,12 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Button specialAttack = null;
 
+    [SerializeField]
+    private Sprite hexIconFilled;
+
+    [SerializeField]
+    private Sprite hexIconEmpty;
+
     #endregion
 
     #region Reference Fields
@@ -44,6 +50,11 @@ public class UIManager : MonoBehaviour
 
     private Button[] buttons;
 
+    private CameraController cameraController;
+
+    
+
+
     #endregion
 
     #region Local Fields
@@ -52,7 +63,6 @@ public class UIManager : MonoBehaviour
 
     private bool isReady;
 
-    private CameraController cameraController;
 
     #endregion
 
@@ -144,6 +154,15 @@ public class UIManager : MonoBehaviour
         else
         {
             move.interactable = buttonState[0] = a_value;
+            
+            if(buttonState[0])
+            {
+                profiles.CurrentProfile.GetChild(1).GetChild(0).GetComponent<Image>().sprite = hexIconFilled;
+            }
+            else
+            {
+                profiles.CurrentProfile.GetChild(1).GetChild(0).GetComponent<Image>().sprite = hexIconEmpty;
+            }
         }
     }
 
@@ -156,6 +175,16 @@ public class UIManager : MonoBehaviour
         else
         {
             attack.interactable = buttonState[1] = a_value;
+
+            if (buttonState[1])
+            {
+                profiles.CurrentProfile.GetChild(1).GetChild(1).GetComponent<Image>().sprite = hexIconFilled;
+            }
+            else
+            {
+                profiles.CurrentProfile.GetChild(1).GetChild(1).GetComponent<Image>().sprite = hexIconEmpty;
+            }
+
         }
     }
 
@@ -168,6 +197,16 @@ public class UIManager : MonoBehaviour
         else
         {
             specialAttack.interactable = buttonState[2] = a_value;
+
+            if (buttonState[2])
+            {
+                profiles.CurrentProfile.GetChild(1).GetChild(2).GetComponent<Image>().sprite = hexIconFilled;
+            }
+            else
+            {
+                profiles.CurrentProfile.GetChild(1).GetChild(2).GetComponent<Image>().sprite = hexIconEmpty;
+            }
+
         }
     }
 
@@ -240,6 +279,8 @@ public class UIManager : MonoBehaviour
         }
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+
+
     }
 
 

@@ -509,13 +509,18 @@ public class PlayerController : MonoBehaviour
             {
                 currentRuleset.CheckValidity(selectedUnit, unitUnderMouse);
 
-                if (previousUnitUnderMouse != null && previousTileUnderMouse != unitUnderMouse)
+                if (previousUnitUnderMouse != null && unitUnderMouse != null)
                 {
                     previousUnitUnderMouse.Highlight(false, currentRuleset.HighlightColour);
 
                     previousUnitUnderMouse = unitUnderMouse;
 
                     unitUnderMouse.Highlight(true, currentRuleset.HighlightColour);
+
+                    if (currentRuleset.actionType == ActionType.selection && unitUnderMouse.CompareTag("Enemy"))
+                    {
+                        // HighlightTilesInRange(unitUnderMouse.MoveRange);
+                    }
                 }
             }
         }
@@ -821,7 +826,7 @@ public class PlayerController : MonoBehaviour
             canInteract = true;
             SelectUnit(earthUnit);
         }
-        else if (Manager.instance.StateController.StateBeforeTransition == GameState.battle)
+        else if (Manager.instance.StateController.CurrentGameState == GameState.transition && Manager.instance.StateController.StateBeforeTransition == GameState.battle)
         {
             DeselectUnit();
             canInteract = false;

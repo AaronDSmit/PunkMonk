@@ -78,6 +78,12 @@ public class Unit : LivingEntity
         get { return moveRange; }
     }
 
+    public bool IsSelected
+    {
+        get { return isSelected; }
+    }
+
+
     public int AttackRange
     {
         get { return attackRange; }

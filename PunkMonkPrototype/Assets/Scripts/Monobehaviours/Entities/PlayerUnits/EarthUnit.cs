@@ -57,9 +57,14 @@ public class EarthUnit : Unit
         }
     }
 
-    public int BasicDamage
+    public int BasicAttackDamage
     {
         get { return basicDamage; }
+    }
+
+    public int MinSpecialDamage
+    {
+        get { return specialDamage[specialDamage.Length - 1]; }
     }
 
     public int GetSpecialDamage(int a_distance)

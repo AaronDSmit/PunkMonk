@@ -119,6 +119,8 @@ public class PlayerController : MonoBehaviour
         {
             Debug.LogError("No lightning unit found!");
         }
+
+        ToolTip.instance.Init();
     }
 
     // Toggles between two player units, requires that both units are alive
@@ -455,14 +457,14 @@ public class PlayerController : MonoBehaviour
                 if (currentRuleset.WithinRange && currentRuleset.actionType == ActionType.attack || currentRuleset.actionType == ActionType.specialAttack)
                 {
                     ProcessActionHighlighting(tileUnderMouse, hitInfo);
-                    if (currentRuleset.IsValid)
-                    {
-                        lineRenderer.positionCount = 2;
-                        lineRenderer.SetPosition(0, selectedUnit.transform.position + Vector3.up * 1.5f);
-                        lineRenderer.SetPosition(1, tileUnderMouse.transform.position + Vector3.up * 0.5f);
-                    }
-                    else
-                        lineRenderer.positionCount = 0;
+                    //if (currentRuleset.IsValid)
+                    //{
+                    //    lineRenderer.positionCount = 2;
+                    //    lineRenderer.SetPosition(0, selectedUnit.transform.position + Vector3.up * 1.5f);
+                    //    lineRenderer.SetPosition(1, tileUnderMouse.transform.position + Vector3.up * 0.5f);
+                    //}
+                    //else
+                    //    lineRenderer.positionCount = 0;
                 }
                 else if (currentRuleset.IsValid && currentRuleset.actionType == ActionType.movement)
                 {
@@ -906,7 +908,7 @@ public class PlayerController : MonoBehaviour
 
         foreach (Unit unit in enemiesAffectByAction)
         {
-            unit.PreviewDamage(earthUnit.BasicDamage);
+            unit.PreviewDamage(earthUnit.BasicAttackDamage);
         }
     }
 
@@ -1070,7 +1072,7 @@ public class PlayerController : MonoBehaviour
 
         foreach (Unit unit in enemiesAffectByAction)
         {
-            unit.PreviewDamage(lightningUnit.BasicDamage);
+            unit.PreviewDamage(lightningUnit.BasicAttackDamage);
         }
     }
 

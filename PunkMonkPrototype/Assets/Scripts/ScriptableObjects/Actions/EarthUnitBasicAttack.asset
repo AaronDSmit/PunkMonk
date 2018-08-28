@@ -11,7 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f51c28d4cdd77d46a9eaeb64435a8be, type: 3}
   m_Name: EarthUnitBasicAttack
   m_EditorClassIdentifier: 
+  name: Ground Slam
+  flavourText: Hit in ground infront of you in a cone
   ruleset: {fileID: 11400000, guid: c975a14679e377543bebef260c0a277f, type: 2}
   coolDown: 1
-  atttack: {fileID: 11400000, guid: 8c96605b00bfc474ab9bbd0764da2410, type: 2}
   AnimTrigger: 

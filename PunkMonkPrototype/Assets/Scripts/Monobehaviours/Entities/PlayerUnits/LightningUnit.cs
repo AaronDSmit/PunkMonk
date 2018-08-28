@@ -43,9 +43,19 @@ public class LightningUnit : Unit
 
     //TODO - Add partical effect for basic attack
 
-    public int BasicDamage
+    public int BasicAttackDamage
     {
         get { return basicDamage; }
+    }
+
+    public int MaxSpecialDamage
+    {
+        get { return specialFinalDamage; }
+    }
+
+    public int MinSpecialDamage
+    {
+        get { return specialBounceDamage; }
     }
 
     protected override void Awake()

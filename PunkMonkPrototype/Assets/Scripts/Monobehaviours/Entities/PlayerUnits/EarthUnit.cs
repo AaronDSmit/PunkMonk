@@ -64,7 +64,12 @@ public class EarthUnit : Unit
 
     public int GetSpecialDamage(int a_distance)
     {
-        return specialDamage[a_distance];
+        if (a_distance < specialDamage.Length)
+        {
+            return specialDamage[a_distance];
+        }
+
+        return 0;
     }
 
     public int SpecialDamageArea

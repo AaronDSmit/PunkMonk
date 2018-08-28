@@ -703,8 +703,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
-
     private void HighlightTilesInRange(int a_range)
     {
         if (currentRuleset.actionType == ActionType.movement)

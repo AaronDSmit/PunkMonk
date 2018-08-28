@@ -52,8 +52,8 @@ public class ProfileSwitcher : MonoBehaviour
             StartCoroutine(MoveProfile(lightningProfile, primaryPos, secondaryPos));
             StartCoroutine(Scale(lightningProfile, primaryScale, secondaryScale));
 
-            earthProfileButton.interactable = false;
-            lightningProfileButton.interactable = true;
+            earthProfileButton.GetComponent<Image>().raycastTarget = false;
+            lightningProfileButton.GetComponent<Image>().raycastTarget = true;
         }
         else
         {
@@ -65,8 +65,8 @@ public class ProfileSwitcher : MonoBehaviour
             StartCoroutine(MoveProfile(earthProfile, primaryPos, secondaryPos));
             StartCoroutine(Scale(earthProfile, primaryScale, secondaryScale));
 
-            earthProfileButton.interactable = true;
-            lightningProfileButton.interactable = false;
+            earthProfileButton.GetComponent<Image>().raycastTarget = true;
+            lightningProfileButton.GetComponent<Image>().raycastTarget = false;
         }
     }
 
@@ -86,6 +86,15 @@ public class ProfileSwitcher : MonoBehaviour
         secondaryPos = lightningProfile.anchoredPosition;
 
         lightningProfile.localScale = secondaryScale;
+
+        earthProfileButton.GetComponent<Image>().raycastTarget = false;
+        lightningProfileButton.GetComponent<Image>().raycastTarget = true;
+
+        earthProfileButton.interactable = true;
+        lightningProfileButton.interactable = true;
+
+        earthProfileButton.GetComponent<Image>().raycastTarget = false;
+        lightningProfileButton.GetComponent<Image>().raycastTarget = true;
     }
 
     #endregion

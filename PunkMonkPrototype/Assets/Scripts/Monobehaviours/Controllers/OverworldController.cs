@@ -79,6 +79,7 @@ public class OverworldController : MonoBehaviour
                     if (vecBetween.magnitude > 1)
                     {
                         earthUnit.transform.position += vecBetween.normalized * movementSpeed * Time.deltaTime;
+                        earthUnit.transform.rotation = Quaternion.LookRotation(vecBetween.normalized, Vector3.up);
                     }
                 }
             }

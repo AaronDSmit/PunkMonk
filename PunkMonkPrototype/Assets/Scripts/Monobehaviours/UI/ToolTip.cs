@@ -72,6 +72,8 @@ public class ToolTip : MonoBehaviour
         }
     }
 
+
+
     public void Show(ActionType a_buttonType)
     {
         if (showing)
@@ -150,13 +152,11 @@ public class ToolTip : MonoBehaviour
     {
         child.SetActive(false);
         showing = false;
-
-        StopAllCoroutines();
     }
 
     private IEnumerator MoveToMouse()
     {
-        while (true)
+        while (showing)
         {
             transform.position = Input.mousePosition;
 

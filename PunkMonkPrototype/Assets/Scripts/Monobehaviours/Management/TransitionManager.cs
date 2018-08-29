@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// This script is used
+/// This script is used.
 /// </summary>
 public class TransitionManager : MonoBehaviour
 {

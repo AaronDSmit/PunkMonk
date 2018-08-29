@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class MenuHelper : MonoBehaviour
 {
-    [SerializeField] private Settings settings;
+    [SerializeField] private Settings currentSettings;
 
     #region Settings
 
@@ -11,26 +11,55 @@ public class MenuHelper : MonoBehaviour
 
     public void SetInverseCameraRotationToggle(Toggle a_toggle)
     {
-        settings.inverseCameraRotation = a_toggle.isOn;
+        currentSettings.inverseCameraRotation = a_toggle.isOn;
     }
 
     public void SetScreenEdgePanToggle(Toggle a_toggle)
     {
-        settings.screenEdgePan = a_toggle.isOn;
+        currentSettings.screenEdgePan = a_toggle.isOn;
     }
 
     #endregion
 
     #region Quality
 
-    public void SetQualityExpensive(int a_newQualityLevel)
+    public void SetQuality(int a_newQualityLevel)
     {
-        settings.quality = a_newQualityLevel;
+        currentSettings.quality = a_newQualityLevel;
     }
 
-    public void SetQualityExpensiveDropdown(Dropdown a_dropDown)
+    public void SetQualityDropdown(Dropdown a_dropDown)
     {
-        settings.quality = a_dropDown.value;
+        currentSettings.quality = a_dropDown.value;
+    }
+
+    #endregion
+
+    #region Sound
+
+    public void SetMuteAllToggle(Toggle a_toggle)
+    {
+        currentSettings.muteAll = a_toggle.isOn;
+    }
+
+    public void SetMasterVolumeSlider(Slider a_slider)
+    {
+        currentSettings.master = a_slider.value;
+    }
+
+    public void SetMusicVolumeSlider(Slider a_slider)
+    {
+        currentSettings.music = a_slider.value;
+    }
+
+    public void SetEffectsVolumeSlider(Slider a_slider)
+    {
+        currentSettings.effects = a_slider.value;
+    }
+
+    public void SetDialougeVolumeSlider(Slider a_slider)
+    {
+        currentSettings.dialouge = a_slider.value;
     }
 
     #endregion

@@ -52,7 +52,7 @@ public class Spawner : MonoBehaviour
 
     public void SpawnUnit()
     {
-        if (currentHex.IsTraversable)
+        if (currentHex.CurrentUnit == null)
         {
             Vector3 spawnPos = transform.parent.position;
             spawnPos.y = 0.0f;

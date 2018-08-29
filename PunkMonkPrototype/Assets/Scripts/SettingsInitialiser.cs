@@ -6,8 +6,8 @@ public class SettingsInitialiser : MonoBehaviour
 
     #region Inspector Fields
 
-    [HideInInspector] private Settings defaultSettings = null;
-    [HideInInspector] private Settings settings = null;
+    [SerializeField] private Settings defaultSettings = null;
+    [SerializeField] private Settings currentSettings = null;
 
     [Header("Gameplay")]
     [SerializeField]
@@ -16,20 +16,20 @@ public class SettingsInitialiser : MonoBehaviour
     private Toggle screenEdgePanToggle = null;
 
     [Header("Graphics")]
-    [HideInInspector]
-    private Dropdown qualityValue = null;
+    [SerializeField]
+    private Dropdown qualityDropdown = null;
 
     [Header("Sounds")]
     [SerializeField]
-    private Toggle muteAll = null;
+    private Toggle muteAllToggle = null;
     [SerializeField]
-    private Slider master = null;
+    private Slider masterSlider = null;
     [SerializeField]
-    private Slider music = null;
+    private Slider musicSlider = null;
     [SerializeField]
-    private Slider effects = null;
+    private Slider effectsSlider = null;
     [SerializeField]
-    private Slider dialouge = null;
+    private Slider dialougeSlider = null;
 
     #endregion
 
@@ -51,19 +51,22 @@ public class SettingsInitialiser : MonoBehaviour
             if (screenEdgePanToggle)
                 screenEdgePanToggle.isOn = defaultSettings.screenEdgePan;
             // Graphics
-            if (qualityValue)
-                qualityValue.value = defaultSettings.quality;
+            if (qualityDropdown)
+                qualityDropdown.value = defaultSettings.quality;
             // Sounds
-            if (muteAll)
-                muteAll.isOn = defaultSettings.muteAll;
-            if (master)
-                master.value = defaultSettings.master;
-            if (music)
-                music.value = defaultSettings.music;
-            if (effects)
-                effects.value = defaultSettings.effects;
-            if (dialouge)
-                dialouge.value = defaultSettings.dialouge;
+            if (muteAllToggle)
+                muteAllToggle.isOn = defaultSettings.muteAll;
+            if (masterSlider)
+                masterSlider.value = defaultSettings.master;
+            if (musicSlider)
+                musicSlider.value = defaultSettings.music;
+            if (effectsSlider)
+                effectsSlider.value = defaultSettings.effects;
+            if (dialougeSlider)
+                dialougeSlider.value = defaultSettings.dialouge;
+
+            // Set the current settings to the default
+            currentSettings.SetAllTo(defaultSettings);
 
             hasInitialised = true;
         }

@@ -31,6 +31,7 @@ public class Manager : MonoBehaviour
     private TransitionManager transitionManager;
     private TurnManager turnManager;
     private CheckPointManager checkPointManager;
+    private HexHighlighter hexHighlighter;
 
     #endregion
 
@@ -67,6 +68,12 @@ public class Manager : MonoBehaviour
         get { return checkPointManager; }
     }
 
+    public HexHighlighter HexHighlighter
+    {
+        get { return hexHighlighter; }
+    }
+
+
     #endregion
 
     #region Public Methods
@@ -83,10 +90,14 @@ public class Manager : MonoBehaviour
 
     #region Unity Life-cycle Methods
 
-
     private void OnDisable()
     {
         SceneManager.activeSceneChanged -= SceneLoaded;
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.activeSceneChanged += SceneLoaded;
     }
 
     private void Awake()
@@ -95,13 +106,12 @@ public class Manager : MonoBehaviour
         {
             instance = this;
 
-            SceneManager.activeSceneChanged += SceneLoaded;
-
             stateManager = GetComponent<StateManager>();
             transitionManager = GetComponent<TransitionManager>();
             uiManager = GetComponent<UIManager>();
             turnManager = GetComponent<TurnManager>();
             checkPointManager = GetComponent<CheckPointManager>();
+            hexHighlighter = GetComponent<HexHighlighter>();
 
             StartCoroutine(InitManagers());
 
@@ -155,6 +165,8 @@ public class Manager : MonoBehaviour
         transitionManager.Init();
 
         yield return new WaitUntil(() => transitionManager.Ready);
+
+        hexHighlighter.Init();
 
         stateManager.StartGame();
     }

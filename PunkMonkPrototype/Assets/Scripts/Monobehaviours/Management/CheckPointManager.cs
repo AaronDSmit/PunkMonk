@@ -77,8 +77,6 @@ public class CheckPointManager : MonoBehaviour
 
     private IEnumerator WaitTillFadeOutToSpawn()
     {
-        player.ResetUnitDeaths();
-
         Manager.instance.StateController.ChangeStateAfterFade(GameState.overworld);
 
         yield return new WaitUntil(() => Manager.instance.StateController.MidLoad);

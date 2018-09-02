@@ -57,6 +57,8 @@ public class GridManager : MonoBehaviour
 
     protected Renderer gridRenderer;
 
+    private bool isReady;
+
     #endregion
 
     #region Properties
@@ -71,9 +73,19 @@ public class GridManager : MonoBehaviour
         get { return mapHeight; }
     }
 
+    public bool Ready
+    {
+        get { return isReady; }
+    }
+
     #endregion
 
     #region Public Methods
+
+    public void Init()
+    {
+        StartCoroutine(RemoveExcessTiles());
+    }
 
     public bool GenerateGrid(int width, int height, Color a_traversableColour)
     {
@@ -208,6 +220,40 @@ public class GridManager : MonoBehaviour
     #endregion
 
     #region Local Methods
+
+    private IEnumerator RemoveExcessTiles()
+    {
+        int traversableCount = 0;
+        int perFrame = 5;
+        int count = 0;
+
+        foreach (Hex tile in grid)
+        {
+            traversableCount = 0;
+
+            foreach (Hex neighbour in tile.Neighbours)
+            {
+                if (neighbour.IsTraversable)
+                {
+                    traversableCount++;
+                    break; // don't look at any more neighbours if one is traversable
+                }
+            }
+
+            if (traversableCount == 0)
+            {
+                tile.gameObject.SetActive(false);
+            }
+
+            if (count >= perFrame)
+            {
+                count = 0;
+                yield return null;
+            }
+        }
+
+        isReady = true;
+    }
 
     private void CreateHex(int x, int y, int i)
     {

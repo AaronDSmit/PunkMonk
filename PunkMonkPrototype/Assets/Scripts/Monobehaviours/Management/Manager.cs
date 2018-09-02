@@ -32,6 +32,7 @@ public class Manager : MonoBehaviour
     private TurnManager turnManager;
     private CheckPointManager checkPointManager;
     private HexHighlighter hexHighlighter;
+    private GridManager grid;
 
     #endregion
 
@@ -42,6 +43,11 @@ public class Manager : MonoBehaviour
     #endregion
 
     #region Properties
+
+    public GridManager Grid
+    {
+        get { return grid; }
+    }
 
     public StateManager StateController
     {
@@ -113,6 +119,8 @@ public class Manager : MonoBehaviour
             checkPointManager = GetComponent<CheckPointManager>();
             hexHighlighter = GetComponent<HexHighlighter>();
 
+            grid = GameObject.FindGameObjectWithTag("Grid").GetComponent<GridManager>();
+
             StartCoroutine(InitManagers());
 
             if (cursorTextureHover)
@@ -165,6 +173,10 @@ public class Manager : MonoBehaviour
         transitionManager.Init();
 
         yield return new WaitUntil(() => transitionManager.Ready);
+
+        grid.Init();
+
+        yield return new WaitUntil(() => grid.Ready);
 
         hexHighlighter.Init();
 

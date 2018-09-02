@@ -43,9 +43,9 @@ public class PlayerController : MonoBehaviour
 
     #region Local Fields
 
-    private bool myTurn = true;
+    private bool myTurn;
 
-    private bool canInteract = false;
+    private bool canInteract;
 
     private PlayerAttack currentAttack;
 
@@ -55,8 +55,6 @@ public class PlayerController : MonoBehaviour
 
     private List<Unit> enemiesAffectByAction;
 
-    private UIManager UI;
-
     private GridManager grid;
 
     private Hex earthStartingHex;
@@ -65,15 +63,15 @@ public class PlayerController : MonoBehaviour
     private Hex lightningStartingHex;
     private HexDirection lightningStartingDirection;
 
-    private int encounterKillLimit = 0;
+    private int encounterKillLimit;
 
-    private int encounterKillCount = 0;
+    private int encounterKillCount;
 
-    private bool trackingKills = false;
+    private bool trackingKills;
 
-    private bool LightningDead = false;
+    private bool LightningDead;
 
-    private bool earthDead = false;
+    private bool earthDead;
 
     #endregion
 
@@ -92,10 +90,19 @@ public class PlayerController : MonoBehaviour
 
     public void Init()
     {
+        // set default values for local fields
         canInteract = false;
+        myTurn = false;
 
-        Manager.instance.TurnController.PlayerTurnEvent += TurnEvent;
+        trackingKills = false;
+        encounterKillLimit = 0;
+        encounterKillCount = 0;
+        LightningDead = false;
+        earthDead = false;
 
+        // Subscribe to necessary delegates
+
+        Manager.instance.TurnController.PlayerTurnEvent += TurnEvent; // only care about our turn, not the AI's
         Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
 
         GameObject earthGO = GameObject.FindGameObjectWithTag("EarthUnit");
@@ -120,10 +127,11 @@ public class PlayerController : MonoBehaviour
             Debug.LogError("No lightning unit found!");
         }
 
+        // Initialise the ToolTip to find the lightning and earth unit
         ToolTip.instance.Init();
     }
 
-    // Toggles between two player units, requires that both units are alive
+    // Toggles between two player units, requires that both units are alive (used by tab)
     public void SwitchSelection()
     {
         if (!earthDead && !LightningDead)
@@ -141,6 +149,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Spawn's the earth unit and returns a reference to it, takes in an optional spawnHex
     public Unit SpawnEarthUnit(Hex spawnHex = null)
     {
         // use spawn points by default
@@ -167,6 +176,8 @@ public class PlayerController : MonoBehaviour
 
                 earthUnit.OnDeath += PlayerUnitDied;
 
+                earthDead = false;
+
                 return earthUnit;
             }
             else
@@ -192,6 +203,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Spawn's the lightning unit and returns a reference to it, takes in an optional spawnHex
     public Unit SpawnLightningUnit(Hex spawnHex = null)
     {
         // use spawn points by default
@@ -262,6 +274,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // set the starting Hex that each unit walks towards at the start of an encounter and the direction to face once they arrive at that hex
     public void SetUnitStartingHexes(Hex a_earthHex, HexDirection a_earthDir, Hex a_lightningHex, HexDirection a_lightningDir)
     {
         earthStartingHex = a_earthHex;
@@ -290,6 +303,7 @@ public class PlayerController : MonoBehaviour
         earthUnit.CurrentVolt += a_value;
     }
 
+    // Set which action of the selected unit is currently being used
     public void SelectAction(int actionIndex)
     {
         RemoveHighlightedTiles();
@@ -345,8 +359,6 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        UI = GameObject.FindGameObjectWithTag("Manager").GetComponent<UIManager>();
-
         grid = GameObject.FindGameObjectWithTag("Grid").GetComponent<GridManager>();
 
         tilesWithinRange = new List<Hex>();
@@ -369,7 +381,6 @@ public class PlayerController : MonoBehaviour
         lineRenderer = GetComponent<LineRenderer>();
     }
 
-
     private void Update()
     {
         if (myTurn && canInteract)
@@ -391,22 +402,26 @@ public class PlayerController : MonoBehaviour
     // Process Keyboard Input
     private void ProcessKeyboardInput()
     {
+        // Toggles between each unit, only works if both are alive.
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             SwitchSelection();
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        // Key shortcut to walk
+        if (Input.GetKeyDown(KeyCode.Alpha1) && selectedUnit.CanMove)
         {
             SelectAction(0);
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        // Key shortcut to select basic attack
+        if (Input.GetKeyDown(KeyCode.Alpha2) && selectedUnit.CanAttack)
         {
             SelectAction(1);
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha3))
+        // Key shortcut to select special attack
+        if (Input.GetKeyDown(KeyCode.Alpha3) && selectedUnit.CanSpecialAttack)
         {
             SelectAction(2);
         }
@@ -457,14 +472,6 @@ public class PlayerController : MonoBehaviour
                 if (currentRuleset.WithinRange && currentRuleset.actionType == ActionType.attack || currentRuleset.actionType == ActionType.specialAttack)
                 {
                     ProcessActionHighlighting(tileUnderMouse, hitInfo);
-                    //if (currentRuleset.IsValid)
-                    //{
-                    //    lineRenderer.positionCount = 2;
-                    //    lineRenderer.SetPosition(0, selectedUnit.transform.position + Vector3.up * 1.5f);
-                    //    lineRenderer.SetPosition(1, tileUnderMouse.transform.position + Vector3.up * 0.5f);
-                    //}
-                    //else
-                    //    lineRenderer.positionCount = 0;
                 }
                 else if (currentRuleset.IsValid && currentRuleset.actionType == ActionType.movement)
                 {
@@ -577,7 +584,7 @@ public class PlayerController : MonoBehaviour
                     tileUnderMouse.MouseExit();
                     lineRenderer.positionCount = 0;
                     canInteract = false;
-                    UI.LockUI();
+                    Manager.instance.UIController.LockUI();
 
                     break;
 
@@ -616,6 +623,7 @@ public class PlayerController : MonoBehaviour
         #endregion
     }
 
+    // Called when one of the player units die
     private void PlayerUnitDied(LivingEntity a_unit)
     {
         if (a_unit.CompareTag("LightningUnit"))
@@ -629,10 +637,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Set currentRuleset back to selectionRuleset and remove all highlighting
     private void CancelCurrentAction()
     {
         lineRenderer.positionCount = 0;
         currentRuleset = selectionRuleset;
+
         RemoveHighlightedTiles();
 
         if (tileUnderMouse)
@@ -646,38 +656,39 @@ public class PlayerController : MonoBehaviour
     // Callback called when a unit starts their attack
     private void AttackStart()
     {
-        UI.LockUI();
+        Manager.instance.UIController.LockUI();
     }
 
     // Callback called when a unit finishes their attack
     private void AttackEnd()
     {
         canInteract = true;
-        UI.UnlockUI();
+        Manager.instance.UIController.UnlockUI();
     }
 
     // Callback called when a unit finishes their special attack
     private void SpecialAttackStart()
     {
-        UI.LockUI();
+        Manager.instance.UIController.LockUI();
     }
 
     // Callback called when a unit finishes their special attack
     private void SpecialAttackEnd()
     {
         canInteract = true;
-        UI.UnlockUI();
+        Manager.instance.UIController.UnlockUI();
     }
 
     // Callback called when a unit finishes walking to a tile
     private void UnitFinishedWalking()
     {
         canInteract = true;
-        UI.UnlockUI();
+        Manager.instance.UIController.UnlockUI();
     }
 
     #endregion
 
+    // Set which unit is currently selected
     private void SelectUnit(Unit a_newSelectedUnit)
     {
         if (a_newSelectedUnit != null)
@@ -694,13 +705,14 @@ public class PlayerController : MonoBehaviour
 
             selectedUnit = a_newSelectedUnit;
 
-            UI.UpdateSelectedUnit(selectedUnit);
+            Manager.instance.UIController.UpdateSelectedUnit(selectedUnit);
             selectedUnit.Select(true, currentRuleset.ValidHighlightColour);
         }
 
         cameraRig.LookAtPosition(selectedUnit.transform.position);
     }
 
+    // Remove current selection, used when it's not the player's turn
     private void DeselectUnit()
     {
         if (selectedUnit)
@@ -710,40 +722,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Apply a permanent highlight to tiles within range of a unit
     private void HighlightTilesInRange(int a_range)
     {
-        if (currentRuleset.actionType == ActionType.movement)
-        {
-            List<Hex> area = grid.GetTilesWithinDistance(selectedUnit.CurrentTile, a_range);
+        List<Hex> area = grid.GetTilesWithinDistance(selectedUnit.CurrentTile, a_range);
 
-            foreach (Hex tile in area)
-            {
-                tilesWithinRange.Add(tile);
-
-                if (tile.IsTraversable)
-                {
-                    tile.Highlight(currentRuleset.InRangeHighlightColour);
-                }
-                else
-                {
-                    tile.Highlight(currentRuleset.InvalidHighlightColour);
-                }
-            }
-        }
-        else
-        {
-            List<Hex> area = grid.GetTilesWithinDistance(selectedUnit.CurrentTile, a_range, false);
-
-            foreach (Hex tile in area)
-            {
-                tilesWithinRange.Add(tile);
-                tile.Highlight(currentRuleset.InRangeHighlightColour);
-            }
-        }
+        Manager.instance.HexHighlighter.HighLightArea(area, currentRuleset.InRangeHighlightColour, currentRuleset.InRangeHighlightColour, this, new List<Hex> { selectedUnit.CurrentTile });
     }
 
+    // remove the highlight from all highlighted tiles
     private void RemoveHighlightedTiles()
     {
+        Manager.instance.HexHighlighter.RemoveHighlights(this);
+
         foreach (Hex tile in tilesWithinRange)
         {
             tile.RemoveHighlight();
@@ -772,6 +763,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Called when the player's turn state changes
     private void TurnEvent(TurnManager.TurnState a_newState, int a_turnNumber)
     {
         if (a_newState == TurnManager.TurnState.start)
@@ -807,11 +799,13 @@ public class PlayerController : MonoBehaviour
         else if (a_newState == TurnManager.TurnState.end)
         {
             myTurn = false;
+            canInteract = false;
 
             DeselectUnit();
         }
     }
 
+    // Called when the game state changes
     private void GameStateChanged(GameState a_oldstate, GameState a_newstate)
     {
         if (a_newstate == GameState.transition && Manager.instance.StateController.StateAfterTransition == GameState.battle)

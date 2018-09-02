@@ -63,7 +63,6 @@ public class UIManager : MonoBehaviour
 
     private bool isReady;
 
-
     #endregion
 
     #region Properties
@@ -98,11 +97,6 @@ public class UIManager : MonoBehaviour
     public void Continue()
     {
         Manager.instance.StateController.PauseGame();
-    }
-
-    public void Settings()
-    {
-
     }
 
     public void MainMenu()
@@ -272,8 +266,6 @@ public class UIManager : MonoBehaviour
         }
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-
-
     }
 
 
@@ -290,11 +282,11 @@ public class UIManager : MonoBehaviour
     private void GameStateChanged(GameState a_oldstate, GameState a_newstate)
     {
         // Leaving the loading state
-        if (a_oldstate == GameState.mainmenu)
+        if (a_oldstate == GameState.loading)
         {
             StartCoroutine(FadeOutLoading());
         }
-        else if (a_newstate == GameState.loading)
+        else if (a_oldstate != GameState.mainmenu && a_newstate == GameState.loading)
         {
             StartCoroutine(FadeIntoState());
         }

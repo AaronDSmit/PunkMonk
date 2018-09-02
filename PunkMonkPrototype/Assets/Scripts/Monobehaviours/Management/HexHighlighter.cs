@@ -7,13 +7,17 @@ public class HexHighlighter : MonoBehaviour
 {
     #region Unity Inspector Fields
 
-    [Tooltip("Thickness of lineRenderer that displays area border")]
+    [Tooltip("Percentage Distance from edge to centre of hex")]
     [SerializeField]
-    private float borderThickness = 0.4f;
+    private float borderThickness = 0.1f;
 
-    [Tooltip("Should use Particles/Alpha Blended Shader")]
+    [Tooltip("Material used for outer border of area")]
     [SerializeField]
-    private Material material = null;
+    private Material borderMaterial = null;
+
+    [Tooltip("Material used for inside of area")]
+    [SerializeField]
+    private Material fillMaterial = null;
 
     #endregion
 
@@ -58,6 +62,8 @@ public class HexHighlighter : MonoBehaviour
     /// <param name="a_excludedHexes">List of hexes that shouldn't be highlighted</param>
     public void HighLightArea(List<Hex> a_area, Color a_borderColour, Color a_fillColour, MonoBehaviour a_script, List<Hex> a_excludedHexes = null)
     {
+        float inverseThickness = 1.0f - borderThickness;
+
         // And new dictionary key if doesn't exist
         if (!highlightedAreas.ContainsKey(a_script))
         {
@@ -69,7 +75,7 @@ public class HexHighlighter : MonoBehaviour
         GO.transform.SetParent(holder, false);
 
         MeshRenderer renderer = GO.AddComponent<MeshRenderer>();
-        renderer.material = material;
+        renderer.material = borderMaterial;
 
         Mesh mesh = GO.AddComponent<MeshFilter>().mesh;
 
@@ -113,57 +119,57 @@ public class HexHighlighter : MonoBehaviour
                     AddTriangle(
                         centre + HexUtility.GetFirstCorner(direction),
                         centre + HexUtility.GetSecondCorner(direction),
-                        centre + HexUtility.GetFirstCorner(direction) * 0.9f
+                        centre + HexUtility.GetFirstCorner(direction) * inverseThickness
                         );
 
                     AddTriangleUV(
                         centre + HexUtility.GetFirstCorner(direction),
                         centre + HexUtility.GetSecondCorner(direction),
-                        centre + HexUtility.GetFirstCorner(direction) * 0.9f
+                        centre + HexUtility.GetFirstCorner(direction) * inverseThickness
                         );
 
                     AddTriangle(
-                        centre + HexUtility.GetSecondCorner(direction) * 0.9f,
-                        centre + HexUtility.GetFirstCorner(direction) * 0.9f,
+                        centre + HexUtility.GetSecondCorner(direction) * inverseThickness,
+                        centre + HexUtility.GetFirstCorner(direction) * inverseThickness,
                         centre + HexUtility.GetSecondCorner(direction)
                         );
 
                     AddTriangleUV(
-                        centre + HexUtility.GetSecondCorner(direction) * 0.9f,
-                        centre + HexUtility.GetFirstCorner(direction) * 0.9f,
+                        centre + HexUtility.GetSecondCorner(direction) * inverseThickness,
+                        centre + HexUtility.GetFirstCorner(direction) * inverseThickness,
                         centre + HexUtility.GetSecondCorner(direction)
                         );
                 }
                 else if (border.Contains(tile.Neighbours[i]))
                 {
-                    int closestCorner = ClosestToOutside(tile, centre + HexUtility.GetFirstCorner(direction), centre + HexUtility.GetSecondCorner(direction), ref a_area);
+                    int closestCorner = ClosestToOutside(tile, centre + HexUtility.GetFirstCorner(direction), centre + HexUtility.GetSecondCorner(direction), ref a_area, ref a_excludedHexes);
 
                     if (closestCorner == 2)
                     {
                         AddTriangle(
                         centre + HexUtility.GetSecondCorner(direction),
-                        centre + HexUtility.GetSecondCorner(direction) * 0.9f,
-                        centre + HexUtility.GetSecondCorner(direction) + (HexUtility.GetFirstCorner(direction) - HexUtility.GetSecondCorner(direction)) * 0.1f
+                        centre + HexUtility.GetSecondCorner(direction) * inverseThickness,
+                        centre + HexUtility.GetSecondCorner(direction) + (HexUtility.GetFirstCorner(direction) - HexUtility.GetSecondCorner(direction)) * borderThickness
                         );
 
                         AddTriangleUV(
                         centre + HexUtility.GetSecondCorner(direction),
-                        centre + HexUtility.GetSecondCorner(direction) * 0.9f,
-                        centre + HexUtility.GetSecondCorner(direction) + (HexUtility.GetFirstCorner(direction) - HexUtility.GetSecondCorner(direction)) * 0.1f
+                        centre + HexUtility.GetSecondCorner(direction) * inverseThickness,
+                        centre + HexUtility.GetSecondCorner(direction) + (HexUtility.GetFirstCorner(direction) - HexUtility.GetSecondCorner(direction)) * borderThickness
                         );
                     }
                     else if (closestCorner == 1)
                     {
                         AddTriangle(
                         centre + HexUtility.GetFirstCorner(direction),
-                        centre + HexUtility.GetFirstCorner(direction) + (HexUtility.GetSecondCorner(direction) - HexUtility.GetFirstCorner(direction)) * 0.1f,
-                        centre + HexUtility.GetFirstCorner(direction) * 0.9f
+                        centre + HexUtility.GetFirstCorner(direction) + (HexUtility.GetSecondCorner(direction) - HexUtility.GetFirstCorner(direction)) * borderThickness,
+                        centre + HexUtility.GetFirstCorner(direction) * inverseThickness
                         );
 
                         AddTriangleUV(
                        centre + HexUtility.GetFirstCorner(direction),
-                       centre + HexUtility.GetFirstCorner(direction) + (HexUtility.GetSecondCorner(direction) - HexUtility.GetFirstCorner(direction)) * 0.1f,
-                       centre + HexUtility.GetFirstCorner(direction) * 0.9f
+                       centre + HexUtility.GetFirstCorner(direction) + (HexUtility.GetSecondCorner(direction) - HexUtility.GetFirstCorner(direction)) * borderThickness,
+                       centre + HexUtility.GetFirstCorner(direction) * inverseThickness
                        );
                     }
                 }
@@ -175,12 +181,9 @@ public class HexHighlighter : MonoBehaviour
         mesh.SetTriangles(triangles, 0);
 
         mesh.RecalculateNormals();
-
-        AssetDatabase.CreateAsset(mesh, "Assets/mesh.asset");
-        AssetDatabase.SaveAssets();
     }
 
-    private int ClosestToOutside(Hex a_hex, Vector3 a_first, Vector3 a_second, ref List<Hex> a_area)
+    private int ClosestToOutside(Hex a_hex, Vector3 a_first, Vector3 a_second, ref List<Hex> a_area, ref List<Hex> a_exclude)
     {
         List<Hex> outsideNeighbours = new List<Hex>();
 
@@ -188,39 +191,57 @@ public class HexHighlighter : MonoBehaviour
         {
             if (!a_area.Contains(neighbour))
             {
-                outsideNeighbours.Add(neighbour);
+                float dist1 = Vector3.Distance(a_first, neighbour.transform.position);
+
+                if (dist1 < 1.3f)
+                {
+                    return 1;
+                }
+
+                float dist2 = Vector3.Distance(a_second, neighbour.transform.position);
+
+                if (dist2 < 1.3f)
+                {
+                    return 2;
+                }
             }
         }
 
-        float closest1 = Mathf.Infinity;
-        float closest2 = Mathf.Infinity;
+        return 0;
+    }
 
-        foreach (Hex neighbour in outsideNeighbours)
+    // Remove all highlighted areas for a particular script
+    public void RemoveHighlights(MonoBehaviour a_script)
+    {
+        if (highlightedAreas.ContainsKey(a_script))
         {
-            float dist1 = Vector3.Distance(a_first, neighbour.transform.position);
+            List<GameObject> objects = highlightedAreas[a_script];
 
-            if (dist1 < closest1)
+            for (int i = objects.Count - 1; i >= 0; i--)
             {
-                closest1 = dist1;
+                Destroy(objects[i]);
             }
 
-            float dist2 = Vector3.Distance(a_second, neighbour.transform.position);
-
-            if (dist2 < closest2)
-            {
-                closest2 = dist2;
-            }
-        }
-
-        if (closest1 < 1.1f || closest2 < 1.1f)
-        {
-            return (closest1 < closest2) ? 1 : 2;
-        }
-        else
-        {
-            return 0;
+            highlightedAreas.Remove(a_script);
         }
     }
+
+    #endregion
+
+    #region Unity Life-cycle Methods
+
+    private void Awake()
+    {
+        Transform grid = GameObject.FindGameObjectWithTag("Grid").transform;
+
+        holder = new GameObject("Highlight Container").transform;
+
+        holder.position = new Vector3(0.0f, grid.position.y + 0.05f);
+    }
+
+    #endregion
+
+    #region local Functions
 
     private void AddTriangle(Vector3 v1, Vector3 v2, Vector3 v3)
     {
@@ -234,41 +255,11 @@ public class HexHighlighter : MonoBehaviour
         triangles.Add(vertexIndex + 2);
     }
 
-    public void AddTriangleUV(Vector2 uv1, Vector2 uv2, Vector3 uv3)
+    private void AddTriangleUV(Vector2 uv1, Vector2 uv2, Vector3 uv3)
     {
         uvs.Add(uv1);
         uvs.Add(uv2);
         uvs.Add(uv3);
-    }
-
-    // Remove all highlighted areas for a particular script
-    public void RemoveHighlights(MonoBehaviour a_script)
-    {
-        if(highlightedAreas.ContainsKey(a_script))
-        {
-            List<GameObject> objects = highlightedAreas[a_script];
-
-            for (int i = objects.Count - 1; i >= 0; i--)
-            {
-                Destroy(objects[i]);
-            }
-
-            highlightedAreas.Remove(a_script);
-        }
-    }
-
-
-    #endregion
-
-    #region Unity Life-cycle Methods
-
-    private void Awake()
-    {
-        Transform grid = GameObject.FindGameObjectWithTag("Grid").transform;
-
-        holder = new GameObject("Highlight Container").transform;
-
-        holder.position = new Vector3(0.0f, grid.position.y + 0.05f);
     }
 
     #endregion

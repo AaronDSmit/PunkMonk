@@ -777,6 +777,7 @@ public class PlayerController : MonoBehaviour
             }
 
             myTurn = true;
+            canInteract = true;
 
             if (!earthDead && !LightningDead)
             {

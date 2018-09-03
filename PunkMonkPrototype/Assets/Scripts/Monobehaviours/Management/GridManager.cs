@@ -88,12 +88,13 @@ public class GridManager : MonoBehaviour
 
         int distance = HexUtility.Distance(a_lhs, a_rhs);
 
+        float scale = HexUtility.outerRadius;
 
 
 
-        for (int i = 0; i < distance - 1; i++)
+        for (int i = 0; i < distance; i++)
         {
-        //    Vector3.Lerp(a_lhs, a_rhs, i )
+            hexs.Add(GetHexFromPosition(Vector3.Lerp(a_lhs.transform.position, a_rhs.transform.position, scale / distance * i)));
         }
 
 

@@ -331,6 +331,27 @@ public class CameraController : MonoBehaviour
     }
 
 
+    public void GlamCamLookAtTransform(Transform a_trasform, GlamCamType a_glamCamType)
+    {
+        //switch (a_glamCamType)
+        //{
+        //    //case GlamCamType.EARTH_BASIC:
+                
+        //    //    break;
+        //    //case GlamCamType.EARTH_SPECIAL:
+        //    //    PlayEarthSpecialAttackGlamCam(a_pos, a_vecBetween);
+        //    //    break;
+        //    //case GlamCamType.LIGHNING_BASIC:
+        //    //    PlayLightningBasicAttackGlamCam(a_pos, a_vecBetween);
+        //    //    break;
+        //    //case GlamCamType.LIGHNING_SPECIAL:
+        //    //    PlayLightingSpecialAttackGlamCam(a_pos, a_vecBetween);
+        //    //    break;
+        //    //default:
+        //    //    return;
+        //}
+    }
+
     public void PlayGlamCam(Vector3 a_pos, Vector3 a_vecBetween, GlamCamType a_glamCamType)
     {
         if (onGlamCamStart != null)
@@ -360,14 +381,14 @@ public class CameraController : MonoBehaviour
     private void PlayEarthBasicAttackGlamCam(Vector3 a_pos, Vector3 a_vecBetween)
     {
         cinemachine = true;
-        oldCamPosition = camera.transform.position;
+       // oldCamPosition = camera.transform.position;
 
-        Vector3 halfwayVec = a_pos + -a_vecBetween.normalized * a_vecBetween.magnitude * 0.5f * glamCamDistance;
+       // Vector3 halfwayVec = a_pos + -a_vecBetween.normalized * a_vecBetween.magnitude * 0.5f * glamCamDistance;
 
-        halfwayVec.y = a_vecBetween.magnitude * glamCamDistance;
+       // halfwayVec.y = a_vecBetween.magnitude * glamCamDistance;
 
 
-        basicEarthGlamCam.transform.position = halfwayVec;
+       // basicEarthGlamCam.transform.position = halfwayVec;
 
         basicEarthGlamCam.SetActive(true);
     }
@@ -378,11 +399,11 @@ public class CameraController : MonoBehaviour
         oldCamPosition = camera.transform.position;
         oldCamRotation = camera.transform.rotation;
 
-        Vector3 rightPerp = a_pos + Vector3.Cross(a_vecBetween.normalized, Vector3.up) * glamCamDistance;
+       // Vector3 rightPerp = a_pos + Vector3.Cross(a_vecBetween.normalized, Vector3.up) * glamCamDistance;
 
-        rightPerp.y = 1.0f;
+       // rightPerp.y = 1.0f;
 
-        specialEarthGlamCam.transform.position = rightPerp;
+       // specialEarthGlamCam.transform.position = rightPerp;
 
 
         specialEarthGlamCam.SetActive(true);
@@ -395,11 +416,11 @@ public class CameraController : MonoBehaviour
         oldCamPosition = camera.transform.position;
         oldCamRotation = camera.transform.rotation;
 
-        Vector3 finalPos = a_pos + (a_vecBetween * 1.1f) + ((a_vecBetween.normalized + Vector3.Cross(a_vecBetween.normalized, Vector3.up)).normalized * glamCamDistance);
+     //   Vector3 finalPos = a_pos + (a_vecBetween * 1.1f) + ((a_vecBetween.normalized + Vector3.Cross(a_vecBetween.normalized, Vector3.up)).normalized * glamCamDistance);
 
-        finalPos.y = 2;
+     //   finalPos.y = 2;
 
-        basicLightningGlamCam.transform.position = finalPos;
+      //  basicLightningGlamCam.transform.position = finalPos;
 
         basicLightningGlamCam.SetActive(true);
 
@@ -411,11 +432,11 @@ public class CameraController : MonoBehaviour
         oldCamPosition = camera.transform.position;
         oldCamRotation = camera.transform.rotation;
 
-        Vector3 finalPos = a_pos + -a_vecBetween.normalized + (-(a_vecBetween.normalized + Vector3.Cross(a_vecBetween.normalized, Vector3.up)).normalized * glamCamDistance);
+      //  Vector3 finalPos = a_pos + -a_vecBetween.normalized + (-(a_vecBetween.normalized + Vector3.Cross(a_vecBetween.normalized, Vector3.up)).normalized * glamCamDistance);
 
-        finalPos.y = 2;
+       // finalPos.y = 2;
 
-        specialLightningGlamCam.transform.position = finalPos;
+      //  specialLightningGlamCam.transform.position = finalPos;
 
         specialLightningGlamCam.SetActive(true);
     }

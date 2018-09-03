@@ -909,7 +909,7 @@ public class PlayerController : MonoBehaviour
                 break;
             case PlayerAttack.lightningBasic:
 
-                GetTilesAffectByLightningAttack(a_targetTile);
+                GetTilesAffectByLightningAttack(a_targetTile, a_hitInfo);
                 break;
             case PlayerAttack.lightningSpecial:
 
@@ -1097,7 +1097,7 @@ public class PlayerController : MonoBehaviour
 
     #region Lighting Attack Highlighting
 
-    private void GetTilesAffectByLightningAttack(Hex a_targetTile)
+    private void GetTilesAffectByLightningAttack(Hex a_targetTile, RaycastHit a_hitInfo)
     {
         // clear highlighting 
         foreach (Hex tile in tilesAffectByAction)
@@ -1121,15 +1121,13 @@ public class PlayerController : MonoBehaviour
         if (lightningAttackHex1 != null)
         {
             //draw line between lightningAttackHex1 and lightningAttackHex2
+            lineRenderer.positionCount = 2;
+            lineRenderer.SetPosition(0, lightningAttackHex1.transform.position);
+            lineRenderer.SetPosition(1, a_hitInfo.transform.position);
+
         }
 
         tilesAffectByAction.Add(a_targetTile);
-
-
-
-
-
-
 
 
         // highlight new tiles

@@ -90,16 +90,10 @@ public class GridManager : MonoBehaviour
 
         float scale = HexUtility.outerRadius;
 
-
-
         for (int i = 0; i < distance; i++)
         {
             hexs.Add(GetHexFromPosition(Vector3.Lerp(a_lhs.transform.position, a_rhs.transform.position, scale / distance * i)));
         }
-
-
-
-
 
         return hexs.ToArray();
     }

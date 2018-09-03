@@ -63,6 +63,9 @@ public class PlayerController : MonoBehaviour
     private Hex lightningStartingHex;
     private HexDirection lightningStartingDirection;
 
+    private Hex lightningAttackHex1 = null;
+    private Hex lightningAttackHex2 = null;
+
     private int encounterKillLimit;
 
     private int encounterKillCount;
@@ -435,10 +438,12 @@ public class PlayerController : MonoBehaviour
         Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hitInfo;
 
+        // make sure the mouse pointeer isn't above UI and that the raycast is hitting something
         if (!EventSystem.current.IsPointerOverGameObject(-1) && Physics.Raycast(mouseRay, out hitInfo, Mathf.Infinity, currentRuleset.interactableLayers))
         {
             #region Remove Previous highlighting
 
+            // if there is a tile under the cursor and it's a new tile then remove the highlight from the previous tile
             if (tileUnderMouse)
             {
                 if (previousTileUnderMouse && previousTileUnderMouse != tileUnderMouse)
@@ -449,6 +454,7 @@ public class PlayerController : MonoBehaviour
                 previousTileUnderMouse = tileUnderMouse;
             }
 
+            // if there is a unit under the cursor and it's a new unit then remove the highlight from the previous unit
             if (unitUnderMouse)
             {
                 if (previousUnitUnderMouse && previousUnitUnderMouse != unitUnderMouse)
@@ -461,6 +467,7 @@ public class PlayerController : MonoBehaviour
 
             #endregion
 
+            // try set values, will be null if there isn't an object under the cursor
             tileUnderMouse = hitInfo.transform.GetComponent<Hex>();
             unitUnderMouse = hitInfo.transform.GetComponent<Unit>();
 
@@ -469,14 +476,17 @@ public class PlayerController : MonoBehaviour
                 // Check if the tile under the mouse is a valid target
                 currentRuleset.CheckValidity(selectedUnit, tileUnderMouse);
 
+                // show attack shape if the tile is within attack range
                 if (currentRuleset.WithinRange && currentRuleset.actionType == ActionType.attack || currentRuleset.actionType == ActionType.specialAttack)
                 {
                     ProcessActionHighlighting(tileUnderMouse, hitInfo);
                 }
                 else if (currentRuleset.IsValid && currentRuleset.actionType == ActionType.movement)
                 {
+                    // if trying to move then simply highlight the tile under the cursor
                     tileUnderMouse.MouseEnter(currentRuleset.HighlightColour);
 
+                    // get path from Navigation and set the points of the lineRenderer to match it
                     List<Hex> path = Navigation.FindPath(selectedUnit.CurrentTile, tileUnderMouse);
                     lineRenderer.positionCount = path.Count + 1;
 
@@ -489,6 +499,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
+                    // no valid tile under the cursor, remove all highlighting and previewing
                     lineRenderer.positionCount = 0;
 
                     if (tilesAffectByAction.Count > 0)
@@ -512,22 +523,48 @@ public class PlayerController : MonoBehaviour
                     }
                 }
             }
-            else if (unitUnderMouse)
+            else
             {
+                // no tile is under the mouse, remove highlighting
+
+
+                // If there was a tile that was highlighted remove the highlight
+                if (previousTileUnderMouse)
+                {
+                    previousTileUnderMouse.MouseExit();
+                    previousTileUnderMouse = null;
+                }
+            }
+
+            if (unitUnderMouse)
+            {
+                // check if the unit under the cursor is a valid target
                 currentRuleset.CheckValidity(selectedUnit, unitUnderMouse);
 
-                if (previousUnitUnderMouse != null && unitUnderMouse != null)
+                // remove highlight from previous unit if there is one and it isn't this unit
+                if (previousUnitUnderMouse != null && previousUnitUnderMouse != unitUnderMouse)
                 {
                     previousUnitUnderMouse.Highlight(false, currentRuleset.HighlightColour);
 
                     previousUnitUnderMouse = unitUnderMouse;
+                }
 
-                    unitUnderMouse.Highlight(true, currentRuleset.HighlightColour);
+                unitUnderMouse.Highlight(true, currentRuleset.HighlightColour);
 
-                    if (currentRuleset.actionType == ActionType.selection && unitUnderMouse.CompareTag("Enemy"))
-                    {
-                        // HighlightTilesInRange(unitUnderMouse.MoveRange);
-                    }
+                if (currentRuleset.actionType == ActionType.selection && unitUnderMouse.CompareTag("Enemy"))
+                {
+                    // HighlightTilesInRange(unitUnderMouse.MoveRange);
+                }
+            }
+            else
+            {
+                // no unit is under the mouse, remove highlighting
+
+                // If there was a unit that was highlighted remove the highlight
+                if (previousUnitUnderMouse)
+                {
+                    previousUnitUnderMouse.Highlight(false, currentRuleset.HighlightColour);
+                    previousUnitUnderMouse = null;
                 }
             }
         }
@@ -590,11 +627,29 @@ public class PlayerController : MonoBehaviour
 
                 case ActionType.attack:
 
-                    selectedUnit.BasicAttack(tilesAffectByAction.ToArray(), AttackStart, AttackEnd);
-                    RemoveHighlightedTiles();
-                    currentRuleset = selectionRuleset;
-
-                    canInteract = false;
+                    // simply attack if it's the earth unit
+                    if (selectedUnit == earthUnit)
+                    {
+                        selectedUnit.BasicAttack(tilesAffectByAction.ToArray(), AttackStart, AttackEnd);
+                        RemoveHighlightedTiles();
+                        currentRuleset = selectionRuleset;
+                        canInteract = false;
+                    }
+                    else
+                    {
+                        // set the hex1 if it's null
+                        if (lightningAttackHex1 == null)
+                        {
+                            lightningAttackHex1 = tileUnderMouse;
+                        }
+                        else if (lightningAttackHex2 != null)// hex1 has been set, set hex2
+                        {
+                            selectedUnit.BasicAttack(tilesAffectByAction.ToArray(), AttackStart, AttackEnd);
+                            RemoveHighlightedTiles();
+                            currentRuleset = selectionRuleset;
+                            canInteract = false;
+                        }
+                    }
 
                     break;
 
@@ -1044,6 +1099,7 @@ public class PlayerController : MonoBehaviour
 
     private void GetTilesAffectByLightningAttack(Hex a_targetTile)
     {
+        // clear highlighting 
         foreach (Hex tile in tilesAffectByAction)
         {
             tile.MouseExit();
@@ -1058,7 +1114,25 @@ public class PlayerController : MonoBehaviour
 
         enemiesAffectByAction.Clear();
 
+        // calculate tiles affected
+
+
+
+        if (lightningAttackHex1 != null)
+        {
+            //draw line between lightningAttackHex1 and lightningAttackHex2
+        }
+
         tilesAffectByAction.Add(a_targetTile);
+
+
+
+
+
+
+
+
+        // highlight new tiles
 
         foreach (Hex tile in tilesAffectByAction)
         {

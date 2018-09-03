@@ -3,20 +3,35 @@ using UnityEngine.UI;
 
 public class MenuHelper : MonoBehaviour
 {
-    [SerializeField] private Settings currentSettings;
+    [SerializeField] ConfirmationPopup confirmationPopup = null;
+    [SerializeField] SettingsInitialiser settingsInitialiser = null;
+
+    private Settings currentSettings;
+    //private Settings defaultSettings;
+
+    private void Awake()
+    {
+        currentSettings = Resources.Load<Settings>("Settings/current");
+        //defaultSettings = Resources.Load<Settings>("Settings/default");
+    }
 
     #region Settings
+
+    public void SetSettingsToDefault()
+    {
+        settingsInitialiser.InitializeToDefault();
+    }
 
     #region Gameplay
 
     public void SetInverseCameraRotationToggle(Toggle a_toggle)
     {
-        currentSettings.inverseCameraRotation = a_toggle.isOn;
+        currentSettings.InverseCameraRotation = a_toggle.isOn;
     }
 
     public void SetScreenEdgePanToggle(Toggle a_toggle)
     {
-        currentSettings.screenEdgePan = a_toggle.isOn;
+        currentSettings.ScreenEdgePan = a_toggle.isOn;
     }
 
     #endregion
@@ -25,12 +40,12 @@ public class MenuHelper : MonoBehaviour
 
     public void SetQuality(int a_newQualityLevel)
     {
-        currentSettings.quality = a_newQualityLevel;
+        currentSettings.Quality = a_newQualityLevel;
     }
 
     public void SetQualityDropdown(Dropdown a_dropDown)
     {
-        currentSettings.quality = a_dropDown.value;
+        currentSettings.Quality = a_dropDown.value;
     }
 
     #endregion
@@ -39,27 +54,27 @@ public class MenuHelper : MonoBehaviour
 
     public void SetMuteAllToggle(Toggle a_toggle)
     {
-        currentSettings.muteAll = a_toggle.isOn;
+        currentSettings.MuteAll = a_toggle.isOn;
     }
 
     public void SetMasterVolumeSlider(Slider a_slider)
     {
-        currentSettings.master = a_slider.value;
+        currentSettings.Master = a_slider.value;
     }
 
     public void SetMusicVolumeSlider(Slider a_slider)
     {
-        currentSettings.music = a_slider.value;
+        currentSettings.Music = a_slider.value;
     }
 
     public void SetEffectsVolumeSlider(Slider a_slider)
     {
-        currentSettings.effects = a_slider.value;
+        currentSettings.Effects = a_slider.value;
     }
 
     public void SetDialougeVolumeSlider(Slider a_slider)
     {
-        currentSettings.dialouge = a_slider.value;
+        currentSettings.Dialouge = a_slider.value;
     }
 
     #endregion
@@ -131,5 +146,21 @@ public class MenuHelper : MonoBehaviour
         {
             a_go.transform.GetChild(i).gameObject.SetActive(false);
         }
+    }
+
+    public void ResetAllSettingsPopup(string a_message)
+    {
+        OpenConfirmationPopup(a_message, SetSettingsToDefault);
+    }
+
+    private void OpenConfirmationPopup(string a_message, System.Action a_action)
+    {
+        if (confirmationPopup)
+        {
+            confirmationPopup.gameObject.SetActive(true);
+            confirmationPopup.Setup(a_message, a_action);
+        }
+        else
+            Debug.LogError("No Confirmation Popup attached.", gameObject);
     }
 }

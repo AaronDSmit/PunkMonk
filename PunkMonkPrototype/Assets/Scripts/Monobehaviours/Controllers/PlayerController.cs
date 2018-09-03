@@ -599,7 +599,7 @@ public class PlayerController : MonoBehaviour
 
         #region Left Click
 
-        if (Input.GetMouseButton(0) && currentRuleset.IsValid)
+        if (Input.GetMouseButtonDown(0) && currentRuleset.IsValid)
         {
             switch (currentRuleset.actionType)
             {
@@ -637,17 +637,20 @@ public class PlayerController : MonoBehaviour
                     }
                     else
                     {
+
+                        if (lightningAttackHex1 != null || lightningAttackHex1 != lightningAttackHex2)// hex1 has been set, set hex2
+                        {
+                            lightningAttackHex2 = tileUnderMouse;
+                            selectedUnit.BasicAttack(grid.GetHexLine(lightningAttackHex1, lightningAttackHex2), AttackStart, AttackEnd);
+                            RemoveHighlightedTiles();
+                            currentRuleset = selectionRuleset;
+                            canInteract = false;
+                        }
+
                         // set the hex1 if it's null
                         if (lightningAttackHex1 == null)
                         {
                             lightningAttackHex1 = tileUnderMouse;
-                        }
-                        else if (lightningAttackHex2 != null)// hex1 has been set, set hex2
-                        {
-                            selectedUnit.BasicAttack(tilesAffectByAction.ToArray(), AttackStart, AttackEnd);
-                            RemoveHighlightedTiles();
-                            currentRuleset = selectionRuleset;
-                            canInteract = false;
                         }
                     }
 
@@ -1125,6 +1128,7 @@ public class PlayerController : MonoBehaviour
             lineRenderer.SetPosition(0, lightningAttackHex1.transform.position);
             lineRenderer.SetPosition(1, a_hitInfo.transform.position);
 
+            tilesAffectByAction.AddRange(grid.GetHexLine(lightningAttackHex1, a_hitInfo.transform.GetComponent<Hex>()));
         }
 
         tilesAffectByAction.Add(a_targetTile);

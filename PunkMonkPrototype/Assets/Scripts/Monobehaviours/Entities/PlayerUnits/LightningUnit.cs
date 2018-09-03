@@ -305,6 +305,7 @@ public class LightningUnit : Unit
 
         cameraController.TurnOffGlamCam();
 
+        basicTiles.Clear();
 
         Destroy(tempGameobject1);
         Destroy(tempGameobject2);

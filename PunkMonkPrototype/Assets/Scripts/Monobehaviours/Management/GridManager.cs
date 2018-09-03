@@ -82,6 +82,28 @@ public class GridManager : MonoBehaviour
 
     #region Public Methods
 
+    public Hex[] GetHexLine(Hex a_lhs, Hex a_rhs)
+    {
+        List<Hex> hexs = new List<Hex>();
+
+        int distance = HexUtility.Distance(a_lhs, a_rhs);
+
+
+
+
+        for (int i = 0; i < distance - 1; i++)
+        {
+        //    Vector3.Lerp(a_lhs, a_rhs, i )
+        }
+
+
+
+
+
+        return hexs.ToArray();
+    }
+
+
     public void Init()
     {
         StartCoroutine(RemoveExcessTiles());

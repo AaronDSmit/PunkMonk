@@ -16,5 +16,19 @@
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
 		</SoundBank>
+		<SoundBank Id="3991942870" Language="SFX">
+			<ObjectPath>\SoundBanks\Default Work Unit\Music</ObjectPath>
+			<ShortName>Music</ShortName>
+			<Path>Music.bnk</Path>
+			<IncludedEvents>
+				<Event Id="1256202815" Name="Play" ObjectPath="\Events\Default Work Unit\Play"/>
+			</IncludedEvents>
+			<IncludedMemoryFiles>
+				<File Id="754501869" Language="SFX">
+					<ShortName>Combat_Theme_FullLoop_v1.wav</ShortName>
+					<Path>SFX\Combat_Theme_FullLoop_v1_8956FC97.wem</Path>
+				</File>
+			</IncludedMemoryFiles>
+		</SoundBank>
 	</SoundBanks>
 </SoundBanksInfo>

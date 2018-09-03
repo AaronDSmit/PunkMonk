@@ -31,20 +31,43 @@ MonoBehaviour:
     List: []
   BankWwu:
   - Guid: '{A76D73F7-5EA3-46B5-B38F-16F7929AC7DF}'
-    m_lastTimePart2: -1999236805
-    m_lastTimePsrt1: 2046657221
+    m_lastTimePart2: -1999236797
+    m_lastTimePsrt1: 467458819
     ParentPhysicalPath: 
     PhysicalPath: SoundBanks\Default Work Unit.wwu
-    List: []
+    List:
+    - Guid: 2d8eac41a083714e8e60c923a62a251f
+      ID: -303024426
+      Name: Music
+      Path: Default Work Unit\Music
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Music
+        ObjectType: 7
   EventWwu:
   - Guid: '{9B7E563D-D886-4529-9471-1F499F2670AE}'
-    m_lastTimePart2: -1999236805
-    m_lastTimePsrt1: 2046527221
+    m_lastTimePart2: -1999236798
+    m_lastTimePsrt1: -175701181
     ParentPhysicalPath: 
     PhysicalPath: Events\Default Work Unit.wwu
-    List: []
+    List:
+    - Guid: 20ff1aac9313ba458138948653b8b587
+      ID: 1256202815
+      Name: Play
+      Path: Default Work Unit\Play
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Play
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
   ExpandedItems:
   - /PunkMonkPrototype_WwiseProject
+  - /PunkMonkPrototype_WwiseProject/Events
+  - /PunkMonkPrototype_WwiseProject/Events/Default Work Unit
   RtpcWwu:
   - Guid: '{0611EF02-C52F-4D22-840D-EF5CD7507B8B}'
     m_lastTimePart2: -1999236805
@@ -54,8 +77,8 @@ MonoBehaviour:
     List: []
   StateWwu:
   - Guid: '{04CF6E00-4CA3-4424-9273-F0833B6CE0D5}'
-    m_lastTimePart2: -1999236805
-    m_lastTimePsrt1: 2046757221
+    m_lastTimePart2: -1999236798
+    m_lastTimePsrt1: 446616115
     ParentPhysicalPath: 
     PhysicalPath: States\Default Work Unit.wwu
     List: []

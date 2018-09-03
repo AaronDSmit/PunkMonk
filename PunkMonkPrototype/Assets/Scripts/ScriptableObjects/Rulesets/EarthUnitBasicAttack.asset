@@ -21,7 +21,7 @@ MonoBehaviour:
   useDistanceCheck: 1
   useTeamCheck: 0
   useTileOccupationCheck: 0
-  targetOccupation: 1
+  targetOccupation: 0
   distanceCheckType: 0
   minDistance: 1
   targetTeam: 1

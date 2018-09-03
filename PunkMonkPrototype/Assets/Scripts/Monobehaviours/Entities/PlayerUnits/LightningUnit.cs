@@ -14,7 +14,7 @@ public class LightningUnit : Unit
     [SerializeField] private float basicElectricityLifetime = 3;
 
     private System.Action basicFinishedFunc;
-    private Hex basicTile;
+    private List<Hex> basicTiles = new List<Hex>();
     private bool basicLightningAnimation;
     private float basicLightningTimer;
     private GameObject basicLightningGO;
@@ -71,7 +71,7 @@ public class LightningUnit : Unit
         CanAttack = false;
 
         //store the target tile
-        basicTile = targetTiles[0];
+        basicTiles.AddRange(targetTiles);
 
         //store the finished function call
         basicFinishedFunc = finished;
@@ -80,15 +80,17 @@ public class LightningUnit : Unit
 
         basicLightningTimer = 3f;
 
-        Vector3 tilePos = basicTile.transform.position;
+        Vector3 startTilePos = basicTiles[0].transform.position;
+        Vector3 endTilePos = basicTiles[basicTiles.Count - 1].transform.position;
 
-        tilePos.y = transform.position.y;
+        startTilePos.y = transform.position.y;
+        endTilePos.y = startTilePos.y;
 
         if (glamCam)
         {
             if (Random.Range(0, 100) <= glamCamChance)
             {
-                cameraController.PlayGlamCam(transform.position, tilePos - transform.position, GlamCamType.LIGHNING_BASIC);
+                cameraController.PlayGlamCam(transform.position, startTilePos - endTilePos, GlamCamType.LIGHNING_BASIC);
                 StartCoroutine(BasicAttackDamageDelay(basicDamgeDelayTimer, 2));
                 return;
             }
@@ -266,8 +268,8 @@ public class LightningUnit : Unit
         yield return new WaitForEndOfFrame();
         basicLightningGO = Instantiate(lightningPrefab);
 
-        basicLightningGO.transform.GetChild(0).position = basicTile.transform.position + (transform.up * 0.8f);
-        basicLightningGO.transform.GetChild(1).position = transform.position + (transform.up * 0.8f);
+        basicLightningGO.transform.GetChild(0).position = basicTiles[0].transform.position + (transform.up * 0.8f);
+        basicLightningGO.transform.GetChild(1).position = basicTiles[basicTiles.Count - 1].transform.position + (transform.up * 0.8f);
 
         yield return new WaitForEndOfFrame();
         GameObject tempGameobject1 = Instantiate(basicLightningGO);
@@ -286,17 +288,20 @@ public class LightningUnit : Unit
         //wait for timer before runing code
         yield return new WaitForSeconds(a_timer);
 
-
-        //if there is a unit
-        if (basicTile.CurrentUnit != null)
+        foreach (var tile in basicTiles)
         {
-            //make sure we arent damaging the player or team
-            if (basicTile.CurrentUnit.Team != TEAM.player)
+            //if there is a unit
+            if (tile.CurrentUnit != null)
             {
-                //deal damage to that unit
-                basicTile.CurrentUnit.TakeDamage(basicDamage, this);
+                //make sure we arent damaging the player or team
+                if (tile.CurrentUnit.Team != TEAM.player)
+                {
+                    //deal damage to that unit
+                    tile.CurrentUnit.TakeDamage(basicDamage, this);
+                }
             }
         }
+
 
         cameraController.TurnOffGlamCam();
 

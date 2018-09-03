@@ -64,7 +64,6 @@ public class PlayerController : MonoBehaviour
     private HexDirection lightningStartingDirection;
 
     private Hex lightningAttackHex1 = null;
-    private Hex lightningAttackHex2 = null;
 
     private int encounterKillLimit;
 
@@ -638,13 +637,15 @@ public class PlayerController : MonoBehaviour
                     else
                     {
 
-                        if (lightningAttackHex1 != null || lightningAttackHex1 != lightningAttackHex2)// hex1 has been set, set hex2
+                        if (lightningAttackHex1 != null && lightningAttackHex1 != tileUnderMouse)// hex1 has been set, set hex2
                         {
-                            lightningAttackHex2 = tileUnderMouse;
-                            selectedUnit.BasicAttack(grid.GetHexLine(lightningAttackHex1, lightningAttackHex2), AttackStart, AttackEnd);
+                            selectedUnit.BasicAttack(tilesAffectByAction.ToArray(), AttackStart, AttackEnd);
                             RemoveHighlightedTiles();
                             currentRuleset = selectionRuleset;
                             canInteract = false;
+                            lightningAttackHex1 = null;
+                            lineRenderer.positionCount = 0;
+
                         }
 
                         // set the hex1 if it's null
@@ -702,6 +703,11 @@ public class PlayerController : MonoBehaviour
         currentRuleset = selectionRuleset;
 
         RemoveHighlightedTiles();
+
+        if(lightningAttackHex1 != null)
+        {
+            lightningAttackHex1 = null;
+        }
 
         if (tileUnderMouse)
         {
@@ -1132,6 +1138,8 @@ public class PlayerController : MonoBehaviour
         }
 
         tilesAffectByAction.Add(a_targetTile);
+
+
 
 
         // highlight new tiles

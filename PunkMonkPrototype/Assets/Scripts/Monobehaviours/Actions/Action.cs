@@ -19,6 +19,8 @@ public class Action : ScriptableObject
 
     public InteractionRuleset ruleset;
 
+    public InteractionRuleset[] otherRuleset;
+
     ActionType actionType;
 
     public int coolDown;

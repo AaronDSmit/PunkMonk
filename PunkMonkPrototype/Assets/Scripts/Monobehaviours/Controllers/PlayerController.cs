@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public enum PlayerAttack { earthBasic, earthSpecial, lightningBasic, lightningSpecial }
+public enum PlayerAttack { earthBasic, earthSpecial, lightningBasic, lightningSpecial, lightningSpecial2 }
 
 /// <summary>
 /// 
@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private InteractionRuleset selectionRuleset;
+
 
     [Header("Debug Info")]
     [SerializeField]
@@ -85,6 +86,7 @@ public class PlayerController : MonoBehaviour
 
         set { encounterKillLimit = value; }
     }
+
 
     #endregion
 
@@ -312,6 +314,7 @@ public class PlayerController : MonoBehaviour
 
         currentRuleset = selectedUnit.GetAction(actionIndex).ruleset;
 
+
         // set the current attack
         if (selectedUnit == earthUnit)
         {
@@ -326,6 +329,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (selectedUnit == lightningUnit)
         {
+
             if (actionIndex == 1)
             {
                 currentAttack = PlayerAttack.lightningBasic;
@@ -334,6 +338,7 @@ public class PlayerController : MonoBehaviour
             {
                 currentAttack = PlayerAttack.lightningSpecial;
             }
+
         }
 
         // Highlight area in range to walk
@@ -353,6 +358,7 @@ public class PlayerController : MonoBehaviour
         {
             HighlightTilesInRange(selectedUnit.SpecialAttackRange);
         }
+
     }
 
     #endregion
@@ -470,10 +476,17 @@ public class PlayerController : MonoBehaviour
             tileUnderMouse = hitInfo.transform.GetComponent<Hex>();
             unitUnderMouse = hitInfo.transform.GetComponent<Unit>();
 
+            Hex currentHex = selectedUnit.CurrentTile;
+            if (lightningAttackHex1 != null)
+            {
+                currentHex = lightningAttackHex1;
+            }
+
             if (tileUnderMouse)
             {
+
                 // Check if the tile under the mouse is a valid target
-                currentRuleset.CheckValidity(selectedUnit, tileUnderMouse);
+                currentRuleset.CheckValidity(currentHex, tileUnderMouse);
 
                 // show attack shape if the tile is within attack range
                 if (currentRuleset.WithinRange && currentRuleset.actionType == ActionType.attack || currentRuleset.actionType == ActionType.specialAttack)
@@ -486,10 +499,10 @@ public class PlayerController : MonoBehaviour
                     tileUnderMouse.MouseEnter(currentRuleset.HighlightColour);
 
                     // get path from Navigation and set the points of the lineRenderer to match it
-                    List<Hex> path = Navigation.FindPath(selectedUnit.CurrentTile, tileUnderMouse);
+                    List<Hex> path = Navigation.FindPath(currentHex, tileUnderMouse);
                     lineRenderer.positionCount = path.Count + 1;
 
-                    lineRenderer.SetPosition(0, selectedUnit.CurrentTile.transform.position + Vector3.up * 0.5f);
+                    lineRenderer.SetPosition(0, currentHex.transform.position + Vector3.up * 0.5f);
 
                     for (int i = 0; i < path.Count; i++)
                     {
@@ -538,7 +551,7 @@ public class PlayerController : MonoBehaviour
             if (unitUnderMouse)
             {
                 // check if the unit under the cursor is a valid target
-                currentRuleset.CheckValidity(selectedUnit, unitUnderMouse);
+                currentRuleset.CheckValidity(currentHex, unitUnderMouse);
 
                 // remove highlight from previous unit if there is one and it isn't this unit
                 if (previousUnitUnderMouse != null && previousUnitUnderMouse != unitUnderMouse)
@@ -645,13 +658,18 @@ public class PlayerController : MonoBehaviour
                             canInteract = false;
                             lightningAttackHex1 = null;
                             lineRenderer.positionCount = 0;
-
+                            break;
                         }
+
 
                         // set the hex1 if it's null
                         if (lightningAttackHex1 == null)
                         {
                             lightningAttackHex1 = tileUnderMouse;
+                            RemoveHighlightedTiles();
+                            currentRuleset = selectedUnit.GetAction(1).otherRuleset[0];
+                            HighlightTilesInRange(selectedUnit.SpecialAttackRange, lightningAttackHex1);
+
                         }
                     }
 
@@ -704,7 +722,7 @@ public class PlayerController : MonoBehaviour
 
         RemoveHighlightedTiles();
 
-        if(lightningAttackHex1 != null)
+        if (lightningAttackHex1 != null)
         {
             lightningAttackHex1 = null;
         }
@@ -787,11 +805,15 @@ public class PlayerController : MonoBehaviour
     }
 
     // Apply a permanent highlight to tiles within range of a unit
-    private void HighlightTilesInRange(int a_range)
+    private void HighlightTilesInRange(int a_range, Hex startingHex = null)
     {
-        List<Hex> area = grid.GetTilesWithinDistance(selectedUnit.CurrentTile, a_range);
+        if (startingHex == null)
+        {
+            startingHex = selectedUnit.CurrentTile;
+        }
+        List<Hex> area = grid.GetTilesWithinDistance(startingHex, a_range);
 
-        Manager.instance.HexHighlighter.HighLightArea(area, currentRuleset.InRangeHighlightColour, currentRuleset.InRangeHighlightColour, this, new List<Hex> { selectedUnit.CurrentTile });
+        Manager.instance.HexHighlighter.HighLightArea(area, currentRuleset.InRangeHighlightColour, currentRuleset.InRangeHighlightColour, this, new List<Hex> { startingHex });
     }
 
     // remove the highlight from all highlighted tiles
@@ -917,7 +939,6 @@ public class PlayerController : MonoBehaviour
                 GetTilesAffectByEarthSpecialAttack(a_targetTile);
                 break;
             case PlayerAttack.lightningBasic:
-
                 GetTilesAffectByLightningAttack(a_targetTile, a_hitInfo);
                 break;
             case PlayerAttack.lightningSpecial:

@@ -14,5 +14,7 @@ MonoBehaviour:
   name: Zap
   flavourText: Throw lightning at a target
   ruleset: {fileID: 11400000, guid: b6f0f11b6388ecf45b0550712b5c25f8, type: 2}
+  otherRuleset:
+  - {fileID: 11400000, guid: 563cb1f76bb5d67438811e8e35a524ec, type: 2}
   coolDown: 0
   AnimTrigger: 

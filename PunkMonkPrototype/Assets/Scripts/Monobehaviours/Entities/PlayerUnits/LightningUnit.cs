@@ -8,10 +8,10 @@ public class LightningUnit : Unit
 
     [Header("Basic Attack")]
 
-    [SerializeField]
-    private int basicDamage = 1;
+    [SerializeField] private int basicDamage = 1;
     [SerializeField] private float basicDamgeDelayTimer = 3;
     [SerializeField] private float basicElectricityLifetime = 3;
+    [SerializeField] private int basicElectricityRange;
 
     private System.Action basicFinishedFunc;
     private List<Hex> basicTiles = new List<Hex>();
@@ -56,6 +56,14 @@ public class LightningUnit : Unit
     public int MinSpecialDamage
     {
         get { return specialBounceDamage; }
+    }
+
+    public int BasicElectricityRange
+    {
+        get
+        {
+            return basicElectricityRange;
+        }
     }
 
     protected override void Awake()

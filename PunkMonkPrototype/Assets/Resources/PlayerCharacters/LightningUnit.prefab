@@ -592,6 +592,7 @@ MonoBehaviour:
   basicDamage: 2
   basicDamgeDelayTimer: 0.9
   basicElectricityLifetime: 1
+  basicElectricityRange: 5
   specialRehitEnemies: 1
   specialRange: 5
   specialAmountOfBounces: 3

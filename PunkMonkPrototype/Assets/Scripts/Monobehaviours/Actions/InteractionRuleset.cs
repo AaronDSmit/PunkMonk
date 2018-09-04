@@ -43,6 +43,8 @@ public class InteractionRuleset : ScriptableObject
     [SerializeField]
     private DistanceType distanceType;
 
+
+
     public bool IsValid { get; private set; }
 
     public bool WithinRange { get; private set; }
@@ -71,17 +73,18 @@ public class InteractionRuleset : ScriptableObject
         get { return withinRangeHighlightColour; }
     }
 
-    public void CheckValidity(Unit a_selectedObject, Hex a_tileUnderMouse)
+
+    public void CheckValidity(Hex a_hex, Hex a_tileUnderMouse)
     {
         if (useDistanceCheck)
         {
             if (distanceType == DistanceType.absolute)
             {
-                WithinRange = WithinDistanceAboslute(a_selectedObject, a_tileUnderMouse);
+                WithinRange = WithinDistanceAboslute(a_hex, a_tileUnderMouse);
             }
             else if (distanceType == DistanceType.pathTraveled)
             {
-                WithinRange = WithinDistancePath(a_selectedObject, a_tileUnderMouse);
+                WithinRange = WithinDistancePath(a_hex, a_tileUnderMouse);
             }
         }
         else
@@ -110,17 +113,17 @@ public class InteractionRuleset : ScriptableObject
         IsValid = WithinRange && CorrectTileOccupation && CorrectTeam;
     }
 
-    public void CheckValidity(Unit a_selectedObject, Entity a_entityUnderMouse)
+    public void CheckValidity(Hex a_hex, Entity a_entityUnderMouse)
     {
         if (useTeamCheck && useDistanceCheck)
         {
             if (distanceType == DistanceType.absolute)
             {
-                IsValid = TeamCheck(a_entityUnderMouse) && WithinDistanceAboslute(a_selectedObject, a_entityUnderMouse.CurrentTile);
+                IsValid = TeamCheck(a_entityUnderMouse) && WithinDistanceAboslute(a_hex, a_entityUnderMouse.CurrentTile);
             }
             else if (distanceType == DistanceType.pathTraveled)
             {
-                IsValid = TeamCheck(a_entityUnderMouse) && WithinDistancePath(a_selectedObject, a_entityUnderMouse.CurrentTile);
+                IsValid = TeamCheck(a_entityUnderMouse) && WithinDistancePath(a_hex, a_entityUnderMouse.CurrentTile);
             }
         }
         else if (useTeamCheck)
@@ -131,11 +134,11 @@ public class InteractionRuleset : ScriptableObject
         {
             if (distanceType == DistanceType.absolute)
             {
-                IsValid = WithinDistanceAboslute(a_selectedObject, a_entityUnderMouse.CurrentTile);
+                IsValid = WithinDistanceAboslute(a_hex, a_entityUnderMouse.CurrentTile);
             }
             else if (distanceType == DistanceType.pathTraveled)
             {
-                IsValid = WithinDistancePath(a_selectedObject, a_entityUnderMouse.CurrentTile);
+                IsValid = WithinDistancePath(a_hex, a_entityUnderMouse.CurrentTile);
             }
         }
         else
@@ -144,51 +147,51 @@ public class InteractionRuleset : ScriptableObject
         }
     }
 
-    private bool WithinDistanceAboslute(Entity a_selectedObject, Hex a_tileLocation)
+    private bool WithinDistanceAboslute(Hex a_hex, Hex a_tileLocation)
     {
         int distance = 0;
 
         switch (distanceCheckType)
         {
             case DistanceCheck.attackRange:
-                distance = a_selectedObject.GetComponent<Unit>().AttackRange;
-                return HexUtility.Distance(a_selectedObject.CurrentTile, a_tileLocation) <= distance;
+                distance = a_hex.CurrentUnit.GetComponent<Unit>().AttackRange;
+                return HexUtility.Distance(a_hex, a_tileLocation) <= distance;
 
             case DistanceCheck.specialAttackRange:
-                distance = a_selectedObject.GetComponent<Unit>().SpecialAttackRange;
-                return HexUtility.Distance(a_selectedObject.CurrentTile, a_tileLocation) <= distance;
+                distance = a_hex.CurrentUnit.GetComponent<Unit>().SpecialAttackRange;
+                return HexUtility.Distance(a_hex, a_tileLocation) <= distance;
 
             case DistanceCheck.movementRange:
-                distance = a_selectedObject.GetComponent<Unit>().MoveRange;
-                return HexUtility.Distance(a_selectedObject.CurrentTile, a_tileLocation) <= distance;
+                distance = a_hex.CurrentUnit.GetComponent<Unit>().MoveRange;
+                return HexUtility.Distance(a_hex, a_tileLocation) <= distance;
 
             case DistanceCheck.custom:
-                return HexUtility.Distance(a_selectedObject.CurrentTile, a_tileLocation) <= minDistance;
+                return HexUtility.Distance(a_hex, a_tileLocation) <= minDistance;
         }
 
         return false;
     }
 
-    private bool WithinDistancePath(Entity a_selectedObject, Hex a_tileLocation)
+    private bool WithinDistancePath(Hex a_hex, Hex a_tileLocation)
     {
         int distance = 0;
 
         switch (distanceCheckType)
         {
             case DistanceCheck.attackRange:
-                distance = a_selectedObject.GetComponent<Unit>().AttackRange;
-                return Navigation.PathLength(a_selectedObject.CurrentTile, a_tileLocation) <= distance;
+                distance = a_hex.CurrentUnit.AttackRange;
+                return Navigation.PathLength(a_hex, a_tileLocation) <= distance;
 
             case DistanceCheck.specialAttackRange:
-                distance = a_selectedObject.GetComponent<Unit>().SpecialAttackRange;
-                return Navigation.PathLength(a_selectedObject.CurrentTile, a_tileLocation) <= distance;
+                distance = a_hex.CurrentUnit.SpecialAttackRange;
+                return Navigation.PathLength(a_hex, a_tileLocation) <= distance;
 
             case DistanceCheck.movementRange:
-                distance = a_selectedObject.GetComponent<Unit>().MoveRange;
-                return Navigation.PathLength(a_selectedObject.CurrentTile, a_tileLocation) <= distance;
+                distance = a_hex.CurrentUnit.MoveRange;
+                return Navigation.PathLength(a_hex, a_tileLocation) <= distance;
 
             case DistanceCheck.custom:
-                return Navigation.PathLength(a_selectedObject.CurrentTile, a_tileLocation) <= minDistance;
+                return Navigation.PathLength(a_hex, a_tileLocation) <= minDistance;
         }
 
         return false;

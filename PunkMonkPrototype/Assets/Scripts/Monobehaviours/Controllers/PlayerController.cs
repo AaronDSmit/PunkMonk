@@ -639,10 +639,22 @@ public class PlayerController : MonoBehaviour
 
                 case ActionType.attack:
 
+                    selectedUnit.BasicAttack(tilesAffectByAction.ToArray(), SpecialAttackStart, SpecialAttackEnd);
+                    RemoveHighlightedTiles();
+                    currentRuleset = selectionRuleset;
+
+                    canInteract = false;
+
+                    break;
+
+                case ActionType.specialAttack:
+
+
+
                     // simply attack if it's the earth unit
                     if (selectedUnit == earthUnit)
                     {
-                        selectedUnit.BasicAttack(tilesAffectByAction.ToArray(), AttackStart, AttackEnd);
+                        selectedUnit.SpecialAttack(tilesAffectByAction.ToArray(), AttackStart, AttackEnd);
                         RemoveHighlightedTiles();
                         currentRuleset = selectionRuleset;
                         canInteract = false;
@@ -652,7 +664,7 @@ public class PlayerController : MonoBehaviour
 
                         if (lightningAttackHex1 != null && lightningAttackHex1 != tileUnderMouse)// hex1 has been set, set hex2
                         {
-                            selectedUnit.BasicAttack(tilesAffectByAction.ToArray(), AttackStart, AttackEnd);
+                            selectedUnit.SpecialAttack(tilesAffectByAction.ToArray(), AttackStart, AttackEnd);
                             RemoveHighlightedTiles();
                             currentRuleset = selectionRuleset;
                             canInteract = false;
@@ -672,16 +684,6 @@ public class PlayerController : MonoBehaviour
 
                         }
                     }
-
-                    break;
-
-                case ActionType.specialAttack:
-
-                    selectedUnit.SpecialAttack(tilesAffectByAction.ToArray(), SpecialAttackStart, SpecialAttackEnd);
-                    RemoveHighlightedTiles();
-                    currentRuleset = selectionRuleset;
-
-                    canInteract = false;
 
                     break;
             }
@@ -939,11 +941,10 @@ public class PlayerController : MonoBehaviour
                 GetTilesAffectByEarthSpecialAttack(a_targetTile);
                 break;
             case PlayerAttack.lightningBasic:
-                GetTilesAffectByLightningAttack(a_targetTile, a_hitInfo);
+                GetTilesAffectByLightningSpecialAttack(a_targetTile, a_hitInfo);
                 break;
             case PlayerAttack.lightningSpecial:
-
-                GetTilesAffectByLightningSpecialAttack(a_targetTile);
+                GetTilesAffectByLightningAttack(a_targetTile);
                 break;
         }
     }
@@ -1127,7 +1128,7 @@ public class PlayerController : MonoBehaviour
 
     #region Lighting Attack Highlighting
 
-    private void GetTilesAffectByLightningAttack(Hex a_targetTile, RaycastHit a_hitInfo)
+    private void GetTilesAffectByLightningSpecialAttack(Hex a_targetTile, RaycastHit a_hitInfo)
     {
         // clear highlighting 
         foreach (Hex tile in tilesAffectByAction)
@@ -1177,11 +1178,11 @@ public class PlayerController : MonoBehaviour
 
         foreach (Unit unit in enemiesAffectByAction)
         {
-            unit.PreviewDamage(lightningUnit.BasicAttackDamage);
+            unit.PreviewDamage(lightningUnit.SpecialAttackDamage);
         }
     }
 
-    private void GetTilesAffectByLightningSpecialAttack(Hex a_targetTile)
+    private void GetTilesAffectByLightningAttack(Hex a_targetTile)
     {
         foreach (Hex tile in tilesAffectByAction)
         {

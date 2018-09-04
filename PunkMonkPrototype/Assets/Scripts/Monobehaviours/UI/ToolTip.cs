@@ -6,7 +6,7 @@ using TMPro;
 
 public class ToolTip : MonoBehaviour
 {
-    private RectTransform rect;
+    //private RectTransform rect;
 
     private GameObject child;
 
@@ -66,7 +66,7 @@ public class ToolTip : MonoBehaviour
 
             child = transform.GetChild(0).gameObject;
 
-            rect = GetComponent<RectTransform>();
+            //rect = GetComponent<RectTransform>();
 
             Hide();
         }

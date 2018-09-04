@@ -40,7 +40,7 @@ public class CameraController : MonoBehaviour
     private bool canMove = true;
 
     private Vector3 oldCamPosition;
-    private Quaternion oldCamRotation;
+    //private Quaternion oldCamRotation;
 
     private Settings settings;
 
@@ -413,7 +413,7 @@ public class CameraController : MonoBehaviour
     {
         cinemachine = true;
         oldCamPosition = camera.transform.position;
-        oldCamRotation = camera.transform.rotation;
+        //oldCamRotation = camera.transform.rotation;
 
        // Vector3 rightPerp = a_pos + Vector3.Cross(a_vecBetween.normalized, Vector3.up) * glamCamDistance;
 
@@ -430,7 +430,7 @@ public class CameraController : MonoBehaviour
     {
         cinemachine = true;
         oldCamPosition = camera.transform.position;
-        oldCamRotation = camera.transform.rotation;
+        //oldCamRotation = camera.transform.rotation;
 
      //   Vector3 finalPos = a_pos + (a_vecBetween * 1.1f) + ((a_vecBetween.normalized + Vector3.Cross(a_vecBetween.normalized, Vector3.up)).normalized * glamCamDistance);
 
@@ -446,7 +446,7 @@ public class CameraController : MonoBehaviour
     {
         cinemachine = true;
         oldCamPosition = camera.transform.position;
-        oldCamRotation = camera.transform.rotation;
+        //oldCamRotation = camera.transform.rotation;
 
       //  Vector3 finalPos = a_pos + -a_vecBetween.normalized + (-(a_vecBetween.normalized + Vector3.Cross(a_vecBetween.normalized, Vector3.up)).normalized * glamCamDistance);
 

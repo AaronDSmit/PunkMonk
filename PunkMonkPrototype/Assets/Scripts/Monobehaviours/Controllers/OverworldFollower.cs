@@ -16,7 +16,7 @@ public class OverworldFollower : MonoBehaviour
 
     #region Local Fields
 
-    private Unit earthUnit;
+    //private Unit earthUnit;
     private bool inOverworld;
     private Vector3 vecBetween;
     private Queue<Vector3> nodes = new Queue<Vector3>();
@@ -34,16 +34,16 @@ public class OverworldFollower : MonoBehaviour
 
     public void Init()
     {
-        GameObject earthGO = GameObject.FindGameObjectWithTag("EarthUnit");
+        //GameObject earthGO = GameObject.FindGameObjectWithTag("EarthUnit");
 
-        if (earthGO)
-        {
-            earthUnit = GameObject.FindGameObjectWithTag("EarthUnit").GetComponent<Unit>();
-        }
-        else
-        {
-            Debug.LogError("No Earth unit found!");
-        }
+        //if (earthGO)
+        //{
+        //    earthUnit = GameObject.FindGameObjectWithTag("EarthUnit").GetComponent<Unit>();
+        //}
+        //else
+        //{
+        //    Debug.LogError("No Earth unit found!");
+        //}
     }
 
     #endregion

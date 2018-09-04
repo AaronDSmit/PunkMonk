@@ -10,7 +10,7 @@ public class LightningUnit : Unit
 
     [SerializeField] private int specialDamage = 1;
     [SerializeField] private float specialDamgeDelayTimer = 3;
-    [SerializeField] private float specialElectricityLifetime = 3;
+    //[SerializeField] private float specialElectricityLifetime = 3;
 
     private System.Action specialFinishedFunction;
     private List<Hex> specialTiles = new List<Hex>();

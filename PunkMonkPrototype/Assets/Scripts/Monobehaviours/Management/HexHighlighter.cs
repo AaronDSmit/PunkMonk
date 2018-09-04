@@ -15,9 +15,9 @@ public class HexHighlighter : MonoBehaviour
     [SerializeField]
     private Material borderMaterial = null;
 
-    [Tooltip("Material used for inside of area")]
-    [SerializeField]
-    private Material fillMaterial = null;
+    //[Tooltip("Material used for inside of area")]
+    //[SerializeField]
+    //private Material fillMaterial = null;
 
     #endregion
 
@@ -185,7 +185,7 @@ public class HexHighlighter : MonoBehaviour
 
     private int ClosestToOutside(Hex a_hex, Vector3 a_first, Vector3 a_second, ref List<Hex> a_area, ref List<Hex> a_exclude)
     {
-        List<Hex> outsideNeighbours = new List<Hex>();
+        //List<Hex> outsideNeighbours = new List<Hex>();
 
         foreach (Hex neighbour in a_hex.Neighbours)
         {

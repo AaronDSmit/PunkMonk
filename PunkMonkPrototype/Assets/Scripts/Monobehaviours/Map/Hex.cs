@@ -35,7 +35,7 @@ public class Hex : Entity
     [SerializeField]
     public float inaccessibleAlpha;
 
-    private GameObject child;
+    //private GameObject child;
 
     private SpriteRenderer border;
 
@@ -248,7 +248,7 @@ public class Hex : Entity
         }
         else
         {
-            child = transform.GetChild(0).gameObject;
+            //child = transform.GetChild(0).gameObject;
 
             border = GetComponentsInChildren<SpriteRenderer>()[0];
             highlight = GetComponentsInChildren<SpriteRenderer>()[1];

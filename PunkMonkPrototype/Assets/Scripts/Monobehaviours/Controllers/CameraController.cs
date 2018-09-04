@@ -42,7 +42,7 @@ public class CameraController : MonoBehaviour
     private Vector3 oldCamPosition;
     private Quaternion oldCamRotation;
 
-   
+    private Settings settings;
 
     public delegate void GlamCamEvent();
 
@@ -90,6 +90,7 @@ public class CameraController : MonoBehaviour
     {
         Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
         camera = transform.GetChild(0).gameObject;
+        settings = Resources.Load<Settings>("Settings/current");
     }
 
     private void Start()
@@ -116,6 +117,21 @@ public class CameraController : MonoBehaviour
         specialEarthGlamCam.SetActive(false);
         basicLightningGlamCam.SetActive(false);
         specialLightningGlamCam.SetActive(false);
+
+        // Subscribe to the settings changing delegate
+        settings.onSettingsChanged += SettingsChanged;
+    }
+
+    private void OnDestroy()
+    {
+        // Unsubscribe to the settings changing delegate
+        settings.onSettingsChanged -= SettingsChanged;
+    }
+
+    private void SettingsChanged()
+    {
+        inverseRotation = settings.InverseCameraRotation;
+        screenPan = settings.ScreenEdgePan;
     }
 
     private void GameStateChanged(GameState _oldstate, GameState _newstate)

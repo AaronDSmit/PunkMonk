@@ -679,7 +679,7 @@ public class PlayerController : MonoBehaviour
                         {
                             lightningAttackHex1 = tileUnderMouse;
                             RemoveHighlightedTiles();
-                            currentRuleset = selectedUnit.GetAction(1).otherRuleset[0];
+                            currentRuleset = selectedUnit.GetAction(2).otherRuleset[0];
                             HighlightTilesInRange(selectedUnit.SpecialAttackRange, lightningAttackHex1);
 
                         }
@@ -941,10 +941,12 @@ public class PlayerController : MonoBehaviour
                 GetTilesAffectByEarthSpecialAttack(a_targetTile);
                 break;
             case PlayerAttack.lightningBasic:
-                GetTilesAffectByLightningSpecialAttack(a_targetTile, a_hitInfo);
+                GetTilesAffectByLightningAttack(a_targetTile);
+
                 break;
             case PlayerAttack.lightningSpecial:
-                GetTilesAffectByLightningAttack(a_targetTile);
+                GetTilesAffectByLightningSpecialAttack(a_targetTile, a_hitInfo);
+
                 break;
         }
     }

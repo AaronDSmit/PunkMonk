@@ -13,6 +13,9 @@ public class PlayerController : MonoBehaviour
     #region Unity Inspector Fields
 
     [SerializeField]
+    private float spawnYLevel = 0.0f;
+
+    [SerializeField]
     private InteractionRuleset selectionRuleset;
 
 
@@ -166,7 +169,7 @@ public class PlayerController : MonoBehaviour
                 Hex spawnHexEarth = earthGO.transform.parent.GetComponent<Hex>();
 
                 Vector3 spawnPosEarth = spawnHexEarth.transform.position;
-                spawnPosEarth.y = 0.1f;
+                spawnPosEarth.y = spawnYLevel;
 
                 earthUnit = Instantiate(Resources.Load<EarthUnit>("PlayerCharacters/EarthUnit"), spawnPosEarth, Quaternion.identity);
                 earthUnit.Spawn(spawnHexEarth);
@@ -196,7 +199,7 @@ public class PlayerController : MonoBehaviour
             // spawn at checkpoint pos
 
             Vector3 spawnPosEarth = spawnHex.transform.position;
-            spawnPosEarth.y = 0.1f;
+            spawnPosEarth.y = spawnYLevel;
 
             earthUnit = Instantiate(Resources.Load<EarthUnit>("PlayerCharacters/EarthUnit"), spawnPosEarth, Quaternion.identity);
             earthUnit.Spawn(spawnHex);
@@ -220,7 +223,7 @@ public class PlayerController : MonoBehaviour
                 Hex spawnHexLightning = lightningGO.transform.parent.GetComponent<Hex>();
 
                 Vector3 spawnPosLightning = spawnHexLightning.transform.position;
-                spawnPosLightning.y = 0.1f;
+                spawnPosLightning.y = spawnYLevel;
 
                 lightningUnit = Instantiate(Resources.Load<LightningUnit>("PlayerCharacters/LightningUnit"), spawnPosLightning, Quaternion.identity);
                 lightningUnit.Spawn(spawnHexLightning);
@@ -243,7 +246,7 @@ public class PlayerController : MonoBehaviour
             // spawn at checkpoint pos
 
             Vector3 spawnPosLightning = spawnHex.transform.position;
-            spawnPosLightning.y = 0.1f;
+            spawnPosLightning.y = spawnYLevel;
 
             lightningUnit = Instantiate(Resources.Load<LightningUnit>("PlayerCharacters/LightningUnit"), spawnPosLightning, Quaternion.identity);
             lightningUnit.Spawn(spawnHex);

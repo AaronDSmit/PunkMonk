@@ -14,11 +14,21 @@ public class OverworldController : MonoBehaviour
 
     private bool inOverworld;
 
+    private Vector3 direction;
+
+    private bool mouseInput = false;
+    private bool keyboardInput = false;
+
     [SerializeField]
     private float newNodeDistance = 1;
 
     [SerializeField]
-    private float movementSpeed = 0;
+    private float movementSpeed = 1;
+
+    [SerializeField]
+    private bool useKeyboardInput = true;
+    [SerializeField]
+    private bool useMouseInput = true;
 
     private void Awake()
     {
@@ -42,19 +52,45 @@ public class OverworldController : MonoBehaviour
         // Don't update if in any other game state
         if (inOverworld)
         {
-            ProcessKeyboardInput();
-            ProcessMouseInput();
-            if(Vector3.Distance(earthUnit.transform.position, currentNode) >= newNodeDistance)
+            if (useMouseInput)
+                ProcessMouseInput();
+            if (useKeyboardInput)
+                ProcessKeyboardInput();
+
+            Movement();
+
+            if (Vector3.Distance(earthUnit.transform.position, currentNode) >= newNodeDistance)
             {
                 DropNode();
             }
         }
     }
 
+    private void Movement()
+    {
+        if ((mouseInput || keyboardInput) && direction.sqrMagnitude != 0)
+        {
+            earthUnit.transform.position += direction.normalized * movementSpeed * Time.deltaTime;
+            earthUnit.transform.rotation = Quaternion.Slerp(earthUnit.transform.rotation, Quaternion.LookRotation(direction.normalized, Vector3.up), 10.0f * Time.deltaTime);
+        }
+    }
+
     // Process Keyboard Input
     private void ProcessKeyboardInput()
     {
-
+        if (!mouseInput)
+        {
+            keyboardInput = true;
+            direction.x = Input.GetAxis("Horizontal");
+            direction.z = Input.GetAxis("Vertical");
+            direction = Camera.main.transform.TransformDirection(direction);
+            direction.y = 0;
+            direction = direction.normalized;
+        }
+        else
+        {
+            keyboardInput = false;
+        }
     }
 
     // Process Mouse Input
@@ -64,7 +100,8 @@ public class OverworldController : MonoBehaviour
         {
             if (Input.GetMouseButton(0))
             {
-                Vector3 vecBetween;
+                mouseInput = true;
+
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
                 int layerMask = 0;
@@ -72,16 +109,17 @@ public class OverworldController : MonoBehaviour
 
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
                 {
-                    vecBetween = hit.transform.position - earthUnit.transform.position;
+                    Vector3 vecBetween = hit.transform.position - earthUnit.transform.position;
                     vecBetween.y = 0;
-                    //Debug.DrawLine()
-
-                    if (vecBetween.magnitude > 1)
+                    if (vecBetween.sqrMagnitude > 1)
                     {
-                        earthUnit.transform.position += vecBetween.normalized * movementSpeed * Time.deltaTime;
-                        earthUnit.transform.rotation = Quaternion.Slerp(earthUnit.transform.rotation, Quaternion.LookRotation(vecBetween.normalized, Vector3.up), 10.0f *Time.deltaTime);
+                        direction = vecBetween;
                     }
                 }
+            }
+            else
+            {
+                mouseInput = false;
             }
         }
     }

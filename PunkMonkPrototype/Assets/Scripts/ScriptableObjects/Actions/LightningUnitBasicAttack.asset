@@ -11,10 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f51c28d4cdd77d46a9eaeb64435a8be, type: 3}
   m_Name: LightningUnitBasicAttack
   m_EditorClassIdentifier: 
-  name: Zap
-  flavourText: Throw lightning at a target
-  ruleset: {fileID: 11400000, guid: b6f0f11b6388ecf45b0550712b5c25f8, type: 2}
-  otherRuleset:
-  - {fileID: 11400000, guid: 563cb1f76bb5d67438811e8e35a524ec, type: 2}
+  name: Chain Lightning
+  flavourText: Electrocute enemies in a chain
+  ruleset: {fileID: 11400000, guid: a3970bbe37755b04783eacdffb38652a, type: 2}
+  otherRuleset: []
   coolDown: 0
   AnimTrigger: 

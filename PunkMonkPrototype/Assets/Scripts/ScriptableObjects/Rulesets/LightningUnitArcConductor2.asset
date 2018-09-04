@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d8913b09cd8bb0245b97367ae458f86d, type: 3}
-  m_Name: LightningUnitSpecialAttack2
+  m_Name: LightningUnitArcConductor2
   m_EditorClassIdentifier: 
   interactableLayers:
     serializedVersion: 2

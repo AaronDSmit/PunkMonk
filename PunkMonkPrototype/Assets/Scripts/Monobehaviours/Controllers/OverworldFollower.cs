@@ -14,6 +14,12 @@ public class OverworldFollower : MonoBehaviour
 
     #endregion
 
+    #region References
+
+    private CharacterController cc = null;
+
+    #endregion
+
     #region Local Fields
 
     //private Unit earthUnit;
@@ -34,6 +40,9 @@ public class OverworldFollower : MonoBehaviour
 
     public void Init()
     {
+
+        cc = GetComponent<CharacterController>();
+
         //GameObject earthGO = GameObject.FindGameObjectWithTag("EarthUnit");
 
         //if (earthGO)
@@ -55,12 +64,17 @@ public class OverworldFollower : MonoBehaviour
         Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
     }
 
+    private void OnDestroy()
+    {
+        Manager.instance.StateController.OnGameStateChanged -= GameStateChanged;
+    }
+
     private void Update()
     {
         if (inOverworld && nodes.Count > 1)
         {
             vecBetween = nodes.Peek() - transform.position;
-            transform.position += vecBetween.normalized * movementSpeed * Mathf.Clamp(nodes.Count, 1, 3) * Time.deltaTime;
+            cc.Move(vecBetween.normalized * movementSpeed * Mathf.Clamp(nodes.Count, 1, 3) * Time.deltaTime);
 
             if (Vector3.Distance(transform.position, nodes.Peek()) < 0.1)
             {

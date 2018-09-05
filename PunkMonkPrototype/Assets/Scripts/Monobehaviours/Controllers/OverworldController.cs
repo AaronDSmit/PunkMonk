@@ -4,20 +4,10 @@ using UnityEngine;
 
 public class OverworldController : MonoBehaviour
 {
-    private Unit earthUnit = null;
+    #region Inspector Fields
 
-    private Unit lightningUnit = null;
-
-    private OverworldFollower follower;
-
-    private Vector3 currentNode;
-
-    private bool inOverworld;
-
-    private Vector3 direction;
-
-    private bool mouseInput = false;
-    private bool keyboardInput = false;
+    [SerializeField]
+    private float raycastPlaneYLevel = 0.0f;
 
     [SerializeField]
     private float newNodeDistance = 1;
@@ -30,14 +20,45 @@ public class OverworldController : MonoBehaviour
     [SerializeField]
     private bool useMouseInput = true;
 
+    #endregion
+
+    #region References
+
+    private CharacterController earthCC = null;
+
+    private CharacterController lightningCC = null;
+
+    private OverworldFollower follower;
+
+    #endregion
+
+    #region Private Fields
+
+    private Vector3 currentNode;
+
+    private bool inOverworld;
+
+    private Vector3 direction;
+
+    private bool mouseInput = false;
+    private bool keyboardInput = false;
+
+    #endregion
+
+
     private void Awake()
     {
         Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
     }
 
+    private void OnDestroy()
+    {
+        Manager.instance.StateController.OnGameStateChanged -= GameStateChanged;
+    }
+
     private void Start()
     {
-        follower = lightningUnit.GetComponent<OverworldFollower>();
+        follower = lightningCC.GetComponent<OverworldFollower>();
         DropNode();
     }
 
@@ -59,7 +80,7 @@ public class OverworldController : MonoBehaviour
 
             Movement();
 
-            if (Vector3.Distance(earthUnit.transform.position, currentNode) >= newNodeDistance)
+            if (Vector3.Distance(earthCC.transform.position, currentNode) >= newNodeDistance)
             {
                 DropNode();
             }
@@ -70,63 +91,80 @@ public class OverworldController : MonoBehaviour
     {
         if ((mouseInput || keyboardInput) && direction.sqrMagnitude != 0)
         {
-            earthUnit.transform.position += direction.normalized * movementSpeed * Time.deltaTime;
-            earthUnit.transform.rotation = Quaternion.Slerp(earthUnit.transform.rotation, Quaternion.LookRotation(direction.normalized, Vector3.up), 10.0f * Time.deltaTime);
+            earthCC.Move(direction.normalized * movementSpeed * Time.deltaTime);
+            earthCC.transform.rotation = Quaternion.Slerp(earthCC.transform.rotation, Quaternion.LookRotation(direction.normalized, Vector3.up), 10.0f * Time.deltaTime);
         }
     }
 
     // Process Keyboard Input
     private void ProcessKeyboardInput()
     {
-        if (!mouseInput)
-        {
-            keyboardInput = true;
-            direction.x = Input.GetAxis("Horizontal");
-            direction.z = Input.GetAxis("Vertical");
-            direction = Camera.main.transform.TransformDirection(direction);
-            direction.y = 0;
-            direction = direction.normalized;
-        }
-        else
-        {
-            keyboardInput = false;
-        }
+        //keyboardInput = false;
+
+        //if (!mouseInput)
+        //{
+        //    if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) // UP
+        //        direction.x += 1.0f;
+        //    if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) // DOWN
+        //        direction.x -= 1.0f;
+
+        //    if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) // LEFT
+        //        direction.z -= 1.0f;
+        //    if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) // RIGHT
+        //        direction.z += 1.0f;
+
+        //    if (direction.z != 0f && direction.z != 0f)
+        //    {
+        //        keyboardInput = true;
+
+        //        direction = Camera.main.transform.TransformDirection(direction);
+        //        direction.y = 0;
+        //        direction = direction.normalized;
+        //    }
+        //}
     }
 
     // Process Mouse Input
     private void ProcessMouseInput()
     {
-        if (inOverworld && earthUnit && lightningUnit)
+        mouseInput = false;
+
+        if (inOverworld && earthCC && lightningCC)
         {
             if (Input.GetMouseButton(0))
             {
-                mouseInput = true;
 
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-                int layerMask = 0;
-                layerMask |= (1 << LayerMask.NameToLayer("Ground"));
+                Plane plane = new Plane(Vector3.up, raycastPlaneYLevel);
+                //RaycastHit hit;
+                //int layerMask = 0;
+                //layerMask |= (1 << LayerMask.NameToLayer("Ground"));
 
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
+                //if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
+                //{
+                //Vector3 vecBetween = hit.transform.position - earthUnit.transform.position;
+                //vecBetween.y = 0;
+
+                float distance = 0.0f;
+                if (plane.Raycast(ray, out distance))
                 {
-                    Vector3 vecBetween = hit.transform.position - earthUnit.transform.position;
+                    Vector3 hitPoint = ray.GetPoint(distance);
+                    Vector3 vecBetween = hitPoint - earthCC.transform.position;
                     vecBetween.y = 0;
+
                     if (vecBetween.sqrMagnitude > 1)
                     {
+                        mouseInput = true;
                         direction = vecBetween;
                     }
                 }
-            }
-            else
-            {
-                mouseInput = false;
             }
         }
     }
 
     private void DropNode()
     {
-        currentNode = earthUnit.transform.position;
+        currentNode = earthCC.transform.position;
         follower.Nodes.Enqueue(currentNode);
     }
 
@@ -137,7 +175,7 @@ public class OverworldController : MonoBehaviour
 
         if (earthGO)
         {
-            earthUnit = GameObject.FindGameObjectWithTag("EarthUnit").GetComponent<Unit>();
+            earthCC = GameObject.FindGameObjectWithTag("EarthUnit").GetComponent<CharacterController>();
         }
         else
         {
@@ -148,7 +186,7 @@ public class OverworldController : MonoBehaviour
 
         if (lightningGO)
         {
-            lightningUnit = GameObject.FindGameObjectWithTag("LightningUnit").GetComponent<Unit>();
+            lightningCC = GameObject.FindGameObjectWithTag("LightningUnit").GetComponent<CharacterController>();
         }
         else
         {

@@ -86,10 +86,10 @@ public class Manager : MonoBehaviour
 
     public void SceneLoaded(Scene current, Scene next)
     {
-        if (next.buildIndex == 0 || next.buildIndex == 2)
-        {
-            Destroy(gameObject);
-        }
+        //if (next.buildIndex == 0 || next.buildIndex == 2)
+        //{
+        //    Destroy(gameObject);
+        //}
     }
 
     #endregion
@@ -131,12 +131,18 @@ public class Manager : MonoBehaviour
         else
         {
             //stop the game from having more than one GameStateManager
+            Debug.LogError("Multiple Managers exist, deleting duplicates.");
             Destroy(gameObject);
             return;
         }
 
         //Don't destroy the GameStateManager in scene
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        Debug.LogError("MANAGER DESTROYED!!");
     }
 
     private void Update()

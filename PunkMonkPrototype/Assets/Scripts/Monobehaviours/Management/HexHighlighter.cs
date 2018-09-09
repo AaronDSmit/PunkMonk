@@ -15,9 +15,9 @@ public class HexHighlighter : MonoBehaviour
     [SerializeField]
     private Material borderMaterial = null;
 
-    //[Tooltip("Material used for inside of area")]
-    //[SerializeField]
-    //private Material fillMaterial = null;
+    [Tooltip("Material used for inside of area")]
+    [SerializeField]
+    private Material fillMaterial = null;
 
     #endregion
 
@@ -30,6 +30,8 @@ public class HexHighlighter : MonoBehaviour
     #region Local Fields
 
     private Dictionary<MonoBehaviour, List<GameObject>> highlightedAreas;
+
+    private float inverseThickness;
 
     private List<Hex> border;
 
@@ -62,7 +64,8 @@ public class HexHighlighter : MonoBehaviour
     /// <param name="a_excludedHexes">List of hexes that shouldn't be highlighted</param>
     public void HighLightArea(List<Hex> a_area, Color a_borderColour, Color a_fillColour, MonoBehaviour a_script, List<Hex> a_excludedHexes = null)
     {
-        float inverseThickness = 1.0f - borderThickness;
+        // invert the thickness available in the inspector
+        inverseThickness = 1.0f - borderThickness;
 
         // And new dictionary key if doesn't exist
         if (!highlightedAreas.ContainsKey(a_script))
@@ -70,144 +73,50 @@ public class HexHighlighter : MonoBehaviour
             highlightedAreas.Add(a_script, new List<GameObject>());
         }
 
-        GameObject GO = new GameObject();
+        // Create two new game objects, one for border and one for inner area
+        GameObject areaGO = new GameObject("AreaHighlight");
+        areaGO.transform.SetParent(holder, false);
 
-        GO.transform.SetParent(holder, false);
+        // border gameObject is a child of the area gameObject
+        GameObject borderGO = new GameObject("BorderHighlight");
+        borderGO.transform.SetParent(areaGO.transform, false);
 
-        MeshRenderer renderer = GO.AddComponent<MeshRenderer>();
-        renderer.material = borderMaterial;
+        borderGO.transform.position = new Vector3(0.0f, areaGO.transform.position.y + 0.01f);
 
-        Mesh mesh = GO.AddComponent<MeshFilter>().mesh;
+        // add the area gameObject to the script which called this function
+        highlightedAreas[a_script].Add(areaGO);
 
-        vertices.Clear();
-        triangles.Clear();
-        uvs.Clear();
+        // Add a MeshRenderer and MeshFilter to both gameObjects
+        MeshRenderer areaRenderer = areaGO.AddComponent<MeshRenderer>();
+        areaRenderer.material = fillMaterial;
+        areaRenderer.material.color = a_fillColour;
 
-        highlightedAreas[a_script].Add(GO);
+        MeshRenderer borderRenderer = borderGO.AddComponent<MeshRenderer>();
+        borderRenderer.material = borderMaterial;
+        borderRenderer.material.color = a_borderColour;
 
-        border.Clear();
+        Mesh borderMesh = borderGO.AddComponent<MeshFilter>().mesh;
+        Mesh areaMesh = areaGO.AddComponent<MeshFilter>().mesh;
 
-        // Process each hex in area by checking if one of their neighbours are outside the area, and add them to the border if true
-        foreach (Hex tile in a_area)
-        {
-            // Don't process tiles in the excluded list
-            if (!a_excludedHexes.Contains(tile))
-            {
-                foreach (Hex neighbour in tile.Neighbours)
-                {
-                    // check if the neighbour is outside of the area, if it's on the excluded list then don't check (useful when a unit is blocking a hex but shouldn’t have a border)
-                    if (!a_area.Contains(neighbour) && (a_excludedHexes != null && !a_excludedHexes.Contains(neighbour)))
-                    {
-                        border.Add(tile);
-                        break; // break because if one neighbour is outside the area then it's a border hex
-                    }
-                }
-            }
-        }
+        Clear();
 
-        // process each hex in border and add the points that border the outside of the area
-        foreach (Hex tile in border)
-        {
-            for (int i = 0; i < tile.Neighbours.Count; i++)
-            {
-                HexDirection direction = HexDirectionUtility.DirectionFromNeighbour(tile, tile.Neighbours[i]);
+        TriangulateBorder(ref a_area, ref a_excludedHexes);
 
-                Vector3 centre = tile.transform.localPosition;
+        borderMesh.SetVertices(vertices);
+        borderMesh.SetUVs(0, uvs);
+        borderMesh.SetTriangles(triangles, 0);
 
-                if (!a_area.Contains(tile.Neighbours[i]) && (a_excludedHexes != null && !a_excludedHexes.Contains(tile.Neighbours[i])))
-                {
-                    AddTriangle(
-                        centre + HexUtility.GetFirstCorner(direction),
-                        centre + HexUtility.GetSecondCorner(direction),
-                        centre + HexUtility.GetFirstCorner(direction) * inverseThickness
-                        );
+        borderMesh.RecalculateNormals();
 
-                    AddTriangleUV(
-                        centre + HexUtility.GetFirstCorner(direction),
-                        centre + HexUtility.GetSecondCorner(direction),
-                        centre + HexUtility.GetFirstCorner(direction) * inverseThickness
-                        );
+        Clear();
 
-                    AddTriangle(
-                        centre + HexUtility.GetSecondCorner(direction) * inverseThickness,
-                        centre + HexUtility.GetFirstCorner(direction) * inverseThickness,
-                        centre + HexUtility.GetSecondCorner(direction)
-                        );
+        TriangulateArea(ref a_area, ref a_excludedHexes);
 
-                    AddTriangleUV(
-                        centre + HexUtility.GetSecondCorner(direction) * inverseThickness,
-                        centre + HexUtility.GetFirstCorner(direction) * inverseThickness,
-                        centre + HexUtility.GetSecondCorner(direction)
-                        );
-                }
-                else if (border.Contains(tile.Neighbours[i]))
-                {
-                    int closestCorner = ClosestToOutside(tile, centre + HexUtility.GetFirstCorner(direction), centre + HexUtility.GetSecondCorner(direction), ref a_area, ref a_excludedHexes);
+        areaMesh.SetVertices(vertices);
+        areaMesh.SetUVs(0, uvs);
+        areaMesh.SetTriangles(triangles, 0);
 
-                    if (closestCorner == 2)
-                    {
-                        AddTriangle(
-                        centre + HexUtility.GetSecondCorner(direction),
-                        centre + HexUtility.GetSecondCorner(direction) * inverseThickness,
-                        centre + HexUtility.GetSecondCorner(direction) + (HexUtility.GetFirstCorner(direction) - HexUtility.GetSecondCorner(direction)) * borderThickness
-                        );
-
-                        AddTriangleUV(
-                        centre + HexUtility.GetSecondCorner(direction),
-                        centre + HexUtility.GetSecondCorner(direction) * inverseThickness,
-                        centre + HexUtility.GetSecondCorner(direction) + (HexUtility.GetFirstCorner(direction) - HexUtility.GetSecondCorner(direction)) * borderThickness
-                        );
-                    }
-                    else if (closestCorner == 1)
-                    {
-                        AddTriangle(
-                        centre + HexUtility.GetFirstCorner(direction),
-                        centre + HexUtility.GetFirstCorner(direction) + (HexUtility.GetSecondCorner(direction) - HexUtility.GetFirstCorner(direction)) * borderThickness,
-                        centre + HexUtility.GetFirstCorner(direction) * inverseThickness
-                        );
-
-                        AddTriangleUV(
-                       centre + HexUtility.GetFirstCorner(direction),
-                       centre + HexUtility.GetFirstCorner(direction) + (HexUtility.GetSecondCorner(direction) - HexUtility.GetFirstCorner(direction)) * borderThickness,
-                       centre + HexUtility.GetFirstCorner(direction) * inverseThickness
-                       );
-                    }
-                }
-            }
-        }
-
-        mesh.SetVertices(vertices);
-        mesh.SetUVs(0, uvs);
-        mesh.SetTriangles(triangles, 0);
-
-        mesh.RecalculateNormals();
-    }
-
-    private int ClosestToOutside(Hex a_hex, Vector3 a_first, Vector3 a_second, ref List<Hex> a_area, ref List<Hex> a_exclude)
-    {
-        //List<Hex> outsideNeighbours = new List<Hex>();
-
-        foreach (Hex neighbour in a_hex.Neighbours)
-        {
-            if (!a_area.Contains(neighbour))
-            {
-                float dist1 = Vector3.Distance(a_first, neighbour.transform.position);
-
-                if (dist1 < 1.3f)
-                {
-                    return 1;
-                }
-
-                float dist2 = Vector3.Distance(a_second, neighbour.transform.position);
-
-                if (dist2 < 1.3f)
-                {
-                    return 2;
-                }
-            }
-        }
-
-        return 0;
+        areaMesh.RecalculateNormals();
     }
 
     // Remove all highlighted areas for a particular script
@@ -255,11 +164,172 @@ public class HexHighlighter : MonoBehaviour
         triangles.Add(vertexIndex + 2);
     }
 
+    void Triangulate(Hex hex)
+    {
+        Vector3 center = hex.transform.localPosition;
+
+        for (int i = 0; i < 6; i++)
+        {
+            AddTriangle(
+                center,
+                center + HexUtility.corners[i],
+                center + HexUtility.corners[i + 1]
+            );
+        }
+    }
+
     private void AddTriangleUV(Vector2 uv1, Vector2 uv2, Vector3 uv3)
     {
         uvs.Add(uv1);
         uvs.Add(uv2);
         uvs.Add(uv3);
+    }
+
+    private void Clear()
+    {
+        vertices.Clear();
+        triangles.Clear();
+        uvs.Clear();
+        border.Clear();
+    }
+
+    private void TriangulateArea(ref List<Hex> a_area, ref List<Hex> a_exclude)
+    {
+        bool process = false;
+
+        foreach (Hex tile in a_area)
+        {
+            process = a_exclude != null ? !a_exclude.Contains(tile) : true;
+
+            // Don't process tiles in the excluded list
+            if (process)
+            {
+                Triangulate(tile);
+            }
+        }
+    }
+
+    private void TriangulateBorder(ref List<Hex> a_area, ref List<Hex> a_exclude)
+    {
+        bool process = false;
+
+        // Process each hex in area by checking if one of their neighbours are outside the area, and add them to the border if true
+        foreach (Hex tile in a_area)
+        {
+            process = a_exclude != null ? !a_exclude.Contains(tile) : true;
+
+            // Don't process tiles in the excluded list
+            if (process)
+            {
+                foreach (Hex neighbour in tile.Neighbours)
+                {
+                    // check if the neighbour is outside of the area, if it's on the excluded list then don't check (useful when a unit is blocking a hex but shouldn’t have a border)
+                    if (!a_area.Contains(neighbour) && (a_exclude != null && !a_exclude.Contains(neighbour)))
+                    {
+                        border.Add(tile);
+                        break; // break because if one neighbour is outside the area then it's a border hex
+                    }
+                }
+            }
+        }
+
+        // process each hex in border and add the points that border the outside of the area
+        foreach (Hex tile in border)
+        {
+            for (int i = 0; i < tile.Neighbours.Count; i++)
+            {
+                HexDirection direction = HexDirectionUtility.DirectionFromNeighbour(tile, tile.Neighbours[i]);
+
+                Vector3 centre = tile.transform.localPosition;
+
+                process = a_exclude != null ? !a_exclude.Contains(tile.Neighbours[i]) : true;
+
+                if (!a_area.Contains(tile.Neighbours[i]) && process)
+                {
+                    AddTriangle(
+                        centre + HexUtility.GetFirstCorner(direction),
+                        centre + HexUtility.GetSecondCorner(direction),
+                        centre + HexUtility.GetFirstCorner(direction) * inverseThickness
+                        );
+
+                    AddTriangleUV(
+                        centre + HexUtility.GetFirstCorner(direction),
+                        centre + HexUtility.GetSecondCorner(direction),
+                        centre + HexUtility.GetFirstCorner(direction) * inverseThickness
+                        );
+
+                    AddTriangle(
+                        centre + HexUtility.GetSecondCorner(direction) * inverseThickness,
+                        centre + HexUtility.GetFirstCorner(direction) * inverseThickness,
+                        centre + HexUtility.GetSecondCorner(direction)
+                        );
+
+                    AddTriangleUV(
+                        centre + HexUtility.GetSecondCorner(direction) * inverseThickness,
+                        centre + HexUtility.GetFirstCorner(direction) * inverseThickness,
+                        centre + HexUtility.GetSecondCorner(direction)
+                        );
+                }
+                else if (border.Contains(tile.Neighbours[i]))
+                {
+                    int closestCorner = ClosestToOutside(tile, centre + HexUtility.GetFirstCorner(direction), centre + HexUtility.GetSecondCorner(direction), ref a_area, ref a_exclude);
+
+                    if (closestCorner == 2)
+                    {
+                        AddTriangle(
+                        centre + HexUtility.GetSecondCorner(direction),
+                        centre + HexUtility.GetSecondCorner(direction) * inverseThickness,
+                        centre + HexUtility.GetSecondCorner(direction) + (HexUtility.GetFirstCorner(direction) - HexUtility.GetSecondCorner(direction)) * borderThickness
+                        );
+
+                        AddTriangleUV(
+                        centre + HexUtility.GetSecondCorner(direction),
+                        centre + HexUtility.GetSecondCorner(direction) * inverseThickness,
+                        centre + HexUtility.GetSecondCorner(direction) + (HexUtility.GetFirstCorner(direction) - HexUtility.GetSecondCorner(direction)) * borderThickness
+                        );
+                    }
+                    else if (closestCorner == 1)
+                    {
+                        AddTriangle(
+                        centre + HexUtility.GetFirstCorner(direction),
+                        centre + HexUtility.GetFirstCorner(direction) + (HexUtility.GetSecondCorner(direction) - HexUtility.GetFirstCorner(direction)) * borderThickness,
+                        centre + HexUtility.GetFirstCorner(direction) * inverseThickness
+                        );
+
+                        AddTriangleUV(
+                       centre + HexUtility.GetFirstCorner(direction),
+                       centre + HexUtility.GetFirstCorner(direction) + (HexUtility.GetSecondCorner(direction) - HexUtility.GetFirstCorner(direction)) * borderThickness,
+                       centre + HexUtility.GetFirstCorner(direction) * inverseThickness
+                       );
+                    }
+                }
+            }
+        }
+    }
+
+    private int ClosestToOutside(Hex a_hex, Vector3 a_first, Vector3 a_second, ref List<Hex> a_area, ref List<Hex> a_exclude)
+    {
+        foreach (Hex neighbour in a_hex.Neighbours)
+        {
+            if (!a_area.Contains(neighbour))
+            {
+                float dist1 = Vector3.Distance(a_first, neighbour.transform.position);
+
+                if (dist1 < 1.3f)
+                {
+                    return 1;
+                }
+
+                float dist2 = Vector3.Distance(a_second, neighbour.transform.position);
+
+                if (dist2 < 1.3f)
+                {
+                    return 2;
+                }
+            }
+        }
+
+        return 0;
     }
 
     #endregion

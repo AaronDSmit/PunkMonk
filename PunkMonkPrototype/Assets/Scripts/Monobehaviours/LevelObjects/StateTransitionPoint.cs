@@ -7,6 +7,8 @@ public class StateTransitionPoint : MonoBehaviour
     [SerializeField] private GameState targetState;
     [SerializeField] private GameState fromState;
 
+    [SerializeField] Conversation conversation;
+
     [HideInInspector]
     [SerializeField]
     public bool drawText;
@@ -106,6 +108,12 @@ public class StateTransitionPoint : MonoBehaviour
 
                 player.GiveEarthVolt(voltGivenToEarth);
                 player.GiveLightningVolt(voltGivenToLightning);
+
+
+                if(conversation != null)
+                {
+                    Manager.instance.DialogueManager.CurrentConversation = conversation;
+                }
 
                 if (checkPoint != null)
                 {

@@ -32,6 +32,7 @@ public class Manager : MonoBehaviour
     private TurnManager turnManager;
     private CheckPointManager checkPointManager;
     private HexHighlighter hexHighlighter;
+    private Dialogue dialogueManager;
     private GridManager grid;
 
     #endregion
@@ -79,6 +80,11 @@ public class Manager : MonoBehaviour
         get { return hexHighlighter; }
     }
 
+    public Dialogue DialogueManager
+    {
+        get {  return dialogueManager; }
+    }
+
 
     #endregion
 
@@ -118,6 +124,8 @@ public class Manager : MonoBehaviour
             turnManager = GetComponent<TurnManager>();
             checkPointManager = GetComponent<CheckPointManager>();
             hexHighlighter = GetComponent<HexHighlighter>();
+            dialogueManager = GetComponent<Dialogue>();
+
 
             grid = GameObject.FindGameObjectWithTag("Grid").GetComponent<GridManager>();
 

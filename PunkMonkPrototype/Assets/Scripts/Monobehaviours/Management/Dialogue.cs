@@ -7,9 +7,9 @@ public class Dialogue : MonoBehaviour
 {
     #region Unity Inspector Fields
 
-    // needs to be public for custom inspector
-    [SerializeField]
-    private List<Conversation> conversations;
+    //// needs to be public for custom inspector
+    //[SerializeField]
+    //private List<Conversation> conversations;
 
 
     #endregion
@@ -23,6 +23,7 @@ public class Dialogue : MonoBehaviour
     private EarthUnit earthUnit;
     private GameObject earthProfile;
     private GameObject lightningProfile;
+    private Conversation currentConversation;
 
 
     #endregion
@@ -38,6 +39,13 @@ public class Dialogue : MonoBehaviour
     #endregion
 
     #region Properties
+    public Conversation CurrentConversation
+    {
+        set
+        {
+            currentConversation = value;
+        }
+    }
 
 
 
@@ -72,19 +80,19 @@ public class Dialogue : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                if (currentSpeachCount >= conversations[currentConversationCount].dialogue.Count)
+                if (currentSpeachCount >= currentConversation.dialogue.Count)
                 {
                     EndConversation();
                     return;
                 }
-                tmp.text = conversations[currentConversationCount].dialogue[currentSpeachCount].text;
-                if(conversations[currentConversationCount].dialogue[currentSpeachCount].speaker == Speach.Speaker.Clade)
+                tmp.text = currentConversation.dialogue[currentSpeachCount].text;
+                if(currentConversation.dialogue[currentSpeachCount].speaker == Speach.Speaker.Clade)
                 {
                     camController.LookAtPosition(earthUnit.transform.position);
                     lightningProfile.SetActive(false);
                     earthProfile.SetActive(true);
                 }
-                else if(conversations[currentConversationCount].dialogue[currentSpeachCount].speaker == Speach.Speaker.Gen)
+                else if(currentConversation.dialogue[currentSpeachCount].speaker == Speach.Speaker.Gen)
                 {
                     camController.LookAtPosition(lightningUnit.transform.position);
                     lightningProfile.SetActive(true);
@@ -136,20 +144,20 @@ public class Dialogue : MonoBehaviour
         conversationPlane.SetActive(true);
         currentSpeachCount = 0;
 
-        if (conversations[currentConversationCount].dialogue[currentSpeachCount].speaker == Speach.Speaker.Clade)
+        if (currentConversation.dialogue[currentSpeachCount].speaker == Speach.Speaker.Clade)
         {
             camController.LookAtPosition(earthUnit.transform.position);
             lightningProfile.SetActive(false);
             earthProfile.SetActive(true);
         }
-        else if (conversations[currentConversationCount].dialogue[currentSpeachCount].speaker == Speach.Speaker.Gen)
+        else if (currentConversation.dialogue[currentSpeachCount].speaker == Speach.Speaker.Gen)
         {
             camController.LookAtPosition(lightningUnit.transform.position);
             lightningProfile.SetActive(true);
             earthProfile.SetActive(false);
         }
 
-        tmp.text = conversations[currentConversationCount].dialogue[currentSpeachCount].text;
+        tmp.text = currentConversation.dialogue[currentSpeachCount].text;
         currentSpeachCount++;
     }
 

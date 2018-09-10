@@ -91,6 +91,10 @@ public class EasyDesignEditor : EditorWindow
     private GameState currentState = GameState.battle;
     [SerializeField]
     private int numberToKill;
+
+    [SerializeField]
+    private Conversation convo;
+
     [SerializeField]
     private int currentID = 0;
     [SerializeField]
@@ -1068,6 +1072,7 @@ public class EasyDesignEditor : EditorWindow
                         sceneTransition.numberToKill = numberToKill;
                         sceneTransition.voltGivenToEarth = voltGivenToEarth;
                         sceneTransition.voltGivenToLightning = voltGivenToLightning;
+                        sceneTransition.Conversation = convo;
 
                         sceneTransition.index = currentID;
                     }
@@ -1087,6 +1092,8 @@ public class EasyDesignEditor : EditorWindow
                         sceneTransition.voltGivenToEarth = voltGivenToEarth;
                         sceneTransition.voltGivenToLightning = voltGivenToLightning;
 
+                        sceneTransition.Conversation = convo;
+
                         sceneTransition.drawText = true;
                         sceneTransition.index = currentID;
 
@@ -1102,6 +1109,13 @@ public class EasyDesignEditor : EditorWindow
                 {
                     GUILayout.Label("Enemies to kill ");
                     numberToKill = EditorGUILayout.IntField(numberToKill);
+                }
+
+
+                else if (targetState == GameState.cinematic)
+                {
+                    GUILayout.Label("Conversation");
+                    convo = EditorGUILayout.ObjectField("", convo, typeof(Conversation), true) as Conversation;
                 }
 
                 EditorGUILayout.EndHorizontal();

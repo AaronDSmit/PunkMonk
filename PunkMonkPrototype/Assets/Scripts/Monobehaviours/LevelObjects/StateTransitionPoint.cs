@@ -7,7 +7,7 @@ public class StateTransitionPoint : MonoBehaviour
     [SerializeField] private GameState targetState;
     [SerializeField] private GameState fromState;
 
-    [SerializeField] Conversation conversation;
+    [SerializeField] private Conversation conversation;
 
     [HideInInspector]
     [SerializeField]
@@ -93,6 +93,13 @@ public class StateTransitionPoint : MonoBehaviour
         get { return fromState; }
 
         set { fromState = value; }
+    }
+
+    public Conversation Conversation
+    {
+        get { return conversation; }
+
+        set { conversation = value; }
     }
 
     private void OnTriggerEnter(Collider other)

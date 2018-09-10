@@ -12,8 +12,4 @@ MonoBehaviour:
   m_Name: hi
   m_EditorClassIdentifier: Assembly-CSharp::Conversation
   name: hi
-  dialogue:
-  - speaker: 0
-    text: hey
-  - speaker: 0
-    text: hi
+  dialogue: []

@@ -900,10 +900,11 @@ public class PlayerController : MonoBehaviour
     // Called when the game state changes
     private void GameStateChanged(GameState a_oldstate, GameState a_newstate)
     {
-        if (a_newstate == GameState.transition && Manager.instance.StateController.StateAfterTransition == GameState.battle)
+        if (a_newstate == GameState.transition && Manager.instance.StateController.StateAfterTransition == GameState.battle || a_newstate == GameState.transition && Manager.instance.StateController.StateAfterTransition == GameState.cinematic)
         {
             earthUnit.WalkDirectlyToTile(earthStartingHex, earthStartingDirection);
             lightningUnit.WalkDirectlyToTile(lightningStartingHex, lightningStartingDirection);
+
         }
 
         // ensure this script knows it's in over-world state

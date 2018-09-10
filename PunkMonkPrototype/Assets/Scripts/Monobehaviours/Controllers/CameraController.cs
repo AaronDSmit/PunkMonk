@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Cinemachine;
+using System.Collections;
 using UnityEngine;
-using Cinemachine;
 
 public enum CameraDirection
 {
@@ -147,10 +146,16 @@ public class CameraController : MonoBehaviour
         screenPan = settings.ScreenEdgePan;
     }
 
-    private void GameStateChanged(GameState _oldstate, GameState _newstate)
+    private void GameStateChanged(GameState a_oldstate, GameState a_newstate)
     {
         // ensure this script knows it's in over-world state
-        inOverworld = (_newstate == GameState.overworld);
+        inOverworld = (a_newstate == GameState.overworld);
+
+        if (a_oldstate != GameState.overworld && a_newstate == GameState.overworld)
+        {
+            distance = overworldDistance;
+            SetRotation(CameraDirection.NE);
+        }
     }
 
     private void Update()
@@ -203,9 +208,10 @@ public class CameraController : MonoBehaviour
                     }
                 }
             }
+            cameraTargetPos = (cameraStartPos).normalized * distance;
+            cinemachineDefault.localPosition = Vector3.Slerp(cinemachineDefault.localPosition, cameraTargetPos, Time.deltaTime * overworldSpeed);
 
             transform.position = Vector3.Slerp(transform.position, rigTargetPos, Time.deltaTime * overworldSpeed);
-            cinemachineDefault.localPosition = Vector3.Slerp(cinemachineDefault.localPosition, cameraTargetPos, Time.deltaTime * overworldSpeed);
             //transform.position = Vector3.Slerp(transform.position, new Vector3(transform.position.x, targetY, transform.position.z), Time.deltaTime * scrollSpeed);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.deltaTime * RotationalSpeed);
         }
@@ -261,9 +267,6 @@ public class CameraController : MonoBehaviour
             }
         }
         distance = Mathf.Clamp(distance, minDistance, maxDistance);
-        
-        cameraTargetPos = (cameraStartPos).normalized * distance;
-
 
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -293,7 +296,6 @@ public class CameraController : MonoBehaviour
 
     private void ProcessOverworldCamera()
     {
-        distance = overworldDistance;
         if (earthUnit != null)
         {
             rigTargetPos = earthUnit.transform.position;
@@ -342,11 +344,11 @@ public class CameraController : MonoBehaviour
         return -1;
     }
 
-    public void LookAtPosition(Vector3 a_position, float time = 0)
+    public void LookAtPosition(Vector3 a_position, float a_time = 0)
     {
         Vector3 oldPos = transform.position;
 
-        if (time == 0)
+        if (a_time == 0)
         {
             rigTargetPos = a_position;
             canMove = false;
@@ -355,13 +357,13 @@ public class CameraController : MonoBehaviour
         {
             lookAtObject = true;
             rigTargetPos = a_position;
-            StartCoroutine(LookAtTimer(time, oldPos));
+            StartCoroutine(LookAtTimer(a_time, oldPos));
         }
     }
 
-    private IEnumerator LookAtTimer(float timer, Vector3 a_pos)
+    private IEnumerator LookAtTimer(float a_timer, Vector3 a_pos)
     {
-        yield return new WaitForSeconds(timer);
+        yield return new WaitForSeconds(a_timer);
 
         lookAtObject = false;
         rigTargetPos = a_pos;

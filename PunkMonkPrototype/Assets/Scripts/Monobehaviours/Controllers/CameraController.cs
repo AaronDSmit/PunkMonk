@@ -28,13 +28,15 @@ public class CameraController : MonoBehaviour
 
     private bool inOverworld;
 
-    private float targetY;
 
-    private Vector3 targetPos;
+    private Vector3 rigTargetPos;
+    private Vector3 cameraTargetPos;
+    private Vector3 cameraStartPos;
 
     private Quaternion targetRot;
 
     private Vector3 vel;
+
 
     private bool lookAtObject = false;
     private bool canMove = true;
@@ -51,12 +53,15 @@ public class CameraController : MonoBehaviour
 
     [SerializeField] private float glamCamDistance;
 
-    [SerializeField] private float speed;
+    [Header("Overworld")]
     [SerializeField] private float overworldSpeed;
+    [SerializeField] private float overworldDistance;
+    [Header("Game")]
+    [SerializeField] private float speed;
     [SerializeField] private float RotationalSpeed;
     [SerializeField] private float scrollSpeed;
-    [SerializeField] private bool inverseRotation;
 
+    [SerializeField] private bool inverseRotation;
     [SerializeField] private bool screenPan = true;
 
     [SerializeField] private int mousePanThresholdYUp = 100;
@@ -64,6 +69,12 @@ public class CameraController : MonoBehaviour
     [SerializeField] private int mousePanThresholdXLeft = 100;
     [SerializeField] private int mousePanThresholdXRight = 100;
 
+    [SerializeField] private float scrollAmount = 1;
+    [SerializeField] private float distance = 25;
+    [SerializeField] private float minDistance = 5;
+    [SerializeField] private float maxDistance = 30;
+
+    [SerializeField] private Transform cinemachineDefault;
 
     private Vector3 dir;
 
@@ -95,8 +106,10 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
-        targetPos = transform.position;
-        targetY = transform.position.y;
+        rigTargetPos = transform.position;
+        cameraTargetPos = cinemachineDefault.position;
+        cameraStartPos = cinemachineDefault.localPosition;
+        distance = overworldDistance;
         targetRot = transform.rotation;
 
         basicEarthGlamCam = transform.GetChild(1).gameObject;
@@ -163,35 +176,37 @@ public class CameraController : MonoBehaviour
                         {
                             if (Input.mousePosition.x <= mousePanThresholdXLeft)
                             {
-                                transform.position += -transform.right * speed * Time.deltaTime;
+                                rigTargetPos += -transform.right * speed * Time.deltaTime;
                             }
                             else if (Input.mousePosition.x >= Screen.width - mousePanThresholdXRight)
                             {
-                                transform.position += transform.right * speed * Time.deltaTime;
+                                rigTargetPos += transform.right * speed * Time.deltaTime;
                             }
 
                             if (Input.mousePosition.y <= mousePanThresholdYDown)
                             {
-                                transform.position += -transform.forward * speed * Time.deltaTime;
+                                rigTargetPos += -transform.forward * speed * Time.deltaTime;
                             }
                             else if (Input.mousePosition.y >= Screen.height - mousePanThresholdYUp)
                             {
-                                transform.position += transform.forward * speed * Time.deltaTime;
+                                rigTargetPos += transform.forward * speed * Time.deltaTime;
                             }
                         }
                     }
                 }
                 else
                 {
-                    if (Vector3.Distance(transform.position, targetPos) < 1f)
+                    if (Vector3.Distance(transform.position, rigTargetPos) < 1f)
                     {
 
                         canMove = true;
                     }
-                    transform.position = Vector3.Slerp(transform.position, targetPos, Time.deltaTime * overworldSpeed);
                 }
             }
-            transform.position = Vector3.Slerp(transform.position, new Vector3(transform.position.x, targetY, transform.position.z), Time.deltaTime * scrollSpeed);
+
+            transform.position = Vector3.Slerp(transform.position, rigTargetPos, Time.deltaTime * overworldSpeed);
+            cinemachineDefault.localPosition = Vector3.Slerp(cinemachineDefault.localPosition, cameraTargetPos, Time.deltaTime * overworldSpeed);
+            //transform.position = Vector3.Slerp(transform.position, new Vector3(transform.position.x, targetY, transform.position.z), Time.deltaTime * scrollSpeed);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.deltaTime * RotationalSpeed);
         }
 
@@ -227,22 +242,27 @@ public class CameraController : MonoBehaviour
         }
 
 
-        transform.position += transform.right * vel.x;
-        transform.position += transform.forward * vel.z;
-
-
+        rigTargetPos += transform.right * vel.x;
+        rigTargetPos += transform.forward * vel.z;
 
 
         if (Input.GetAxis("Mouse ScrollWheel") > 0)
         {
-            if (targetY > 1)
-                targetY -= scrollSpeed * Time.deltaTime;
+            if (distance > minDistance)
+            {
+                distance -= scrollAmount;
+            }
         }
         if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
-            if (targetY < 10)
-                targetY += scrollSpeed * Time.deltaTime;
+            if (distance < maxDistance)
+            {
+                distance += scrollAmount;
+            }
         }
+        distance = Mathf.Clamp(distance, minDistance, maxDistance);
+        
+        cameraTargetPos = (cameraStartPos).normalized * distance;
 
 
         if (Input.GetKeyDown(KeyCode.E))
@@ -273,11 +293,12 @@ public class CameraController : MonoBehaviour
 
     private void ProcessOverworldCamera()
     {
+        distance = overworldDistance;
         if (earthUnit != null)
         {
-            targetPos = earthUnit.transform.position;
+            rigTargetPos = earthUnit.transform.position;
         }
-        transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * overworldSpeed);
+        // transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * overworldSpeed);
     }
 
 
@@ -327,13 +348,13 @@ public class CameraController : MonoBehaviour
 
         if (time == 0)
         {
-            targetPos = a_position;
+            rigTargetPos = a_position;
             canMove = false;
         }
         else
         {
             lookAtObject = true;
-            targetPos = a_position;
+            rigTargetPos = a_position;
             StartCoroutine(LookAtTimer(time, oldPos));
         }
     }
@@ -343,7 +364,7 @@ public class CameraController : MonoBehaviour
         yield return new WaitForSeconds(timer);
 
         lookAtObject = false;
-        targetPos = a_pos;
+        rigTargetPos = a_pos;
     }
 
 
@@ -352,7 +373,7 @@ public class CameraController : MonoBehaviour
         //switch (a_glamCamType)
         //{
         //    //case GlamCamType.EARTH_BASIC:
-                
+
         //    //    break;
         //    //case GlamCamType.EARTH_SPECIAL:
         //    //    PlayEarthSpecialAttackGlamCam(a_pos, a_vecBetween);
@@ -397,14 +418,14 @@ public class CameraController : MonoBehaviour
     private void PlayEarthBasicAttackGlamCam(Vector3 a_pos, Vector3 a_vecBetween)
     {
         cinemachine = true;
-       // oldCamPosition = camera.transform.position;
+        // oldCamPosition = camera.transform.position;
 
-       // Vector3 halfwayVec = a_pos + -a_vecBetween.normalized * a_vecBetween.magnitude * 0.5f * glamCamDistance;
+        // Vector3 halfwayVec = a_pos + -a_vecBetween.normalized * a_vecBetween.magnitude * 0.5f * glamCamDistance;
 
-       // halfwayVec.y = a_vecBetween.magnitude * glamCamDistance;
+        // halfwayVec.y = a_vecBetween.magnitude * glamCamDistance;
 
 
-       // basicEarthGlamCam.transform.position = halfwayVec;
+        // basicEarthGlamCam.transform.position = halfwayVec;
 
         basicEarthGlamCam.SetActive(true);
     }
@@ -415,11 +436,11 @@ public class CameraController : MonoBehaviour
         oldCamPosition = camera.transform.position;
         //oldCamRotation = camera.transform.rotation;
 
-       // Vector3 rightPerp = a_pos + Vector3.Cross(a_vecBetween.normalized, Vector3.up) * glamCamDistance;
+        // Vector3 rightPerp = a_pos + Vector3.Cross(a_vecBetween.normalized, Vector3.up) * glamCamDistance;
 
-       // rightPerp.y = 1.0f;
+        // rightPerp.y = 1.0f;
 
-       // specialEarthGlamCam.transform.position = rightPerp;
+        // specialEarthGlamCam.transform.position = rightPerp;
 
 
         specialEarthGlamCam.SetActive(true);
@@ -432,11 +453,11 @@ public class CameraController : MonoBehaviour
         oldCamPosition = camera.transform.position;
         //oldCamRotation = camera.transform.rotation;
 
-     //   Vector3 finalPos = a_pos + (a_vecBetween * 1.1f) + ((a_vecBetween.normalized + Vector3.Cross(a_vecBetween.normalized, Vector3.up)).normalized * glamCamDistance);
+        //   Vector3 finalPos = a_pos + (a_vecBetween * 1.1f) + ((a_vecBetween.normalized + Vector3.Cross(a_vecBetween.normalized, Vector3.up)).normalized * glamCamDistance);
 
-     //   finalPos.y = 2;
+        //   finalPos.y = 2;
 
-      //  basicLightningGlamCam.transform.position = finalPos;
+        //  basicLightningGlamCam.transform.position = finalPos;
 
         basicLightningGlamCam.SetActive(true);
 
@@ -448,11 +469,11 @@ public class CameraController : MonoBehaviour
         oldCamPosition = camera.transform.position;
         //oldCamRotation = camera.transform.rotation;
 
-      //  Vector3 finalPos = a_pos + -a_vecBetween.normalized + (-(a_vecBetween.normalized + Vector3.Cross(a_vecBetween.normalized, Vector3.up)).normalized * glamCamDistance);
+        //  Vector3 finalPos = a_pos + -a_vecBetween.normalized + (-(a_vecBetween.normalized + Vector3.Cross(a_vecBetween.normalized, Vector3.up)).normalized * glamCamDistance);
 
-       // finalPos.y = 2;
+        // finalPos.y = 2;
 
-      //  specialLightningGlamCam.transform.position = finalPos;
+        //  specialLightningGlamCam.transform.position = finalPos;
 
         specialLightningGlamCam.SetActive(true);
     }

@@ -574,7 +574,7 @@ MonoBehaviour:
   glamCamChance: 10
   lightningPrefab: {fileID: 106988, guid: 15dec7b07032b2f4aa6f855bfbe120f7, type: 2}
   specialDamage: 4
-  specialDamgeDelayTimer: 3
+  specialDamgeDelayTimer: 0.5
   basicRehitEnemies: 0
   basicRange: 4
   basicAmountOfBounces: 3

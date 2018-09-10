@@ -140,11 +140,6 @@ public class Manager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    private void OnDestroy()
-    {
-        Debug.LogError("MANAGER DESTROYED!!");
-    }
-
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))

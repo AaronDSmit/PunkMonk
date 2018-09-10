@@ -91,6 +91,8 @@ GameObject:
   - component: {fileID: 124106969841616920}
   - component: {fileID: 81012484940981636}
   - component: {fileID: 114200708635427546}
+  - component: {fileID: 54427623580139656}
+  - component: {fileID: 136375978918733958}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -304,7 +306,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1655999450581008}
   m_LocalRotation: {x: 0, y: 0.5, z: 0, w: 0.8660254}
-  m_LocalPosition: {x: 5.5, y: 0, z: 24.1}
+  m_LocalPosition: {x: 21.81, y: 0, z: 5.48}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4865571266547684}
@@ -363,7 +365,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1331769141319558}
   m_LocalRotation: {x: 0.46174863, y: -0, z: -0, w: 0.8870109}
-  m_LocalPosition: {x: 0.00000047683716, y: 18.8, z: -13.2}
+  m_LocalPosition: {x: 0, y: 18.8, z: -13.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4814036840382110}
@@ -419,6 +421,21 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!54 &54427623580139656
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1331769141319558}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!81 &81012484940981636
 AudioListener:
   m_ObjectHideFlags: 1
@@ -784,12 +801,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   glamCamDistance: 5
-  speed: 10
+  speed: 20
   overworldSpeed: 5
   RotationalSpeed: 5
   scrollSpeed: 30
   inverseRotation: 0
-  screenPan: 1
+  screenPan: 0
   mousePanThresholdYUp: 100
   mousePanThresholdYDown: 30
   mousePanThresholdXLeft: 100
@@ -880,3 +897,16 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1331769141319558}
   m_Enabled: 1
+--- !u!136 &136375978918733958
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1331769141319558}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 13
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 6.5}

@@ -58,7 +58,6 @@ public class OverworldController : MonoBehaviour
 
     private void Start()
     {
-        follower = lightningCC.GetComponent<OverworldFollower>();
         DropNode();
     }
 
@@ -187,6 +186,7 @@ public class OverworldController : MonoBehaviour
         if (lightningGO)
         {
             lightningCC = GameObject.FindGameObjectWithTag("LightningUnit").GetComponent<CharacterController>();
+            follower = lightningCC.GetComponent<OverworldFollower>();
         }
         else
         {

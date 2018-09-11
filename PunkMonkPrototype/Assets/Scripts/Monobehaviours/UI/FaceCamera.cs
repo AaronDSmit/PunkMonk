@@ -15,6 +15,5 @@ public class FaceCamera : MonoBehaviour
     void LateUpdate ()
     {
         transform.LookAt(transform.position + mainCamera.transform.rotation * Vector3.forward, mainCamera.transform.rotation * Vector3.up);
-        //transform.LookAt(camera.transform.position);
     }
 }

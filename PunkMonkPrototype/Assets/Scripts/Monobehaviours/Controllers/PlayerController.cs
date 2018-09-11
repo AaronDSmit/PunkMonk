@@ -920,13 +920,13 @@ public class PlayerController : MonoBehaviour
 
             if (earthDead)
             {
-                SpawnEarthUnit();
+                SpawnEarthUnit(earthStartingHex);
                 GetComponent<OverworldController>().Init();
             }
 
             if (LightningDead)
             {
-                SpawnLightningUnit();
+                SpawnLightningUnit(lightningStartingHex).GetComponent<OverworldFollower>().Init();
                 GetComponent<OverworldController>().Init();
             }
         }

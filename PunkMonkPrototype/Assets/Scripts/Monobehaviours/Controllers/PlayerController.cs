@@ -834,7 +834,7 @@ public class PlayerController : MonoBehaviour
 
         foreach (var enemy in a_enemies)
         {
-            List<Hex> aiList = grid.GetTilesWithinDistance(enemy.CurrentTile, enemy.MoveRange + enemy.AttackRange);
+            List<Hex> aiList = grid.GetTilesWithinDistance(enemy.CurrentTile, enemy.MoveRange + enemy.AttackRange, false);
 
             foreach (var hex in aiList)
             {

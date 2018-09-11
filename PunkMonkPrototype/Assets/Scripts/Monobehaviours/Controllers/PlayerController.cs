@@ -338,7 +338,9 @@ public class PlayerController : MonoBehaviour
     // Set which action of the selected unit is currently being used
     public void SelectAction(int actionIndex)
     {
+
         RemoveHighlightedTiles();
+
 
         currentRuleset = selectedUnit.GetAction(actionIndex).ruleset;
 
@@ -372,7 +374,12 @@ public class PlayerController : MonoBehaviour
         // Highlight area in range to walk
         if (currentRuleset.actionType == ActionType.movement)
         {
+            if (threatHeightlightTiles)
+            {
+                HighlightEnemiesThreatTiles(enemiesAlive, enemyThreatColor);
+            }
             HighlightTilesInRange(selectedUnit.MoveRange);
+
         }
 
         // Highlight area in range to attack
@@ -756,8 +763,11 @@ public class PlayerController : MonoBehaviour
         lineRenderer.positionCount = 0;
         currentRuleset = selectionRuleset;
 
-        RemoveHighlightedTiles();
-        threatHeightlightTiles = false;
+        if (currentRuleset.actionType != ActionType.movement)
+        {
+            RemoveHighlightedTiles();
+            threatHeightlightTiles = false;
+        }
 
         if (lightningAttackHex1 != null)
         {
@@ -841,8 +851,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    
-    private void HighlightEnemiesThreatTiles(List<AI_Agent> a_enemies, Color a_color)
+
+    private List<Hex> HighlightEnemiesThreatTiles(List<AI_Agent> a_enemies, Color a_color)
     {
         List<Hex> area = new List<Hex>();
 
@@ -874,6 +884,7 @@ public class PlayerController : MonoBehaviour
 
         Manager.instance.HexHighlighter.HighLightArea(area, a_color, a_color, this);
 
+        return area;
 
     }
 
@@ -1068,10 +1079,10 @@ public class PlayerController : MonoBehaviour
             tile.MouseEnter(currentRuleset.HighlightColour);
         }
 
-         
-        
 
-        
+
+
+
 
         foreach (Unit unit in enemiesAffectByAction)
         {

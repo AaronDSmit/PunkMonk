@@ -72,7 +72,7 @@ public class EasyDesignEditor : EditorWindow
     [SerializeField]
     private Color inaccessibleColour;
     [SerializeField]
-    private float inaccessibleAlpha;
+    private float inaccessibleAlpha = 0;
 
     // GameFlow
     [SerializeField]
@@ -179,7 +179,7 @@ public class EasyDesignEditor : EditorWindow
 
         traversableColour = new Color(0.0f, 1.0f, 0.0f, 0.35f);
         inaccessibleColour = new Color(1.0f, 0.0f, 0.0f, 0.35f);
-        inaccessibleAlpha = 0.4f;
+        //inaccessibleAlpha = 0.4f;
 
         conversation = CreateInstance<Conversation>();
 
@@ -946,6 +946,20 @@ public class EasyDesignEditor : EditorWindow
 
                 EditorGUILayout.EndHorizontal();
 
+                EditorGUILayout.BeginHorizontal();
+                {
+                    GUILayout.Label("Move to Hex: ");
+                    bool moveToHex = false;
+                    moveToHex = EditorGUILayout.Toggle(moveToHex, skin.GetStyle("toggle"));
+
+                    EditorGUI.BeginDisabledGroup(!hasSpawnerSelected && !moveToHex);
+
+
+
+                    EditorGUI.EndDisabledGroup();
+                }
+                EditorGUILayout.EndHorizontal();
+
                 EditorGUILayout.Space();
 
                 EditorGUILayout.BeginHorizontal();
@@ -995,7 +1009,11 @@ public class EasyDesignEditor : EditorWindow
 
                 EditorGUILayout.EndHorizontal();
 
+                #endregion
+
                 EditorGUILayout.Space();
+
+                #region Spawn Triggers
 
                 GUILayout.Label("Spawn Triggers:", centeredText);
 
@@ -1054,6 +1072,8 @@ public class EasyDesignEditor : EditorWindow
                 #endregion
 
                 EditorGUILayout.Space();
+
+                #region State Transition
 
                 GUILayout.Label("State Transition:", centeredText);
 
@@ -1241,7 +1261,11 @@ public class EasyDesignEditor : EditorWindow
 
                 EditorGUILayout.EndHorizontal();
 
+                #endregion
+
                 EditorGUILayout.Space();
+
+                #region Scene Transition
 
                 GUILayout.Label("Scene Transition:", centeredText);
 
@@ -1324,6 +1348,8 @@ public class EasyDesignEditor : EditorWindow
                 currentID = EditorGUILayout.IntField(currentID);
 
                 EditorGUILayout.EndHorizontal();
+
+                #endregion
             }
 
             #endregion

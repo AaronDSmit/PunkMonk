@@ -34,6 +34,7 @@ public class Manager : MonoBehaviour
     private HexHighlighter hexHighlighter;
     private Dialogue dialogueManager;
     private GridManager grid;
+    private PlayerController playerController;
 
     #endregion
 
@@ -85,6 +86,10 @@ public class Manager : MonoBehaviour
         get {  return dialogueManager; }
     }
 
+    public PlayerController PlayerController
+    {
+        get {  return playerController; }
+    }
 
     #endregion
 
@@ -126,8 +131,8 @@ public class Manager : MonoBehaviour
             hexHighlighter = GetComponent<HexHighlighter>();
             dialogueManager = GetComponent<Dialogue>();
 
-
             grid = GameObject.FindGameObjectWithTag("Grid").GetComponent<GridManager>();
+            playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
             StartCoroutine(InitManagers());
 

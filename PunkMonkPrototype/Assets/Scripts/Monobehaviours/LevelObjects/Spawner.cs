@@ -34,8 +34,17 @@ public class Spawner : MonoBehaviour
     [SerializeField]
     private UnitType spawnType;
 
+    [HideInInspector]
     [SerializeField]
     public bool hasVolt;
+
+    [HideInInspector]
+    [SerializeField]
+    public bool moveToHex;
+
+    [HideInInspector]
+    [SerializeField]
+    public Hex targetHex;
 
     private void Awake()
     {
@@ -62,8 +71,7 @@ public class Spawner : MonoBehaviour
 
             unit.CurrentVolt = (hasVolt) ? 1 : 0;
 
-            PlayerController player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-            player.SubscribeToUnitDeath(unit);
+            Manager.instance.PlayerController.SubscribeToUnitDeath(unit);
         }
     }
 

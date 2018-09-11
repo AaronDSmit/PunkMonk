@@ -757,6 +757,7 @@ public class PlayerController : MonoBehaviour
         currentRuleset = selectionRuleset;
 
         RemoveHighlightedTiles();
+        threatHeightlightTiles = false;
 
         if (lightningAttackHex1 != null)
         {
@@ -840,13 +841,23 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
+    
     private void HighlightEnemiesThreatTiles(List<AI_Agent> a_enemies, Color a_color)
     {
         List<Hex> area = new List<Hex>();
 
         foreach (var enemy in a_enemies)
         {
+            //
+            //
+            //
+            //
+            ///Remove tiles from the walk if they are in this array
+            //
+            //
+            //
+            //
+            //
             List<Hex> aiList = grid.GetTilesWithinDistance(enemy.CurrentTile, enemy.MoveRange + enemy.AttackRange, true, true);
 
             foreach (var hex in aiList)
@@ -1056,6 +1067,11 @@ public class PlayerController : MonoBehaviour
 
             tile.MouseEnter(currentRuleset.HighlightColour);
         }
+
+         
+        
+
+        
 
         foreach (Unit unit in enemiesAffectByAction)
         {

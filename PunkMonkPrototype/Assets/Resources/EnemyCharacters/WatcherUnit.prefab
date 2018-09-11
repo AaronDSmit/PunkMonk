@@ -602,14 +602,14 @@ MonoBehaviour:
   actions:
   - {fileID: 11400000, guid: 85a01b7788e76f845875da8b3c3553d2, type: 2}
   moveRange: 2
-  attackRange: 4
+  attackRange: 5
   specialAttackRange: 0
   rotationTime: 0
   walkSpeed: 5
   projectilePosition: {fileID: 4614584380952806}
   glamCam: 0
   glamCamChance: 10
-  damage: 2
+  damage: 1
   damgeDelayTimer: 0
 --- !u!114 &114514897629033558
 MonoBehaviour:

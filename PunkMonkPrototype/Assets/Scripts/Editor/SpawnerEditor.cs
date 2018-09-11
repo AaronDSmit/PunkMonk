@@ -61,6 +61,18 @@ public class SpawnerEditor : Editor
             {
                 Handles.Label(spawner.transform.position, "L", style);
             }
+
+            if (spawner.doorHex)
+            {
+                Gizmos.color = new Color(0.93f, 0.58f, 0.04f); // yellow
+                DrawArrow.ForGizmo(spawner.transform.position, spawner.doorHex.transform.position - spawner.transform.position);
+
+                if (spawner.targetHex)
+                {
+                    Gizmos.color = new Color(0.55f, 0.9f, 0.89f); // Blue
+                    DrawArrow.ForGizmo(spawner.doorHex.transform.position, spawner.targetHex.transform.position - spawner.doorHex.transform.position);
+                }
+            }
         }
     }
 }

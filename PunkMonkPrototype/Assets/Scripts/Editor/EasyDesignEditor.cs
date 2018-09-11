@@ -948,13 +948,51 @@ public class EasyDesignEditor : EditorWindow
 
                 EditorGUILayout.BeginHorizontal();
                 {
-                    GUILayout.Label("Move to Hex: ");
-                    bool moveToHex = false;
-                    moveToHex = EditorGUILayout.Toggle(moveToHex, skin.GetStyle("toggle"));
+                    EditorGUI.BeginDisabledGroup(!hasSpawnerSelected);
 
-                    EditorGUI.BeginDisabledGroup(!hasSpawnerSelected && !moveToHex);
+                    if (ColouredButton("Set Door Hex", yellowColour))
+                    {
+                        // Find a hex that isn't a spawner
+                        Hex hex = null;
+                        foreach (GameObject go in Selection.gameObjects)
+                        {
+                            if (go.GetComponentInChildren<Spawner>() == false)
+                            {
+                                hex = go.GetComponent<Hex>();
+                                break;
+                            }
+                        }
+                        // If a hex was found set all selected spawners to use it
+                        if (hex)
+                        {
+                            foreach (Spawner spawner in selectedSpawners)
+                            {
+                                spawner.doorHex = hex;
+                            }
+                        }
+                    }
 
-
+                    if (ColouredButton("Set Target Hex", orangeColour))
+                    {
+                        // Find a hex that isn't a spawner
+                        Hex hex = null;
+                        foreach (GameObject go in Selection.gameObjects)
+                        {
+                            if (go.GetComponentInChildren<Spawner>() == false)
+                            {
+                                hex = go.GetComponent<Hex>();
+                                break;
+                            }
+                        }
+                        // If a hex was found set all selected spawners to use it
+                        if (hex)
+                        {
+                            foreach (Spawner spawner in selectedSpawners)
+                            {
+                                spawner.targetHex = hex;
+                            }
+                        }
+                    }
 
                     EditorGUI.EndDisabledGroup();
                 }

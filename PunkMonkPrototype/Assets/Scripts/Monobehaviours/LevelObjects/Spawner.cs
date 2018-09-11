@@ -40,11 +40,11 @@ public class Spawner : MonoBehaviour
 
     [HideInInspector]
     [SerializeField]
-    public bool moveToHex;
+    public Hex targetHex = null;
 
     [HideInInspector]
     [SerializeField]
-    public Hex targetHex;
+    public Hex doorHex = null;
 
     private void Awake()
     {

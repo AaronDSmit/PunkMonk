@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private InteractionRuleset selectionRuleset;
 
+    [SerializeField]
+    private Color enemyThreatColor = Color.red;
 
     [Header("Debug Info")]
     [SerializeField]
@@ -43,6 +45,8 @@ public class PlayerController : MonoBehaviour
 
     private CameraController cameraRig;
 
+    private AI_Controller AI_controller;
+
     #endregion
 
     #region Local Fields
@@ -58,6 +62,8 @@ public class PlayerController : MonoBehaviour
     private List<Hex> tilesAffectByAction;
 
     private List<Unit> enemiesAffectByAction;
+
+    private List<AI_Agent> enemiesAlive;
 
     private GridManager grid;
 
@@ -106,6 +112,7 @@ public class PlayerController : MonoBehaviour
         encounterKillCount = 0;
         LightningDead = false;
         earthDead = false;
+        AI_controller = GameObject.FindGameObjectWithTag("AI_Controller").GetComponent<AI_Controller>();
 
         // Subscribe to necessary delegates
 
@@ -436,6 +443,17 @@ public class PlayerController : MonoBehaviour
         {
             SelectAction(2);
         }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            HighlightEnemiesThreatTiles(enemiesAlive, enemyThreatColor);
+        }
+
+        if (Input.GetKeyUp(KeyCode.R))
+        {
+            RemoveHighlightedTiles();
+        }
+
     }
 
     // Process Mouse Input
@@ -809,6 +827,30 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
+    private void HighlightEnemiesThreatTiles(List<AI_Agent> a_enemies, Color a_color)
+    {
+        List<Hex> area = new List<Hex>();
+
+        foreach (var enemy in a_enemies)
+        {
+            List<Hex> aiList = grid.GetTilesWithinDistance(enemy.CurrentTile, enemy.MoveRange + enemy.AttackRange);
+
+            foreach (var hex in aiList)
+            {
+                if (!area.Contains(hex))
+                {
+                    area.Add(hex);
+                }
+            }
+        }
+
+
+        Manager.instance.HexHighlighter.HighLightArea(area, a_color, a_color, this);
+
+
+    }
+
     // Apply a permanent highlight to tiles within range of a unit
     private void HighlightTilesInRange(int a_range, Hex startingHex = null)
     {
@@ -860,6 +902,7 @@ public class PlayerController : MonoBehaviour
         if (a_newState == TurnManager.TurnState.start)
         {
             // Re-spawn at checkpoint if both are dead
+            enemiesAlive = AI_controller.Agents;
 
             if (LightningDead && earthDead)
             {
@@ -892,6 +935,7 @@ public class PlayerController : MonoBehaviour
         {
             myTurn = false;
             canInteract = false;
+            RemoveHighlightedTiles();
 
             DeselectUnit();
         }

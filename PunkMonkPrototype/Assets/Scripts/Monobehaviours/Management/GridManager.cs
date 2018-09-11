@@ -132,7 +132,7 @@ public class GridManager : MonoBehaviour
         return (transform.childCount > 0);
     }
 
-    public List<Hex> GetTilesWithinDistance(Hex centerTile, int range, bool CheckIfTraversable = true)
+    public List<Hex> GetTilesWithinDistance(Hex centerTile, int range, bool CheckIfTraversable = true, bool addOccupiedTiles = false)
     {
         List<Hex> openList = new List<Hex>();
         List<Hex> returnList = new List<Hex>();
@@ -151,15 +151,34 @@ public class GridManager : MonoBehaviour
             {
                 if (CheckIfTraversable)
                 {
-                    if (neighbour.IsTraversable && !returnList.Contains(neighbour))
+                    if (addOccupiedTiles == true)
                     {
-                        neighbour.GScore = HexUtility.Distance(currentTile, neighbour) + currentTile.GScore;
-                        if (neighbour.GScore < range + 1)
+                        if ((neighbour.IsTraversable && !returnList.Contains(neighbour)) || (neighbour.CurrentUnit != null && !returnList.Contains(neighbour)))
                         {
-                            openList.Add(neighbour);
-                            returnList.Add(neighbour);
+                            neighbour.GScore = HexUtility.Distance(currentTile, neighbour) + currentTile.GScore;
+                            if (neighbour.GScore < range + 1)
+                            {
+
+                                openList.Add(neighbour);
+                                returnList.Add(neighbour);
+                            }
                         }
                     }
+                    else
+                    {
+                        if (neighbour.IsTraversable && !returnList.Contains(neighbour))
+                        {
+                            neighbour.GScore = HexUtility.Distance(currentTile, neighbour) + currentTile.GScore;
+                            if (neighbour.GScore < range + 1)
+                            {
+
+                                openList.Add(neighbour);
+                                returnList.Add(neighbour);
+                            }
+                        }
+                    }
+
+      
 
                 }
                 else if (!returnList.Contains(neighbour))

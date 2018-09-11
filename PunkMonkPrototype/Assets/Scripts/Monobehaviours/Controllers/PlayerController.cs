@@ -847,7 +847,7 @@ public class PlayerController : MonoBehaviour
 
         foreach (var enemy in a_enemies)
         {
-            List<Hex> aiList = grid.GetTilesWithinDistance(enemy.CurrentTile, enemy.MoveRange + enemy.AttackRange, false);
+            List<Hex> aiList = grid.GetTilesWithinDistance(enemy.CurrentTile, enemy.MoveRange + enemy.AttackRange, true, true);
 
             foreach (var hex in aiList)
             {
@@ -855,8 +855,10 @@ public class PlayerController : MonoBehaviour
                 {
                     area.Add(hex);
                 }
+
             }
         }
+
 
 
         Manager.instance.HexHighlighter.HighLightArea(area, a_color, a_color, this);

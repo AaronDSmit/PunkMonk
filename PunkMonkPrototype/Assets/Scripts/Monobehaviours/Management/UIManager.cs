@@ -81,6 +81,11 @@ public class UIManager : MonoBehaviour
         isReady = true;
     }
 
+    public void HighlightThreatButton()
+    {
+        player.ToggleHighlightEnemiesThreatTiles();
+    }
+
     public void LinkToCamera()
     {
         cameraController = GameObject.FindGameObjectWithTag("CameraRig").GetComponent<CameraController>();
@@ -113,6 +118,7 @@ public class UIManager : MonoBehaviour
     {
         pauseMenu.SetActive(a_show);
     }
+
 
     public void UpdateSelectedUnit(Unit a_selectedUnit)
     {

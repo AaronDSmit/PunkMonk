@@ -53,6 +53,8 @@ public class PlayerController : MonoBehaviour
 
     private bool myTurn;
 
+    private bool threatHeightlightTiles = false;
+
     private bool canInteract;
 
     private PlayerAttack currentAttack;
@@ -144,6 +146,8 @@ public class PlayerController : MonoBehaviour
         // Initialise the ToolTip to find the lightning and earth unit
         ToolTip.instance.Init();
     }
+
+
 
     // Toggles between two player units, requires that both units are alive (used by tab)
     public void SwitchSelection()
@@ -270,6 +274,20 @@ public class PlayerController : MonoBehaviour
     public void SubscribeToUnitDeath(LivingEntity a_livingEntity)
     {
         a_livingEntity.OnDeath += EnemyDied;
+    }
+
+    public void ToggleHighlightEnemiesThreatTiles()
+    {
+        if (!threatHeightlightTiles)
+        {
+            threatHeightlightTiles = true;
+            HighlightEnemiesThreatTiles(enemiesAlive, enemyThreatColor);
+        }
+        else
+        {
+            threatHeightlightTiles = false;
+            RemoveHighlightedTiles();
+        }
     }
 
     // Track enemy units who have died
@@ -446,12 +464,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            HighlightEnemiesThreatTiles(enemiesAlive, enemyThreatColor);
-        }
-
-        if (Input.GetKeyUp(KeyCode.R))
-        {
-            RemoveHighlightedTiles();
+            ToggleHighlightEnemiesThreatTiles();
         }
 
     }

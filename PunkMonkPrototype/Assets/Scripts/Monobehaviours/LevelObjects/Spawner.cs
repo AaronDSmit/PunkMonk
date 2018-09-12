@@ -74,7 +74,7 @@ public class Spawner : MonoBehaviour
 
 
 
-            newUnit.WalkDirectlyToTile(targetHex, );
+            newUnit.WalkDirectlyToTile(targetHex, HexDirection.NE);
 
             yield return new WaitUntil(() => newUnit.IsPerformingAction == false);
         }

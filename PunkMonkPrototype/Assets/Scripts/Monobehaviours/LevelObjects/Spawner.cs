@@ -59,7 +59,18 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    public void SpawnUnit()
+    //private IEnumerator SpawnAndMove()
+    //{
+    //    Unit newUnit = SpawnUnit();
+
+    //    if (doorHex != null && targetHex != null)
+    //    {
+    //        newUnit.WalkDirectlyToTile(doorHex, targetHex);
+    //        newUnit.WalkDirectlyToTile(doorHex, targetHex);
+    //    }
+    //}
+
+    public Unit SpawnUnit()
     {
         if (currentHex.CurrentUnit == null)
         {
@@ -72,7 +83,10 @@ public class Spawner : MonoBehaviour
             unit.CurrentVolt = (hasVolt) ? 1 : 0;
 
             Manager.instance.PlayerController.SubscribeToUnitDeath(unit);
+
+            return unit;
         }
+        return null;
     }
 
     public int TurnToSpawn

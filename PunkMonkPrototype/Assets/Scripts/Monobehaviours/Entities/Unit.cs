@@ -58,6 +58,8 @@ public class Unit : LivingEntity
 
     private bool isSelected;
 
+    private int actionsPerforming = 0;
+
     protected System.Action finishedWalking;
 
     public delegate void VariableChanged(bool a_value);
@@ -141,6 +143,10 @@ public class Unit : LivingEntity
         }
     }
 
+    public bool HasActionAvaialible { get { return CanAttack || CanMove || CanSpecialAttack; } }
+
+    public bool IsPerformingAction { get { return actionsPerforming > 0; } }
+
     #endregion
 
     #region Public Methods
@@ -186,9 +192,14 @@ public class Unit : LivingEntity
         }
     }
 
-    public void WalkDirectlyToTile(Hex a_targetHex, HexDirection a_direction, float time = -1.0f)
+    public void WalkDirectlyToTile(Hex a_targetHex, HexDirection a_direction)
     {
-        StartCoroutine(WalkDirectlyTo(a_targetHex, a_direction, time));
+        StartCoroutine(WalkDirectlyTo(a_targetHex, a_direction));
+    }
+
+    public void WalkDirectlyToTile(Hex a_targetHex, Hex a_lookAtHex)
+    {
+        StartCoroutine(WalkDirectlyTo(a_targetHex, a_lookAtHex));
     }
 
     public void TeleportToHex(Hex a_targetHex)
@@ -345,8 +356,10 @@ public class Unit : LivingEntity
         return false;
     }
 
-    private IEnumerator WalkDirectlyTo(Hex a_targetHex, HexDirection a_direction, float time = -1.0f)
+    private IEnumerator WalkDirectlyTo(Hex a_targetHex, HexDirection a_direction)
     {
+        actionsPerforming++;
+
         Vector3 targetPos = a_targetHex.transform.position;
         targetPos.y = transform.position.y;
 
@@ -355,7 +368,7 @@ public class Unit : LivingEntity
         Vector3 vecBetween = targetPos - transform.position;
         vecBetween.y = 0.0f;
 
-        float speed = vecBetween.magnitude /  (time < 0 ? time : StateManager.stateTransitionTime);
+        float speed = vecBetween.magnitude / StateManager.stateTransitionTime;
 
         while (vecBetween.magnitude > 0.1f)
         {
@@ -378,10 +391,56 @@ public class Unit : LivingEntity
         currentTile = a_targetHex;
         currentTile.Enter(this);
         transform.position = targetPos;
+
+        actionsPerforming--;
+    }
+
+    private IEnumerator WalkDirectlyTo(Hex a_targetHex, Hex a_lookAtHex = null)
+    {
+        actionsPerforming++;
+
+        Vector3 targetPos = a_targetHex.transform.position;
+        targetPos.y = transform.position.y;
+
+        yield return StartCoroutine(Rotate(targetPos));
+
+        Vector3 vecBetween = targetPos - transform.position;
+        vecBetween.y = 0.0f;
+
+        float speed = vecBetween.magnitude / walkSpeed;
+
+        currentTile.Exit();
+
+        while (vecBetween.magnitude > 0.1f)
+        {
+            transform.position += vecBetween.normalized * speed * Time.deltaTime;
+
+            vecBetween = targetPos - transform.position;
+            vecBetween.y = 0.0f;
+
+            yield return null;
+        }
+
+        // lastly turn to face the starting direction
+
+        if (a_lookAtHex)
+        {
+            Vector3 targetDir = a_lookAtHex.transform.position;
+            targetDir.y = transform.position.y;
+            yield return StartCoroutine(Rotate(targetDir));
+        }
+
+        currentTile = a_targetHex;
+        currentTile.Enter(this);
+        transform.position = targetPos;
+
+        actionsPerforming--;
     }
 
     protected IEnumerator Rotate(Vector3 a_targetPos)
     {
+        actionsPerforming++;
+
         Vector3 targetDirection = a_targetPos - transform.position;
 
         //create the rotation we need to be in to look at the target
@@ -401,43 +460,59 @@ public class Unit : LivingEntity
             transform.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0f);
             yield return null;
         }
+
+        actionsPerforming--;
     }
 
     protected IEnumerator Walk(List<Hex> a_path)
     {
+        actionsPerforming++;
+
         int index = 0;
 
         while (index < a_path.Count)
         {
-            Vector3 targetPos = a_path[index].transform.position;
-            targetPos.y = transform.position.y;
-
-            yield return StartCoroutine(Rotate(targetPos));
-
-            float distance = Vector3.Distance(transform.position, targetPos);
-
-            while (distance > 0.4f)
-            {
-                distance = Vector3.Distance(transform.position, targetPos);
-
-                Vector3 vecBetween = targetPos - transform.position;
-
-                transform.position += vecBetween.normalized * Time.deltaTime * walkSpeed;
-
-                yield return null;
-            }
-
-            transform.position = targetPos;
-
-            currentTile.Exit();
-            currentTile = a_path[index];
-            currentTile.Enter(this);
+            yield return StartCoroutine(WalkToHex(a_path[index]));
 
             index++;
         }
 
         CanMove = false;
         finishedWalking();
+
+        actionsPerforming--;
+    }
+
+    protected IEnumerator WalkToHex(Hex a_hex)
+    {
+        actionsPerforming++;
+
+        Vector3 targetPos = a_hex.transform.position;
+        targetPos.y = transform.position.y;
+
+        yield return StartCoroutine(Rotate(targetPos));
+
+        currentTile.Exit();
+
+        float distance = Vector3.Distance(transform.position, targetPos);
+
+        while (distance > Time.deltaTime * walkSpeed)
+        {
+            distance = Vector3.Distance(transform.position, targetPos);
+
+            Vector3 vecBetween = targetPos - transform.position;
+
+            transform.position += vecBetween.normalized * Time.deltaTime * walkSpeed;
+
+            yield return null;
+        }
+
+        transform.position = targetPos;
+
+        currentTile = a_hex;
+        currentTile.Enter(this);
+
+        actionsPerforming--;
     }
 
     private IEnumerator DelayedBasicAction(Hex[] a_targetTiles, System.Action a_start, System.Action a_finished)

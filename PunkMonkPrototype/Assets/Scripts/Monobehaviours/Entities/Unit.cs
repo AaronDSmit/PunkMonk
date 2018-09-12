@@ -86,7 +86,6 @@ public class Unit : LivingEntity
         get { return isSelected; }
     }
 
-
     public int AttackRange
     {
         get { return attackRange; }
@@ -187,9 +186,9 @@ public class Unit : LivingEntity
         }
     }
 
-    public void WalkDirectlyToTile(Hex a_targetHex, HexDirection a_direction)
+    public void WalkDirectlyToTile(Hex a_targetHex, HexDirection a_direction, float time = -1.0f)
     {
-        StartCoroutine(WalkDirectlyTo(a_targetHex, a_direction));
+        StartCoroutine(WalkDirectlyTo(a_targetHex, a_direction, time));
     }
 
     public void TeleportToHex(Hex a_targetHex)
@@ -199,6 +198,11 @@ public class Unit : LivingEntity
         currentTile.Enter(this);
 
         transform.position = new Vector3(currentTile.transform.position.x, transform.position.y, currentTile.transform.position.z);
+    }
+
+    public void RotateTo(Vector3 a_position)
+    {
+        StartCoroutine(Rotate(a_position));
     }
 
     public void Select(bool a_isSelected, Color a_outlineColour)
@@ -341,7 +345,7 @@ public class Unit : LivingEntity
         return false;
     }
 
-    private IEnumerator WalkDirectlyTo(Hex a_targetHex, HexDirection a_direction)
+    private IEnumerator WalkDirectlyTo(Hex a_targetHex, HexDirection a_direction, float time = -1.0f)
     {
         Vector3 targetPos = a_targetHex.transform.position;
         targetPos.y = transform.position.y;
@@ -351,7 +355,7 @@ public class Unit : LivingEntity
         Vector3 vecBetween = targetPos - transform.position;
         vecBetween.y = 0.0f;
 
-        float speed = vecBetween.magnitude / StateManager.stateTransitionTime;
+        float speed = vecBetween.magnitude /  (time < 0 ? time : StateManager.stateTransitionTime);
 
         while (vecBetween.magnitude > 0.1f)
         {

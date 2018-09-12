@@ -1733,7 +1733,7 @@ public class EasyDesignEditor : EditorWindow
         {
             var t = transform.transform.position;
             t.x = Round(t.x);
-            t.y = Round(t.y);
+            //t.y = Round(t.y);
             t.z = Round(t.z);
             transform.transform.position = t;
         }

@@ -270,6 +270,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public bool CheckActionsAvailable()
+    {
+        return earthUnit.CanMove || earthUnit.CanAttack || earthUnit.CanSpecialAttack || lightningUnit.CanMove || lightningUnit.CanAttack || lightningUnit.CanSpecialAttack;
+    }
+
     // Temp code that would be removed with object pooling
     public void SubscribeToUnitDeath(LivingEntity a_livingEntity)
     {

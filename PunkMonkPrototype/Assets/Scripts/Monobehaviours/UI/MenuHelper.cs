@@ -77,7 +77,7 @@ public class MenuHelper : MonoBehaviour
         //OpenConfirmationPopup(a_message, SetSettingsToDefault);
     }
 
-    private void OpenConfirmationPopup(string a_message, System.Action a_action)
+    public void OpenConfirmationPopup(string a_message, System.Action a_action)
     {
         if (confirmationPopup)
         {

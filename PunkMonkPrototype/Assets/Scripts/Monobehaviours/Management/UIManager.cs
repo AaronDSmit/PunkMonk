@@ -52,7 +52,7 @@ public class UIManager : MonoBehaviour
 
     private CameraController cameraController;
 
-
+    private MenuHelper menuHelper;
 
 
     #endregion
@@ -76,9 +76,23 @@ public class UIManager : MonoBehaviour
 
     #region Public Methods
 
+    public void CheckRemainingActions(string a_message)
+    {
+        if (!player.CheckActionsAvailable())
+        {
+            Manager.instance.TurnController.EndTurn(TEAM.player);
+        }
+        else
+        {
+            menuHelper.OpenConfirmationPopup(a_message, EndPlayersTurn);
+        }
+    }
+
+
     public void Init()
     {
         isReady = true;
+        menuHelper = GetComponentInChildren<MenuHelper>();
     }
 
     public void HighlightThreatButton()

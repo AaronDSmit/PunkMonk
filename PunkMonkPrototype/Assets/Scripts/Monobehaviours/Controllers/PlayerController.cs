@@ -371,15 +371,15 @@ public class PlayerController : MonoBehaviour
 
         }
 
+        if (threatHeightlightTiles)
+        {
+            HighlightEnemiesThreatTiles(enemiesAlive, enemyThreatColor);
+        }
+
         // Highlight area in range to walk
         if (currentRuleset.actionType == ActionType.movement)
         {
-            if (threatHeightlightTiles)
-            {
-                HighlightEnemiesThreatTiles(enemiesAlive, enemyThreatColor);
-            }
             HighlightTilesInRange(selectedUnit.MoveRange);
-
         }
 
         // Highlight area in range to attack
@@ -763,10 +763,11 @@ public class PlayerController : MonoBehaviour
         lineRenderer.positionCount = 0;
         currentRuleset = selectionRuleset;
 
-        if (currentRuleset.actionType != ActionType.movement)
+        RemoveHighlightedTiles();
+
+        if (threatHeightlightTiles)
         {
-            RemoveHighlightedTiles();
-            threatHeightlightTiles = false;
+            HighlightEnemiesThreatTiles(enemiesAlive, enemyThreatColor);
         }
 
         if (lightningAttackHex1 != null)

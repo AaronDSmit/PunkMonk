@@ -148,10 +148,17 @@ public class EasyDesignEditor : EditorWindow
     [SerializeField]
     private bool healthyMode = true;
 
+    [SerializeField]
+    private bool toggleSnap = false;
+
+    private Vector3 prevPosition;
+
+
     #endregion
 
     private void OnEnable()
     {
+        EditorApplication.update += Update;
         // load custom skin and window icon
         skin = (GUISkin)Resources.Load("EditorSkin");
 
@@ -1570,6 +1577,7 @@ public class EasyDesignEditor : EditorWindow
             else if (selectedTab == 3)
             {
                 healthyMode = EditorGUILayout.Toggle("Healthy Mode: ", healthyMode, skin.GetStyle("toggle"));
+                toggleSnap = EditorGUILayout.Toggle("Toggle Grid Snap: ", toggleSnap, skin.GetStyle("toggle"));
             }
 
             #endregion
@@ -1684,6 +1692,18 @@ public class EasyDesignEditor : EditorWindow
         }
     }
 
+    private void Update()
+    {
+        if (toggleSnap
+     && !EditorApplication.isPlaying
+     && Selection.transforms.Length > 0
+     && Selection.transforms[0].position != prevPosition)
+        {
+            Snap();
+            prevPosition = Selection.transforms[0].position;
+        }
+    }
+
     private void OnInspectorUpdate()
     {
         if (grid == null)
@@ -1706,4 +1726,22 @@ public class EasyDesignEditor : EditorWindow
             }
         }
     }
+
+    private void Snap()
+    {
+        foreach (var transform in Selection.transforms)
+        {
+            var t = transform.transform.position;
+            t.x = Round(t.x);
+            t.y = Round(t.y);
+            t.z = Round(t.z);
+            transform.transform.position = t;
+        }
+    }
+
+    private float Round(float input)
+    {
+        return 1 * Mathf.Round((input / 1));
+    }
+
 }

@@ -59,16 +59,26 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    //private IEnumerator SpawnAndMove()
-    //{
-    //    Unit newUnit = SpawnUnit();
+    private IEnumerator SpawnAndMove()
+    {
+        Unit newUnit = SpawnUnit();
 
-    //    if (doorHex != null && targetHex != null)
-    //    {
-    //        newUnit.WalkDirectlyToTile(doorHex, targetHex);
-    //        newUnit.WalkDirectlyToTile(doorHex, targetHex);
-    //    }
-    //}
+        if (doorHex != null && targetHex != null)
+        {
+            newUnit.WalkDirectlyToTile(doorHex, targetHex);
+
+            yield return new WaitUntil(() => newUnit.IsPerformingAction == false);
+
+            //TODO: Make the unity look at the closest player 
+            Unit closestPlayer = Manager.instance.PlayerController.EarthUnit;
+
+
+
+            newUnit.WalkDirectlyToTile(targetHex, );
+
+            yield return new WaitUntil(() => newUnit.IsPerformingAction == false);
+        }
+    }
 
     public Unit SpawnUnit()
     {

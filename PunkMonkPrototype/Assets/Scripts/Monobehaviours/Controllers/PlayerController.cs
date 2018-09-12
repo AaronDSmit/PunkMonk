@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour
 
     private bool trackingKills;
 
-    private bool LightningDead;
+    private bool lightningDead;
 
     private bool earthDead;
 
@@ -98,6 +98,8 @@ public class PlayerController : MonoBehaviour
         set { encounterKillLimit = value; }
     }
 
+    public EarthUnit EarthUnit { get { return earthUnit; } }
+    public LightningUnit LightningUnit  { get { return lightningUnit; } }
 
     #endregion
 
@@ -112,7 +114,7 @@ public class PlayerController : MonoBehaviour
         trackingKills = false;
         encounterKillLimit = 0;
         encounterKillCount = 0;
-        LightningDead = false;
+        lightningDead = false;
         earthDead = false;
         AI_controller = GameObject.FindGameObjectWithTag("AI_Controller").GetComponent<AI_Controller>();
 
@@ -152,7 +154,7 @@ public class PlayerController : MonoBehaviour
     // Toggles between two player units, requires that both units are alive (used by tab)
     public void SwitchSelection()
     {
-        if (!earthDead && !LightningDead)
+        if (!earthDead && !lightningDead)
         {
             CancelCurrentAction();
 
@@ -327,7 +329,7 @@ public class PlayerController : MonoBehaviour
     public void ResetUnitDeaths()
     {
         earthDead = false;
-        LightningDead = false;
+        lightningDead = false;
     }
 
     public void GiveLightningVolt(int a_value)
@@ -753,7 +755,7 @@ public class PlayerController : MonoBehaviour
     {
         if (a_unit.CompareTag("LightningUnit"))
         {
-            LightningDead = true;
+            lightningDead = true;
         }
 
         if (a_unit.CompareTag("EarthUnit"))
@@ -947,7 +949,7 @@ public class PlayerController : MonoBehaviour
             // Re-spawn at checkpoint if both are dead
             enemiesAlive = AI_controller.Agents;
 
-            if (LightningDead && earthDead)
+            if (lightningDead && earthDead)
             {
                 Manager.instance.CheckPointController.ResetToLastCheckPoint();
                 return;
@@ -956,7 +958,7 @@ public class PlayerController : MonoBehaviour
             myTurn = true;
             canInteract = true;
 
-            if (!earthDead && !LightningDead)
+            if (!earthDead && !lightningDead)
             {
                 earthUnit.Refresh();
                 lightningUnit.Refresh();
@@ -1011,7 +1013,7 @@ public class PlayerController : MonoBehaviour
                 GetComponent<OverworldController>().Init();
             }
 
-            if (LightningDead)
+            if (lightningDead)
             {
                 SpawnLightningUnit(lightningStartingHex).GetComponent<OverworldFollower>().Init();
                 GetComponent<OverworldController>().Init();

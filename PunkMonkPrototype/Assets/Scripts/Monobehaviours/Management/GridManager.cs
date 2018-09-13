@@ -178,7 +178,7 @@ public class GridManager : MonoBehaviour
                         }
                     }
 
-      
+
 
                 }
                 else if (!returnList.Contains(neighbour))
@@ -278,7 +278,12 @@ public class GridManager : MonoBehaviour
 
             if (traversableCount == 0)
             {
+
                 tile.gameObject.SetActive(false);
+                if (tile.GetComponentInChildren<StateTransitionPoint>() != null)
+                {
+                    tile.gameObject.SetActive(true);
+                }
             }
 
             if (count >= perFrame)
@@ -346,7 +351,32 @@ public class GridManager : MonoBehaviour
 
                 foreach (Hex tile in tiles)
                 {
-                    tile.ShowOverlay(true);
+
+                    if (tile.GetComponentInChildren<StateTransitionPoint>() != null)
+                    {
+                        bool neighboursAreNotTreversable = false;
+                        foreach (Hex neighbour in tile.Neighbours)
+                        {
+                            if (neighbour.IsTraversable == true)
+                            {
+                                neighboursAreNotTreversable = true;
+                                break;
+                            }
+                        }
+
+                        if(neighboursAreNotTreversable)
+                        {
+                            tile.ShowOverlay(true);
+                        }
+                        else
+                        {
+                            tile.ShowOverlay(false);
+                        }
+                    }
+                    else
+                    {
+                        tile.ShowOverlay(true);
+                    }
                 }
 
                 if (overlay)

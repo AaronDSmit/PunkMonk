@@ -294,6 +294,24 @@ public class PlayerController : MonoBehaviour
         {
             threatHeightlightTiles = false;
             RemoveHighlightedTiles();
+
+            if (currentRuleset.actionType == ActionType.movement)
+            {
+                HighlightTilesInRange(selectedUnit.MoveRange);
+            }
+
+            // Highlight area in range to attack
+            if (currentRuleset.actionType == ActionType.attack)
+            {
+                HighlightTilesInRange(selectedUnit.AttackRange);
+            }
+
+            // Highlight area in range to special attack
+            if (currentRuleset.actionType == ActionType.specialAttack)
+            {
+                HighlightTilesInRange(selectedUnit.SpecialAttackRange);
+            }
+
         }
     }
 

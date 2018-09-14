@@ -15,16 +15,22 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        underMouse = true;
+        if(Manager.instance.StateController.CurrentGameState == GameState.battle)
+        {
+            underMouse = true;
 
-        StartCoroutine(DelayShow());
+            StartCoroutine(DelayShow());
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        underMouse = false;
+        if (Manager.instance.StateController.CurrentGameState == GameState.battle)
+        {
+            underMouse = false;
 
-        ToolTip.instance.Hide();
+            ToolTip.instance.Hide();
+        }
     }
 
     private IEnumerator DelayShow()

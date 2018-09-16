@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{9B7E563D-D886-4529-9471-1F499F2670AE}" SchemaVersion="89">
+	<Events>
+		<WorkUnit Name="Default Work Unit" ID="{9B7E563D-D886-4529-9471-1F499F2670AE}" PersistMode="Standalone">
+			<ChildrenList>
+				<Folder Name="Music" ID="{A26EE978-6F47-4FD0-9AF6-6E4767F7A552}" ShortID="806793621">
+					<ChildrenList>
+						<WorkUnit Name="Combat" ID="{258C9602-DBCD-486E-A1B5-A6BC45C5354D}" PersistMode="Reference"/>
+					</ChildrenList>
+				</Folder>
+				<Folder Name="SFX" ID="{F835FE87-A4D5-46C3-9C4C-2AB361D57519}" ShortID="126631870"/>
+			</ChildrenList>
+		</WorkUnit>
+	</Events>
+</WwiseDocument>

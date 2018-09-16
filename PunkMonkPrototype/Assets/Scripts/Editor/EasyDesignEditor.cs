@@ -1140,6 +1140,8 @@ public class EasyDesignEditor : EditorWindow
                         sceneTransition.numberToKill = numberToKill;
                         sceneTransition.voltGivenToEarth = voltGivenToEarth;
                         sceneTransition.voltGivenToLightning = voltGivenToLightning;
+                        sceneTransition.EarthDirection = earthDirection;
+                        sceneTransition.LightningDirection = lightningDirection;
                         sceneTransition.Conversation = convo;
 
                         sceneTransition.index = currentID;

@@ -141,6 +141,7 @@ public class HexHighlighter : MonoBehaviour
 
     private void Awake()
     {
+        
         Transform grid = GameObject.FindGameObjectWithTag("Grid").transform;
 
         holder = new GameObject("Highlight Container").transform;

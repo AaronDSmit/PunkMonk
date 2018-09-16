@@ -158,41 +158,44 @@ public class EasyDesignEditor : EditorWindow
 
     private void OnEnable()
     {
-        EditorApplication.update += Update;
-        // load custom skin and window icon
-        skin = (GUISkin)Resources.Load("EditorSkin");
-
-        centeredText = skin.GetStyle("CenteredText");
-
-        if (window != null)
+        if ((GUISkin)Resources.Load("EditorSkin") != null)
         {
-            window.titleContent = new GUIContent("Easy Design", icon);
-        }
+            EditorApplication.update += Update;
+            // load custom skin and window icon
+            skin = (GUISkin)Resources.Load("EditorSkin");
 
-        GameObject gridGo = GameObject.FindGameObjectWithTag("Manager");
+            centeredText = skin.GetStyle("CenteredText");
 
-        if (gridGo && grid == null)
-        {
-            grid = GameObject.FindGameObjectWithTag("Grid").GetComponent<GridManager>();
-
-            if (grid && grid.transform.childCount > 0)
+            if (window != null)
             {
-                string[] mapSize = grid.transform.GetChild(grid.transform.childCount - 1).name.Split(',');
-
-                mapWidth = int.Parse(mapSize[0]) + 1;
-                mapHeight = int.Parse(mapSize[1]) + 1;
+                window.titleContent = new GUIContent("Easy Design", icon);
             }
+
+            GameObject gridGo = GameObject.FindGameObjectWithTag("Manager");
+
+            if (gridGo && grid == null)
+            {
+                grid = GameObject.FindGameObjectWithTag("Grid").GetComponent<GridManager>();
+
+                if (grid && grid.transform.childCount > 0)
+                {
+                    string[] mapSize = grid.transform.GetChild(grid.transform.childCount - 1).name.Split(',');
+
+                    mapWidth = int.Parse(mapSize[0]) + 1;
+                    mapHeight = int.Parse(mapSize[1]) + 1;
+                }
+            }
+
+            traversableColour = new Color(0.0f, 1.0f, 0.0f, 0.35f);
+            inaccessibleColour = new Color(1.0f, 0.0f, 0.0f, 0.35f);
+            //inaccessibleAlpha = 0.4f;
+
+            conversation = CreateInstance<Conversation>();
+
+            selectedSpeachIndex = 0;
+
+            EditorApplication.playModeStateChanged += PlayModeChanged;
         }
-
-        traversableColour = new Color(0.0f, 1.0f, 0.0f, 0.35f);
-        inaccessibleColour = new Color(1.0f, 0.0f, 0.0f, 0.35f);
-        //inaccessibleAlpha = 0.4f;
-
-        conversation = CreateInstance<Conversation>();
-
-        selectedSpeachIndex = 0;
-
-        EditorApplication.playModeStateChanged += PlayModeChanged;
     }
 
     [MenuItem("Window/EasyDesign")]

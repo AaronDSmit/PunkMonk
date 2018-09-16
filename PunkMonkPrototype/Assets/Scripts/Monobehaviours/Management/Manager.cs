@@ -93,29 +93,10 @@ public class Manager : MonoBehaviour
 
     #endregion
 
-    #region Public Methods
-
-    public void SceneLoaded(Scene current, Scene next)
-    {
-        //if (next.buildIndex == 0 || next.buildIndex == 2)
-        //{
-        //    Destroy(gameObject);
-        //}
-    }
-
-    #endregion
 
     #region Unity Life-cycle Methods
 
-    private void OnDisable()
-    {
-        SceneManager.activeSceneChanged -= SceneLoaded;
-    }
 
-    private void OnEnable()
-    {
-        SceneManager.activeSceneChanged += SceneLoaded;
-    }
 
     private void Awake()
     {

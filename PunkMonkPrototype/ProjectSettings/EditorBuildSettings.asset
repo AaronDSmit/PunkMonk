@@ -8,12 +8,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/MainMenu.unity
     guid: bcb7732e15f8c054e887805ad79aef5c
-  - enabled: 0
-    path: Assets/_Scenes/GreyBox/Greybox_05_Shader.unity
-    guid: 7011df7421938164899fda565dc4cb30
   - enabled: 1
-    path: Assets/_Scenes/Level/L01_04.unity
-    guid: 0733bff944d0d5e4b9512c0e43a84a96
+    path: Assets/_Scenes/Level/L01_09.unity
+    guid: 99b2164e028d3d245a480744fd278c1d
   - enabled: 1
     path: Assets/_Scenes/EndScene.unity
     guid: 3d6a467fc8c462444a5e3dbdebe67d90

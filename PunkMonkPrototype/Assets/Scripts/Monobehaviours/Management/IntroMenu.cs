@@ -47,6 +47,14 @@ public class IntroMenu : MonoBehaviour
 
     #region Unity Life-cycle Methods
 
+    private void Awake()
+    {
+        if (GameObject.FindGameObjectWithTag("Manager") != null)
+        {
+            Destroy(GameObject.FindGameObjectWithTag("Manager"));
+        }
+    }
+
     private void Start()
     {
         // StartCoroutine(LoadScene());

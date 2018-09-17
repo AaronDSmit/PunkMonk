@@ -46,21 +46,34 @@ public class Spawner : MonoBehaviour
     [SerializeField]
     public Hex doorHex = null;
 
+    private bool doneSpawning = false;
+
+    private TurnManager turnController = null;
+
     private void Awake()
     {
-        Manager.instance.TurnController.EveryTurnEvent += TurnEvent;
+        turnController =  Manager.instance.TurnController;
+
+        turnController.SpawningEvent += TurnEvent;
+    }
+
+    private void OnDestroy()
+    {
+        turnController.SpawningEvent -= TurnEvent;
     }
 
     private void TurnEvent(TurnManager.TurnState newState, int turnNumber)
     {
-        if (newState == TurnManager.TurnState.start && turnNumber == turnToSpawn && index == Manager.instance.TurnController.BattleID)
+        if (newState == TurnManager.TurnState.spawning && turnNumber == turnToSpawn && index == turnController.BattleID)
         {
-            SpawnUnit();
+            StartCoroutine(SpawnAndMove());
         }
     }
 
     private IEnumerator SpawnAndMove()
     {
+        turnController.AddSpawner();
+
         Unit newUnit = SpawnUnit();
 
         if (doorHex != null && targetHex != null)
@@ -69,15 +82,16 @@ public class Spawner : MonoBehaviour
 
             yield return new WaitUntil(() => newUnit.IsPerformingAction == false);
 
-            //TODO: Make the unity look at the closest player 
-            Unit closestPlayer = Manager.instance.PlayerController.EarthUnit;
+            float distanceToEarth = Vector3.Distance(currentHex.transform.position, Manager.instance.PlayerController.EarthUnit.CurrentTile.transform.position);
+            float distanceToLightning = Vector3.Distance(currentHex.transform.position, Manager.instance.PlayerController.LightningUnit.CurrentTile.transform.position);
+            Hex closestPlayerTile = distanceToEarth < distanceToLightning ? Manager.instance.PlayerController.EarthUnit.CurrentTile : Manager.instance.PlayerController.LightningUnit.CurrentTile;
 
-
-
-            newUnit.WalkDirectlyToTile(targetHex, HexDirection.NE);
+            newUnit.WalkDirectlyToTile(targetHex, closestPlayerTile);
 
             yield return new WaitUntil(() => newUnit.IsPerformingAction == false);
         }
+
+        turnController.RemoveSpawner();
     }
 
     public Unit SpawnUnit()

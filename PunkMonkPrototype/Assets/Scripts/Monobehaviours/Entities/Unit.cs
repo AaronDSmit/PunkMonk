@@ -399,27 +399,7 @@ public class Unit : LivingEntity
     {
         actionsPerforming++;
 
-        Vector3 targetPos = a_targetHex.transform.position;
-        targetPos.y = transform.position.y;
-
-        yield return StartCoroutine(Rotate(targetPos));
-
-        Vector3 vecBetween = targetPos - transform.position;
-        vecBetween.y = 0.0f;
-
-        float speed = vecBetween.magnitude / walkSpeed;
-
-        currentTile.Exit();
-
-        while (vecBetween.magnitude > 0.1f)
-        {
-            transform.position += vecBetween.normalized * speed * Time.deltaTime;
-
-            vecBetween = targetPos - transform.position;
-            vecBetween.y = 0.0f;
-
-            yield return null;
-        }
+        yield return StartCoroutine(WalkToHex(a_targetHex));
 
         // lastly turn to face the starting direction
 
@@ -429,10 +409,6 @@ public class Unit : LivingEntity
             targetDir.y = transform.position.y;
             yield return StartCoroutine(Rotate(targetDir));
         }
-
-        currentTile = a_targetHex;
-        currentTile.Enter(this);
-        transform.position = targetPos;
 
         actionsPerforming--;
     }

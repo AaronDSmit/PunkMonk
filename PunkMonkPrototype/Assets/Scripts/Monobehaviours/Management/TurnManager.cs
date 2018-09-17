@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 // Needs to be all caps to avoid conflict with Properties
 public enum TEAM { player, ai, neutral }
@@ -26,12 +27,15 @@ public class TurnManager : MonoBehaviour
 
     private int battleID;
 
-    public enum TurnState { start, end }
+    private int spawnerCount = 0;
+
+    public enum TurnState { start, end, spawning }
 
     public delegate void TurnStateChanged(TurnState a_nextState, int a_turnNumber);
     public event TurnStateChanged PlayerTurnEvent;
     public event TurnStateChanged AITurnEvent;
     public event TurnStateChanged EveryTurnEvent;
+    public event TurnStateChanged SpawningEvent;
 
     #endregion
 
@@ -81,8 +85,18 @@ public class TurnManager : MonoBehaviour
 
             currentTeam = (currentTeam == TEAM.player) ? TEAM.ai : TEAM.player;
 
-            StartTurn();
+            StartCoroutine(StartTurn());
         }
+    }
+
+    public void AddSpawner()
+    {
+        spawnerCount++;
+    }
+
+    public void RemoveSpawner()
+    {
+        spawnerCount--;
     }
 
     #endregion
@@ -98,12 +112,22 @@ public class TurnManager : MonoBehaviour
 
     #region Local Methods
 
-    private void GameStateChanged(GameState _oldstate, GameState _newstate)
+
+    private void GameStateChanged(GameState a_oldstate, GameState a_newstate)
     {
         // ensure this script knows it's in over-world state
-        if (_newstate == GameState.battle)
+        if (a_newstate == GameState.battle)
         {
-            StartTurn();
+            StartCoroutine(StartTurn());
+
+            if (a_oldstate != GameState.battle && startingTeam == TEAM.player)
+            {
+                if (SpawningEvent != null)
+                {
+                    StartCoroutine(Spawning());
+                }
+            }
+
         }
         else
         {
@@ -111,12 +135,17 @@ public class TurnManager : MonoBehaviour
         }
     }
 
-    private void StartTurn()
+    private IEnumerator StartTurn()
     {
-        turnCount++;
+        if (currentTeam == startingTeam)
+        {
+            turnCount++;
+        }
 
         if (currentTeam == TEAM.ai)
         {
+            yield return StartCoroutine(Spawning());
+
             if (AITurnEvent != null)
             {
                 AITurnEvent(TurnState.start, turnCount);
@@ -134,6 +163,18 @@ public class TurnManager : MonoBehaviour
         {
             EveryTurnEvent(TurnState.start, turnCount);
         }
+    }
+
+    private IEnumerator Spawning()
+    {
+
+        if (SpawningEvent != null)
+        {
+            SpawningEvent(TurnState.spawning, turnCount);
+        }
+
+
+        yield return new WaitUntil(() => spawnerCount == 0);
     }
 
     #endregion

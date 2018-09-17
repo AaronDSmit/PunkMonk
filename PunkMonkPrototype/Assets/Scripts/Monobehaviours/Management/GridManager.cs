@@ -280,7 +280,7 @@ public class GridManager : MonoBehaviour
             {
 
                 tile.gameObject.SetActive(false);
-                if (tile.GetComponentInChildren<StateTransitionPoint>() != null)
+                if (tile.transform.childCount > 1)
                 {
                     tile.gameObject.SetActive(true);
                 }
@@ -352,7 +352,7 @@ public class GridManager : MonoBehaviour
                 foreach (Hex tile in tiles)
                 {
 
-                    if (tile.GetComponentInChildren<StateTransitionPoint>() != null)
+                    if (tile.transform.childCount > 1)
                     {
                         bool neighboursAreNotTreversable = false;
                         foreach (Hex neighbour in tile.Neighbours)
@@ -364,7 +364,7 @@ public class GridManager : MonoBehaviour
                             }
                         }
 
-                        if(neighboursAreNotTreversable)
+                        if (neighboursAreNotTreversable)
                         {
                             tile.ShowOverlay(true);
                         }

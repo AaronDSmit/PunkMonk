@@ -580,7 +580,7 @@ MonoBehaviour:
   basicAmountOfBounces: 3
   basicLightningLifeTime: 1
   basicBounceDamage: 2
-  basicFinalDamage: 4
+  basicFinalDamage: 2
   basicDelayTime: 0.5
 --- !u!114 &114246982984122502
 MonoBehaviour:

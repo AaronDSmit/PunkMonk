@@ -99,7 +99,7 @@ public class PlayerController : MonoBehaviour
     }
 
     public EarthUnit EarthUnit { get { return earthUnit; } }
-    public LightningUnit LightningUnit  { get { return lightningUnit; } }
+    public LightningUnit LightningUnit { get { return lightningUnit; } }
 
     #endregion
 
@@ -541,8 +541,14 @@ public class PlayerController : MonoBehaviour
             // try set values, will be null if there isn't an object under the cursor
             tileUnderMouse = hitInfo.transform.GetComponent<Hex>();
             unitUnderMouse = hitInfo.transform.GetComponent<Unit>();
+            Hex currentHex;
+            if (selectedUnit == null)
+            {
+                SwitchSelection();
 
-            Hex currentHex = selectedUnit.CurrentTile;
+            }
+                currentHex = selectedUnit.CurrentTile;
+            
             if (lightningAttackHex1 != null)
             {
                 currentHex = lightningAttackHex1;

@@ -577,10 +577,10 @@ MonoBehaviour:
   specialDamgeDelayTimer: 0.5
   basicRehitEnemies: 0
   basicRange: 4
-  basicAmountOfBounces: 2
+  basicAmountOfBounces: 3
   basicLightningLifeTime: 1
   basicBounceDamage: 2
-  basicFinalDamage: 2
+  basicFinalDamage: 4
   basicDelayTime: 0.5
 --- !u!114 &114246982984122502
 MonoBehaviour:

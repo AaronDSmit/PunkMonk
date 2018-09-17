@@ -8,7 +8,8 @@ public class LightningUnit : Unit
 
     [Header("Special Attack")]
 
-    [SerializeField] private int specialDamage = 1;
+    [SerializeField]
+    private int specialDamage = 1;
     [SerializeField] private float specialDamgeDelayTimer = 3;
     //[SerializeField] private float specialElectricityLifetime = 3;
 
@@ -113,6 +114,7 @@ public class LightningUnit : Unit
                     if (!basicFinalTargets.Contains(x))
                     {
                         basicFinalTargets.Add(x);
+                        break;
                     }
                 }
             }

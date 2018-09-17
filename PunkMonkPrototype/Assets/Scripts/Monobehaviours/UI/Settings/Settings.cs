@@ -65,6 +65,8 @@ public class Settings : ScriptableObject
         SetGameplayTo(a_other);
         SetGraphicsTo(a_other);
         SetSoundsTo(a_other);
+
+        onSettingsChanged();
     }
 
     public void SetGameplayTo(Settings a_other)
@@ -72,12 +74,16 @@ public class Settings : ScriptableObject
         // Gameplay
         inverseCameraRotation = a_other.inverseCameraRotation;
         screenEdgePan = a_other.screenEdgePan;
+
+        onSettingsChanged();
     }
 
     public void SetGraphicsTo(Settings a_other)
     {
         // Graphics
         quality = a_other.quality;
+
+        onSettingsChanged();
     }
 
     public void SetSoundsTo(Settings a_other)
@@ -88,6 +94,8 @@ public class Settings : ScriptableObject
         music = a_other.music;
         effects = a_other.effects;
         dialouge = a_other.dialouge;
+
+        onSettingsChanged();
     }
 
     public void Save()

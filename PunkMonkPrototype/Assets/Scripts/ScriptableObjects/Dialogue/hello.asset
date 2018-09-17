@@ -8,18 +8,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: TestConvo
-  m_EditorClassIdentifier: Assembly-CSharp::Conversation
-  name: TestConvo
+  m_Script: {fileID: 11500000, guid: b57921cba5dccb947b45f106b387b99e, type: 3}
+  m_Name: hello
+  m_EditorClassIdentifier: 
+  name: hello
   dialogue:
   - speaker: 0
-    text: hi
-  - speaker: 1
     text: hey
-  - speaker: 0
-    text: this is a test
   - speaker: 1
-    text: ok....
-  - speaker: 0
-    text: '....'
+    text: hi

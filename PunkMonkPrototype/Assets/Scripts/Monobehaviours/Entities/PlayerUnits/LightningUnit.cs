@@ -193,7 +193,7 @@ public class LightningUnit : Unit
             if (Random.Range(0, 100) <= glamCamChance)
             {
                 cameraController.PlayGlamCam(transform.position, startTilePos - endTilePos, GlamCamType.LIGHNING_BASIC);
-                StartCoroutine(BasicAttackDamageDelay(specialDamgeDelayTimer, 2));
+                StartCoroutine(SpecialAttackDamageDelay(specialDamgeDelayTimer, 2));
                 return;
             }
         }

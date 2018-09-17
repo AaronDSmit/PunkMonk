@@ -66,32 +66,22 @@ public class Spawner : MonoBehaviour
         turnController.PlayerTurnEvent -= HighlightTilesEvent;
     }
 
-    private void HighlightTilesEvent(TurnManager.TurnState newState, int turnNumber)
+    private void HighlightTilesEvent(TurnManager.TurnState a_newState, int a_turnNumber)
     {
-        if (turnNumber == turnToSpawn && index == turnController.BattleID)
+        if (a_turnNumber == turnToSpawn && index == turnController.BattleID)
         {
-            if (targetHex != null)
+            if (a_newState == TurnManager.TurnState.start)
             {
-                if (newState == TurnManager.TurnState.start)
-                {
-                    hexHighlighter.HighLightArea(new List<Hex> { targetHex }, Color.red, Color.red, this);
-                }
-                else if (newState == TurnManager.TurnState.end)
-                {
-                    hexHighlighter.RemoveHighlights(this);
-                }
+                hexHighlighter.HighLightArea(new List<Hex> { targetHex == null ? currentHex : targetHex }, Color.red, Color.red, this);
             }
-        }
-        if (newState == TurnManager.TurnState.end && turnNumber == turnToSpawn && index == turnController.BattleID)
-        {
-            if (targetHex != null)
+            if (a_newState == TurnManager.TurnState.end)
             {
-                hexHighlighter.HighLightArea(new List<Hex> { targetHex }, Color.red, Color.red, this);
+                hexHighlighter.RemoveHighlights(this);
             }
         }
     }
 
-    private void StartSpawningEvent(TurnManager.TurnState newState, int turnNumber)
+    private void StartSpawningEvent(TurnManager.TurnState a_newState, int a_turnNumber)
     {
         if (doneSpawning)
         {
@@ -99,7 +89,7 @@ public class Spawner : MonoBehaviour
             return;
         }
 
-        if (newState == TurnManager.TurnState.spawning && turnNumber == turnToSpawn && index == turnController.BattleID)
+        if (a_newState == TurnManager.TurnState.spawning && a_turnNumber == turnToSpawn && index == turnController.BattleID)
         {
             StartCoroutine(SpawnAndMove());
         }

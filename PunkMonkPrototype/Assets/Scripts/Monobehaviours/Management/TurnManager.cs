@@ -119,15 +119,6 @@ public class TurnManager : MonoBehaviour
         if (a_newstate == GameState.battle)
         {
             StartCoroutine(StartTurn());
-
-            if (a_oldstate != GameState.battle && startingTeam == TEAM.player)
-            {
-                if (SpawningEvent != null)
-                {
-                    StartCoroutine(Spawning());
-                }
-            }
-
         }
         else
         {
@@ -137,6 +128,11 @@ public class TurnManager : MonoBehaviour
 
     private IEnumerator StartTurn()
     {
+        if (turnCount == 0)
+        {
+            yield return StartCoroutine(Spawning());
+        }
+
         if (currentTeam == startingTeam)
         {
             turnCount++;

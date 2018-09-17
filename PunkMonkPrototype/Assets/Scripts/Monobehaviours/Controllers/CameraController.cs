@@ -53,10 +53,12 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float glamCamDistance;
 
     [Header("Overworld")]
-    [SerializeField] private float overworldSpeed;
+    [SerializeField]
+    private float overworldSpeed;
     [SerializeField] private float overworldDistance;
     [Header("Game")]
-    [SerializeField] private float speed;
+    [SerializeField]
+    private float speed;
     [SerializeField] private float RotationalSpeed;
     [SerializeField] private float scrollSpeed;
 
@@ -299,6 +301,10 @@ public class CameraController : MonoBehaviour
         if (earthUnit != null)
         {
             rigTargetPos = earthUnit.transform.position;
+        }
+        else
+        {
+            earthUnit = GameObject.FindGameObjectWithTag("EarthUnit").GetComponent<EarthUnit>();
         }
         // transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * overworldSpeed);
     }

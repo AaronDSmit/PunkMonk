@@ -158,44 +158,45 @@ public class EasyDesignEditor : EditorWindow
 
     private void OnEnable()
     {
-        if ((GUISkin)Resources.Load("EditorSkin") != null)
+
+        EditorApplication.update += Update;
+
+        // load custom skin and window icon
+        skin = (GUISkin)Resources.Load("EditorSkin");
+
+
+        centeredText = skin.GetStyle("CenteredText");
+
+        if (window != null)
         {
-            EditorApplication.update += Update;
-            // load custom skin and window icon
-            skin = (GUISkin)Resources.Load("EditorSkin");
-
-            centeredText = skin.GetStyle("CenteredText");
-
-            if (window != null)
-            {
-                window.titleContent = new GUIContent("Easy Design", icon);
-            }
-
-            GameObject gridGo = GameObject.FindGameObjectWithTag("Manager");
-
-            if (gridGo && grid == null)
-            {
-                grid = GameObject.FindGameObjectWithTag("Grid").GetComponent<GridManager>();
-
-                if (grid && grid.transform.childCount > 0)
-                {
-                    string[] mapSize = grid.transform.GetChild(grid.transform.childCount - 1).name.Split(',');
-
-                    mapWidth = int.Parse(mapSize[0]) + 1;
-                    mapHeight = int.Parse(mapSize[1]) + 1;
-                }
-            }
-
-            traversableColour = new Color(0.0f, 1.0f, 0.0f, 0.35f);
-            inaccessibleColour = new Color(1.0f, 0.0f, 0.0f, 0.35f);
-            //inaccessibleAlpha = 0.4f;
-
-            conversation = CreateInstance<Conversation>();
-
-            selectedSpeachIndex = 0;
-
-            EditorApplication.playModeStateChanged += PlayModeChanged;
+            window.titleContent = new GUIContent("Easy Design", icon);
         }
+
+        GameObject gridGo = GameObject.FindGameObjectWithTag("Manager");
+
+        if (gridGo && grid == null)
+        {
+            grid = GameObject.FindGameObjectWithTag("Grid").GetComponent<GridManager>();
+
+            if (grid && grid.transform.childCount > 0)
+            {
+                string[] mapSize = grid.transform.GetChild(grid.transform.childCount - 1).name.Split(',');
+
+                mapWidth = int.Parse(mapSize[0]) + 1;
+                mapHeight = int.Parse(mapSize[1]) + 1;
+            }
+        }
+
+        traversableColour = new Color(0.0f, 1.0f, 0.0f, 0.35f);
+        inaccessibleColour = new Color(1.0f, 0.0f, 0.0f, 0.35f);
+        //inaccessibleAlpha = 0.4f;
+
+        conversation = CreateInstance<Conversation>();
+
+        selectedSpeachIndex = 0;
+
+        EditorApplication.playModeStateChanged += PlayModeChanged;
+
     }
 
     [MenuItem("Window/EasyDesign")]
@@ -240,6 +241,12 @@ public class EasyDesignEditor : EditorWindow
 
     private void OnGUI()
     {
+
+        if (skin == null)
+        {
+            skin = GUI.skin;
+        }
+
         EditorGUI.BeginChangeCheck();
 
         // Only show compiling message while Compiling

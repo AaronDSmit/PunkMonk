@@ -164,14 +164,15 @@ public class EasyDesignEditor : EditorWindow
         // load custom skin and window icon
         skin = (GUISkin)Resources.Load("EditorSkin");
 
-
-        centeredText = skin.GetStyle("CenteredText");
-
-        if (window != null)
+        if (skin != null)
         {
-            window.titleContent = new GUIContent("Easy Design", icon);
-        }
+            centeredText = skin.GetStyle("CenteredText");
 
+            if (window != null)
+            {
+                window.titleContent = new GUIContent("Easy Design", icon);
+            }
+        }
         GameObject gridGo = GameObject.FindGameObjectWithTag("Manager");
 
         if (gridGo && grid == null)
@@ -245,6 +246,8 @@ public class EasyDesignEditor : EditorWindow
         if (skin == null)
         {
             skin = GUI.skin;
+            centeredText = skin.GetStyle("CenteredText");
+
         }
 
         EditorGUI.BeginChangeCheck();

@@ -118,7 +118,7 @@ public class Spawner : MonoBehaviour
 
         turnController.RemoveSpawner();
 
-        doneSpawning = true;
+        //doneSpawning = true;
     }
 
     public Unit SpawnUnit()

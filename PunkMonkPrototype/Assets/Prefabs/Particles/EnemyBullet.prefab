@@ -297,7 +297,7 @@ SphereCollider:
   m_GameObject: {fileID: 1807508469817726}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
@@ -361,7 +361,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -841465667
+  randomSeed: -1397314037
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -757,7 +757,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 1000
+    maxNumParticles: 500
     size3D: 0
     rotation3D: 0
     gravityModifier:
@@ -826,7 +826,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.52510345
+      value: 0.18341383
       mode: 0
       spread: 0
       speed:
@@ -1014,13 +1014,13 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 2
           time: 0
-          value: 0.7702713
+          value: 0.21621323
           inSlope: 0
           outSlope: 0
           tangentMode: 0
         - serializedVersion: 2
           time: 0.99709773
-          value: 0.1891898
+          value: 0
           inSlope: 0.45709026
           outSlope: 0.45709026
           tangentMode: 0

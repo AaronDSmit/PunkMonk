@@ -680,6 +680,8 @@ MonoBehaviour:
   glamCamChance: 10
   damage: 1
   damgeDelayTimer: 0
+  bullet: {fileID: 1807508469817726, guid: 8d964f9dbfc1a434db92cf7a0e64fa65, type: 2}
+  bulletSpeed: 15
 --- !u!114 &114514897629033558
 MonoBehaviour:
   m_ObjectHideFlags: 1

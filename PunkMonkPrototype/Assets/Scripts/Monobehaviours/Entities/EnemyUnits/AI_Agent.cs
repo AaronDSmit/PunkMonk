@@ -8,9 +8,12 @@ using UnityEngine;
 public class AI_Agent : Unit
 {
     #region Unity Inspector Fields
-
-    [SerializeField] private int damage = 100;
+    [Header("Enemy")]
+    [SerializeField]
+    private int damage = 100;
     [SerializeField] private float damgeDelayTimer = 0;
+    [SerializeField] private GameObject bullet;
+    [SerializeField] private float bulletSpeed = 3;
 
     #endregion
 
@@ -89,6 +92,15 @@ public class AI_Agent : Unit
     protected override void DoBasicAttack(Hex[] a_targetTiles, System.Action a_start, System.Action a_finished)
     {
         tilesToAttack = a_targetTiles;
+
+        if (attackRange > 1 && bullet != null)
+        {
+            GameObject bulletGO = Instantiate(bullet, transform.position + transform.forward, Quaternion.LookRotation(transform.forward, Vector3.up));
+            bulletGO.GetComponent<Rigidbody>().AddForce(transform.forward * bulletSpeed, ForceMode.VelocityChange);
+            Destroy(bulletGO, 0.5f);
+        }
+
+
 
         StartCoroutine(BasicAttackDamageDelay(damgeDelayTimer, a_finished));
     }

@@ -246,7 +246,8 @@ public class EasyDesignEditor : EditorWindow
         if (skin == null)
         {
             skin = GUI.skin;
-            centeredText = skin.GetStyle("CenteredText");
+            centeredText = GUIStyle.none;
+            //centeredText = skin.GetStyle("CenteredText");
 
         }
 

@@ -670,8 +670,8 @@ MonoBehaviour:
   hasVoltBar: 1
   actions:
   - {fileID: 11400000, guid: 85a01b7788e76f845875da8b3c3553d2, type: 2}
-  moveRange: 2
-  attackRange: 5
+  moveRange: 1
+  attackRange: 6
   specialAttackRange: 0
   rotationTime: 0
   walkSpeed: 5

@@ -547,8 +547,8 @@ public class PlayerController : MonoBehaviour
                 SwitchSelection();
 
             }
-                currentHex = selectedUnit.CurrentTile;
-            
+            currentHex = selectedUnit.CurrentTile;
+
             if (lightningAttackHex1 != null)
             {
                 currentHex = lightningAttackHex1;
@@ -927,7 +927,7 @@ public class PlayerController : MonoBehaviour
         {
             startingHex = selectedUnit.CurrentTile;
         }
-        List<Hex> area = grid.GetTilesWithinDistance(startingHex, a_range);
+        List<Hex> area = grid.GetTilesWithinDistance(startingHex, a_range, true, true);
 
         Manager.instance.HexHighlighter.HighLightArea(area, currentRuleset.InRangeHighlightColour, currentRuleset.InRangeHighlightColour, this, new List<Hex> { startingHex });
     }

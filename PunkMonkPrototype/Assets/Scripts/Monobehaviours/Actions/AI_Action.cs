@@ -14,9 +14,9 @@ public class AI_Action : Action
 
     public void Init(AI_Agent a_Agent)
     {
-        scorer = new AI_Scorer(calculationCanvas, agent);
-
         agent = a_Agent;
+
+        scorer = new AI_Scorer(calculationCanvas, agent);
 
     }
 

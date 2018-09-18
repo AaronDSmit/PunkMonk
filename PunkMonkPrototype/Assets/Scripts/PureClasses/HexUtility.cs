@@ -54,4 +54,27 @@ public static class HexUtility
 
         return Mathf.Max(dQ, dR, Mathf.Abs(a.s - b.s));
     }
+
+    static int[] snapAngles = { 30, 90, 150, 210, 270, 330 };
+    public static HexDirection VecToHexDirection(Vector3 a_direction)
+    {
+        float angle = Vector3.SignedAngle(Vector3.forward, a_direction, Vector3.up);
+
+        angle = ((int)Mathf.Round(angle / 30.0f)) * 30;
+
+        if (angle < 0)
+        {
+            angle = 360 + angle;
+        }
+
+        for (int a = 0; a < snapAngles.Length; a++)
+        {
+            if (angle == snapAngles[a])
+            {
+                return (HexDirection)a;
+            }
+        }
+
+        return HexDirection.NE;
+    }
 }

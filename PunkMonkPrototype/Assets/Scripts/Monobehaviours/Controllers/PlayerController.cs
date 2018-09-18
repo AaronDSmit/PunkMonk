@@ -219,6 +219,8 @@ public class PlayerController : MonoBehaviour
 
             earthUnit.OnDeath += PlayerUnitDied;
 
+            earthDead = false;
+
             return earthUnit;
         }
     }
@@ -245,6 +247,8 @@ public class PlayerController : MonoBehaviour
 
                 lightningUnit.OnDeath += PlayerUnitDied;
 
+                lightningDead = false;
+
                 return lightningUnit;
             }
             else
@@ -267,6 +271,8 @@ public class PlayerController : MonoBehaviour
             lightningUnit.GetComponent<OverworldFollower>().Init();
 
             lightningUnit.OnDeath += PlayerUnitDied;
+
+            lightningDead = false;
 
             return lightningUnit;
         }

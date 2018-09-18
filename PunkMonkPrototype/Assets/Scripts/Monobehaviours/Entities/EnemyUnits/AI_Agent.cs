@@ -11,7 +11,7 @@ public class AI_Agent : Unit
     [Header("Enemy")]
     [SerializeField]
     private int damage = 100;
-    [SerializeField] private float damgeDelayTimer = 0;
+    [SerializeField] protected float damageDelayTimer = 0;
     [SerializeField] private GameObject bullet;
     [SerializeField] private float bulletSpeed = 3;
 
@@ -21,17 +21,17 @@ public class AI_Agent : Unit
 
     private AI_Controller ai_Controller = null;
 
-    private Unit[] players = null;
+    protected Unit[] players = null;
 
     #endregion
 
     #region Local Fields
 
-    private bool turnComplete = false;
+    protected bool turnComplete = false;
 
     private bool isPerformingAction = true;
 
-    private Hex[] tilesToAttack = null;
+    protected Hex[] tilesToAttack = null;
 
     #endregion
 
@@ -58,6 +58,13 @@ public class AI_Agent : Unit
     public void StartTurn(GridManager a_grid)
     {
         StartCoroutine(DoTurn(a_grid));
+    }
+
+    public override void Refresh()
+    {
+        base.Refresh();
+
+        turnComplete = false;
     }
 
     #endregion
@@ -100,12 +107,10 @@ public class AI_Agent : Unit
             Destroy(bulletGO, 0.5f);
         }
 
-
-
-        StartCoroutine(BasicAttackDamageDelay(damgeDelayTimer, a_finished));
+        StartCoroutine(BasicAttackDamageDelay(damageDelayTimer, a_finished));
     }
 
-    private IEnumerator DoTurn(GridManager a_grid)
+    protected virtual IEnumerator DoTurn(GridManager a_grid)
     {
         AI_Action bestAction = null;
         int playerToAttack = 0;
@@ -168,7 +173,7 @@ public class AI_Agent : Unit
         yield break;
     }
 
-    private IEnumerator BasicAttackDamageDelay(float a_timer, System.Action a_finished)
+    protected IEnumerator BasicAttackDamageDelay(float a_timer, System.Action a_finished)
     {
         //wait for timer before runing code
         yield return new WaitForSeconds(a_timer);
@@ -191,16 +196,9 @@ public class AI_Agent : Unit
         a_finished();
     }
 
-    private void FinishedAction()
+    protected void FinishedAction()
     {
         isPerformingAction = false;
-    }
-
-    public override void Refresh()
-    {
-        base.Refresh();
-
-        turnComplete = false;
     }
 
     private void GameStateChanged(GameState a_oldstate, GameState a_newstate)

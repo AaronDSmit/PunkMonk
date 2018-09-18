@@ -60,6 +60,7 @@ public class UIManager : MonoBehaviour
     #region Local Fields
 
     private bool[] buttonState;
+    private bool[] initialButtonState;
 
     private bool isReady;
 
@@ -285,6 +286,8 @@ public class UIManager : MonoBehaviour
             buttonState[i] = buttons[i].interactable;
         }
 
+        initialButtonState = buttonState;
+
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
 
@@ -314,6 +317,11 @@ public class UIManager : MonoBehaviour
         if (a_oldstate == GameState.battle)
         {
             battleUI.FadeOut();
+        }
+
+        if (a_oldstate != GameState.battle && a_newstate == GameState.battle)
+        {
+            battleUI.SetButtonsInteractable();
         }
     }
 

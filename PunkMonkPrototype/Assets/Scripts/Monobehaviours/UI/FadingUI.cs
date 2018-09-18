@@ -104,6 +104,14 @@ public class FadingUI : MonoBehaviour
         }
     }
 
+    public void SetButtonsInteractable()
+    {
+        foreach (Button button in buttons)
+        {
+            button.interactable = true;
+        }
+    }
+
     #endregion
 
     #region Unity Life-cycle Methods
@@ -185,6 +193,8 @@ public class FadingUI : MonoBehaviour
             finishedFading();
         }
     }
+
+
 
     #endregion
 }

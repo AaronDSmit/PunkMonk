@@ -902,6 +902,11 @@ public class EasyDesignEditor : EditorWindow
                                 spawner.UnitToSpawn = Resources.Load<AI_Agent>("EnemyCharacters/RunnerUnit");
                                 spawner.TextColour = Color.red;
                             }
+                            else if (enemyType == UnitType.missile)
+                            {
+                                spawner.UnitToSpawn = Resources.Load<AI_Agent>("EnemyCharacters/MissileUnit");
+                                spawner.TextColour = Color.grey;
+                            }
                         }
 
                         UpdateTriggerConnections();
@@ -933,6 +938,11 @@ public class EasyDesignEditor : EditorWindow
                             {
                                 spawner.UnitToSpawn = Resources.Load<Unit>("EnemyCharacters/RunnerUnit");
                                 spawner.TextColour = Color.red;
+                            }
+                            else if (enemyType == UnitType.missile)
+                            {
+                                spawner.UnitToSpawn = Resources.Load<AI_Agent>("EnemyCharacters/MissileUnit");
+                                spawner.TextColour = Color.grey;
                             }
 
                             spawner.transform.parent = tile.transform;

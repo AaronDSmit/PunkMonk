@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum UnitType { runner, watcher }
+public enum UnitType { runner, watcher, missile }
 
 public class Spawner : MonoBehaviour
 {

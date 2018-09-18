@@ -572,6 +572,10 @@ public class PlayerController : MonoBehaviour
 
                     // get path from Navigation and set the points of the lineRenderer to match it
                     List<Hex> path = Navigation.FindPath(currentHex, tileUnderMouse);
+                    if (lineRenderer == null)
+                    {
+                        lineRenderer = GetComponent<LineRenderer>();
+                    }
                     lineRenderer.positionCount = path.Count + 1;
 
                     lineRenderer.SetPosition(0, currentHex.transform.position + Vector3.up * 0.5f);

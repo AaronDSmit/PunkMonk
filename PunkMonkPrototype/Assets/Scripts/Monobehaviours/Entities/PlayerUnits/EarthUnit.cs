@@ -69,8 +69,9 @@ public class EarthUnit : Unit
 
     public int GetSpecialDamage(int a_distance)
     {
-        if (a_distance < specialDamage.Length)
+        if (a_distance < specialDamage.Length && a_distance >= 0)
         {
+            Debug.Log(a_distance);
             return specialDamage[a_distance];
         }
 

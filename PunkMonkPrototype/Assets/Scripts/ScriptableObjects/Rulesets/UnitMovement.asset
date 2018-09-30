@@ -25,4 +25,4 @@ MonoBehaviour:
   distanceCheckType: 2
   minDistance: 0
   targetTeam: 0
-  distanceType: 1
+  distanceType: 0

@@ -24,6 +24,7 @@ public enum GlamCamType
 public class CameraController : MonoBehaviour
 {
     private Unit earthUnit;
+    private Unit lightningUnit;
 
     private bool inOverworld;
 
@@ -50,7 +51,6 @@ public class CameraController : MonoBehaviour
     public GlamCamEvent onGlamCamStart;
     public GlamCamEvent onGlamCamEnd;
 
-    [SerializeField] private float glamCamDistance;
 
     [Header("Overworld")]
     [SerializeField]
@@ -79,24 +79,12 @@ public class CameraController : MonoBehaviour
 
     private Vector3 dir;
 
+    private Cinemachine.CinemachineBrain cinemachineBrain;
 
     bool cinemachine = false;
     new GameObject camera = null;
 
-    GameObject basicEarthGlamCam;
-    GameObject specialEarthGlamCam;
-    GameObject basicLightningGlamCam;
-    GameObject specialLightningGlamCam;
 
-    CinemachineVirtualCamera specialLightningCinemachine;
-
-    public CinemachineVirtualCamera SpecialLightningCinemachine
-    {
-        get
-        {
-            return specialLightningCinemachine;
-        }
-    }
 
     private void Awake()
     {
@@ -113,27 +101,10 @@ public class CameraController : MonoBehaviour
         distance = overworldDistance;
         targetRot = transform.rotation;
 
-        basicEarthGlamCam = transform.GetChild(1).gameObject;
-        specialEarthGlamCam = transform.GetChild(2).gameObject;
-        basicLightningGlamCam = transform.GetChild(3).gameObject;
-        specialLightningGlamCam = transform.GetChild(4).gameObject;
-
-        specialLightningCinemachine = specialLightningGlamCam.GetComponent<CinemachineVirtualCamera>();
-
-        basicEarthGlamCam.GetComponent<CinemachineVirtualCamera>().LookAt = GameObject.FindGameObjectWithTag("EarthUnit").transform.GetChild(0);
-        specialEarthGlamCam.GetComponent<CinemachineVirtualCamera>().LookAt = GameObject.FindGameObjectWithTag("EarthUnit").transform.GetChild(0);
-
-        basicLightningGlamCam.GetComponent<CinemachineVirtualCamera>().LookAt = GameObject.FindGameObjectWithTag("LightningUnit").transform.GetChild(0);
-        specialLightningCinemachine.LookAt = GameObject.FindGameObjectWithTag("LightningUnit").transform.GetChild(0);
-
-
-        basicEarthGlamCam.SetActive(false);
-        specialEarthGlamCam.SetActive(false);
-        basicLightningGlamCam.SetActive(false);
-        specialLightningGlamCam.SetActive(false);
-
         // Subscribe to the settings changing delegate
         settings.onSettingsChanged += SettingsChanged;
+
+        cinemachineBrain = gameObject.GetComponentInChildren<Cinemachine.CinemachineBrain>();
     }
 
     private void OnDestroy()
@@ -223,6 +194,8 @@ public class CameraController : MonoBehaviour
     public void Init()
     {
         GameObject earthGO = GameObject.FindGameObjectWithTag("EarthUnit");
+        GameObject lightningGO = GameObject.FindGameObjectWithTag("LightningUnit");
+
 
         if (earthGO)
         {
@@ -231,6 +204,10 @@ public class CameraController : MonoBehaviour
         else
         {
             Debug.LogError("No Earth unit found!");
+        }
+        if (lightningGO)
+        {
+            lightningUnit = GameObject.FindGameObjectWithTag("LightningUnit").GetComponent<Unit>();
         }
     }
 
@@ -376,148 +353,47 @@ public class CameraController : MonoBehaviour
     }
 
 
-    public void GlamCamLookAtTransform(Transform a_trasform, GlamCamType a_glamCamType)
-    {
-        //switch (a_glamCamType)
-        //{
-        //    //case GlamCamType.EARTH_BASIC:
 
-        //    //    break;
-        //    //case GlamCamType.EARTH_SPECIAL:
-        //    //    PlayEarthSpecialAttackGlamCam(a_pos, a_vecBetween);
-        //    //    break;
-        //    //case GlamCamType.LIGHNING_BASIC:
-        //    //    PlayLightningBasicAttackGlamCam(a_pos, a_vecBetween);
-        //    //    break;
-        //    //case GlamCamType.LIGHNING_SPECIAL:
-        //    //    PlayLightingSpecialAttackGlamCam(a_pos, a_vecBetween);
-        //    //    break;
-        //    //default:
-        //    //    return;
-        //}
-    }
-
-    public void PlayGlamCam(Vector3 a_pos, Vector3 a_vecBetween, GlamCamType a_glamCamType)
+    public void PlayGlamCam(Unit a_unit)
     {
         if (onGlamCamStart != null)
         {
             onGlamCamStart();
         }
+        transform.GetChild(1).gameObject.SetActive(false);
+        a_unit.transform.GetChild(5).gameObject.SetActive(true);
 
-        switch (a_glamCamType)
-        {
-            case GlamCamType.EARTH_BASIC:
-                PlayEarthBasicAttackGlamCam(a_pos, a_vecBetween);
-                break;
-            case GlamCamType.EARTH_SPECIAL:
-                PlayEarthSpecialAttackGlamCam(a_pos, a_vecBetween);
-                break;
-            case GlamCamType.LIGHNING_BASIC:
-                PlayLightningBasicAttackGlamCam(a_pos, a_vecBetween);
-                break;
-            case GlamCamType.LIGHNING_SPECIAL:
-                PlayLightingSpecialAttackGlamCam(a_pos, a_vecBetween);
-                break;
-            default:
-                return;
-        }
+        StartCoroutine(ChangeGlamCam(a_unit));
+
     }
 
-    private void PlayEarthBasicAttackGlamCam(Vector3 a_pos, Vector3 a_vecBetween)
+
+    private IEnumerator ChangeGlamCam(Unit a_unit)
     {
-        cinemachine = true;
-        // oldCamPosition = camera.transform.position;
-
-        // Vector3 halfwayVec = a_pos + -a_vecBetween.normalized * a_vecBetween.magnitude * 0.5f * glamCamDistance;
-
-        // halfwayVec.y = a_vecBetween.magnitude * glamCamDistance;
+        yield return new WaitForSeconds(cinemachineBrain.m_DefaultBlend.m_Time);
 
 
-        // basicEarthGlamCam.transform.position = halfwayVec;
+        a_unit.transform.GetChild(5).gameObject.SetActive(false);
+        a_unit.transform.GetChild(6).gameObject.SetActive(true);
 
-        basicEarthGlamCam.SetActive(true);
+        Manager.instance.transform.GetChild(0).GetComponent<MenuHelper>().PlayBlackBars(cinemachineBrain.m_CustomBlends.m_CustomBlends[0].m_Blend.m_Time);
+
+        StartCoroutine(EndGlamCam(a_unit));
     }
 
-    private void PlayEarthSpecialAttackGlamCam(Vector3 a_pos, Vector3 a_vecBetween)
+    private IEnumerator EndGlamCam(Unit a_unit)
     {
-        cinemachine = true;
-        oldCamPosition = camera.transform.position;
-        //oldCamRotation = camera.transform.rotation;
+        yield return new WaitForSeconds(cinemachineBrain.m_CustomBlends.m_CustomBlends[0].m_Blend.m_Time);
 
-        // Vector3 rightPerp = a_pos + Vector3.Cross(a_vecBetween.normalized, Vector3.up) * glamCamDistance;
+        Manager.instance.transform.GetChild(0).GetComponent<MenuHelper>().StopBlackBars();
 
-        // rightPerp.y = 1.0f;
+        a_unit.transform.GetChild(6).gameObject.SetActive(false);
+        transform.GetChild(1).gameObject.SetActive(true);
 
-        // specialEarthGlamCam.transform.position = rightPerp;
-
-
-        specialEarthGlamCam.SetActive(true);
-
+        onGlamCamEnd();
     }
 
-    private void PlayLightningBasicAttackGlamCam(Vector3 a_pos, Vector3 a_vecBetween)
-    {
-        cinemachine = true;
-        oldCamPosition = camera.transform.position;
-        //oldCamRotation = camera.transform.rotation;
 
-        //   Vector3 finalPos = a_pos + (a_vecBetween * 1.1f) + ((a_vecBetween.normalized + Vector3.Cross(a_vecBetween.normalized, Vector3.up)).normalized * glamCamDistance);
-
-        //   finalPos.y = 2;
-
-        //  basicLightningGlamCam.transform.position = finalPos;
-
-        basicLightningGlamCam.SetActive(true);
-
-    }
-
-    private void PlayLightingSpecialAttackGlamCam(Vector3 a_pos, Vector3 a_vecBetween)
-    {
-        cinemachine = true;
-        oldCamPosition = camera.transform.position;
-        //oldCamRotation = camera.transform.rotation;
-
-        //  Vector3 finalPos = a_pos + -a_vecBetween.normalized + (-(a_vecBetween.normalized + Vector3.Cross(a_vecBetween.normalized, Vector3.up)).normalized * glamCamDistance);
-
-        // finalPos.y = 2;
-
-        //  specialLightningGlamCam.transform.position = finalPos;
-
-        specialLightningGlamCam.SetActive(true);
-    }
-
-    public void TurnOffGlamCam()
-    {
-        if (basicEarthGlamCam.activeInHierarchy == true)
-        {
-            basicEarthGlamCam.SetActive(false);
-        }
-
-        if (specialEarthGlamCam.activeInHierarchy == true)
-        {
-            specialEarthGlamCam.SetActive(false);
-        }
-
-        if (basicLightningGlamCam.activeInHierarchy == true)
-        {
-            basicLightningGlamCam.SetActive(false);
-        }
-
-        if (specialLightningGlamCam.activeInHierarchy == true)
-        {
-            specialLightningGlamCam.SetActive(false);
-        }
-
-        camera.transform.position = oldCamPosition;
-
-        cinemachine = false;
-
-        if (onGlamCamEnd != null)
-        {
-            onGlamCamEnd();
-        }
-
-    }
 
 
 }

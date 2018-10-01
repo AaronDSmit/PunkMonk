@@ -144,13 +144,13 @@ public class LightningUnit : Unit
         Vector3 tilePos = basicFinalTargets[1].transform.position;
         tilePos.y = transform.position.y;
 
-        cameraController.SpecialLightningCinemachine.LookAt = basicFinalTargets[1].transform;
+
 
         if (glamCam)
         {
             if (Random.Range(0, 100) <= glamCamChance)
             {
-                cameraController.PlayGlamCam(transform.position, tilePos - transform.position, GlamCamType.LIGHNING_SPECIAL);
+                cameraController.PlayGlamCam(this);
                 StartCoroutine(BasicAttackDamageDelay(specialDamgeDelayTimer, 2));
                 return;
             }
@@ -194,7 +194,7 @@ public class LightningUnit : Unit
         {
             if (Random.Range(0, 100) <= glamCamChance)
             {
-                cameraController.PlayGlamCam(transform.position, startTilePos - endTilePos, GlamCamType.LIGHNING_BASIC);
+                cameraController.PlayGlamCam(this);
                 StartCoroutine(SpecialAttackDamageDelay(specialDamgeDelayTimer, 2));
                 return;
             }
@@ -247,8 +247,6 @@ public class LightningUnit : Unit
             }
         }
 
-
-        cameraController.TurnOffGlamCam();
 
         specialTiles.Clear();
 
@@ -311,9 +309,6 @@ public class LightningUnit : Unit
         yield return new WaitForSeconds(a_timer);
 
         StartCoroutine(SpecialAttackDamageDelay(basicDelayTime, basicFinalDamage, basicFinalTargets[basicFinalTargets.Count - 1]));
-
-        cameraController.TurnOffGlamCam();
-
 
         basicFinishedFunc();
 

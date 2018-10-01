@@ -5,6 +5,48 @@ public class MenuHelper : MonoBehaviour
 {
     [SerializeField] ConfirmationPopup confirmationPopup = null;
 
+    [SerializeField] float cinematicBarDistance = 300;
+    [SerializeField] float cinematicBarSpeed = 1;
+
+    bool cinematic = false;
+
+    RectTransform topBar;
+    RectTransform botBar;
+
+    float blackBarTimer = 0;
+
+    float blackBarTime = 0;
+
+    void Update()
+    {
+        if (cinematic)
+        {
+            blackBarTimer += Time.deltaTime;
+            float currentPercentage = blackBarTimer / blackBarTime;
+            if (topBar.sizeDelta.y < cinematicBarDistance)
+            {
+                topBar.sizeDelta = Vector2.Lerp(new Vector2(0, 0), new Vector2(0, cinematicBarDistance), currentPercentage);
+                botBar.sizeDelta = Vector2.Lerp(new Vector2(0, 0), new Vector2(0, cinematicBarDistance), currentPercentage);
+            }
+        }
+        else
+        {
+            if (topBar == null)
+            {
+                return;
+            }
+            if (topBar.sizeDelta.y >= 0)
+            {
+                blackBarTimer -= Time.deltaTime;
+                float currentPercentage = blackBarTimer / blackBarTime;
+
+                topBar.sizeDelta = Vector2.Lerp(new Vector2(0, 0), new Vector2(0, cinematicBarDistance), currentPercentage);
+                botBar.sizeDelta = Vector2.Lerp(new Vector2(0, 0), new Vector2(0, cinematicBarDistance), currentPercentage);
+            }
+
+        }
+    }
+
     public void SetButtonInteractableTrue(Button a_button)
     {
         a_button.interactable = true;
@@ -87,4 +129,27 @@ public class MenuHelper : MonoBehaviour
         else
             Debug.LogError("No Confirmation Popup attached.", gameObject);
     }
+
+    public void PlayBlackBars(float a_time)
+    {
+        if (!topBar || !botBar)
+        {
+            botBar = transform.GetChild(6).transform.GetChild(1).GetComponent<RectTransform>();
+            topBar = transform.GetChild(6).transform.GetChild(0).GetComponent<RectTransform>();
+        }
+        blackBarTimer = 0;
+        cinematic = true;
+        blackBarTime = a_time;
+    }
+
+    public void StopBlackBars(bool instante = false)
+    {
+        if (instante)
+        {
+            blackBarTimer = 0;
+        }
+
+        cinematic = false;
+    }
+
 }

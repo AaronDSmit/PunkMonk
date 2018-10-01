@@ -105,7 +105,7 @@ public class EarthUnit : Unit
         {
             if (Random.Range(0, 100) <= glamCamChance)
             {
-                cameraController.PlayGlamCam(transform.position, tilePos - transform.position, GlamCamType.EARTH_BASIC);
+                cameraController.PlayGlamCam(this);
                 StartCoroutine(BasicAttackDamageDelay(basicDamgeDelayTimer, finished, 2));
                 return;
             }
@@ -149,7 +149,7 @@ public class EarthUnit : Unit
         {
             if (Random.Range(0, 100) <= glamCamChance)
             {
-                cameraController.PlayGlamCam(specialStartPosition, specialVecBetween, GlamCamType.EARTH_SPECIAL);
+                cameraController.PlayGlamCam(this);
                 specialGlamCamTimer = 2;
             }
 
@@ -234,7 +234,7 @@ public class EarthUnit : Unit
             }
         }
 
-        cameraController.TurnOffGlamCam();
+
 
 
 
@@ -267,8 +267,7 @@ public class EarthUnit : Unit
         //change the position of the camera to the position of the unit
         cameraController.transform.position = transform.position;
 
-        //turn off glamCam  
-        cameraController.TurnOffGlamCam();
+
 
 
         //call the finished call back function

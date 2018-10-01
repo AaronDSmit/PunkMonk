@@ -462,8 +462,8 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 0c0416bbef8f1c346868d32beb70a33a, type: 3}
-  - {fileID: 2100002, guid: 0c0416bbef8f1c346868d32beb70a33a, type: 3}
+  - {fileID: 2100000, guid: dca400af7340a6b41bd3d0c395531ef7, type: 2}
+  - {fileID: 2100000, guid: dca400af7340a6b41bd3d0c395531ef7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -770,7 +770,7 @@ MonoBehaviour:
   glamCam: 0
   glamCamChance: 10
   damage: 1
-  damgeDelayTimer: 0
+  damageDelayTimer: 0
   bullet: {fileID: 1807508469817726, guid: 8d964f9dbfc1a434db92cf7a0e64fa65, type: 2}
   bulletSpeed: 40
 --- !u!114 &114514897629033558

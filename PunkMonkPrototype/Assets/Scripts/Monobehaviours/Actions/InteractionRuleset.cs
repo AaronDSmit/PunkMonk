@@ -74,7 +74,7 @@ public class InteractionRuleset : ScriptableObject
     }
 
 
-    public void CheckValidity(Hex a_hex, Hex a_tileUnderMouse)
+    public void CheckValidity(Hex a_hex, Hex a_tileUnderMouse, bool checkTraversable = false)
     {
         if (useDistanceCheck)
         {
@@ -98,7 +98,21 @@ public class InteractionRuleset : ScriptableObject
         }
         else
         {
-            CorrectTileOccupation = true;
+            if (checkTraversable == false)
+            {
+                CorrectTileOccupation = true;
+            }
+            else
+            {
+                if (a_tileUnderMouse.IsTraversable || a_tileUnderMouse.CurrentUnit != null)
+                {
+                    CorrectTileOccupation = true;
+                }
+                else
+                {
+                    CorrectTileOccupation = false;
+                }
+            }
         }
 
         if (useTeamCheck)

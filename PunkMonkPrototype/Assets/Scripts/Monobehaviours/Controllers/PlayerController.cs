@@ -329,19 +329,19 @@ public class PlayerController : MonoBehaviour
 
             if (currentRuleset.actionType == ActionType.movement)
             {
-                HighlightTilesInRange(selectedUnit.MoveRange);
+                HighlightTilesInRange(selectedUnit.MoveRange, null, true, true);
             }
 
             // Highlight area in range to attack
             if (currentRuleset.actionType == ActionType.attack)
             {
-                HighlightTilesInRange(selectedUnit.AttackRange);
+                HighlightTilesInRange(selectedUnit.AttackRange, null, false, true);
             }
 
             // Highlight area in range to special attack
             if (currentRuleset.actionType == ActionType.specialAttack)
             {
-                HighlightTilesInRange(selectedUnit.SpecialAttackRange);
+                HighlightTilesInRange(selectedUnit.SpecialAttackRange, null, false, true);
             }
 
         }
@@ -443,7 +443,7 @@ public class PlayerController : MonoBehaviour
         // Highlight area in range to special attack
         if (currentRuleset.actionType == ActionType.specialAttack)
         {
-            HighlightTilesInRange(selectedUnit.SpecialAttackRange, null, true, true);
+            HighlightTilesInRange(selectedUnit.SpecialAttackRange, null, false, true);
         }
 
     }
@@ -583,9 +583,16 @@ public class PlayerController : MonoBehaviour
 
             if (tileUnderMouse)
             {
-
-                // Check if the tile under the mouse is a valid target
-                currentRuleset.CheckValidity(currentHex, tileUnderMouse);
+                if (currentAttack == PlayerAttack.lightningSpecial)
+                {
+                    // Check if the tile under the mouse is a valid target
+                    currentRuleset.CheckValidity(currentHex, tileUnderMouse, true);
+                }
+                else
+                {
+                    // Check if the tile under the mouse is a valid target
+                    currentRuleset.CheckValidity(currentHex, tileUnderMouse);
+                }
 
                 // show attack shape if the tile is within attack range
                 if (currentRuleset.WithinRange && currentRuleset.actionType == ActionType.attack || currentRuleset.actionType == ActionType.specialAttack)
@@ -783,7 +790,7 @@ public class PlayerController : MonoBehaviour
                             lightningAttackHex1 = tileUnderMouse;
                             RemoveHighlightedTiles();
                             currentRuleset = selectedUnit.GetAction(2).otherRuleset[0];
-                            HighlightTilesInRange(selectedUnit.SpecialAttackRange, lightningAttackHex1);
+                            HighlightTilesInRange(selectedUnit.SpecialAttackRange, lightningAttackHex1, false, true);
 
                         }
                     }

@@ -38,6 +38,9 @@ public class Unit : LivingEntity
     [SerializeField]
     protected float glamCamChance = 10;
 
+    [SerializeField]
+    private GameObject voltEffect = null;
+
     #endregion
 
     #region Reference Fields
@@ -523,6 +526,11 @@ public class Unit : LivingEntity
         base.VoltChanged();
 
         CanSpecialAttack = HasVolt;
+
+        if (voltEffect)
+        {
+            voltEffect.SetActive(HasVolt);
+        }
     }
 
     #endregion

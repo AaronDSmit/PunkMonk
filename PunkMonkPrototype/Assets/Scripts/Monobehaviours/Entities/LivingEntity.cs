@@ -15,11 +15,6 @@ public class LivingEntity : Entity
     [SerializeField]
     protected int maxHealth = 5;
 
-    [Tooltip("Maximum amount of volt")]
-    [SerializeField]
-    protected int maxVolt = 3;
-    [Tooltip("If this unit has a volt bar or not")]
-
     #endregion
 
     #region Reference Fields
@@ -51,6 +46,8 @@ public class LivingEntity : Entity
 
         set
         {
+            bool voltChanged = value != hasVolt;
+
             hasVolt = value;
 
             if (CompareTag("Enemy") && hasVolt)
@@ -62,6 +59,11 @@ public class LivingEntity : Entity
             else
             {
                 myRenderer.material.SetInt("_UseHighlight", 0);
+            }
+
+            if (voltChanged)
+            {
+                VoltChanged();
             }
         }
     }
@@ -184,6 +186,11 @@ public class LivingEntity : Entity
         currentTile.Exit();
 
         Destroy(gameObject);
+    }
+
+    protected virtual void VoltChanged()
+    {
+
     }
 
     #endregion

@@ -14,9 +14,9 @@ using UnityEngine;
 
 public enum HexState
 {
-    Intraversable,
     Traversable,
-    OutOFfBounds
+    Untraversable,
+    OutOfBounds
 }
 
 
@@ -31,7 +31,7 @@ public class Hex : Entity
     [SerializeField]
     private List<Hex> allNeighbours;
 
-    [HideInInspector]
+    //[HideInInspector]
     [SerializeField]
     private HexState hexState = HexState.Traversable;
 
@@ -50,6 +50,8 @@ public class Hex : Entity
     private SpriteRenderer highlight;
 
     private SpriteRenderer hover;
+
+    public HexState HexState { get { return hexState; } }
 
     #region API
 
@@ -94,7 +96,7 @@ public class Hex : Entity
         CurrentUnit = unit;
         team = CurrentUnit.Team;
 
-        hexState = HexState.Intraversable;
+        hexState = HexState.Untraversable;
     }
 
     public void Exit()
@@ -229,7 +231,7 @@ public class Hex : Entity
     {
         if (Physics.CheckSphere(transform.position + Vector3.up, 0.3f))
         {
-            SetHexState(HexState.Intraversable, a_inaccessibleColour);
+            SetHexState(HexState.Untraversable, a_inaccessibleColour);
         }
     }
 

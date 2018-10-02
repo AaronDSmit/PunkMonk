@@ -76,6 +76,8 @@ public class EasyDesignEditor : EditorWindow
     private Color inaccessibleColour;
     [SerializeField]
     private float inaccessibleAlpha = 0;
+    [SerializeField]
+    private Color outOfBoundsColour;
 
     // GameFlow
     [SerializeField]
@@ -189,7 +191,8 @@ public class EasyDesignEditor : EditorWindow
         }
 
         traversableColour = new Color(0.0f, 1.0f, 0.0f, 0.35f);
-        inaccessibleColour = new Color(1.0f, 0.0f, 0.0f, 0.35f);
+        inaccessibleColour = new Color(1.0f, 1.0f, 0.0f, 0.35f);
+        outOfBoundsColour = new Color(1.0f, 0.0f, 0.0f, 0.35f);
         //inaccessibleAlpha = 0.4f;
 
         conversation = CreateInstance<Conversation>();
@@ -406,7 +409,7 @@ public class EasyDesignEditor : EditorWindow
 
                         foreach (Hex tile in tiles)
                         {
-                            tile.SetHexState(tileState, traversableColour);
+                            tile.SetHexState(tileState, GetHexStateColour(tileState));
                         }
                     }
                 }
@@ -435,7 +438,7 @@ public class EasyDesignEditor : EditorWindow
 
                         foreach (Hex tile in tiles)
                         {
-                            tile.SetHexState(tileState, traversableColour);
+                            tile.SetHexState(tileState, GetHexStateColour(tileState));
                         }
 
                         setAllNodesTraversable = false;
@@ -537,7 +540,7 @@ public class EasyDesignEditor : EditorWindow
                             openList.RemoveAt(0);
                             closeList.Add(currentHex);
 
-                            currentHex.SetHexState(tileState, traversableColour);
+                            currentHex.SetHexState(tileState, GetHexStateColour(tileState));
 
                             foreach (Hex neighbour in currentHex.Neighbours)
                             {
@@ -1610,6 +1613,21 @@ public class EasyDesignEditor : EditorWindow
     private float Round(float input)
     {
         return 1 * Mathf.Round((input / 1));
+    }
+
+    private Color GetHexStateColour(HexState a_hexState)
+    {
+        switch (a_hexState)
+        {
+            case HexState.Untraversable:
+                return inaccessibleColour;
+            case HexState.Traversable:
+                return traversableColour;
+            case HexState.OutOfBounds:
+                return outOfBoundsColour;
+            default:
+                return Color.black;
+        }
     }
 
 }

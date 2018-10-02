@@ -410,19 +410,19 @@ public class PlayerController : MonoBehaviour
         // Highlight area in range to walk
         if (currentRuleset.actionType == ActionType.movement)
         {
-            HighlightTilesInRange(selectedUnit.MoveRange);
+            HighlightTilesInRange(selectedUnit.MoveRange, null, true, true);
         }
 
         // Highlight area in range to attack
         if (currentRuleset.actionType == ActionType.attack)
         {
-            HighlightTilesInRange(selectedUnit.AttackRange);
+            HighlightTilesInRange(selectedUnit.AttackRange, null, false, true);
         }
 
         // Highlight area in range to special attack
         if (currentRuleset.actionType == ActionType.specialAttack)
         {
-            HighlightTilesInRange(selectedUnit.SpecialAttackRange);
+            HighlightTilesInRange(selectedUnit.SpecialAttackRange, null, true, true);
         }
 
     }
@@ -900,16 +900,7 @@ public class PlayerController : MonoBehaviour
 
         foreach (var enemy in a_enemies)
         {
-            //
-            //
-            //
-            //
-            ///Remove tiles from the walk if they are in this array
-            //
-            //
-            //
-            //
-            //
+
             List<Hex> aiList = grid.GetTilesWithinDistance(enemy.CurrentTile, enemy.MoveRange + enemy.AttackRange, true, true);
 
             foreach (var hex in aiList)
@@ -931,15 +922,15 @@ public class PlayerController : MonoBehaviour
     }
 
     // Apply a permanent highlight to tiles within range of a unit
-    private void HighlightTilesInRange(int a_range, Hex startingHex = null)
+    private void HighlightTilesInRange(int a_range, Hex a_startingHex = null, bool a_checkIfTreversable = true, bool a_addOccupiedTiles = true)
     {
-        if (startingHex == null)
+        if (a_startingHex == null)
         {
-            startingHex = selectedUnit.CurrentTile;
+            a_startingHex = selectedUnit.CurrentTile;
         }
-        List<Hex> area = grid.GetTilesWithinDistance(startingHex, a_range, true, true);
+        List<Hex> area = grid.GetTilesWithinDistance(a_startingHex, a_range, a_checkIfTreversable, a_addOccupiedTiles);
 
-        Manager.instance.HexHighlighter.HighLightArea(area, currentRuleset.InRangeHighlightColour, currentRuleset.InRangeHighlightColour, this, new List<Hex> { startingHex });
+        Manager.instance.HexHighlighter.HighLightArea(area, currentRuleset.InRangeHighlightColour, currentRuleset.InRangeHighlightColour, this, new List<Hex> { a_startingHex });
     }
 
     // remove the highlight from all highlighted tiles

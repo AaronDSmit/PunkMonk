@@ -12,6 +12,14 @@ using UnityEngine;
 /// 
 /// </summary>
 
+public enum HexState
+{
+    Intraversable,
+    Traversable,
+    OutOFfBounds
+}
+
+
 [SelectionBase]
 public class Hex : Entity
 {
@@ -25,7 +33,7 @@ public class Hex : Entity
 
     [HideInInspector]
     [SerializeField]
-    private bool isTraversable = true;
+    private HexState hexState = HexState.Traversable;
 
     [HideInInspector]
     [SerializeField]
@@ -86,13 +94,13 @@ public class Hex : Entity
         CurrentUnit = unit;
         team = CurrentUnit.Team;
 
-        isTraversable = false;
+        hexState = HexState.Intraversable;
     }
 
     public void Exit()
     {
         CurrentUnit = null;
-        isTraversable = true;
+        hexState = HexState.Traversable;
 
         team = TEAM.neutral;
     }
@@ -104,7 +112,7 @@ public class Hex : Entity
     // disable or enable all spriteRenders on the Hex
     public void ShowOverlay(bool a_showOverlay)
     {
-        if (!isTraversable)
+        if (!IsTraversable)
         {
             border.color = new Color(border.color.r, border.color.g, border.color.b, inaccessibleAlpha);
         }
@@ -184,9 +192,9 @@ public class Hex : Entity
         return neighbours[(int)direction];
     }
 
-    public void SetTraversable(bool a_isTraversable, Color a_colour)
+    public void SetHexState(HexState a_hexSate, Color a_colour)
     {
-        isTraversable = a_isTraversable;
+        hexState = a_hexSate;
 
         if (!highlight)
         {
@@ -198,7 +206,7 @@ public class Hex : Entity
 
     public bool IsTraversable
     {
-        get { return isTraversable; }
+        get { return hexState == HexState.Traversable; }
     }
 
     public float GScore { get; set; }
@@ -221,7 +229,7 @@ public class Hex : Entity
     {
         if (Physics.CheckSphere(transform.position + Vector3.up, 0.3f))
         {
-            SetTraversable(false, a_inaccessibleColour);
+            SetHexState(HexState.Intraversable, a_inaccessibleColour);
         }
     }
 
@@ -229,7 +237,7 @@ public class Hex : Entity
     {
         if (!Physics.CheckSphere(transform.position + Vector3.up, 0.3f))
         {
-            SetTraversable(true, a_traversableColour);
+            SetHexState(HexState.Traversable, a_traversableColour);
         }
     }
 

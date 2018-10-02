@@ -25,6 +25,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private InteractionRuleset currentRuleset;
 
+    [SerializeField]
+    private int maxVolt = 3;
+
     #endregion
 
     #region Reference Fields
@@ -50,6 +53,8 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Local Fields
+
+    private int currentVolt = 0;
 
     private bool myTurn;
 
@@ -101,6 +106,24 @@ public class PlayerController : MonoBehaviour
     public EarthUnit EarthUnit { get { return earthUnit; } }
     public LightningUnit LightningUnit { get { return lightningUnit; } }
 
+    public int CurrentVolt
+    {
+        get { return currentVolt; }
+
+        set
+        {
+            currentVolt = Mathf.Clamp(value, 0, maxVolt);
+
+            if (currentVolt > 0)
+            {
+                earthUnit.HasVolt = true;
+                lightningUnit.HasVolt = true;
+            }
+
+            // TODO: Update volt UI
+        }
+    }
+
     #endregion
 
     #region Public Methods
@@ -148,8 +171,6 @@ public class PlayerController : MonoBehaviour
         // Initialise the ToolTip to find the lightning and earth unit
         ToolTip.instance.Init();
     }
-
-
 
     // Toggles between two player units, requires that both units are alive (used by tab)
     public void SwitchSelection()
@@ -356,14 +377,9 @@ public class PlayerController : MonoBehaviour
         lightningDead = false;
     }
 
-    public void GiveLightningVolt(int a_value)
+    public void GiveVolt()
     {
-        lightningUnit.CurrentVolt += a_value;
-    }
-
-    public void GiveEarthVolt(int a_value)
-    {
-        earthUnit.CurrentVolt += a_value;
+        CurrentVolt += 1;
     }
 
     // Set which action of the selected unit is currently being used

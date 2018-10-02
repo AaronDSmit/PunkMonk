@@ -98,7 +98,7 @@ public class EarthUnit : Unit
         //store the target tile
         basicTiles = targetTiles;
 
-        Vector3 tilePos = new Vector3(targetTiles[0].transform.position.x, transform.position.y, targetTiles[0].transform.position.z);
+        //Vector3 tilePos = new Vector3(targetTiles[0].transform.position.x, transform.position.y, targetTiles[0].transform.position.z);
 
 
         if (glamCam)
@@ -120,7 +120,7 @@ public class EarthUnit : Unit
         //call the start call back function
         start();
 
-        CurrentVolt--;
+        //CurrentVolt--;
         hasUsedSpecialAttack = true;
 
         CanSpecialAttack = false;

@@ -131,7 +131,7 @@ public class Spawner : MonoBehaviour
             Unit unit = Instantiate(unitToSpawn, spawnPos, Quaternion.identity);
             unit.Spawn(currentHex);
 
-            unit.CurrentVolt = (hasVolt) ? 1 : 0;
+            unit.HasVolt = hasVolt;
 
             Manager.instance.PlayerController.SubscribeToUnitDeath(unit);
 

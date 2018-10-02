@@ -166,10 +166,7 @@ public class LightningUnit : Unit
         //call the start call back function
         start();
 
-
-
-
-        CurrentVolt--;
+        Manager.instance.PlayerController.CurrentVolt--;
         hasUsedSpecialAttack = true;
 
         CanSpecialAttack = false;

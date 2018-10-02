@@ -180,11 +180,12 @@ public class Unit : LivingEntity
             {
                 myRenderer.material.SetFloat("_HighlightAmount", 0.03f);
             }
-            else if (CompareTag("Enemy") && CurrentVolt > 0)
-            {
-                myRenderer.material.SetFloat("_HighlightAmount", 0.5f);
-                myRenderer.material.SetColor("_HighlightColour", new Color(1.0f, 0.62f, 0.21f));
-            }
+            // TODO: Highlight units that have volt
+            //else if (CompareTag("Enemy") && CurrentVolt > 0)
+            //{
+            //    myRenderer.material.SetFloat("_HighlightAmount", 0.5f);
+            //    myRenderer.material.SetColor("_HighlightColour", new Color(1.0f, 0.62f, 0.21f));
+            //}
             else
             {
                 myRenderer.material.SetInt("_UseHighlight", 0);
@@ -266,12 +267,12 @@ public class Unit : LivingEntity
         CanAttack = true;
         CanMove = true;
         hasUsedSpecialAttack = false;
-        CanSpecialAttack = CurrentVolt > 0;
+        //CanSpecialAttack = CurrentVolt > 0;
     }
 
     public void HasKilled()
     {
-        if (CurrentVolt > 0)
+        //if (CurrentVolt > 0)
         {
             // only set it to true if you haven't already used special attack
             canSpecialAttack = !hasUsedSpecialAttack;

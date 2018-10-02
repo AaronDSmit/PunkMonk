@@ -43,8 +43,7 @@ public class StateTransitionPoint : MonoBehaviour
 
     public bool triggered = false;
 
-    public int voltGivenToEarth;
-    public int voltGivenToLightning;
+    public int voltGiven;
 
     public Hex LightningHex
     {
@@ -108,16 +107,14 @@ public class StateTransitionPoint : MonoBehaviour
         {
             if (Manager.instance.StateController.CurrentGameState == fromState)
             {
-                PlayerController player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+                PlayerController player = Manager.instance.PlayerController;
 
                 player.EncounterKillLimit = numberToKill;
                 player.SetUnitStartingHexes(earthHex, earthDirection, lightningHex, lightningDirection);
 
-                player.GiveEarthVolt(voltGivenToEarth);
-                player.GiveLightningVolt(voltGivenToLightning);
+                player.CurrentVolt += voltGiven;
 
-
-                if(conversation != null)
+                if (conversation != null)
                 {
                     Manager.instance.DialogueManager.CurrentConversation = conversation;
                 }

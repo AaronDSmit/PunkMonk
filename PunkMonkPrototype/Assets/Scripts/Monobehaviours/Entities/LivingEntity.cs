@@ -35,9 +35,9 @@ public class LivingEntity : Entity
 
     #region Local Fields
 
-    private int currentHealth;
+    private bool hasVolt = false;
 
-    private int currentVolt = 0;
+    private int currentHealth;
 
     private bool dead;
 
@@ -48,22 +48,15 @@ public class LivingEntity : Entity
 
     #region Properties
 
-    public int CurrentVolt
+    public bool HasVolt
     {
-        get { return currentVolt; }
+        get { return hasVolt; }
 
         set
         {
-            // Set the volt, making sure it isn't above 
-            currentVolt = Mathf.Clamp(value, 0, maxVolt);
+            hasVolt = value;
 
-            // Update the volt bar
-            if (hasVoltBar)
-            {
-                voltBar.CurrentHealth = CurrentVolt;
-            }
-
-            if (CompareTag("Enemy") && currentVolt > 0)
+            if (CompareTag("Enemy") && hasVolt)
             {
                 myRenderer.material.SetFloat("_HighlightAmount", 0.5f);
                 myRenderer.material.SetColor("_HighlightColour", new Color(1.0f, 0.62f, 0.21f));
@@ -111,10 +104,17 @@ public class LivingEntity : Entity
 
         if (currentHealth <= 0.0f && !dead)
         {
-            if (CurrentVolt > 0)
+            if (HasVolt)
             {
-                a_damageFrom.CurrentVolt++;
-                a_damageFrom.HasKilled();
+                if (CompareTag("Enemy"))
+                {
+                    Manager.instance.PlayerController.GiveVolt();
+                }
+                else
+                {
+                    a_damageFrom.HasVolt = true;
+                    a_damageFrom.HasKilled();
+                }
             }
 
             Die();
@@ -140,12 +140,6 @@ public class LivingEntity : Entity
     {
         healthBar.MaxHealth = MaxHealth;
         healthBar.CurrentHealth = CurrentHealth;
-
-        if (hasVoltBar)
-        {
-            voltBar.MaxHealth = maxVolt;
-            voltBar.CurrentHealth = CurrentVolt;
-        }
     }
 
     #endregion

@@ -53,6 +53,9 @@ public class EasyDesignEditor : EditorWindow
     private bool hasTriggerSelected = false;
 
     [SerializeField]
+    private HexState tileState = HexState.Traversable;
+
+    [SerializeField]
     private bool setAllNodesTraversable = false;
     [SerializeField]
     private bool setAllNodesInaccessible = false;
@@ -111,10 +114,7 @@ public class EasyDesignEditor : EditorWindow
     private HexDirection lightningDirection;
 
     [SerializeField]
-    private int voltGivenToEarth;
-
-    [SerializeField]
-    private int voltGivenToLightning;
+    private int voltGiven;
 
     // Dialogue
     [SerializeField]
@@ -381,13 +381,22 @@ public class EasyDesignEditor : EditorWindow
 
                 #region Set Selected Tiles To Traversable/Inaccessible
 
-                GUILayout.Label("Set Selected Tiles To", centeredText);
+                EditorGUILayout.EndHorizontal();
+
+                EditorGUILayout.BeginHorizontal();
+
+                GUILayout.Label("State To Set Tiles", centeredText);
+                tileState = (HexState)EditorGUILayout.EnumPopup(tileState);
+
+                EditorGUILayout.EndHorizontal();
+
+                EditorGUILayout.BeginHorizontal();
 
                 EditorGUI.BeginDisabledGroup(!hasTileSelected);
 
                 EditorGUILayout.BeginHorizontal();
-
-                if (ColouredButton("Traversable", greenColour))
+                
+                if (ColouredButton("Set Selected", greenColour))
                 {
                     GameObject[] selectedObjects = Selection.gameObjects;
 
@@ -397,22 +406,7 @@ public class EasyDesignEditor : EditorWindow
 
                         foreach (Hex tile in tiles)
                         {
-                            tile.SetTraversable(true, traversableColour);
-                        }
-                    }
-                }
-
-                if (ColouredButton("Inaccessible", redColour))
-                {
-                    GameObject[] selectedObjects = Selection.gameObjects;
-
-                    foreach (GameObject obj in selectedObjects)
-                    {
-                        Hex[] tiles = obj.GetComponentsInChildren<Hex>();
-
-                        foreach (Hex tile in tiles)
-                        {
-                            tile.SetTraversable(false, inaccessibleColour);
+                            tile.SetHexState(tileState, traversableColour);
                         }
                     }
                 }
@@ -423,11 +417,7 @@ public class EasyDesignEditor : EditorWindow
 
                 #endregion
 
-                EditorGUILayout.Space();
-
                 #region Set All Tiles To Traversable/Inaccessible
-
-                GUILayout.Label("Set All Tiles To", centeredText);
 
                 EditorGUILayout.BeginHorizontal();
 
@@ -435,7 +425,7 @@ public class EasyDesignEditor : EditorWindow
                 {
                     BeginColouredVerticalBox(orangeColour);
 
-                    GUILayout.Label("All Traversable?", centeredText);
+                    GUILayout.Label("Set All Tiles?", centeredText);
 
                     EditorGUILayout.BeginHorizontal();
 
@@ -445,7 +435,7 @@ public class EasyDesignEditor : EditorWindow
 
                         foreach (Hex tile in tiles)
                         {
-                            tile.SetTraversable(true, traversableColour);
+                            tile.SetHexState(tileState, traversableColour);
                         }
 
                         setAllNodesTraversable = false;
@@ -462,46 +452,9 @@ public class EasyDesignEditor : EditorWindow
                 }
                 else if (!setAllNodesInaccessible)
                 {
-                    if (ColouredButton("Traversable", greenColour))
+                    if (ColouredButton("Set All Tiles", greenColour))
                     {
                         setAllNodesTraversable = true;
-                    }
-                }
-
-                if (!setAllNodesTraversable && setAllNodesInaccessible)
-                {
-                    BeginColouredVerticalBox(orangeColour);
-
-                    GUILayout.Label("All Inaccessible?", centeredText);
-
-                    EditorGUILayout.BeginHorizontal();
-
-                    if (ColouredButton("yes!", greenColour))
-                    {
-                        Hex[] tiles = grid.GetComponentsInChildren<Hex>();
-
-                        foreach (Hex tile in tiles)
-                        {
-                            tile.SetTraversable(false, inaccessibleColour);
-                        }
-
-                        setAllNodesInaccessible = false;
-                    }
-
-                    if (ColouredButton("No...", redColour))
-                    {
-                        setAllNodesInaccessible = false;
-                    }
-
-                    EditorGUILayout.EndHorizontal();
-
-                    EditorGUILayout.EndVertical();
-                }
-                else if (!setAllNodesTraversable)
-                {
-                    if (ColouredButton("Inaccessible", redColour))
-                    {
-                        setAllNodesInaccessible = true;
                     }
                 }
 
@@ -509,11 +462,7 @@ public class EasyDesignEditor : EditorWindow
 
                 #endregion
 
-                EditorGUILayout.Space();
-
                 #region Auto Traversable/Inaccessible
-
-                GUILayout.Label("Automatically Set Tiles To", centeredText);
 
                 EditorGUILayout.BeginHorizontal();
 
@@ -521,7 +470,7 @@ public class EasyDesignEditor : EditorWindow
                 {
                     BeginColouredVerticalBox(orangeColour);
 
-                    GUILayout.Label("Automatically Traversable?", centeredText);
+                    GUILayout.Label("Set Automatically?", centeredText);
 
                     EditorGUILayout.BeginHorizontal();
 
@@ -548,46 +497,9 @@ public class EasyDesignEditor : EditorWindow
                 }
                 else if (!autoAllNodesInaccessible)
                 {
-                    if (ColouredButton("Traversable", greenColour))
+                    if (ColouredButton("Set Automaticlly", greenColour))
                     {
                         autoAllNodesTraversable = true;
-                    }
-                }
-
-                if (!autoAllNodesTraversable && autoAllNodesInaccessible)
-                {
-                    BeginColouredVerticalBox(orangeColour);
-
-                    GUILayout.Label("Automatically Inaccessible?", centeredText);
-
-                    EditorGUILayout.BeginHorizontal();
-
-                    if (ColouredButton("yes!", greenColour))
-                    {
-                        Hex[] tiles = grid.GetComponentsInChildren<Hex>();
-
-                        foreach (Hex tile in tiles)
-                        {
-                            tile.InaccessibleCheck(inaccessibleColour);
-                        }
-
-                        autoAllNodesInaccessible = false;
-                    }
-
-                    if (ColouredButton("No...", redColour))
-                    {
-                        autoAllNodesInaccessible = false;
-                    }
-
-                    EditorGUILayout.EndHorizontal();
-
-                    EditorGUILayout.EndVertical();
-                }
-                else if (!autoAllNodesTraversable)
-                {
-                    if (ColouredButton("Inaccessible", redColour))
-                    {
-                        autoAllNodesInaccessible = true;
                     }
                 }
 
@@ -595,11 +507,7 @@ public class EasyDesignEditor : EditorWindow
 
                 #endregion
 
-                EditorGUILayout.Space();
-
                 #region Fill Tiles Traversable/Inaccessible
-
-                GUILayout.Label("Fill Area", centeredText);
 
                 EditorGUI.BeginDisabledGroup(!hasTileSelected || Selection.gameObjects.Length != 1);
 
@@ -609,7 +517,7 @@ public class EasyDesignEditor : EditorWindow
                 {
                     BeginColouredVerticalBox(orangeColour);
 
-                    GUILayout.Label("Fil Traversable?", centeredText);
+                    GUILayout.Label("Fill Traversable?", centeredText);
 
                     EditorGUILayout.BeginHorizontal();
 
@@ -629,7 +537,7 @@ public class EasyDesignEditor : EditorWindow
                             openList.RemoveAt(0);
                             closeList.Add(currentHex);
 
-                            currentHex.SetTraversable(true, traversableColour);
+                            currentHex.SetHexState(tileState, traversableColour);
 
                             foreach (Hex neighbour in currentHex.Neighbours)
                             {
@@ -654,64 +562,9 @@ public class EasyDesignEditor : EditorWindow
                 }
                 else if (!fillNodesInaccessible)
                 {
-                    if (ColouredButton("Traversable", greenColour))
+                    if (ColouredButton("Fill Area", greenColour))
                     {
                         fillNodesTraversable = true;
-                    }
-                }
-
-                if (!fillNodesTraversable && fillNodesInaccessible)
-                {
-                    BeginColouredVerticalBox(orangeColour);
-
-                    GUILayout.Label("Fill Inaccessible?", centeredText);
-
-                    EditorGUILayout.BeginHorizontal();
-
-                    if (ColouredButton("Yes!", greenColour))
-                    {
-                        Hex hex = Selection.gameObjects[0].GetComponent<Hex>();
-                        Hex currentHex;
-
-                        List<Hex> openList = new List<Hex>();
-                        List<Hex> closeList = new List<Hex>();
-
-                        openList.Add(hex);
-
-                        while (openList.Count > 0)
-                        {
-                            currentHex = openList[0];
-                            openList.RemoveAt(0);
-                            closeList.Add(currentHex);
-
-                            currentHex.SetTraversable(false, inaccessibleColour);
-
-                            foreach (Hex neighbour in currentHex.Neighbours)
-                            {
-                                if (neighbour.IsTraversable && !openList.Contains(neighbour) && !closeList.Contains(neighbour))
-                                {
-                                    openList.Add(neighbour);
-                                }
-                            }
-                        }
-
-                        fillNodesInaccessible = false;
-                    }
-
-                    if (ColouredButton("No...", redColour))
-                    {
-                        fillNodesInaccessible = false;
-                    }
-
-                    EditorGUILayout.EndHorizontal();
-
-                    EditorGUILayout.EndVertical();
-                }
-                else if (!fillNodesTraversable)
-                {
-                    if (ColouredButton("Inaccessible", redColour))
-                    {
-                        fillNodesInaccessible = true;
                     }
                 }
 
@@ -1159,8 +1012,7 @@ public class EasyDesignEditor : EditorWindow
                         sceneTransition.TargetState = targetState;
                         sceneTransition.CurrentState = currentState;
                         sceneTransition.numberToKill = numberToKill;
-                        sceneTransition.voltGivenToEarth = voltGivenToEarth;
-                        sceneTransition.voltGivenToLightning = voltGivenToLightning;
+                        sceneTransition.voltGiven = voltGiven;
                         sceneTransition.EarthDirection = earthDirection;
                         sceneTransition.LightningDirection = lightningDirection;
                         sceneTransition.Conversation = convo;
@@ -1180,8 +1032,7 @@ public class EasyDesignEditor : EditorWindow
                         sceneTransition.TargetState = targetState;
                         sceneTransition.CurrentState = currentState;
                         sceneTransition.numberToKill = numberToKill;
-                        sceneTransition.voltGivenToEarth = voltGivenToEarth;
-                        sceneTransition.voltGivenToLightning = voltGivenToLightning;
+                        sceneTransition.voltGiven = voltGiven;
 
                         sceneTransition.Conversation = convo;
 
@@ -1225,17 +1076,9 @@ public class EasyDesignEditor : EditorWindow
 
                 EditorGUILayout.BeginHorizontal();
 
-                GUILayout.Label("Give Clade Volt: ");
+                GUILayout.Label("Volt Given to the player");
 
-                voltGivenToEarth = EditorGUILayout.IntField(voltGivenToEarth);
-
-                EditorGUILayout.EndHorizontal();
-
-                EditorGUILayout.BeginHorizontal();
-
-                GUILayout.Label("Give Gen Volt: ");
-
-                voltGivenToLightning = EditorGUILayout.IntField(voltGivenToLightning);
+                voltGiven = EditorGUILayout.IntField(voltGiven);
 
                 EditorGUILayout.EndHorizontal();
 
@@ -1685,8 +1528,7 @@ public class EasyDesignEditor : EditorWindow
 
             currentID = selectedTransitionPoints[0].index;
 
-            voltGivenToEarth = selectedTransitionPoints[0].voltGivenToEarth;
-            voltGivenToLightning = selectedTransitionPoints[0].voltGivenToLightning;
+            voltGiven = selectedTransitionPoints[0].voltGiven;
         }
     }
 

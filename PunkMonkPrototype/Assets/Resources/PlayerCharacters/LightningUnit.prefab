@@ -669,7 +669,6 @@ MonoBehaviour:
   dissolveMat: {fileID: 2100000, guid: 25b0cd8d1848b1f4a83e3fa96f6d0869, type: 2}
   deathAnimationTime: 1
   maxHealth: 5
-  maxVolt: 3
   actions:
   - {fileID: 11400000, guid: 2f4429e83ae258647a203d36c3f14919, type: 2}
   - {fileID: 11400000, guid: c8d6d920f1429604189ab5d760244910, type: 2}
@@ -680,8 +679,9 @@ MonoBehaviour:
   rotationTime: 0.2
   walkSpeed: 5
   projectilePosition: {fileID: 4970049176054302}
-  glamCam: 1
+  glamCam: 0
   glamCamChance: 100
+  voltEffect: {fileID: 0}
   lightningPrefab: {fileID: 106988, guid: 15dec7b07032b2f4aa6f855bfbe120f7, type: 2}
   specialDamage: 4
   specialDamgeDelayTimer: 0.5

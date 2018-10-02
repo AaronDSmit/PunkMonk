@@ -28,6 +28,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private int maxVolt = 3;
 
+    [SerializeField]
+    private int currentVolt = 0;
+
     #endregion
 
     #region Reference Fields
@@ -54,7 +57,6 @@ public class PlayerController : MonoBehaviour
 
     #region Local Fields
 
-    private int currentVolt = 0;
 
     private bool myTurn;
 

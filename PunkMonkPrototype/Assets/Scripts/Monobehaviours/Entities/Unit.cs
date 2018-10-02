@@ -518,5 +518,12 @@ public class Unit : LivingEntity
         cameraController.onGlamCamEnd -= healthBar.Show;
     }
 
+    protected override void VoltChanged()
+    {
+        base.VoltChanged();
+
+        CanSpecialAttack = HasVolt;
+    }
+
     #endregion
 }

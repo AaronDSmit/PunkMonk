@@ -181,7 +181,7 @@ public class GridManager : MonoBehaviour
 
 
                 }
-                else if (!returnList.Contains(neighbour))
+                else if (!returnList.Contains(neighbour) && neighbour.HexState != HexState.OutOfBounds)
                 {
                     neighbour.GScore = HexUtility.Distance(currentTile, neighbour) + currentTile.GScore;
                     if (neighbour.GScore < range + 1)

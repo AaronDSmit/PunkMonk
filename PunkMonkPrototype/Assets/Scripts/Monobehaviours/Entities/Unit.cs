@@ -267,7 +267,7 @@ public class Unit : LivingEntity
         CanAttack = true;
         CanMove = true;
         hasUsedSpecialAttack = false;
-        //CanSpecialAttack = CurrentVolt > 0;
+        CanSpecialAttack = HasVolt;
     }
 
     public void HasKilled()
@@ -318,14 +318,10 @@ public class Unit : LivingEntity
         if (a_newstate == GameState.battle)
         {
             healthBar.Show();
-            if (hasVoltBar)
-                voltBar.Show();
         }
         else if (a_oldstate == GameState.battle)
         {
             healthBar.Hide();
-            if (hasVoltBar)
-                voltBar.Hide();
         }
     }
 

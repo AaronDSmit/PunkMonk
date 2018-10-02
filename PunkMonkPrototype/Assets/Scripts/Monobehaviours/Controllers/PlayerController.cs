@@ -119,6 +119,11 @@ public class PlayerController : MonoBehaviour
                 earthUnit.HasVolt = true;
                 lightningUnit.HasVolt = true;
             }
+            else
+            {
+                earthUnit.HasVolt = false;
+                lightningUnit.HasVolt = false;
+            }
 
             // TODO: Update volt UI
         }

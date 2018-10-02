@@ -19,8 +19,6 @@ public class LivingEntity : Entity
     [SerializeField]
     protected int maxVolt = 3;
     [Tooltip("If this unit has a volt bar or not")]
-    [SerializeField]
-    protected bool hasVoltBar = false;
 
     #endregion
 
@@ -29,7 +27,6 @@ public class LivingEntity : Entity
     protected Renderer myRenderer;
 
     protected SegmentedHealthBar healthBar;
-    protected SegmentedHealthBar voltBar;
 
     #endregion
 
@@ -132,8 +129,6 @@ public class LivingEntity : Entity
         myRenderer = GetComponentInChildren<Renderer>();
         SegmentedHealthBar[] healthBars = GetComponentsInChildren<SegmentedHealthBar>();
         healthBar = healthBars[0];
-        voltBar = hasVoltBar ? healthBars[1] : null;
-
     }
 
     protected virtual void Start()
@@ -157,8 +152,6 @@ public class LivingEntity : Entity
             {
                 Destroy(healthBar.gameObject);
             }
-            if (voltBar)
-                Destroy(voltBar.gameObject);
 
             if (OnDeath != null)
             {

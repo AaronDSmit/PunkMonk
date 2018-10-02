@@ -398,7 +398,7 @@ public class EasyDesignEditor : EditorWindow
                 EditorGUI.BeginDisabledGroup(!hasTileSelected);
 
                 EditorGUILayout.BeginHorizontal();
-                
+
                 if (ColouredButton("Set Selected", greenColour))
                 {
                     GameObject[] selectedObjects = Selection.gameObjects;
@@ -574,6 +574,31 @@ public class EasyDesignEditor : EditorWindow
                 EditorGUILayout.EndHorizontal();
 
                 EditorGUI.EndDisabledGroup();
+
+                EditorGUILayout.EndVertical();
+
+                EditorGUILayout.BeginVertical();
+
+                GUILayout.Label("Use this button if your grid is out dated but still has the correct colours", centeredText);
+
+                if (ColouredButton("Update Tiles", orangeColour))
+                {
+                    Hex[] hexs = grid.GetComponentsInChildren<Hex>();
+
+                    foreach (Hex hex in hexs)
+                    {
+                        SpriteRenderer highlight = hex.GetComponentsInChildren<SpriteRenderer>()[1];
+
+                        if (highlight.color == new Color(0.0f, 1.0f, 0.0f, 0.35f))
+                        {
+                            hex.SetHexState(HexState.Traversable, traversableColour);
+                        }
+                        else if (highlight.color == new Color(1.0f, 0.0f, 0.0f, 0.35f))
+                        {
+                            hex.SetHexState(HexState.OutOfBounds, outOfBoundsColour);
+                        }
+                    }
+                }
 
                 #endregion
 

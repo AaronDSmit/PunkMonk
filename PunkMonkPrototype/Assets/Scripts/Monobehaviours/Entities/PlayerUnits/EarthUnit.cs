@@ -33,6 +33,7 @@ public class EarthUnit : Unit
     [SerializeField]
     private AnimationCurve ZCurve;
 
+    private Cinemachine.CinemachineVirtualCamera enemyLookAtCamera;
     private Vector3 specialTargetPosition;
     private Vector3 specialStartPosition;
     private float specialTimer;
@@ -40,6 +41,7 @@ public class EarthUnit : Unit
     private Vector3 specialVecBetween;
     private Hex[] specialTiles;
     private System.Action specialFinishedFunc;
+    private List<Unit> specialAffectedUnits = new List<Unit>();
     private float specialGlamCamTimer = 0;
 
     private Hex[] basicTiles;
@@ -93,6 +95,8 @@ public class EarthUnit : Unit
         //call the start call back function
         start();
 
+        enemyLookAtCamera = transform.GetChild(7).GetComponent<Cinemachine.CinemachineVirtualCamera>();
+
         CanAttack = false;
 
         //store the target tile
@@ -144,13 +148,38 @@ public class EarthUnit : Unit
         //get the vector between the start position and the target position
         specialVecBetween = specialTargetPosition - specialStartPosition;
 
+
+        //Start the Update Loop
+        specialAttack = true;
+
         //start the glamCam
         if (glamCam)
         {
             if (Random.Range(0, 100) <= glamCamChance)
             {
-                cameraController.PlayGlamCam(this);
-                specialGlamCamTimer = 2;
+                //cameraController.PlayGlamCam(this);
+                timeline.Play();
+                //specialAffectedUnits.Clear();
+
+                ////go though each tile and deal damage to the enemy
+                //foreach (Hex x in specialTiles)
+                //{
+                //    //if there is a unit
+                //    if (x.CurrentUnit != null)
+                //    {
+                //        //make sure we arent damaging the player or team
+                //        if (x.CurrentUnit.Team != TEAM.player)
+                //        {
+                //            //deal damage to that unit
+                //            specialAffectedUnits.Add(x.CurrentUnit);
+                //        }
+                //    }
+                //}
+
+
+
+                specialGlamCamTimer = (float)timeline.duration;
+
             }
 
             else
@@ -158,8 +187,7 @@ public class EarthUnit : Unit
                 specialGlamCamTimer = 0;
             }
         }
-        //Start the Update Loop
-        specialAttack = true;
+
     }
 
 
@@ -273,5 +301,7 @@ public class EarthUnit : Unit
         //call the finished call back function
         specialFinishedFunc();
     }
+
+
 
 }

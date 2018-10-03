@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Playables;
 /// <summary>
 /// 
 /// </summary>
@@ -46,6 +46,7 @@ public class Unit : LivingEntity
     #region Reference Fields
 
     protected CameraController cameraController;
+    protected PlayableDirector timeline;
 
     #endregion
 
@@ -302,6 +303,8 @@ public class Unit : LivingEntity
         canAttack = true;
         canMove = true;
         canSpecialAttack = false;
+
+        timeline = GetComponent<PlayableDirector>();
 
         cameraController.onGlamCamStart += healthBar.Hide;
         cameraController.onGlamCamEnd += healthBar.Show;

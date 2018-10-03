@@ -354,44 +354,44 @@ public class CameraController : MonoBehaviour
 
 
 
-    public void PlayGlamCam(Unit a_unit)
-    {
-        if (onGlamCamStart != null)
-        {
-            onGlamCamStart();
-        }
-        transform.GetChild(1).gameObject.SetActive(false);
-        a_unit.transform.GetChild(5).gameObject.SetActive(true);
+    //public void PlayGlamCam(Unit a_unit)
+    //{
+    //    if (onGlamCamStart != null)
+    //    {
+    //        onGlamCamStart();
+    //    }
+    //    transform.GetChild(1).gameObject.SetActive(false);
+    //    a_unit.transform.GetChild(5).gameObject.SetActive(true);
 
-        StartCoroutine(ChangeGlamCam(a_unit));
+    //    StartCoroutine(ChangeGlamCam(a_unit));
 
-    }
-
-
-    private IEnumerator ChangeGlamCam(Unit a_unit)
-    {
-        yield return new WaitForSeconds(cinemachineBrain.m_DefaultBlend.m_Time);
+    //}
 
 
-        a_unit.transform.GetChild(5).gameObject.SetActive(false);
-        a_unit.transform.GetChild(6).gameObject.SetActive(true);
+    //private IEnumerator ChangeGlamCam(Unit a_unit)
+    //{
+    //    yield return new WaitForSeconds(cinemachineBrain.m_DefaultBlend.m_Time);
 
-        Manager.instance.transform.GetChild(0).GetComponent<MenuHelper>().PlayBlackBars(cinemachineBrain.m_CustomBlends.m_CustomBlends[0].m_Blend.m_Time);
 
-        StartCoroutine(EndGlamCam(a_unit));
-    }
+    //    a_unit.transform.GetChild(5).gameObject.SetActive(false);
+    //    a_unit.transform.GetChild(6).gameObject.SetActive(true);
 
-    private IEnumerator EndGlamCam(Unit a_unit)
-    {
-        yield return new WaitForSeconds(cinemachineBrain.m_CustomBlends.m_CustomBlends[0].m_Blend.m_Time);
+    //    Manager.instance.transform.GetChild(0).GetComponent<MenuHelper>().PlayBlackBars(cinemachineBrain.m_CustomBlends.m_CustomBlends[0].m_Blend.m_Time);
 
-        Manager.instance.transform.GetChild(0).GetComponent<MenuHelper>().StopBlackBars();
+    //    StartCoroutine(EndGlamCam(a_unit));
+    //}
 
-        a_unit.transform.GetChild(6).gameObject.SetActive(false);
-        transform.GetChild(1).gameObject.SetActive(true);
+    //private IEnumerator EndGlamCam(Unit a_unit)
+    //{
+    //    yield return new WaitForSeconds(cinemachineBrain.m_CustomBlends.m_CustomBlends[0].m_Blend.m_Time);
 
-        onGlamCamEnd();
-    }
+    //    Manager.instance.transform.GetChild(0).GetComponent<MenuHelper>().StopBlackBars();
+
+    //    a_unit.transform.GetChild(6).gameObject.SetActive(false);
+    //    transform.GetChild(1).gameObject.SetActive(true);
+
+    //    onGlamCamEnd();
+    //}
 
 
 

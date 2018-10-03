@@ -36,6 +36,9 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Sprite hexIconEmpty;
 
+    [SerializeField]
+    private Slider voltBar;
+
     #endregion
 
     #region Reference Fields
@@ -54,7 +57,6 @@ public class UIManager : MonoBehaviour
 
     private MenuHelper menuHelper;
 
-
     #endregion
 
     #region Local Fields
@@ -72,6 +74,8 @@ public class UIManager : MonoBehaviour
     {
         get { return isReady; }
     }
+
+    public Slider VoltBar { get { return voltBar; } }
 
     #endregion
 

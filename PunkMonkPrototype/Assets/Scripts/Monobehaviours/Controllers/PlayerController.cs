@@ -127,7 +127,7 @@ public class PlayerController : MonoBehaviour
                 lightningUnit.HasVolt = false;
             }
 
-            // TODO: Update volt UI
+            Manager.instance.UIController.VoltBar.value = currentVolt;
         }
     }
 

@@ -66,7 +66,7 @@ public class EasyDesignEditor : EditorWindow
     private bool autoAllNodesInaccessible = false;
 
     [SerializeField]
-    private bool fillNodesTraversable = false;
+    private bool fillNodes = false;
     [SerializeField]
     private bool fillNodesInaccessible = false;
 
@@ -516,11 +516,11 @@ public class EasyDesignEditor : EditorWindow
 
                 EditorGUILayout.BeginHorizontal();
 
-                if (!fillNodesInaccessible && fillNodesTraversable)
+                if (fillNodes)
                 {
                     BeginColouredVerticalBox(orangeColour);
 
-                    GUILayout.Label("Fill Traversable?", centeredText);
+                    GUILayout.Label("Fill Nodes?", centeredText);
 
                     EditorGUILayout.BeginHorizontal();
 
@@ -528,6 +528,8 @@ public class EasyDesignEditor : EditorWindow
                     {
                         Hex hex = Selection.gameObjects[0].GetComponent<Hex>();
                         Hex currentHex;
+
+                        HexState originalHexState = hex.HexState;
 
                         List<Hex> openList = new List<Hex>();
                         List<Hex> closeList = new List<Hex>();
@@ -544,30 +546,30 @@ public class EasyDesignEditor : EditorWindow
 
                             foreach (Hex neighbour in currentHex.Neighbours)
                             {
-                                if (!neighbour.IsTraversable && !openList.Contains(neighbour) && !closeList.Contains(neighbour))
+                                if (neighbour.HexState == originalHexState && !openList.Contains(neighbour) && !closeList.Contains(neighbour))
                                 {
                                     openList.Add(neighbour);
                                 }
                             }
                         }
 
-                        fillNodesTraversable = false;
+                        fillNodes = false;
                     }
 
                     if (ColouredButton("No...", redColour))
                     {
-                        fillNodesTraversable = false;
+                        fillNodes = false;
                     }
 
                     EditorGUILayout.EndHorizontal();
 
                     EditorGUILayout.EndVertical();
                 }
-                else if (!fillNodesInaccessible)
+                else
                 {
                     if (ColouredButton("Fill Area", greenColour))
                     {
-                        fillNodesTraversable = true;
+                        fillNodes = true;
                     }
                 }
 

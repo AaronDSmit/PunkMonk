@@ -28,7 +28,9 @@ public class EasyDesignEditor : EditorWindow
     [SerializeField]
     private static GridManager grid;
     [SerializeField]
-    private static float HexScale = 1;
+    private static float hexScale = 1;
+    [SerializeField]
+    private static float hexAlpha = 0.35f;
 
     // GridManager Generation
     [SerializeField]
@@ -189,10 +191,10 @@ public class EasyDesignEditor : EditorWindow
                 mapHeight = int.Parse(mapSize[1]) + 1;
             }
         }
-
-        traversableColour = new Color(0.0f, 1.0f, 0.0f, 0.35f);
-        inaccessibleColour = new Color(1.0f, 1.0f, 0.0f, 0.35f);
-        outOfBoundsColour = new Color(1.0f, 0.0f, 0.0f, 0.35f);
+        
+        traversableColour = new Color(0.0f, 1.0f, 0.0f, hexAlpha);
+        inaccessibleColour = new Color(1.0f, 1.0f, 0.0f, hexAlpha);
+        outOfBoundsColour = new Color(1.0f, 0.0f, 0.0f, hexAlpha);
         //inaccessibleAlpha = 0.4f;
 
         conversation = CreateInstance<Conversation>();
@@ -235,7 +237,7 @@ public class EasyDesignEditor : EditorWindow
                 }
             }
 
-            HexUtility.UpdateScale(HexScale);
+            HexUtility.UpdateScale(hexScale);
         }
         else if (state == PlayModeStateChange.EnteredEditMode)
         {
@@ -350,7 +352,7 @@ public class EasyDesignEditor : EditorWindow
 
                     if (ColouredButton("Yes!", greenColour))
                     {
-                        HexUtility.UpdateScale(HexScale);
+                        HexUtility.UpdateScale(hexScale);
 
                         if (grid.GenerateGrid(mapWidth, mapHeight, traversableColour))
                         {
@@ -659,10 +661,31 @@ public class EasyDesignEditor : EditorWindow
                 EditorGUILayout.EndHorizontal();
 
                 EditorGUILayout.BeginHorizontal();
+                {
+                    GUILayout.Label("Hex Scale:");
+                    hexScale = EditorGUILayout.FloatField(hexScale);
+                }
+                EditorGUILayout.EndHorizontal();
 
-                GUILayout.Label("Hex Scale:");
-                HexScale = EditorGUILayout.FloatField(HexScale);
+                EditorGUILayout.BeginHorizontal();
+                {
+                    GUILayout.Label("Global Hex Alpha:");
+                    float prevHexAlpha = hexAlpha;
+                    hexAlpha = EditorGUILayout.Slider(hexAlpha, 0.0f, 1.0f);
+                    if (prevHexAlpha != hexAlpha)
+                    {
+                        traversableColour = new Color(traversableColour.r, traversableColour.g, traversableColour.b, hexAlpha);
+                        inaccessibleColour = new Color(inaccessibleColour.r, inaccessibleColour.g, inaccessibleColour.b, hexAlpha);
+                        outOfBoundsColour = new Color(outOfBoundsColour.r, outOfBoundsColour.g, outOfBoundsColour.b, hexAlpha);
 
+                        Hex[] tiles = grid.GetComponentsInChildren<Hex>();
+
+                        foreach (Hex tile in tiles)
+                        {
+                            tile.SetHexState(tile.HexState, GetHexStateColour(tile.HexState));
+                        }
+                    }
+                }
                 EditorGUILayout.EndHorizontal();
             }
 

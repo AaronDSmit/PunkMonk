@@ -58,6 +58,7 @@ public static class HexUtility
     static int[] snapAngles = { 30, 90, 150, 210, 270, 330 };
     public static HexDirection VecToHexDirection(Vector3 a_direction)
     {
+        //TODO: Make sure this works
         float angle = Vector3.SignedAngle(Vector3.forward, a_direction, Vector3.up);
 
         angle = ((int)Mathf.Round(angle / 30.0f)) * 30;

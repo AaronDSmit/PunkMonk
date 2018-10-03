@@ -24,6 +24,7 @@ public class MissileUnit : AI_Agent
             float distanceToLightning = Vector3.Distance(CurrentTile.transform.position, Manager.instance.PlayerController.LightningUnit.CurrentTile.transform.position);
             Hex furthestPlayerTile = distanceToEarth > distanceToLightning ? Manager.instance.PlayerController.EarthUnit.CurrentTile : Manager.instance.PlayerController.LightningUnit.CurrentTile;
 
+            // Attack the hex behind the furthest player
             Hex hexToAttack = furthestPlayerTile.GetNeighbour(HexUtility.VecToHexDirection(furthestPlayerTile.transform.position - CurrentTile.transform.position));
 
             tilesToAttack = a_grid.GetTilesWithinDistance(hexToAttack, 2, true, true).ToArray();

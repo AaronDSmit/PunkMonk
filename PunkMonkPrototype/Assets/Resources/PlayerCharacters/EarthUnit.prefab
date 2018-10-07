@@ -347,7 +347,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1932661507485238}
   m_LocalRotation: {x: 0.1875324, y: 0.29735348, z: -0.059686966, w: 0.9342645}
-  m_LocalPosition: {x: -7.17, y: 6.49, z: -8.5}
+  m_LocalPosition: {x: -7.27, y: 7.67, z: -10.15}
   m_LocalScale: {x: 1.0000001, y: 1.0000002, z: 1.0000001}
   m_Children:
   - {fileID: 4750984972120730}
@@ -394,8 +394,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1826838626591276}
   m_LocalRotation: {x: 0.1875324, y: 0.29735348, z: -0.059686966, w: 0.9342645}
-  m_LocalPosition: {x: -5.54, y: 5.31, z: -6.21}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -5.99, y: 6.1, z: -8.34}
+  m_LocalScale: {x: 1.0000001, y: 1.0000002, z: 1.0000001}
   m_Children:
   - {fileID: 4869975742783950}
   m_Father: {fileID: 4319087534689710}
@@ -618,8 +618,8 @@ MonoBehaviour:
   rotationTime: 0.2
   walkSpeed: 5
   projectilePosition: {fileID: 4535602620240850}
-  glamCam: 0
-  glamCamChance: 100
+  glamCam: 1
+  glamCamChance: 15
   voltEffect: {fileID: 0}
   basicDamage: 2
   basicDamgeDelayTimer: 0
@@ -732,7 +732,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: -13.752207, y: 0.54358196, z: -7.5700645}
+  m_FollowOffset: {x: -14.992212, y: 1.443582, z: -9.320065}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -784,7 +784,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: -12.132208, y: -0.6264181, z: -5.290064}
+  m_FollowOffset: {x: -10.852217, y: -2.1264186, z: -3.4800587}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1

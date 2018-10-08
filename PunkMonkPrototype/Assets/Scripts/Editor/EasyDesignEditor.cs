@@ -69,8 +69,6 @@ public class EasyDesignEditor : EditorWindow
 
     [SerializeField]
     private bool fillNodes = false;
-    [SerializeField]
-    private bool fillNodesInaccessible = false;
 
     [SerializeField]
     private Color traversableColour;

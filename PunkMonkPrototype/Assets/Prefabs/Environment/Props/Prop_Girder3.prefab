@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4132414685524842}
   - component: {fileID: 33981271349421590}
   - component: {fileID: 23327241768095214}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Prop_Girder3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34,13 +34,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1819210829851136}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1, y: 0, z: -18}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0.38749254, z: -0, w: 0.92187285}
+  m_LocalPosition: {x: -1.26, y: 0.1, z: 4.24}
+  m_LocalScale: {x: 1.0000007, y: 1.0000005, z: 1.0000011}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -45.597004, z: 0}
 --- !u!23 &23327241768095214
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -55,7 +55,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: f54301194fe42574eb567040aa9ac825, type: 2}
+  - {fileID: 2100000, guid: af83a4f5d2469464c98c53a553ed346e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

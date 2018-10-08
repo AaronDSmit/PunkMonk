@@ -21,12 +21,12 @@ GameObject:
   - component: {fileID: 4657846242589892}
   - component: {fileID: 33351460103985204}
   - component: {fileID: 23963655309737036}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BuildingA_TrimCornerCapBalcony
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4657846242589892
 Transform:

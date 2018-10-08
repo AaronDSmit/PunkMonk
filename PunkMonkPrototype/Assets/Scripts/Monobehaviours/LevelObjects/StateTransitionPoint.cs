@@ -45,6 +45,11 @@ public class StateTransitionPoint : MonoBehaviour
 
     public int voltGiven;
 
+    public AK.Wwise.Event MyEvent = null;
+
+
+
+
     public Hex LightningHex
     {
         get { return lightningHex; }
@@ -128,6 +133,8 @@ public class StateTransitionPoint : MonoBehaviour
                 Manager.instance.StateController.ChangeGameStateAfterDelay(targetState, StateManager.stateTransitionTime + 0.1f);
 
                 triggered = true;
+                MyEvent.Post(gameObject);
+
             }
         }
     }

@@ -17,22 +17,22 @@ MonoBehaviour:
   m_lastPopulateTimePsrt1: 0
   AcousticTextureWwu:
   - Guid: '{8C506F3E-FAD5-4CC1-9F43-4559ED4E3FA7}'
-    m_lastTimePart2: -1999236805
-    m_lastTimePsrt1: 2046647221
+    m_lastTimePart2: -1999234001
+    m_lastTimePsrt1: 2016178255
     ParentPhysicalPath: 
     PhysicalPath: Virtual Acoustics\Default Work Unit.wwu
     List: []
   AuxBusWwu:
   - Guid: '{17B85F81-D4B6-4851-8C1E-9D808D7B1DC8}'
-    m_lastTimePart2: -1999236805
-    m_lastTimePsrt1: 2046357221
+    m_lastTimePart2: -1999234001
+    m_lastTimePsrt1: 2009858255
     ParentPhysicalPath: 
     PhysicalPath: Master-Mixer Hierarchy\Default Work Unit.wwu
     List: []
   BankWwu:
   - Guid: '{A76D73F7-5EA3-46B5-B38F-16F7929AC7DF}'
-    m_lastTimePart2: -1999236797
-    m_lastTimePsrt1: 467458819
+    m_lastTimePart2: -1999229753
+    m_lastTimePsrt1: 1230885244
     ParentPhysicalPath: 
     PhysicalPath: SoundBanks\Default Work Unit.wwu
     List:
@@ -47,19 +47,19 @@ MonoBehaviour:
         ObjectType: 7
   EventWwu:
   - Guid: '{9B7E563D-D886-4529-9471-1F499F2670AE}'
-    m_lastTimePart2: -1999236798
-    m_lastTimePsrt1: -175701181
+    m_lastTimePart2: -1999229753
+    m_lastTimePsrt1: 1230855244
     ParentPhysicalPath: 
     PhysicalPath: Events\Default Work Unit.wwu
     List:
-    - Guid: 20ff1aac9313ba458138948653b8b587
-      ID: 1256202815
-      Name: Play
-      Path: Default Work Unit\Play
+    - Guid: 9b7043921865c745a94edc9cb628ed90
+      ID: 1096437587
+      Name: EnterBattle
+      Path: Default Work Unit\EnterBattle
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
-      - ElementName: Play
+      - ElementName: EnterBattle
         ObjectType: 3
       maxAttenuation: 0
       maxDuration: 0
@@ -70,29 +70,29 @@ MonoBehaviour:
   - /PunkMonkPrototype_WwiseProject/Events/Default Work Unit
   RtpcWwu:
   - Guid: '{0611EF02-C52F-4D22-840D-EF5CD7507B8B}'
-    m_lastTimePart2: -1999236805
-    m_lastTimePsrt1: 2046557221
+    m_lastTimePart2: -1999234001
+    m_lastTimePsrt1: 2004498255
     ParentPhysicalPath: 
     PhysicalPath: Game Parameters\Default Work Unit.wwu
     List: []
   StateWwu:
   - Guid: '{04CF6E00-4CA3-4424-9273-F0833B6CE0D5}'
-    m_lastTimePart2: -1999236798
-    m_lastTimePsrt1: 446616115
+    m_lastTimePart2: -1999234001
+    m_lastTimePsrt1: 2016158255
     ParentPhysicalPath: 
     PhysicalPath: States\Default Work Unit.wwu
     List: []
   SwitchWwu:
   - Guid: '{B6FD7C61-6C9F-48A5-8B29-05A62B27072C}'
-    m_lastTimePart2: -1999236805
-    m_lastTimePsrt1: 2046767221
+    m_lastTimePart2: -1999234001
+    m_lastTimePsrt1: 2016158255
     ParentPhysicalPath: 
     PhysicalPath: Switches\Default Work Unit.wwu
     List: []
   TriggerWwu:
   - Guid: '{F63834BC-6D92-48B9-A27B-98C86E0C3830}'
-    m_lastTimePart2: -1999236805
-    m_lastTimePsrt1: 2046787221
+    m_lastTimePart2: -1999234001
+    m_lastTimePsrt1: 2016168255
     ParentPhysicalPath: 
     PhysicalPath: Triggers\Default Work Unit.wwu
     List: []

@@ -3,12 +3,22 @@
 	<Events>
 		<WorkUnit Name="Default Work Unit" ID="{9B7E563D-D886-4529-9471-1F499F2670AE}" PersistMode="Standalone">
 			<ChildrenList>
-				<Folder Name="Music" ID="{A26EE978-6F47-4FD0-9AF6-6E4767F7A552}" ShortID="806793621">
-					<ChildrenList>
-						<WorkUnit Name="Combat" ID="{258C9602-DBCD-486E-A1B5-A6BC45C5354D}" PersistMode="Reference"/>
-					</ChildrenList>
-				</Folder>
+				<Folder Name="Music" ID="{A26EE978-6F47-4FD0-9AF6-6E4767F7A552}" ShortID="806793621"/>
 				<Folder Name="SFX" ID="{F835FE87-A4D5-46C3-9C4C-2AB361D57519}" ShortID="126631870"/>
+				<Event Name="EnterBattle" ID="{9243709B-6518-45C7-A94E-DC9CB628ED90}">
+					<ChildrenList>
+						<Action Name="" ID="{C65E4492-6E84-4878-BE92-06026560DBCA}" ShortID="114447605">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="1"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Combat_FullLoop_v1" ID="{9772456A-2D26-4AF7-803B-F2CF8A85BD24}" WorkUnitID="{4DB86490-E208-4AE5-878B-DD391FBC0583}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

@@ -9,10 +9,13 @@ public class MissileUnit : AI_Agent
 
     int turns = 0;
 
+    bool readyToAttack = false;
+
     protected override void Start()
     {
         base.Start();
         turns = rechargeTurns;
+        readyToAttack = false;
     }
 
     protected override void Die()
@@ -22,9 +25,14 @@ public class MissileUnit : AI_Agent
         Manager.instance.HexHighlighter.RemoveHighlights(this);
     }
 
+    public override void Spawn(Hex a_startingTile)
+    {
+        base.Spawn(a_startingTile);
+    }
+
     protected override IEnumerator DoTurn(GridManager a_grid)
     {
-        if (turns == 0)
+        if (readyToAttack)
         {
             // Remove the highlight
             Manager.instance.HexHighlighter.RemoveHighlights(this);
@@ -33,8 +41,24 @@ public class MissileUnit : AI_Agent
             StartCoroutine(BasicAttackDamageDelay(damageDelayTimer, FinishedAction));
 
             turns = rechargeTurns;
+
+            readyToAttack = false;
         }
 
+        if (turns == 1 || rechargeTurns == 0)
+        {
+            Invoke("ChooseAreaToAttack", damageDelayTimer + 0.1f);
+        }
+
+        if (turns > 0)
+            turns--;
+
+        turnComplete = true;
+        yield break;
+    }
+
+    private void ChooseAreaToAttack()
+    {
         if (turns == 1 || rechargeTurns == 0)
         {
             // Select Area to shoot to
@@ -45,7 +69,7 @@ public class MissileUnit : AI_Agent
             // Attack the hex behind the furthest player
             Hex hexToAttack = furthestPlayerTile.GetNeighbour(HexUtility.VecToHexDirection(furthestPlayerTile.transform.position - CurrentTile.transform.position));
 
-            tilesToAttack = a_grid.GetTilesWithinDistance(hexToAttack, 2, true, true).ToArray();
+            tilesToAttack = Manager.instance.Grid.GetTilesWithinDistance(hexToAttack, 2, true, true).ToArray();
 
             // Rotate to the direction
             StartCoroutine(Rotate(hexToAttack.transform.position));
@@ -53,12 +77,8 @@ public class MissileUnit : AI_Agent
             // Highlight the area around the hex
             Manager.instance.HexHighlighter.HighLightArea(new List<Hex>(tilesToAttack), Color.yellow, Color.yellow, this);
 
+            readyToAttack = true;
         }
-
-        turns--;
-
-        turnComplete = true;
-        yield break;
     }
 
     public override void TakeDamage(int a_damageAmount, Unit a_damageFrom)

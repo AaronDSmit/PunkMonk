@@ -21,7 +21,9 @@ GameObject:
   - component: {fileID: 4533594938928316}
   - component: {fileID: 33437230842504196}
   - component: {fileID: 23241068345922950}
-  m_Layer: 0
+  - component: {fileID: 65856323881914658}
+  - component: {fileID: 114001683147994022}
+  m_Layer: 10
   m_Name: BuildingA_TrimCornerInner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34,8 +36,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1755385024766678}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -13, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: 0.70710695, z: -0, w: 0.70710665}
+  m_LocalPosition: {x: 52, y: 2, z: 65}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -82,3 +84,26 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1755385024766678}
   m_Mesh: {fileID: 4300000, guid: 855ed89759ab97d40ad3457cc0d111dd, type: 3}
+--- !u!65 &65856323881914658
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1755385024766678}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.32594103, y: 2.002584, z: 0.32328737}
+  m_Center: {x: 0.025174178, y: 1.1089766, z: 0.023837276}
+--- !u!114 &114001683147994022
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1755385024766678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24b70badff882d346b099fc70d7772f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

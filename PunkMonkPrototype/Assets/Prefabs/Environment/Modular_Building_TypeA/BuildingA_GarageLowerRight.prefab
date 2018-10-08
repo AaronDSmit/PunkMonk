@@ -21,7 +21,11 @@ GameObject:
   - component: {fileID: 4474890476443402}
   - component: {fileID: 33345753278449414}
   - component: {fileID: 23267571717154884}
-  m_Layer: 0
+  - component: {fileID: 65354861795536914}
+  - component: {fileID: 114518040770489644}
+  - component: {fileID: 65409974633770498}
+  - component: {fileID: 114328395555829368}
+  m_Layer: 10
   m_Name: BuildingA_GarageLowerRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34,8 +38,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1615070059264438}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: 0.70710695, z: -0, w: -0.70710665}
+  m_LocalPosition: {x: 54, y: 4, z: 12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -82,3 +86,49 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1615070059264438}
   m_Mesh: {fileID: 4300000, guid: 2c2aa901dfcdcef4eae41511759a5039, type: 3}
+--- !u!65 &65354861795536914
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1615070059264438}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.8200347, y: 2.006253, z: 0.29055208}
+  m_Center: {x: -0.90743494, y: 1.1075317, z: -0.18730819}
+--- !u!65 &65409974633770498
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1615070059264438}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.8200347, y: 2.006253, z: 0.29055208}
+  m_Center: {x: -0.90743494, y: 1.1075317, z: -0.18730819}
+--- !u!114 &114328395555829368
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1615070059264438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24b70badff882d346b099fc70d7772f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114518040770489644
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1615070059264438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24b70badff882d346b099fc70d7772f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

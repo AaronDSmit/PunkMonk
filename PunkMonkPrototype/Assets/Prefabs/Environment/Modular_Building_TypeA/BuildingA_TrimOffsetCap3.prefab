@@ -21,7 +21,9 @@ GameObject:
   - component: {fileID: 4798638347568682}
   - component: {fileID: 33528157738009976}
   - component: {fileID: 23887224009235278}
-  m_Layer: 0
+  - component: {fileID: 65362811419535280}
+  - component: {fileID: 114006679707275666}
+  m_Layer: 10
   m_Name: BuildingA_TrimOffsetCap3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34,8 +36,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1128552507231244}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -20, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: -0.0000005662441}
+  m_LocalPosition: {x: 56, y: 2, z: 61}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -82,3 +84,26 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1128552507231244}
   m_Mesh: {fileID: 4300000, guid: d1e21fda68cec4a4f9ef271d6775d16e, type: 3}
+--- !u!65 &65362811419535280
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1128552507231244}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.6385727, y: 1.0667334, z: 0.5021963}
+  m_Center: {x: -0.12182617, y: 0.036973983, z: -0.24438049}
+--- !u!114 &114006679707275666
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1128552507231244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24b70badff882d346b099fc70d7772f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

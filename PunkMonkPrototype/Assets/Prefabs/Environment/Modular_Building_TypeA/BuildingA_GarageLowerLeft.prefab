@@ -21,7 +21,11 @@ GameObject:
   - component: {fileID: 4321164276532704}
   - component: {fileID: 33372377352602726}
   - component: {fileID: 23901788998026232}
-  m_Layer: 0
+  - component: {fileID: 65334078316907784}
+  - component: {fileID: 114116305478882912}
+  - component: {fileID: 65584755266805272}
+  - component: {fileID: 114290392054215290}
+  m_Layer: 10
   m_Name: BuildingA_GarageLowerLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34,8 +38,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1363259347073938}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: 0.70710695, z: -0, w: -0.70710665}
+  m_LocalPosition: {x: 54, y: 4, z: 12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -82,3 +86,49 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1363259347073938}
   m_Mesh: {fileID: 4300000, guid: 53125e0044b79c843a19e93f583ec12c, type: 3}
+--- !u!65 &65334078316907784
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1363259347073938}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.820034, y: 2.006253, z: 0.29055208}
+  m_Center: {x: 0.90743446, y: 1.1075317, z: -0.18730819}
+--- !u!65 &65584755266805272
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1363259347073938}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.820034, y: 2.006253, z: 0.29055208}
+  m_Center: {x: 0.90743446, y: 1.1075317, z: -0.18730819}
+--- !u!114 &114116305478882912
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1363259347073938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24b70badff882d346b099fc70d7772f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114290392054215290
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1363259347073938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24b70badff882d346b099fc70d7772f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

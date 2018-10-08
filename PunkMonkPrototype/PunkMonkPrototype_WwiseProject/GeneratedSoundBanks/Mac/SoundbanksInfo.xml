@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <SoundBanksInfo Platform="Mac" BasePlatform="Mac" SchemaVersion="11" SoundbankVersion="132">
 	<RootPaths>
-		<ProjectRoot>C:\Users\s163504\Documents\PunkMonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\</ProjectRoot>
-		<SourceFilesRoot>C:\Users\s163504\Documents\PunkMonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Mac\</SourceFilesRoot>
-		<SoundBanksRoot>C:\Users\s163504\Documents\PunkMonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\GeneratedSoundBanks\Mac\</SoundBanksRoot>
+		<ProjectRoot>C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\</ProjectRoot>
+		<SourceFilesRoot>C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Mac\</SourceFilesRoot>
+		<SoundBanksRoot>C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\GeneratedSoundBanks\Mac\</SoundBanksRoot>
 		<ExternalSourcesInputFile></ExternalSourcesInputFile>
-		<ExternalSourcesOutputRoot>C:\Users\s163504\Documents\PunkMonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\GeneratedSoundBanks\Mac</ExternalSourcesOutputRoot>
+		<ExternalSourcesOutputRoot>C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\GeneratedSoundBanks\Mac</ExternalSourcesOutputRoot>
 	</RootPaths>
 	<DialogueEvents/>
 	<StreamedFiles/>
@@ -21,12 +21,12 @@
 			<ShortName>Music</ShortName>
 			<Path>Music.bnk</Path>
 			<IncludedEvents>
-				<Event Id="1256202815" Name="Play" ObjectPath="\Events\Default Work Unit\Play"/>
+				<Event Id="1096437587" Name="EnterBattle" ObjectPath="\Events\Default Work Unit\EnterBattle"/>
 			</IncludedEvents>
 			<IncludedMemoryFiles>
-				<File Id="754501869" Language="SFX">
-					<ShortName>Combat_Theme_FullLoop_v1.wav</ShortName>
-					<Path>SFX\Combat_Theme_FullLoop_v1_8956FC97.wem</Path>
+				<File Id="683211502" Language="SFX">
+					<ShortName>Combat_FullLoop_v1.wav</ShortName>
+					<Path>SFX\Combat_FullLoop_v1_56D34C19.wem</Path>
 				</File>
 			</IncludedMemoryFiles>
 		</SoundBank>

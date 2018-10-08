@@ -85,8 +85,11 @@ public class PlayerController : MonoBehaviour
     private Hex lightningAttackHex1 = null;
 
     private int encounterKillLimit;
-
     private int encounterKillCount;
+
+    private bool encounterHasBoss;
+    private int encounterBossDamage;
+    private int encounterBossDamageGoal;
 
     private bool trackingKills;
 
@@ -104,6 +107,28 @@ public class PlayerController : MonoBehaviour
 
         set { encounterKillLimit = value; }
     }
+
+    public bool EncounterHasBoss
+    {
+        get { return encounterHasBoss; }
+
+        set { encounterHasBoss = value; }
+    }
+
+    public int EncounterBossDamage
+    {
+        get { return encounterBossDamage; }
+
+        set { encounterBossDamage = value; CheckForEndOfEncounter(); }
+    }
+
+    public int EncounterBossDamageGoal
+    {
+        get { return encounterBossDamageGoal; }
+
+        set { encounterBossDamageGoal = value; }
+    }
+    
 
     public EarthUnit EarthUnit { get { return earthUnit; } }
     public LightningUnit LightningUnit { get { return lightningUnit; } }
@@ -143,6 +168,9 @@ public class PlayerController : MonoBehaviour
 
         trackingKills = false;
         encounterKillLimit = 0;
+        encounterHasBoss = false;
+        encounterBossDamage = 0;
+        encounterBossDamageGoal = 0;
         encounterKillCount = 0;
         lightningDead = false;
         earthDead = false;
@@ -356,12 +384,7 @@ public class PlayerController : MonoBehaviour
         {
             encounterKillCount++;
 
-            // end encounter if you've reached the kill goal
-            if (encounterKillCount >= EncounterKillLimit)
-            {
-                Manager.instance.StateController.ChangeGameStateAfterDelay(GameState.overworld, 1.0f);
-                return;
-            }
+            CheckForEndOfEncounter();
         }
     }
 
@@ -1096,6 +1119,14 @@ public class PlayerController : MonoBehaviour
                 GetTilesAffectByLightningSpecialAttack(a_targetTile, a_hitInfo);
 
                 break;
+        }
+    }
+
+    private void CheckForEndOfEncounter()
+    {
+        if (encounterKillCount >= EncounterKillLimit && (!encounterHasBoss || encounterBossDamage >= encounterBossDamageGoal))
+        {
+            Manager.instance.StateController.ChangeGameStateAfterDelay(GameState.overworld, 1.0f);
         }
     }
 

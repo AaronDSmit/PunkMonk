@@ -95,7 +95,11 @@ public class EasyDesignEditor : EditorWindow
     [SerializeField]
     private GameState currentState = GameState.battle;
     [SerializeField]
-    private int numberToKill;
+    private int numberToKill = 0;
+    [SerializeField]
+    private bool hasBoss = false;
+    [SerializeField]
+    private int bossDamageGoal = 0;
 
     [SerializeField]
     private Conversation convo;
@@ -189,7 +193,7 @@ public class EasyDesignEditor : EditorWindow
                 mapHeight = int.Parse(mapSize[1]) + 1;
             }
         }
-        
+
         traversableColour = new Color(0.0f, 1.0f, 0.0f, hexAlpha);
         inaccessibleColour = new Color(1.0f, 1.0f, 0.0f, hexAlpha);
         outOfBoundsColour = new Color(1.0f, 0.0f, 0.0f, hexAlpha);
@@ -1063,6 +1067,8 @@ public class EasyDesignEditor : EditorWindow
                         sceneTransition.TargetState = targetState;
                         sceneTransition.CurrentState = currentState;
                         sceneTransition.numberToKill = numberToKill;
+                        sceneTransition.hasBoss = hasBoss;
+                        sceneTransition.bossDamage = bossDamageGoal;
                         sceneTransition.voltGiven = voltGiven;
                         sceneTransition.EarthDirection = earthDirection;
                         sceneTransition.LightningDirection = lightningDirection;
@@ -1098,19 +1104,6 @@ public class EasyDesignEditor : EditorWindow
                     }
                 }
 
-                if (targetState == GameState.battle)
-                {
-                    GUILayout.Label("Enemies to kill ");
-                    numberToKill = EditorGUILayout.IntField(numberToKill);
-                }
-
-
-                else if (targetState == GameState.cinematic)
-                {
-                    GUILayout.Label("Conversation");
-                    convo = EditorGUILayout.ObjectField("", convo, typeof(Conversation), true) as Conversation;
-                }
-
                 EditorGUILayout.EndHorizontal();
 
                 EditorGUILayout.BeginHorizontal();
@@ -1124,6 +1117,38 @@ public class EasyDesignEditor : EditorWindow
                 targetState = (GameState)EditorGUILayout.EnumPopup(targetState);
 
                 EditorGUILayout.EndHorizontal();
+
+
+                if (targetState == GameState.battle)
+                {
+                    EditorGUILayout.BeginHorizontal();
+                    {
+                        GUILayout.Label("Enemies to kill ");
+                        numberToKill = EditorGUILayout.IntField(numberToKill);
+                        GUILayout.Label("Has Boss");
+                        hasBoss = EditorGUILayout.Toggle(hasBoss);
+                    }
+                    EditorGUILayout.EndHorizontal();
+
+                    if (hasBoss)
+                    {
+                        EditorGUILayout.BeginHorizontal();
+                        {
+                            GUILayout.Label("Boss Damage ");
+                            bossDamageGoal = EditorGUILayout.IntField(bossDamageGoal);
+                        }
+                        EditorGUILayout.EndHorizontal();
+                    }
+                }
+                else if (targetState == GameState.cinematic)
+                {
+                    EditorGUILayout.BeginHorizontal();
+                    {
+                        GUILayout.Label("Conversation");
+                        convo = EditorGUILayout.ObjectField("", convo, typeof(Conversation), true) as Conversation;
+                    }
+                    EditorGUILayout.EndHorizontal();
+                }
 
                 EditorGUILayout.BeginHorizontal();
 

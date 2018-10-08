@@ -23,6 +23,14 @@ public class StateTransitionPoint : MonoBehaviour
 
     [HideInInspector]
     [SerializeField]
+    public bool hasBoss;
+
+    [HideInInspector]
+    [SerializeField]
+    public int bossDamage;
+
+    [HideInInspector]
+    [SerializeField]
     private Hex earthHex;
 
     [HideInInspector]
@@ -47,9 +55,6 @@ public class StateTransitionPoint : MonoBehaviour
 
     public AK.Wwise.Event MyEvent = null;
 
-
-
-
     public Hex LightningHex
     {
         get { return lightningHex; }
@@ -73,7 +78,6 @@ public class StateTransitionPoint : MonoBehaviour
         get { return lightningDirection; }
         set { lightningDirection = value; }
     }
-
 
     public Hex CheckPoint
     {
@@ -115,6 +119,8 @@ public class StateTransitionPoint : MonoBehaviour
                 PlayerController player = Manager.instance.PlayerController;
 
                 player.EncounterKillLimit = numberToKill;
+                player.EncounterHasBoss = hasBoss;
+                player.EncounterBossDamageGoal = bossDamage;
                 player.SetUnitStartingHexes(earthHex, earthDirection, lightningHex, lightningDirection);
 
                 player.CurrentVolt += voltGiven;
@@ -134,7 +140,6 @@ public class StateTransitionPoint : MonoBehaviour
 
                 triggered = true;
                 MyEvent.Post(gameObject);
-
             }
         }
     }

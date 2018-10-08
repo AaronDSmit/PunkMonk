@@ -17,6 +17,13 @@ public class MissileUnit : AI_Agent
         turns = rechargeTurns;
     }
 
+    protected override void Die()
+    {
+        base.Die();
+
+        Manager.instance.HexHighlighter.RemoveHighlights(this);
+    }
+
     protected override IEnumerator DoTurn(GridManager a_grid)
     {
         if (charged)
@@ -61,4 +68,12 @@ public class MissileUnit : AI_Agent
         turnComplete = true;
         yield break;
     }
+
+    public override void TakeDamage(int a_damageAmount, Unit a_damageFrom)
+    {
+        base.TakeDamage(a_damageAmount, a_damageFrom);
+
+        Manager.instance.PlayerController.EncounterBossDamage += a_damageAmount;
+    }
+
 }

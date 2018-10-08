@@ -510,7 +510,6 @@ MonoBehaviour:
   dissolveMat: {fileID: 2100000, guid: 25b0cd8d1848b1f4a83e3fa96f6d0869, type: 2}
   deathAnimationTime: 1
   maxHealth: 5
-  maxVolt: 3
   actions: []
   moveRange: 0
   attackRange: 6
@@ -520,10 +519,12 @@ MonoBehaviour:
   projectilePosition: {fileID: 4408833779778438}
   glamCam: 0
   glamCamChance: 10
+  voltEffect: {fileID: 0}
   damage: 3
   damageDelayTimer: 0
   bullet: {fileID: 1807508469817726, guid: 8d964f9dbfc1a434db92cf7a0e64fa65, type: 2}
   bulletSpeed: 40
+  rechargeTurns: 0
 --- !u!114 &114420571058143936
 MonoBehaviour:
   m_ObjectHideFlags: 1

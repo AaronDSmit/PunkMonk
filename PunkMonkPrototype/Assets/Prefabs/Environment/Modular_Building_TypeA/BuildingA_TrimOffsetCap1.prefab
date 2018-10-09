@@ -21,12 +21,12 @@ GameObject:
   - component: {fileID: 4065219020550760}
   - component: {fileID: 33579773056951006}
   - component: {fileID: 23723504018132504}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BuildingA_TrimOffsetCap1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4065219020550760
 Transform:

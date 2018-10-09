@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4065219020550760}
   - component: {fileID: 33579773056951006}
   - component: {fileID: 23723504018132504}
+  - component: {fileID: 65550119473412638}
   m_Layer: 10
   m_Name: BuildingA_TrimOffsetCap1
   m_TagString: Untagged
@@ -34,13 +35,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1609520792747546}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -17, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0.0000007599591}
+  m_LocalPosition: {x: 56, y: 6, z: 61}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -180.00002, z: 0}
 --- !u!23 &23723504018132504
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -55,7 +56,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: d7c2056005d73184eaabf45144990cd7, type: 3}
+  - {fileID: 2100000, guid: ad9cfb28758b84740a05fec684ae0247, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -81,4 +82,16 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1609520792747546}
-  m_Mesh: {fileID: 4300000, guid: d7c2056005d73184eaabf45144990cd7, type: 3}
+  m_Mesh: {fileID: 4300000, guid: c2b14e70c0d69b4458874970f77c79f6, type: 3}
+--- !u!65 &65550119473412638
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1609520792747546}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.7160225, y: 1.0667332, z: 0.5021982}
+  m_Center: {x: -0.16055107, y: 0.2649501, z: -0.24438143}

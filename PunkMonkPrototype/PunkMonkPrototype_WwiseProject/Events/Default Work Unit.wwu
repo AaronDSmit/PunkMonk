@@ -7,44 +7,7 @@
 				<Folder Name="SFX" ID="{F835FE87-A4D5-46C3-9C4C-2AB361D57519}" ShortID="126631870">
 					<ChildrenList>
 						<Folder Name="Clade" ID="{CE70BA09-840C-4498-9BB5-73A5C48250BC}" ShortID="289338736"/>
-						<Folder Name="Gen" ID="{2EC56694-E6E9-46D4-A512-BEE62F3FC5A4}" ShortID="993879949">
-							<ChildrenList>
-								<Event Name="Play" ID="{D106B78D-CFDF-4665-A2D3-FBC1150675F5}">
-									<ChildrenList>
-										<Action Name="" ID="{2568728F-955F-42E3-A7E6-0A2C863A55FF}" ShortID="514278088">
-											<PropertyList>
-												<Property Name="ActionType" Type="int16" Value="1"/>
-											</PropertyList>
-											<ReferenceList>
-												<Reference Name="Target">
-													<ObjectRef Name="New Music Segment" ID="{62968E88-35B7-4706-B531-8558A313C9DE}"/>
-												</Reference>
-											</ReferenceList>
-										</Action>
-										<Action Name="" ID="{CDFF6F2A-B1E3-4418-A7C3-E0F3ED1A4BF5}" ShortID="945068215">
-											<PropertyList>
-												<Property Name="ActionType" Type="int16" Value="1"/>
-											</PropertyList>
-											<ReferenceList>
-												<Reference Name="Target">
-													<ObjectRef Name="New Music Segment_01" ID="{95B3F457-36B9-4AAA-9870-985DC2F0D2F9}"/>
-												</Reference>
-											</ReferenceList>
-										</Action>
-										<Action Name="" ID="{08BB2FE7-7FF9-4B3F-989A-9E8ED6C1558A}" ShortID="567986349">
-											<PropertyList>
-												<Property Name="ActionType" Type="int16" Value="1"/>
-											</PropertyList>
-											<ReferenceList>
-												<Reference Name="Target">
-													<ObjectRef Name="New Music Segment_02" ID="{EABB4D91-05F3-495B-8DE3-6880160C1081}"/>
-												</Reference>
-											</ReferenceList>
-										</Action>
-									</ChildrenList>
-								</Event>
-							</ChildrenList>
-						</Folder>
+						<Folder Name="Gen" ID="{2EC56694-E6E9-46D4-A512-BEE62F3FC5A4}" ShortID="993879949"/>
 						<Folder Name="Enemies" ID="{7D52DC29-B2A9-45C1-969D-936F2A057B97}" ShortID="5898167">
 							<ChildrenList>
 								<Folder Name="Attack" ID="{F798D675-2EAC-4AA8-B60A-242FEF7D35FF}" ShortID="815324480">

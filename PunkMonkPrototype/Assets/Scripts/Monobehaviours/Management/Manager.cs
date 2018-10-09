@@ -93,10 +93,7 @@ public class Manager : MonoBehaviour
 
     #endregion
 
-
     #region Unity Life-cycle Methods
-
-
 
     private void Awake()
     {

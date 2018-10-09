@@ -10,7 +10,7 @@ public class SettingsHelper : MonoBehaviour
 
     private void Awake()
     {
-        currentSettings = Resources.Load<Settings>("Settings/current");
+        currentSettings = SettingsLoader.Instance.CurrentSettings;
     }
 
     #region Settings

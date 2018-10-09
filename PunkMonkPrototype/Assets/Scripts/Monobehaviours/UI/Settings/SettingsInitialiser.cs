@@ -47,15 +47,12 @@ public class SettingsInitialiser : MonoBehaviour
 
     private void Awake()
     {
-        defaultSettings = Resources.Load<Settings>("Settings/default");
-        currentSettings = Resources.Load<Settings>("Settings/current");
-    }
-
-    private void OnEnable()
-    {
         if (hasInitialised == false)
         {
-            InitializeToDefault();
+            defaultSettings = SettingsLoader.Instance.DefaultSettings;
+            currentSettings = SettingsLoader.Instance.CurrentSettings;
+
+            Initialize(currentSettings);
 
             hasInitialised = true;
         }

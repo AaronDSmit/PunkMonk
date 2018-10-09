@@ -2,23 +2,27 @@
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
-[CreateAssetMenu(fileName = "settings", menuName = "Settings/new settings", order = 0)]
 [System.Serializable]
-public class Settings : ScriptableObject
+public class Settings
 {
     public delegate void OnSettingsChanged();
     public OnSettingsChanged onSettingsChanged = delegate { };
+
+    [HideInInspector]
+    [SerializeField]
+    private string name = "newSettings";
+    public string Name { set { name = value; if (onSettingsChanged != null) onSettingsChanged(); } get { return name; } }
 
     #region Gameplay
 
     [HideInInspector]
     [SerializeField]
     private bool inverseCameraRotation = false;
-    public bool InverseCameraRotation { set { inverseCameraRotation = value; onSettingsChanged(); } get { return inverseCameraRotation; } }
+    public bool InverseCameraRotation { set { inverseCameraRotation = value; if (onSettingsChanged != null) onSettingsChanged(); } get { return inverseCameraRotation; } }
     [HideInInspector]
     [SerializeField]
     private bool screenEdgePan = true;
-    public bool ScreenEdgePan { set { screenEdgePan = value; onSettingsChanged(); } get { return screenEdgePan; } }
+    public bool ScreenEdgePan { set { screenEdgePan = value; if (onSettingsChanged != null) onSettingsChanged(); } get { return screenEdgePan; } }
 
     #endregion
 
@@ -27,7 +31,7 @@ public class Settings : ScriptableObject
     [HideInInspector]
     [SerializeField]
     private int quality = 0;
-    public int Quality { set { quality = value; onSettingsChanged(); } get { return quality; } }
+    public int Quality { set { quality = value; if (onSettingsChanged != null) onSettingsChanged(); } get { return quality; } }
 
     #endregion
 
@@ -36,27 +40,27 @@ public class Settings : ScriptableObject
     [HideInInspector]
     [SerializeField]
     private bool muteAll = false;
-    public bool MuteAll { set { muteAll = value; onSettingsChanged(); } get { return muteAll; } }
+    public bool MuteAll { set { muteAll = value; if (onSettingsChanged != null) onSettingsChanged(); } get { return muteAll; } }
     [Range(0.0f, 1.0f)]
     [HideInInspector]
     [SerializeField]
     private float master = 1;
-    public float Master { set { master = value; onSettingsChanged(); } get { return master; } }
+    public float Master { set { master = value; if (onSettingsChanged != null) onSettingsChanged(); } get { return master; } }
     [Range(0.0f, 1.0f)]
     [HideInInspector]
     [SerializeField]
     private float music = 1;
-    public float Music { set { music = value; onSettingsChanged(); } get { return music; } }
+    public float Music { set { music = value; if (onSettingsChanged != null) onSettingsChanged(); } get { return music; } }
     [Range(0.0f, 1.0f)]
     [HideInInspector]
     [SerializeField]
     private float effects = 1;
-    public float Effects { set { effects = value; onSettingsChanged(); } get { return effects; } }
+    public float Effects { set { effects = value; if (onSettingsChanged != null) onSettingsChanged(); } get { return effects; } }
     [Range(0.0f, 1.0f)]
     [HideInInspector]
     [SerializeField]
     private float dialouge = 1;
-    public float Dialouge { set { dialouge = value; onSettingsChanged(); } get { return dialouge; } }
+    public float Dialouge { set { dialouge = value; if (onSettingsChanged != null) onSettingsChanged(); } get { return dialouge; } }
 
     #endregion
 
@@ -66,7 +70,8 @@ public class Settings : ScriptableObject
         SetGraphicsTo(a_other);
         SetSoundsTo(a_other);
 
-        onSettingsChanged();
+        if (onSettingsChanged != null)
+            onSettingsChanged();
     }
 
     public void SetGameplayTo(Settings a_other)
@@ -75,7 +80,8 @@ public class Settings : ScriptableObject
         inverseCameraRotation = a_other.inverseCameraRotation;
         screenEdgePan = a_other.screenEdgePan;
 
-        onSettingsChanged();
+        if (onSettingsChanged != null)
+            onSettingsChanged();
     }
 
     public void SetGraphicsTo(Settings a_other)
@@ -83,7 +89,8 @@ public class Settings : ScriptableObject
         // Graphics
         quality = a_other.quality;
 
-        onSettingsChanged();
+        if (onSettingsChanged != null)
+            onSettingsChanged();
     }
 
     public void SetSoundsTo(Settings a_other)
@@ -95,7 +102,8 @@ public class Settings : ScriptableObject
         effects = a_other.effects;
         dialouge = a_other.dialouge;
 
-        onSettingsChanged();
+        if (onSettingsChanged != null)
+            onSettingsChanged();
     }
 
     public void Save()
@@ -108,22 +116,22 @@ public class Settings : ScriptableObject
         Debug.Log("Settings saved to: '" + Application.persistentDataPath + "/" + name + ".settings" + "'.");
     }
 
-    public void LoadGame()
+    public static Settings Load(string a_name)
     {
-        if (File.Exists(Application.persistentDataPath + "/" + name + ".settings"))
+        if (File.Exists(Application.persistentDataPath + "/" + a_name + ".settings"))
         {
 
             BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/" + name + ".settings", FileMode.Open);
-            SetAllTo((Settings)bf.Deserialize(file));
+            FileStream file = File.Open(Application.persistentDataPath + "/" + a_name + ".settings", FileMode.Open);
+            Settings loadedSettings = (Settings)bf.Deserialize(file);
             file.Close();
 
-            Debug.Log("Settings Loaded");
+            return loadedSettings;
 
         }
         else
         {
-            Debug.Log("No Settings Found");
+            return null;
         }
     }
 }

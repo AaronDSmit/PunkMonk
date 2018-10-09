@@ -3,19 +3,28 @@ using UnityEngine.UI;
 
 public class MenuHelper : MonoBehaviour
 {
-    [SerializeField] ConfirmationPopup confirmationPopup = null;
+    [SerializeField] private ConfirmationPopup confirmationPopup = null;
 
-    [SerializeField] float cinematicBarDistance = 300;
-    [SerializeField] float cinematicBarSpeed = 1;
+    [SerializeField] private float cinematicBarDistance = 300;
+    [SerializeField] private float cinematicBarSpeed = 1;
 
-    bool cinematic = false;
+    private bool cinematic = false;
 
-    RectTransform topBar;
-    RectTransform botBar;
+    private RectTransform topBar;
+    private RectTransform botBar;
 
-    float blackBarTimer = 0;
+    private float blackBarTimer = 0;
 
-    float blackBarTime = 0;
+    private float blackBarTime = 0;
+
+    private Settings currentSettings = null;
+    private Settings defaultSettings = null;
+
+    private void Start()
+    {
+        currentSettings = SettingsLoader.Instance.CurrentSettings;
+        defaultSettings = SettingsLoader.Instance.DefaultSettings; 
+    }
 
     void Update()
     {
@@ -116,7 +125,7 @@ public class MenuHelper : MonoBehaviour
 
     public void ResetAllSettingsPopup(string a_message)
     {
-        //OpenConfirmationPopup(a_message, SetSettingsToDefault);
+        OpenConfirmationPopup(a_message, SetSettingsToDefault);
     }
 
     public void OpenConfirmationPopup(string a_message, System.Action a_action)
@@ -152,4 +161,13 @@ public class MenuHelper : MonoBehaviour
         cinematic = false;
     }
 
+    public void SaveSettings()
+    {
+        currentSettings.Save();
+    }
+
+    private void SetSettingsToDefault()
+    {
+        currentSettings.SetAllTo(defaultSettings);
+    }
 }

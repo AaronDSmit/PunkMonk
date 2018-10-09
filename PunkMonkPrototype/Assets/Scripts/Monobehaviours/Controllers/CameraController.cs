@@ -20,7 +20,6 @@ public enum GlamCamType
     LIGHNING_SPECIAL
 }
 
-
 public class CameraController : MonoBehaviour
 {
     private Unit earthUnit;
@@ -41,7 +40,7 @@ public class CameraController : MonoBehaviour
     private bool lookAtObject = false;
     private bool canMove = true;
 
-    private Vector3 oldCamPosition;
+    //private Vector3 oldCamPosition;
     //private Quaternion oldCamRotation;
 
     private Settings settings;
@@ -90,7 +89,7 @@ public class CameraController : MonoBehaviour
     {
         Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
         camera = transform.GetChild(0).gameObject;
-        settings = Resources.Load<Settings>("Settings/current");
+        settings = SettingsLoader.Instance.CurrentSettings;
     }
 
     private void Start()
@@ -103,6 +102,7 @@ public class CameraController : MonoBehaviour
 
         // Subscribe to the settings changing delegate
         settings.onSettingsChanged += SettingsChanged;
+        SettingsChanged();
 
         cinemachineBrain = gameObject.GetComponentInChildren<Cinemachine.CinemachineBrain>();
     }

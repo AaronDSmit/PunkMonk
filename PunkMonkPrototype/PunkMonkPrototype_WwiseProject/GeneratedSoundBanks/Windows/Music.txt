@@ -1,6 +1,7 @@
 Event	ID	Name			Wwise Object Path	Notes
+	929506175	ExitBattle			\Default Work Unit\ExitBattle	
 	1096437587	EnterBattle			\Default Work Unit\EnterBattle	
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
-	683211502	Combat_FullLoop_v1	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\Combat_FullLoop_v1_56D34C19.wem		\Actor-Mixer Hierarchy\Default Work Unit\Combat_FullLoop_v1		6248280
+	683211502	Combat_FullLoop_v1	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\Combat_FullLoop_v1_8956FC97.wem		\Actor-Mixer Hierarchy\Default Work Unit\Combat_FullLoop_v1		6248280
 

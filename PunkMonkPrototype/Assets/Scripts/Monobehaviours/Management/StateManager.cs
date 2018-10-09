@@ -27,6 +27,7 @@ public class StateManager : MonoBehaviour
     [SerializeField]
     private List<GameState> stateHistory;
 
+
     #endregion
 
     #region Local Fields

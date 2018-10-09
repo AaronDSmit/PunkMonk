@@ -31,6 +31,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private int currentVolt = 0;
 
+    [SerializeField]
+    private AK.Wwise.Event endBattleState;
+
     #endregion
 
     #region Reference Fields
@@ -128,7 +131,7 @@ public class PlayerController : MonoBehaviour
 
         set { encounterBossDamageGoal = value; }
     }
-    
+
 
     public EarthUnit EarthUnit { get { return earthUnit; } }
     public LightningUnit LightningUnit { get { return lightningUnit; } }
@@ -1073,6 +1076,10 @@ public class PlayerController : MonoBehaviour
             lightningUnit.WalkDirectlyToTile(lightningStartingHex, lightningStartingDirection);
 
         }
+        if (a_oldstate == GameState.battle && a_newstate == GameState.transition)
+        {
+            endBattleState.Post(gameObject);
+        }
 
         // ensure this script knows it's in over-world state
         if (a_newstate == GameState.battle)
@@ -1097,6 +1104,9 @@ public class PlayerController : MonoBehaviour
                 GetComponent<OverworldController>().Init();
             }
         }
+
+
+
     }
 
     private void ProcessActionHighlighting(Hex a_targetTile, RaycastHit a_hitInfo)

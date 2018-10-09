@@ -22,11 +22,12 @@
 			<Path>Music.bnk</Path>
 			<IncludedEvents>
 				<Event Id="1096437587" Name="EnterBattle" ObjectPath="\Events\Default Work Unit\EnterBattle"/>
+				<Event Id="929506175" Name="ExitBattle" ObjectPath="\Events\Default Work Unit\ExitBattle" MaxAttenuation="0.000000"/>
 			</IncludedEvents>
 			<IncludedMemoryFiles>
 				<File Id="683211502" Language="SFX">
 					<ShortName>Combat_FullLoop_v1.wav</ShortName>
-					<Path>SFX\Combat_FullLoop_v1_56D34C19.wem</Path>
+					<Path>SFX\Combat_FullLoop_v1_8956FC97.wem</Path>
 				</File>
 			</IncludedMemoryFiles>
 		</SoundBank>

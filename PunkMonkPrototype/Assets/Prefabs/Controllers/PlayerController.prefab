@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 114181964515706148}
   - component: {fileID: 114752336446416580}
   - component: {fileID: 120541263066808342}
+  - component: {fileID: 114765109545479262}
   m_Layer: 0
   m_Name: PlayerController
   m_TagString: Player
@@ -53,8 +54,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f82f87fb871e5547877f56bb9ff889c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnYLevel: 0
   selectionRuleset: {fileID: 11400000, guid: 0a213320bf2f3b54dbe93f82d8c1341e, type: 2}
+  enemyThreatColor: {r: 1, g: 0, b: 0, a: 1}
   currentRuleset: {fileID: 0}
+  maxVolt: 3
+  currentVolt: 0
+  endBattleState:
+    ID: 929506175
+    valueGuid: bad0505a2bc0194f9021c83331c3cf3b
 --- !u!114 &114752336446416580
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -66,7 +74,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2eb2cc566d859c849a4a9ef168d3e0d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  raycastPlaneYLevel: 0
+  newNodeDistance: 1
   movementSpeed: 5
+  useKeyboardInput: 1
+  useMouseInput: 1
+--- !u!114 &114765109545479262
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1466322186341554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82f975add6b5434438eae7b6b98000b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerList: f7e1664c
+  useOtherObject: 0
+  bankName: Music
+  decodeBank: 0
+  loadAsynchronous: 0
+  saveDecodedBank: 0
+  unloadTriggerList: 958ca0ea
+  valueGuid: 2d8eac41a083714e8e60c923a62a251f
 --- !u!120 &120541263066808342
 LineRenderer:
   m_ObjectHideFlags: 1

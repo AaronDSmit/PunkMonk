@@ -6,6 +6,7 @@
 				<SoundBank Name="Music" ID="{41AC8E2D-83A0-4E71-8E60-C923A62A251F}">
 					<ObjectInclusionList>
 						<ObjectRef Name="EnterBattle" ID="{9243709B-6518-45C7-A94E-DC9CB628ED90}" WorkUnitID="{9B7E563D-D886-4529-9471-1F499F2670AE}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="ExitBattle" ID="{5A50D0BA-C02B-4F19-9021-C83331C3CF3B}" WorkUnitID="{9B7E563D-D886-4529-9471-1F499F2670AE}" Filter="7" Origin="Manual"/>
 					</ObjectInclusionList>
 					<ObjectExclusionList/>
 					<GameSyncExclusionList/>

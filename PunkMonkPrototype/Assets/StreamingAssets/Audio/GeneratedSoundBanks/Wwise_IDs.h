@@ -14,6 +14,7 @@ namespace AK
     namespace EVENTS
     {
         static const AkUniqueID ENTERBATTLE = 1096437587U;
+        static const AkUniqueID EXITBATTLE = 929506175U;
     } // namespace EVENTS
 
     namespace BANKS

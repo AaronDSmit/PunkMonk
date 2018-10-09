@@ -31,8 +31,8 @@ MonoBehaviour:
     List: []
   BankWwu:
   - Guid: '{A76D73F7-5EA3-46B5-B38F-16F7929AC7DF}'
-    m_lastTimePart2: -1999229753
-    m_lastTimePsrt1: 1230885244
+    m_lastTimePart2: -1999229554
+    m_lastTimePsrt1: -530363280
     ParentPhysicalPath: 
     PhysicalPath: SoundBanks\Default Work Unit.wwu
     List:
@@ -47,8 +47,8 @@ MonoBehaviour:
         ObjectType: 7
   EventWwu:
   - Guid: '{9B7E563D-D886-4529-9471-1F499F2670AE}'
-    m_lastTimePart2: -1999229753
-    m_lastTimePsrt1: 1230855244
+    m_lastTimePart2: -1999229549
+    m_lastTimePsrt1: 2026837536
     ParentPhysicalPath: 
     PhysicalPath: Events\Default Work Unit.wwu
     List:
@@ -64,10 +64,22 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
+    - Guid: bad0505a2bc0194f9021c83331c3cf3b
+      ID: 929506175
+      Name: ExitBattle
+      Path: Default Work Unit\ExitBattle
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: ExitBattle
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
   ExpandedItems:
   - /PunkMonkPrototype_WwiseProject
   - /PunkMonkPrototype_WwiseProject/Events
-  - /PunkMonkPrototype_WwiseProject/Events/Default Work Unit
+  - /PunkMonkPrototype_WwiseProject/SoundBanks
   RtpcWwu:
   - Guid: '{0611EF02-C52F-4D22-840D-EF5CD7507B8B}'
     m_lastTimePart2: -1999234001

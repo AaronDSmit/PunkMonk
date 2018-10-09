@@ -43,6 +43,8 @@ public class FadingUI : MonoBehaviour
 
     public bool IsFading { get; private set; }
 
+
+
     #endregion
 
     #region Public Methods

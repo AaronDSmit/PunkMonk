@@ -57,6 +57,10 @@ public class UIManager : MonoBehaviour
 
     private MenuHelper menuHelper;
 
+    private GameObject earthProfile;
+    private GameObject lightningProfile;
+
+
     #endregion
 
     #region Local Fields
@@ -74,6 +78,9 @@ public class UIManager : MonoBehaviour
     {
         get { return isReady; }
     }
+
+
+
 
     public Slider VoltBar { get { return voltBar; } }
 
@@ -93,6 +100,17 @@ public class UIManager : MonoBehaviour
         }
     }
 
+
+    private void UpdateSmallAblilityIcons()
+    {
+        earthProfile.transform.GetChild(1).GetChild(0).GetComponent<Image>().sprite = (player.EarthUnit.CanMove) ? hexIconFilled : hexIconEmpty;
+        earthProfile.transform.GetChild(1).GetChild(1).GetComponent<Image>().sprite = (player.EarthUnit.CanAttack) ? hexIconFilled : hexIconEmpty;
+        earthProfile.transform.GetChild(1).GetChild(2).GetComponent<Image>().sprite = (player.EarthUnit.CanSpecialAttack) ? hexIconFilled : hexIconEmpty;
+
+        lightningProfile.transform.GetChild(1).GetChild(0).GetComponent<Image>().sprite = (player.LightningUnit.CanMove) ? hexIconFilled : hexIconEmpty;
+        lightningProfile.transform.GetChild(1).GetChild(1).GetComponent<Image>().sprite = (player.LightningUnit.CanAttack) ? hexIconFilled : hexIconEmpty;
+        lightningProfile.transform.GetChild(1).GetChild(2).GetComponent<Image>().sprite = (player.LightningUnit.CanSpecialAttack) ? hexIconFilled : hexIconEmpty;
+    }
 
     public void Init()
     {
@@ -174,7 +192,6 @@ public class UIManager : MonoBehaviour
         {
             move.interactable = buttonState[0] = a_value;
 
-            profiles.CurrentProfile.GetChild(1).GetChild(0).GetComponent<Image>().sprite = (buttonState[0]) ? hexIconFilled : hexIconEmpty;
         }
     }
 
@@ -188,14 +205,6 @@ public class UIManager : MonoBehaviour
         {
             attack.interactable = buttonState[1] = a_value;
 
-            if (buttonState[1])
-            {
-                profiles.CurrentProfile.GetChild(1).GetChild(1).GetComponent<Image>().sprite = hexIconFilled;
-            }
-            else
-            {
-                profiles.CurrentProfile.GetChild(1).GetChild(1).GetComponent<Image>().sprite = hexIconEmpty;
-            }
 
         }
     }
@@ -209,15 +218,6 @@ public class UIManager : MonoBehaviour
         else
         {
             specialAttack.interactable = buttonState[2] = a_value;
-
-            if (buttonState[2])
-            {
-                profiles.CurrentProfile.GetChild(1).GetChild(2).GetComponent<Image>().sprite = hexIconFilled;
-            }
-            else
-            {
-                profiles.CurrentProfile.GetChild(1).GetChild(2).GetComponent<Image>().sprite = hexIconEmpty;
-            }
 
         }
     }
@@ -241,6 +241,7 @@ public class UIManager : MonoBehaviour
         {
             buttons[i].interactable = buttonState[i];
         }
+        UpdateSmallAblilityIcons();
     }
 
     public void EndPlayersTurn()
@@ -256,9 +257,12 @@ public class UIManager : MonoBehaviour
     {
         Transform canvas = GameObject.FindGameObjectWithTag("UI").transform;
 
+
         if (canvas)
         {
             profiles = battleUI.transform.GetChild(0).GetComponent<ProfileSwitcher>();
+            earthProfile = profiles.transform.GetChild(0).gameObject;
+            lightningProfile = profiles.transform.GetChild(1).gameObject; ;
 
             if (fadePlane)
             {

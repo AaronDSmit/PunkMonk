@@ -17,22 +17,22 @@ MonoBehaviour:
   m_lastPopulateTimePsrt1: 0
   AcousticTextureWwu:
   - Guid: '{8C506F3E-FAD5-4CC1-9F43-4559ED4E3FA7}'
-    m_lastTimePart2: -1999234001
-    m_lastTimePsrt1: 2016178255
+    m_lastTimePart2: -1999231162
+    m_lastTimePsrt1: -1693149576
     ParentPhysicalPath: 
     PhysicalPath: Virtual Acoustics\Default Work Unit.wwu
     List: []
   AuxBusWwu:
   - Guid: '{17B85F81-D4B6-4851-8C1E-9D808D7B1DC8}'
-    m_lastTimePart2: -1999234001
-    m_lastTimePsrt1: 2009858255
+    m_lastTimePart2: -1999231162
+    m_lastTimePsrt1: -1695969576
     ParentPhysicalPath: 
     PhysicalPath: Master-Mixer Hierarchy\Default Work Unit.wwu
     List: []
   BankWwu:
   - Guid: '{A76D73F7-5EA3-46B5-B38F-16F7929AC7DF}'
-    m_lastTimePart2: -1999229554
-    m_lastTimePsrt1: -530363280
+    m_lastTimePart2: -1999229548
+    m_lastTimePsrt1: 1106266482
     ParentPhysicalPath: 
     PhysicalPath: SoundBanks\Default Work Unit.wwu
     List:
@@ -47,8 +47,8 @@ MonoBehaviour:
         ObjectType: 7
   EventWwu:
   - Guid: '{9B7E563D-D886-4529-9471-1F499F2670AE}'
-    m_lastTimePart2: -1999229549
-    m_lastTimePsrt1: 2026837536
+    m_lastTimePart2: -1999229542
+    m_lastTimePsrt1: -2139774624
     ParentPhysicalPath: 
     PhysicalPath: Events\Default Work Unit.wwu
     List:
@@ -76,35 +76,124 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
+    - Guid: 8db706d1dfcf6546a2d3fbc1150675f5
+      ID: 1256202815
+      Name: Play
+      Path: Default Work Unit\SFX\Gen\Play
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: SFX
+        ObjectType: 4
+      - ElementName: Gen
+        ObjectType: 4
+      - ElementName: Play
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - Guid: b69c68504dff594bb8c82608bee43c1b
+      ID: 795139033
+      Name: Play_Melee_Attack
+      Path: Default Work Unit\SFX\Enemies\Attack\Play_Melee_Attack
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: SFX
+        ObjectType: 4
+      - ElementName: Enemies
+        ObjectType: 4
+      - ElementName: Attack
+        ObjectType: 4
+      - ElementName: Play_Melee_Attack
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - Guid: 29ab5a0d8f3f9e438ae03ec0c9fd276d
+      ID: 973990149
+      Name: Play_Missile_Attack
+      Path: Default Work Unit\SFX\Enemies\Attack\Play_Missile_Attack
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: SFX
+        ObjectType: 4
+      - ElementName: Enemies
+        ObjectType: 4
+      - ElementName: Attack
+        ObjectType: 4
+      - ElementName: Play_Missile_Attack
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - Guid: 18a6f5293a7dea4db5023bb7ce37d1f3
+      ID: 1520388910
+      Name: Play_Ranged_Attack
+      Path: Default Work Unit\SFX\Enemies\Attack\Play_Ranged_Attack
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: SFX
+        ObjectType: 4
+      - ElementName: Enemies
+        ObjectType: 4
+      - ElementName: Attack
+        ObjectType: 4
+      - ElementName: Play_Ranged_Attack
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - Guid: 12ad2f255dfbd24981d7beda565c85a9
+      ID: 1315981400
+      Name: Play_TakeDamage
+      Path: Default Work Unit\SFX\Enemies\TakeDamage\Play_TakeDamage
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: SFX
+        ObjectType: 4
+      - ElementName: Enemies
+        ObjectType: 4
+      - ElementName: TakeDamage
+        ObjectType: 4
+      - ElementName: Play_TakeDamage
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
   ExpandedItems:
   - /PunkMonkPrototype_WwiseProject
   - /PunkMonkPrototype_WwiseProject/Events
+  - /PunkMonkPrototype_WwiseProject/Events/Default Work Unit
   - /PunkMonkPrototype_WwiseProject/SoundBanks
   RtpcWwu:
   - Guid: '{0611EF02-C52F-4D22-840D-EF5CD7507B8B}'
-    m_lastTimePart2: -1999234001
-    m_lastTimePsrt1: 2004498255
+    m_lastTimePart2: -1999229542
+    m_lastTimePsrt1: -2139744624
     ParentPhysicalPath: 
     PhysicalPath: Game Parameters\Default Work Unit.wwu
     List: []
   StateWwu:
   - Guid: '{04CF6E00-4CA3-4424-9273-F0833B6CE0D5}'
-    m_lastTimePart2: -1999234001
-    m_lastTimePsrt1: 2016158255
+    m_lastTimePart2: -1999229753
+    m_lastTimePsrt1: 1915764915
     ParentPhysicalPath: 
     PhysicalPath: States\Default Work Unit.wwu
     List: []
   SwitchWwu:
   - Guid: '{B6FD7C61-6C9F-48A5-8B29-05A62B27072C}'
-    m_lastTimePart2: -1999234001
-    m_lastTimePsrt1: 2016158255
+    m_lastTimePart2: -1999229753
+    m_lastTimePsrt1: 1915794915
     ParentPhysicalPath: 
     PhysicalPath: Switches\Default Work Unit.wwu
     List: []
   TriggerWwu:
   - Guid: '{F63834BC-6D92-48B9-A27B-98C86E0C3830}'
-    m_lastTimePart2: -1999234001
-    m_lastTimePsrt1: 2016168255
+    m_lastTimePart2: -1999229542
+    m_lastTimePsrt1: -2139644624
     ParentPhysicalPath: 
     PhysicalPath: Triggers\Default Work Unit.wwu
     List: []

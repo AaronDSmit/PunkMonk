@@ -4,7 +4,92 @@
 		<WorkUnit Name="Default Work Unit" ID="{9B7E563D-D886-4529-9471-1F499F2670AE}" PersistMode="Standalone">
 			<ChildrenList>
 				<Folder Name="Music" ID="{A26EE978-6F47-4FD0-9AF6-6E4767F7A552}" ShortID="806793621"/>
-				<Folder Name="SFX" ID="{F835FE87-A4D5-46C3-9C4C-2AB361D57519}" ShortID="126631870"/>
+				<Folder Name="SFX" ID="{F835FE87-A4D5-46C3-9C4C-2AB361D57519}" ShortID="126631870">
+					<ChildrenList>
+						<Folder Name="Clade" ID="{CE70BA09-840C-4498-9BB5-73A5C48250BC}" ShortID="289338736"/>
+						<Folder Name="Gen" ID="{2EC56694-E6E9-46D4-A512-BEE62F3FC5A4}" ShortID="993879949">
+							<ChildrenList>
+								<Event Name="Play" ID="{D106B78D-CFDF-4665-A2D3-FBC1150675F5}">
+									<ChildrenList>
+										<Action Name="" ID="{2568728F-955F-42E3-A7E6-0A2C863A55FF}" ShortID="514278088">
+											<PropertyList>
+												<Property Name="ActionType" Type="int16" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="New Music Segment" ID="{62968E88-35B7-4706-B531-8558A313C9DE}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+										<Action Name="" ID="{CDFF6F2A-B1E3-4418-A7C3-E0F3ED1A4BF5}" ShortID="945068215">
+											<PropertyList>
+												<Property Name="ActionType" Type="int16" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="New Music Segment_01" ID="{95B3F457-36B9-4AAA-9870-985DC2F0D2F9}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+										<Action Name="" ID="{08BB2FE7-7FF9-4B3F-989A-9E8ED6C1558A}" ShortID="567986349">
+											<PropertyList>
+												<Property Name="ActionType" Type="int16" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="New Music Segment_02" ID="{EABB4D91-05F3-495B-8DE3-6880160C1081}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+									</ChildrenList>
+								</Event>
+							</ChildrenList>
+						</Folder>
+						<Folder Name="Enemies" ID="{7D52DC29-B2A9-45C1-969D-936F2A057B97}" ShortID="5898167">
+							<ChildrenList>
+								<Folder Name="Attack" ID="{F798D675-2EAC-4AA8-B60A-242FEF7D35FF}" ShortID="815324480">
+									<ChildrenList>
+										<Event Name="Play_Melee_Attack" ID="{50689CB6-FF4D-4B59-B8C8-2608BEE43C1B}">
+											<ChildrenList>
+												<Action Name="" ID="{BF40A355-8771-4A03-8F15-28D43C9314E3}" ShortID="465998960">
+													<PropertyList>
+														<Property Name="ActionType" Type="int16" Value="1"/>
+													</PropertyList>
+													<ReferenceList/>
+												</Action>
+											</ChildrenList>
+										</Event>
+										<Event Name="Play_Ranged_Attack" ID="{29F5A618-7D3A-4DEA-B502-3BB7CE37D1F3}">
+											<ChildrenList>
+												<Action Name="" ID="{51174E9F-A381-4693-BBF7-857C02DCE0E5}" ShortID="30514515">
+													<PropertyList>
+														<Property Name="ActionType" Type="int16" Value="1"/>
+													</PropertyList>
+													<ReferenceList/>
+												</Action>
+											</ChildrenList>
+										</Event>
+										<Event Name="Play_Missile_Attack" ID="{0D5AAB29-3F8F-439E-8AE0-3EC0C9FD276D}">
+											<ChildrenList>
+												<Action Name="" ID="{33083B73-60E1-40B6-8887-50BEC7C00363}" ShortID="1012403757">
+													<PropertyList>
+														<Property Name="ActionType" Type="int16" Value="1"/>
+													</PropertyList>
+													<ReferenceList/>
+												</Action>
+											</ChildrenList>
+										</Event>
+									</ChildrenList>
+								</Folder>
+								<Folder Name="TakeDamage" ID="{BC2FCEFB-E8FD-4D49-801F-EE53C6235879}" ShortID="272695727">
+									<ChildrenList>
+										<Event Name="Play_TakeDamage" ID="{252FAD12-FB5D-49D2-81D7-BEDA565C85A9}"/>
+									</ChildrenList>
+								</Folder>
+							</ChildrenList>
+						</Folder>
+					</ChildrenList>
+				</Folder>
 				<Event Name="EnterBattle" ID="{9243709B-6518-45C7-A94E-DC9CB628ED90}">
 					<ChildrenList>
 						<Action Name="" ID="{C65E4492-6E84-4878-BE92-06026560DBCA}" ShortID="114447605">

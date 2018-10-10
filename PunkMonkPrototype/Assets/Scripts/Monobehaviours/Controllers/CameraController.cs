@@ -1,6 +1,6 @@
-﻿using Cinemachine;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public enum CameraDirection
 {
@@ -354,32 +354,23 @@ public class CameraController : MonoBehaviour
 
 
 
-    //public void PlayGlamCam(Unit a_unit)
-    //{
-    //    if (onGlamCamStart != null)
-    //    {
-    //        onGlamCamStart();
-    //    }
-    //    transform.GetChild(1).gameObject.SetActive(false);
-    //    a_unit.transform.GetChild(5).gameObject.SetActive(true);
+    public void PlayCinematicBars(Unit a_unit)
+    {
 
-    //    StartCoroutine(ChangeGlamCam(a_unit));
+        
+        Manager.instance.transform.GetChild(0).GetComponent<MenuHelper>().PlayBlackBars(1);
+        StartCoroutine(StopBlackBars((float)a_unit.GetComponent<PlayableDirector>().duration));
 
-    //}
+    }
 
 
-    //private IEnumerator ChangeGlamCam(Unit a_unit)
-    //{
-    //    yield return new WaitForSeconds(cinemachineBrain.m_DefaultBlend.m_Time);
+    private IEnumerator StopBlackBars(float a_time)
+    {
+        yield return new WaitForSeconds(a_time);
+        Manager.instance.transform.GetChild(0).GetComponent<MenuHelper>().PlayBlackBars(1);
 
 
-    //    a_unit.transform.GetChild(5).gameObject.SetActive(false);
-    //    a_unit.transform.GetChild(6).gameObject.SetActive(true);
-
-    //    Manager.instance.transform.GetChild(0).GetComponent<MenuHelper>().PlayBlackBars(cinemachineBrain.m_CustomBlends.m_CustomBlends[0].m_Blend.m_Time);
-
-    //    StartCoroutine(EndGlamCam(a_unit));
-    //}
+    }
 
     //private IEnumerator EndGlamCam(Unit a_unit)
     //{

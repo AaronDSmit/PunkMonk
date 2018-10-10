@@ -95,8 +95,6 @@ public class EarthUnit : Unit
         //call the start call back function
         start();
 
-        enemyLookAtCamera = transform.GetChild(7).GetComponent<Cinemachine.CinemachineVirtualCamera>();
-
         CanAttack = false;
 
         //store the target tile
@@ -109,7 +107,7 @@ public class EarthUnit : Unit
         {
             if (Random.Range(0, 100) <= glamCamChance)
             {
-                cameraController.PlayGlamCam(this);
+                cameraController.PlayCinematicBars(this);
                 StartCoroutine(BasicAttackDamageDelay(basicDamgeDelayTimer, finished, 2));
                 return;
             }
@@ -158,6 +156,7 @@ public class EarthUnit : Unit
             if (Random.Range(0, 100) <= glamCamChance)
             {
                 //cameraController.PlayGlamCam(this);
+                cameraController.transform.GetChild(1).gameObject.SetActive(false);
                 timeline.Play();
                 //specialAffectedUnits.Clear();
 
@@ -177,9 +176,8 @@ public class EarthUnit : Unit
                 //}
 
 
-
-                specialGlamCamTimer = (float)timeline.duration;
-
+                //SUBJECT TO CHANGE
+                specialGlamCamTimer = 3.45f;
             }
 
             else
@@ -229,6 +227,9 @@ public class EarthUnit : Unit
                     //exit current tile
                     currentTile.Exit();
                     currentTile = specialTiles[0];
+
+                    cameraController.transform.GetChild(1).gameObject.SetActive(true);
+
 
                     //enter target tile
                     currentTile.Enter(this);

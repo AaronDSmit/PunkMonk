@@ -150,7 +150,7 @@ public class LightningUnit : Unit
         {
             if (Random.Range(0, 100) <= glamCamChance)
             {
-                cameraController.PlayGlamCam(this);
+                cameraController.PlayCinematicBars(this);
                 StartCoroutine(BasicAttackDamageDelay(specialDamgeDelayTimer, 2));
                 return;
             }
@@ -191,7 +191,7 @@ public class LightningUnit : Unit
         {
             if (Random.Range(0, 100) <= glamCamChance)
             {
-                cameraController.PlayGlamCam(this);
+                cameraController.PlayCinematicBars(this);
                 StartCoroutine(SpecialAttackDamageDelay(specialDamgeDelayTimer, 2));
                 return;
             }

@@ -10,13 +10,14 @@ public class Dialogue : MonoBehaviour
     //// needs to be public for custom inspector
     //[SerializeField]
     //private List<Conversation> conversations;
-
+    [SerializeField]
+    private GameObject conversationPlane;
 
     #endregion
 
     #region Reference Fields
 
-    private GameObject conversationPlane;
+    //private GameObject conversationPlane;
     private TextMeshProUGUI tmp;
     private CameraController camController;
     private LightningUnit lightningUnit;
@@ -64,7 +65,11 @@ public class Dialogue : MonoBehaviour
         {
             instance = this;
         }
-        conversationPlane = transform.GetChild(0).GetChild(4).gameObject;
+        else
+        {
+            Destroy(gameObject);
+        }
+        //conversationPlane = transform.GetChild(0).GetChild(4).gameObject;
         tmp = conversationPlane.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
         camController = GameObject.FindGameObjectWithTag("CameraRig").GetComponent<CameraController>();
         Manager.instance.StateController.OnGameStateChanged += GameStateChanged;

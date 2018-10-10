@@ -17,22 +17,55 @@ MonoBehaviour:
   m_lastPopulateTimePsrt1: 0
   AcousticTextureWwu:
   - Guid: '{8C506F3E-FAD5-4CC1-9F43-4559ED4E3FA7}'
-    m_lastTimePart2: -1999231162
-    m_lastTimePsrt1: -1693149576
+    m_lastTimePart2: -1999229340
+    m_lastTimePsrt1: 919435087
     ParentPhysicalPath: 
     PhysicalPath: Virtual Acoustics\Default Work Unit.wwu
     List: []
   AuxBusWwu:
   - Guid: '{17B85F81-D4B6-4851-8C1E-9D808D7B1DC8}'
-    m_lastTimePart2: -1999231162
-    m_lastTimePsrt1: -1695969576
+    m_lastTimePart2: -1999229294
+    m_lastTimePsrt1: 1489773716
     ParentPhysicalPath: 
     PhysicalPath: Master-Mixer Hierarchy\Default Work Unit.wwu
-    List: []
+    List:
+    - Guid: 572048f9c9e168458c2cce9bbf04eed9
+      ID: -1099981808
+      Name: Bus_Ambient
+      Path: Default Work Unit\Master Audio Bus\Bus_Ambient
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Master Audio Bus
+        ObjectType: 2
+      - ElementName: Bus_Ambient
+        ObjectType: 1
+    - Guid: 8129cf49308a0345b0440072164b049b
+      ID: 1162281553
+      Name: Bus_Music
+      Path: Default Work Unit\Master Audio Bus\Bus_Music
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Master Audio Bus
+        ObjectType: 2
+      - ElementName: Bus_Music
+        ObjectType: 1
+    - Guid: 23c718c326877f48870459ebce91c66d
+      ID: -399043451
+      Name: Bus_SFX
+      Path: Default Work Unit\Master Audio Bus\Bus_SFX
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Master Audio Bus
+        ObjectType: 2
+      - ElementName: Bus_SFX
+        ObjectType: 1
   BankWwu:
   - Guid: '{A76D73F7-5EA3-46B5-B38F-16F7929AC7DF}'
-    m_lastTimePart2: -1999229548
-    m_lastTimePsrt1: 1106266482
+    m_lastTimePart2: -1999229340
+    m_lastTimePsrt1: 919395087
     ParentPhysicalPath: 
     PhysicalPath: SoundBanks\Default Work Unit.wwu
     List:
@@ -47,8 +80,8 @@ MonoBehaviour:
         ObjectType: 7
   EventWwu:
   - Guid: '{9B7E563D-D886-4529-9471-1F499F2670AE}'
-    m_lastTimePart2: -1999229542
-    m_lastTimePsrt1: -2139774624
+    m_lastTimePart2: -1999229340
+    m_lastTimePsrt1: 915375087
     ParentPhysicalPath: 
     PhysicalPath: Events\Default Work Unit.wwu
     List:
@@ -72,22 +105,6 @@ MonoBehaviour:
       - ElementName: Default Work Unit
         ObjectType: 12
       - ElementName: ExitBattle
-        ObjectType: 3
-      maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
-    - Guid: 8db706d1dfcf6546a2d3fbc1150675f5
-      ID: 1256202815
-      Name: Play
-      Path: Default Work Unit\SFX\Gen\Play
-      PathAndIcons:
-      - ElementName: Default Work Unit
-        ObjectType: 12
-      - ElementName: SFX
-        ObjectType: 4
-      - ElementName: Gen
-        ObjectType: 4
-      - ElementName: Play
         ObjectType: 3
       maxAttenuation: 0
       maxDuration: 0
@@ -168,32 +185,33 @@ MonoBehaviour:
   - /PunkMonkPrototype_WwiseProject
   - /PunkMonkPrototype_WwiseProject/Events
   - /PunkMonkPrototype_WwiseProject/Events/Default Work Unit
+  - /PunkMonkPrototype_WwiseProject/Events/Default Work Unit/SFX
   - /PunkMonkPrototype_WwiseProject/SoundBanks
   RtpcWwu:
   - Guid: '{0611EF02-C52F-4D22-840D-EF5CD7507B8B}'
-    m_lastTimePart2: -1999229542
-    m_lastTimePsrt1: -2139744624
+    m_lastTimePart2: -1999229340
+    m_lastTimePsrt1: 915375087
     ParentPhysicalPath: 
     PhysicalPath: Game Parameters\Default Work Unit.wwu
     List: []
   StateWwu:
   - Guid: '{04CF6E00-4CA3-4424-9273-F0833B6CE0D5}'
-    m_lastTimePart2: -1999229753
-    m_lastTimePsrt1: 1915764915
+    m_lastTimePart2: -1999229340
+    m_lastTimePsrt1: 919415087
     ParentPhysicalPath: 
     PhysicalPath: States\Default Work Unit.wwu
     List: []
   SwitchWwu:
   - Guid: '{B6FD7C61-6C9F-48A5-8B29-05A62B27072C}'
-    m_lastTimePart2: -1999229753
-    m_lastTimePsrt1: 1915794915
+    m_lastTimePart2: -1999229340
+    m_lastTimePsrt1: 919425087
     ParentPhysicalPath: 
     PhysicalPath: Switches\Default Work Unit.wwu
     List: []
   TriggerWwu:
   - Guid: '{F63834BC-6D92-48B9-A27B-98C86E0C3830}'
-    m_lastTimePart2: -1999229542
-    m_lastTimePsrt1: -2139644624
+    m_lastTimePart2: -1999229340
+    m_lastTimePsrt1: 919425087
     ParentPhysicalPath: 
     PhysicalPath: Triggers\Default Work Unit.wwu
     List: []

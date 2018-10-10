@@ -21,8 +21,6 @@ GameObject:
   - component: {fileID: 4649375426294534}
   - component: {fileID: 33755981326853854}
   - component: {fileID: 23379800226531140}
-  - component: {fileID: 65858002115663980}
-  - component: {fileID: 114020473855575154}
   m_Layer: 10
   m_Name: BuildingA_GarageUpperLeft
   m_TagString: Untagged
@@ -84,26 +82,3 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1338685270444022}
   m_Mesh: {fileID: 4300000, guid: d4a8580fa7dd7b941b08a09e4c70222e, type: 3}
---- !u!65 &65858002115663980
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1338685270444022}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.817452, y: 2.00263, z: 0.29055214}
-  m_Center: {x: 0.908726, y: 1.1089536, z: -0.18730824}
---- !u!114 &114020473855575154
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1338685270444022}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24b70badff882d346b099fc70d7772f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

@@ -21,8 +21,6 @@ GameObject:
   - component: {fileID: 4591294593938172}
   - component: {fileID: 33022453121744706}
   - component: {fileID: 23640574503130336}
-  - component: {fileID: 65524373034092606}
-  - component: {fileID: 114894295731604440}
   m_Layer: 10
   m_Name: BuildingA_Window1
   m_TagString: Untagged
@@ -84,26 +82,3 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1442057257133980}
   m_Mesh: {fileID: 4300000, guid: 201a162c9be3e764d86fe40dac9dd774, type: 3}
---- !u!65 &65524373034092606
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1442057257133980}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.6361321, y: 2.002584, z: 0.3213434}
-  m_Center: {x: -1.0012975, y: 1.1089766, z: -0.15277435}
---- !u!114 &114894295731604440
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1442057257133980}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24b70badff882d346b099fc70d7772f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

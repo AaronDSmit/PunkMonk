@@ -10,7 +10,7 @@ public class AI_Agent : Unit
     #region Unity Inspector Fields
     [Header("Enemy")]
     [SerializeField]
-    private int damage = 100;
+    protected int damage = 3;
     [SerializeField] protected float damageDelayTimer = 0;
     [SerializeField] private GameObject bullet;
     [SerializeField] private float bulletSpeed = 3;
@@ -173,21 +173,17 @@ public class AI_Agent : Unit
         yield break;
     }
 
-    protected IEnumerator BasicAttackDamageDelay(float a_timer, System.Action a_finished)
+    protected virtual IEnumerator BasicAttackDamageDelay(float a_timer, System.Action a_finished)
     {
         //wait for timer before runing code
         yield return new WaitForSeconds(a_timer);
 
-        //go though each tile and deal damage to the enemy
         foreach (Hex tile in tilesToAttack)
         {
-            //if there is a unit
             if (tile.CurrentUnit != null)
             {
-                //make sure we arent damaging other ai
                 if (tile.CurrentUnit.Team != TEAM.ai)
                 {
-                    //deal damage to that unit
                     tile.CurrentUnit.TakeDamage(damage, this);
                 }
             }

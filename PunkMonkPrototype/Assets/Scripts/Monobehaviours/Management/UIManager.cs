@@ -103,13 +103,13 @@ public class UIManager : MonoBehaviour
 
     private void UpdateSmallAblilityIcons()
     {
-        earthProfile.transform.GetChild(1).GetChild(0).GetComponent<Image>().sprite = (player.EarthUnit.CanMove) ? hexIconFilled : hexIconEmpty;
-        earthProfile.transform.GetChild(1).GetChild(1).GetComponent<Image>().sprite = (player.EarthUnit.CanAttack) ? hexIconFilled : hexIconEmpty;
-        earthProfile.transform.GetChild(1).GetChild(2).GetComponent<Image>().sprite = (player.EarthUnit.CanSpecialAttack) ? hexIconFilled : hexIconEmpty;
+        earthProfile.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = (player.EarthUnit.CanMove) ? hexIconFilled : hexIconEmpty;
+        earthProfile.transform.GetChild(0).GetChild(1).GetComponent<Image>().sprite = (player.EarthUnit.CanAttack) ? hexIconFilled : hexIconEmpty;
+        earthProfile.transform.GetChild(0).GetChild(2).GetComponent<Image>().sprite = (player.EarthUnit.CanSpecialAttack) ? hexIconFilled : hexIconEmpty;
 
-        lightningProfile.transform.GetChild(1).GetChild(0).GetComponent<Image>().sprite = (player.LightningUnit.CanMove) ? hexIconFilled : hexIconEmpty;
-        lightningProfile.transform.GetChild(1).GetChild(1).GetComponent<Image>().sprite = (player.LightningUnit.CanAttack) ? hexIconFilled : hexIconEmpty;
-        lightningProfile.transform.GetChild(1).GetChild(2).GetComponent<Image>().sprite = (player.LightningUnit.CanSpecialAttack) ? hexIconFilled : hexIconEmpty;
+        lightningProfile.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = (player.LightningUnit.CanMove) ? hexIconFilled : hexIconEmpty;
+        lightningProfile.transform.GetChild(0).GetChild(1).GetComponent<Image>().sprite = (player.LightningUnit.CanAttack) ? hexIconFilled : hexIconEmpty;
+        lightningProfile.transform.GetChild(0).GetChild(2).GetComponent<Image>().sprite = (player.LightningUnit.CanSpecialAttack) ? hexIconFilled : hexIconEmpty;
     }
 
     public void Init()

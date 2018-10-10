@@ -5,11 +5,16 @@ using UnityEngine;
 public class MissileUnit : AI_Agent
 {
     [SerializeField]
-    int rechargeTurns = 1;
+    private int rechargeTurns = 1;
 
-    int turns = 0;
+    [SerializeField]
+    private GameObject missilePrefab = null;
 
-    bool readyToAttack = false;
+    private int turns = 0;
+
+    private bool readyToAttack = false;
+
+    private int missileFallCount = 0;
 
     protected override void Start()
     {
@@ -34,11 +39,12 @@ public class MissileUnit : AI_Agent
     {
         if (readyToAttack)
         {
-            // Remove the highlight
             Manager.instance.HexHighlighter.RemoveHighlights(this);
 
-            // Shoot Missiles
-            StartCoroutine(BasicAttackDamageDelay(damageDelayTimer, FinishedAction));
+            StartCoroutine(ShootMissiles());
+
+            yield return new WaitForSeconds(2f);
+            yield return new WaitUntil(() => missileFallCount == 0);
 
             turns = rechargeTurns;
 
@@ -55,6 +61,55 @@ public class MissileUnit : AI_Agent
 
         turnComplete = true;
         yield break;
+    }
+
+    private IEnumerator ShootMissiles()
+    {
+        GameObject missileParent = Instantiate(missilePrefab);
+        missileParent.transform.position = transform.position;
+        Missile missile = missileParent.transform.GetChild(0).GetComponent<Missile>();
+        missile.TriggerUp();
+
+        yield return new WaitForSeconds(0.001f);
+        yield return new WaitUntil(() => missile.Done);
+
+        missileParent.transform.position = Vector3.zero;
+        Destroy(missileParent);
+
+        foreach (Hex tile in tilesToAttack)
+        {
+            StartCoroutine(MissileDown(tile));
+        }
+
+        yield return new WaitUntil(() => missileFallCount == 0);
+
+        FinishedAction();
+    }
+
+    private IEnumerator MissileDown(Hex a_tile)
+    {
+        missileFallCount++;
+
+        GameObject missileParent = Instantiate(missilePrefab);
+        missileParent.transform.position = a_tile.transform.position;
+        Missile missile = missileParent.transform.GetChild(0).GetComponent<Missile>();
+        missile.TriggerDown();
+
+        yield return new WaitForSeconds(0.001f);
+        yield return new WaitUntil(() => missile.Done);
+
+        missileParent.transform.position = Vector3.zero;
+        Destroy(missileParent);
+
+        if (a_tile.CurrentUnit != null)
+        {
+            if (a_tile.CurrentUnit.Team != TEAM.ai)
+            {
+                a_tile.CurrentUnit.TakeDamage(damage, this);
+            }
+        }
+
+        missileFallCount--;
     }
 
     private void ChooseAreaToAttack()

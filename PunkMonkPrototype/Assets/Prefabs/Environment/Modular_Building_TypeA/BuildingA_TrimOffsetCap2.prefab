@@ -21,8 +21,6 @@ GameObject:
   - component: {fileID: 4635686950255632}
   - component: {fileID: 33017160568559346}
   - component: {fileID: 23412658497411848}
-  - component: {fileID: 114876316391348754}
-  - component: {fileID: 65690854630537080}
   m_Layer: 10
   m_Name: BuildingA_TrimOffsetCap2
   m_TagString: Untagged
@@ -84,26 +82,3 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1855746670047714}
   m_Mesh: {fileID: 4300000, guid: e62d36694daac5a4a8f628b3a1aad615, type: 3}
---- !u!65 &65690854630537080
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1855746670047714}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.7160225, y: 1.0667332, z: 0.5024042}
-  m_Center: {x: 0.16055107, y: 0.2649501, z: -0.24448252}
---- !u!114 &114876316391348754
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1855746670047714}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24b70badff882d346b099fc70d7772f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

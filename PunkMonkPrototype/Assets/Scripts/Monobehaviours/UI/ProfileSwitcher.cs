@@ -69,10 +69,10 @@ public class ProfileSwitcher : MonoBehaviour
         {
             earthProfile.transform.SetAsLastSibling();
 
-            StartCoroutine(MoveProfile(earthProfile, secondaryPos, primaryPos));
+            //StartCoroutine(MoveProfile(earthProfile, secondaryPos, primaryPos));
             StartCoroutine(Scale(earthProfile, secondaryScale, primaryScale));
 
-            StartCoroutine(MoveProfile(lightningProfile, primaryPos, secondaryPos));
+           // StartCoroutine(MoveProfile(lightningProfile, primaryPos, secondaryPos));
             StartCoroutine(Scale(lightningProfile, primaryScale, secondaryScale));
 
             earthProfileButton.GetComponent<Image>().raycastTarget = false;
@@ -82,10 +82,10 @@ public class ProfileSwitcher : MonoBehaviour
         {
             lightningProfile.transform.SetAsLastSibling();
 
-            StartCoroutine(MoveProfile(lightningProfile, secondaryPos, primaryPos));
+            //StartCoroutine(MoveProfile(lightningProfile, secondaryPos, primaryPos));
             StartCoroutine(Scale(lightningProfile, secondaryScale, primaryScale));
 
-            StartCoroutine(MoveProfile(earthProfile, primaryPos, secondaryPos));
+            //StartCoroutine(MoveProfile(earthProfile, primaryPos, secondaryPos));
             StartCoroutine(Scale(earthProfile, primaryScale, secondaryScale));
 
             earthProfileButton.GetComponent<Image>().raycastTarget = true;

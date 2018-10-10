@@ -4109,9 +4109,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c90b8b83545f508489a1635da606b62b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animationTime: 0.3
+  animationTime: 0.1
   primaryScale: {x: 1, y: 1}
-  secondaryScale: {x: 0.7, y: 0.7}
+  secondaryScale: {x: 0.95, y: 0.95}
 --- !u!114 &114546563440158194
 MonoBehaviour:
   m_ObjectHideFlags: 1

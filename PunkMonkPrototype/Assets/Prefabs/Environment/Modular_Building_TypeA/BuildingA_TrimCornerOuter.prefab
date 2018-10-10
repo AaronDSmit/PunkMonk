@@ -21,8 +21,6 @@ GameObject:
   - component: {fileID: 4783573296505268}
   - component: {fileID: 33664942755360224}
   - component: {fileID: 23081125353697190}
-  - component: {fileID: 65300875085818226}
-  - component: {fileID: 114366129784967344}
   m_Layer: 10
   m_Name: BuildingA_TrimCornerOuter
   m_TagString: Untagged
@@ -84,26 +82,3 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1197030846007294}
   m_Mesh: {fileID: 4300000, guid: 21167f61fb2ac6043a5cb465cb0df96d, type: 3}
---- !u!65 &65300875085818226
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1197030846007294}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.4100247, y: 2.0025842, z: 0.40206146}
-  m_Center: {x: -0.20501235, y: 1.1089767, z: -0.20103073}
---- !u!114 &114366129784967344
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1197030846007294}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24b70badff882d346b099fc70d7772f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

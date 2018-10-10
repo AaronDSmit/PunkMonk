@@ -21,8 +21,6 @@ GameObject:
   - component: {fileID: 4466415949918830}
   - component: {fileID: 33965577403208826}
   - component: {fileID: 23366208300715640}
-  - component: {fileID: 65530922424491954}
-  - component: {fileID: 114279213950269850}
   m_Layer: 10
   m_Name: BuildingA_TrimCornerCapRoof
   m_TagString: Untagged
@@ -84,26 +82,3 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1920886289089678}
   m_Mesh: {fileID: 4300000, guid: be4520bea4f7801469892bd5bfc6ca0d, type: 3}
---- !u!65 &65530922424491954
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1920886289089678}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.41002655, y: 0.21265304, z: 0.40230376}
-  m_Center: {x: -0.20501328, y: 0.21389624, z: -0.20115188}
---- !u!114 &114279213950269850
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1920886289089678}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24b70badff882d346b099fc70d7772f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

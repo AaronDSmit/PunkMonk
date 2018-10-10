@@ -21,8 +21,6 @@ GameObject:
   - component: {fileID: 4101472364088940}
   - component: {fileID: 33361790446781830}
   - component: {fileID: 23794262543945084}
-  - component: {fileID: 65509542704995146}
-  - component: {fileID: 114970199065376576}
   m_Layer: 10
   m_Name: BuildingA_TrimStraightWall
   m_TagString: Untagged
@@ -84,26 +82,3 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1144269633708294}
   m_Mesh: {fileID: 4300000, guid: 932aabc3fcefdb9418d61491603d583a, type: 3}
---- !u!65 &65509542704995146
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1144269633708294}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.36645108, y: 2.002584, z: 0.137807}
-  m_Center: {x: -0.0000056400895, y: 1.1089766, z: -0.0689035}
---- !u!114 &114970199065376576
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1144269633708294}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24b70badff882d346b099fc70d7772f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

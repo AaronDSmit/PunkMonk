@@ -10,9 +10,9 @@
 						</Reference>
 					</ReferenceList>
 					<ChildrenList>
-						<AuxBus Name="Bus_SFX" ID="{C318C723-8726-487F-8704-59EBCE91C66D}"/>
-						<AuxBus Name="Bus_Music" ID="{49CF2981-8A30-4503-B044-0072164B049B}"/>
-						<AuxBus Name="Bus_Ambient" ID="{F9482057-E1C9-4568-8C2C-CE9BBF04EED9}"/>
+						<Bus Name="Bus_SFX" ID="{F5B70500-AE66-45F4-AE1A-09F85764E6E6}"/>
+						<Bus Name="Bus_Ambient" ID="{C670AFFA-7BE7-49F5-8F3D-09EC259CD1DA}"/>
+						<Bus Name="Bus_Music" ID="{DB6CE080-4290-47A8-B8B7-B1E660F3F55C}"/>
 					</ChildrenList>
 				</Bus>
 			</ChildrenList>

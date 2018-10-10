@@ -13,8 +13,8 @@ namespace AK
 {
     namespace EVENTS
     {
-        static const AkUniqueID ENTERBATTLE = 1096437587U;
-        static const AkUniqueID EXITBATTLE = 929506175U;
+        static const AkUniqueID BATTLE_ENTER = 906289856U;
+        static const AkUniqueID BATTLE_EXIT = 4139651882U;
     } // namespace EVENTS
 
     namespace BANKS
@@ -25,6 +25,9 @@ namespace AK
 
     namespace BUSSES
     {
+        static const AkUniqueID BUS_AMBIENT = 3194985488U;
+        static const AkUniqueID BUS_MUSIC = 1162281553U;
+        static const AkUniqueID BUS_SFX = 3895923845U;
         static const AkUniqueID MASTER_AUDIO_BUS = 3803692087U;
     } // namespace BUSSES
 

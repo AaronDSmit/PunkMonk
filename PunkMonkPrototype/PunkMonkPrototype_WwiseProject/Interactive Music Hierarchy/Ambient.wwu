@@ -11,9 +11,6 @@
 						<Reference Name="OutputBus">
 							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{17B85F81-D4B6-4851-8C1E-9D808D7B1DC8}"/>
 						</Reference>
-						<Reference Name="UserAuxSend0">
-							<ObjectRef Name="Bus_Ambient" ID="{F9482057-E1C9-4568-8C2C-CE9BBF04EED9}" WorkUnitID="{17B85F81-D4B6-4851-8C1E-9D808D7B1DC8}"/>
-						</Reference>
 					</ReferenceList>
 					<ChildrenList>
 						<MusicSegment Name="Ambient_Inside" ID="{156C1549-ABE7-481C-8B74-134D9E5C4AFA}" ShortID="102954352">

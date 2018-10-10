@@ -61,8 +61,8 @@ MonoBehaviour:
   maxVolt: 3
   currentVolt: 0
   endBattleState:
-    ID: 929506175
-    valueGuid: bad0505a2bc0194f9021c83331c3cf3b
+    ID: -155315414
+    valueGuid: 18fa134358a7134db7926f91deb6776d
 --- !u!114 &114752336446416580
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -88,39 +88,6 @@
 						</Folder>
 					</ChildrenList>
 				</Folder>
-				<Event Name="EnterBattle" ID="{9243709B-6518-45C7-A94E-DC9CB628ED90}">
-					<ChildrenList>
-						<Action Name="" ID="{C65E4492-6E84-4878-BE92-06026560DBCA}" ShortID="114447605">
-							<PropertyList>
-								<Property Name="ActionType" Type="int16" Value="1"/>
-								<Property Name="FadeInCurve" Type="int16" Value="2"/>
-								<Property Name="FadeTime" Type="Real64" Value="1.5"/>
-							</PropertyList>
-							<ReferenceList>
-								<Reference Name="Target">
-									<ObjectRef Name="Combat_FullLoop_v1" ID="{9772456A-2D26-4AF7-803B-F2CF8A85BD24}" WorkUnitID="{4DB86490-E208-4AE5-878B-DD391FBC0583}"/>
-								</Reference>
-							</ReferenceList>
-						</Action>
-					</ChildrenList>
-				</Event>
-				<Event Name="ExitBattle" ID="{5A50D0BA-C02B-4F19-9021-C83331C3CF3B}">
-					<ChildrenList>
-						<Action Name="" ID="{FE71FE90-5188-47B5-BCAC-093D39A1CE2E}" ShortID="46350951">
-							<PropertyList>
-								<Property Name="ActionType" Type="int16" Value="2"/>
-								<Property Name="FadeOutCurve" Type="int16" Value="1"/>
-								<Property Name="FadeTime" Type="Real64" Value="1.5"/>
-								<Property Name="Scope" Type="int16" Value="1"/>
-							</PropertyList>
-							<ReferenceList>
-								<Reference Name="Target">
-									<ObjectRef Name="Combat_FullLoop_v1" ID="{9772456A-2D26-4AF7-803B-F2CF8A85BD24}" WorkUnitID="{4DB86490-E208-4AE5-878B-DD391FBC0583}"/>
-								</Reference>
-							</ReferenceList>
-						</Action>
-					</ChildrenList>
-				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

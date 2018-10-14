@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{97043EB5-8AFD-479B-B7EC-1820B945D1D5}" SchemaVersion="89">
+	<Events>
+		<WorkUnit Name="SFX" ID="{97043EB5-8AFD-479B-B7EC-1820B945D1D5}" PersistMode="Standalone">
+			<ChildrenList>
+				<Folder Name="TakeDamage" ID="{15A7D1A3-06EA-4235-AF87-F8CF326F7066}" ShortID="880570660"/>
+				<Folder Name="Battle" ID="{5AA654EA-3C77-4173-99CF-A1A387F5AF96}" ShortID="1045213817"/>
+			</ChildrenList>
+		</WorkUnit>
+	</Events>
+</WwiseDocument>

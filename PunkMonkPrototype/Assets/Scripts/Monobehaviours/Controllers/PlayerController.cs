@@ -779,7 +779,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
-            if (raycastHitButton == false)
+            if (raycastHitButton == false )
             {
                 switch (currentRuleset.actionType)
                 {
@@ -807,49 +807,54 @@ public class PlayerController : MonoBehaviour
 
                     case ActionType.attack:
 
-                        selectedUnit.BasicAttack(tilesAffectByAction.ToArray(), SpecialAttackStart, SpecialAttackEnd);
-                        RemoveHighlightedTiles();
-                        currentRuleset = selectionRuleset;
+                        if (tilesAffectByAction.Count > 0)
+                        {
 
-                        canInteract = false;
+                            selectedUnit.BasicAttack(tilesAffectByAction.ToArray(), SpecialAttackStart, SpecialAttackEnd);
+                            RemoveHighlightedTiles();
+                            currentRuleset = selectionRuleset;
 
+                            canInteract = false;
+                        }
                         break;
 
                     case ActionType.specialAttack:
 
-
-
-                        // simply attack if it's the earth unit
-                        if (selectedUnit == earthUnit)
-                        {
-                            selectedUnit.SpecialAttack(tilesAffectByAction.ToArray(), AttackStart, AttackEnd);
-                            RemoveHighlightedTiles();
-                            currentRuleset = selectionRuleset;
-                            canInteract = false;
-                        }
-                        else
+                        if (tilesAffectByAction.Count > 0)
                         {
 
-                            if (lightningAttackHex1 != null && lightningAttackHex1 != tileUnderMouse)// hex1 has been set, set hex2
+                            // simply attack if it's the earth unit
+                            if (selectedUnit == earthUnit)
                             {
                                 selectedUnit.SpecialAttack(tilesAffectByAction.ToArray(), AttackStart, AttackEnd);
                                 RemoveHighlightedTiles();
                                 currentRuleset = selectionRuleset;
                                 canInteract = false;
-                                lightningAttackHex1 = null;
-                                lineRenderer.positionCount = 0;
-                                break;
                             }
-
-
-                            // set the hex1 if it's null
-                            if (lightningAttackHex1 == null)
+                            else
                             {
-                                lightningAttackHex1 = tileUnderMouse;
-                                RemoveHighlightedTiles();
-                                currentRuleset = selectedUnit.GetAction(2).otherRuleset[0];
-                                HighlightTilesInRange(selectedUnit.SpecialAttackRange, lightningAttackHex1, false, true);
 
+                                if (lightningAttackHex1 != null && lightningAttackHex1 != tileUnderMouse)// hex1 has been set, set hex2
+                                {
+                                    selectedUnit.SpecialAttack(tilesAffectByAction.ToArray(), AttackStart, AttackEnd);
+                                    RemoveHighlightedTiles();
+                                    currentRuleset = selectionRuleset;
+                                    canInteract = false;
+                                    lightningAttackHex1 = null;
+                                    lineRenderer.positionCount = 0;
+                                    break;
+                                }
+
+
+                                // set the hex1 if it's null
+                                if (lightningAttackHex1 == null)
+                                {
+                                    lightningAttackHex1 = tileUnderMouse;
+                                    RemoveHighlightedTiles();
+                                    currentRuleset = selectedUnit.GetAction(2).otherRuleset[0];
+                                    HighlightTilesInRange(selectedUnit.SpecialAttackRange, lightningAttackHex1, false, true);
+
+                                }
                             }
                         }
 

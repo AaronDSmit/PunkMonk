@@ -132,7 +132,7 @@ public class GridManager : MonoBehaviour
         return (transform.childCount > 0);
     }
 
-    public List<Hex> GetTilesWithinDistance(Hex centerTile, int range, bool CheckIfTraversable = true, bool addOccupiedTiles = false)
+    public List<Hex> GetTilesWithinDistance(Hex centerTile, int range, bool CheckIfTraversable = true, bool addOccupiedTiles = false, bool addOutofBounds = false)
     {
         List<Hex> openList = new List<Hex>();
         List<Hex> returnList = new List<Hex>();
@@ -181,13 +181,28 @@ public class GridManager : MonoBehaviour
 
 
                 }
-                else if (!returnList.Contains(neighbour) && neighbour.HexState != HexState.OutOfBounds)
+                else if (!returnList.Contains(neighbour))
                 {
-                    neighbour.GScore = HexUtility.Distance(currentTile, neighbour) + currentTile.GScore;
-                    if (neighbour.GScore < range + 1)
+                    if (addOutofBounds == false)
                     {
-                        openList.Add(neighbour);
-                        returnList.Add(neighbour);
+                        if (neighbour.HexState != HexState.OutOfBounds)
+                        {
+                            neighbour.GScore = HexUtility.Distance(currentTile, neighbour) + currentTile.GScore;
+                            if (neighbour.GScore < range + 1)
+                            {
+                                openList.Add(neighbour);
+                                returnList.Add(neighbour);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        neighbour.GScore = HexUtility.Distance(currentTile, neighbour) + currentTile.GScore;
+                        if (neighbour.GScore < range + 1)
+                        {
+                            openList.Add(neighbour);
+                            returnList.Add(neighbour);
+                        }
                     }
                 }
             }

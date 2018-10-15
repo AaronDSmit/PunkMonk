@@ -472,7 +472,7 @@ public class PlayerController : MonoBehaviour
         // Highlight area in range to attack
         if (currentRuleset.actionType == ActionType.attack)
         {
-            HighlightTilesInRange(selectedUnit.AttackRange, null, false, true);
+            HighlightTilesInRange(selectedUnit.AttackRange, null, false, true, true);
         }
 
         // Highlight area in range to special attack
@@ -771,15 +771,14 @@ public class PlayerController : MonoBehaviour
 
             bool raycastHitButton = false;
 
-            foreach (RaycastResult result in results)
+
+            if (results.Count != 0)
             {
-                if (result.gameObject.GetComponent<Button>() != null)
-                {
-                    raycastHitButton = true;
-                }
+                raycastHitButton = true;
             }
 
-            if (raycastHitButton == false )
+
+            if (raycastHitButton == false)
             {
                 switch (currentRuleset.actionType)
                 {
@@ -1014,13 +1013,13 @@ public class PlayerController : MonoBehaviour
     }
 
     // Apply a permanent highlight to tiles within range of a unit
-    private void HighlightTilesInRange(int a_range, Hex a_startingHex = null, bool a_checkIfTreversable = true, bool a_addOccupiedTiles = true)
+    private void HighlightTilesInRange(int a_range, Hex a_startingHex = null, bool a_checkIfTreversable = true, bool a_addOccupiedTiles = true, bool a_addOutOfBounds = false)
     {
         if (a_startingHex == null)
         {
             a_startingHex = selectedUnit.CurrentTile;
         }
-        List<Hex> area = grid.GetTilesWithinDistance(a_startingHex, a_range, a_checkIfTreversable, a_addOccupiedTiles);
+        List<Hex> area = grid.GetTilesWithinDistance(a_startingHex, a_range, a_checkIfTreversable, a_addOccupiedTiles, a_addOutOfBounds);
 
         Manager.instance.HexHighlighter.HighLightArea(area, currentRuleset.InRangeHighlightColour, currentRuleset.InRangeHighlightColour, this, new List<Hex> { a_startingHex });
     }

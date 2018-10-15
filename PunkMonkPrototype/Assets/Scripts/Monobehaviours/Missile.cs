@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Missile : MonoBehaviour
 {
+    [Header("Missile")]
     [SerializeField]
     private ParticleSystem landParticleSystem = null;
 

@@ -618,7 +618,7 @@ public class PlayerController : MonoBehaviour
             Hex currentHex;
             if (selectedUnit == null)
             {
-                SwitchSelection();
+                selectedUnit = earthUnit;
 
             }
             currentHex = selectedUnit.CurrentTile;

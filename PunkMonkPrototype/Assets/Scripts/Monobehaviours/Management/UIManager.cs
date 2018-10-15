@@ -161,14 +161,22 @@ public class UIManager : MonoBehaviour
     {
         if (a_selectedUnit != selectedUnit)
         {
+
+
+
             if (selectedUnit != null)
             {
+                profiles.SwitchAbilityButtons();
+
                 profiles.Switch(a_selectedUnit.CompareTag("EarthUnit"));
+
 
                 selectedUnit.OnCanMoveChanged -= CanMove;
                 selectedUnit.OnCanAttackChanged -= CanAttack;
                 selectedUnit.OnCanSpecialChanged -= CanSpecialAttack;
+
             }
+
 
             selectedUnit = a_selectedUnit;
 
@@ -258,11 +266,15 @@ public class UIManager : MonoBehaviour
         Transform canvas = GameObject.FindGameObjectWithTag("UI").transform;
 
 
+
         if (canvas)
         {
             profiles = battleUI.transform.GetChild(0).GetComponent<ProfileSwitcher>();
-            earthProfile = profiles.transform.GetChild(0).gameObject;
-            lightningProfile = profiles.transform.GetChild(1).gameObject; ;
+            earthProfile = profiles.transform.GetChild(1).gameObject;
+            lightningProfile = profiles.transform.GetChild(2).gameObject; ;
+
+            //    profiles.SwitchAbilityButtons();
+
 
             if (fadePlane)
             {

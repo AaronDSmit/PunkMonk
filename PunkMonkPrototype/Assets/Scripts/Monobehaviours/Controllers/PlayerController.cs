@@ -472,7 +472,14 @@ public class PlayerController : MonoBehaviour
         // Highlight area in range to attack
         if (currentRuleset.actionType == ActionType.attack)
         {
-            HighlightTilesInRange(selectedUnit.AttackRange, null, false, true, true);
+            if (selectedUnit == earthUnit)
+            {
+                HighlightTilesInRange(selectedUnit.AttackRange, null, false, true, true);
+            }
+            else if (selectedUnit == lightningUnit)
+            {
+                HighlightTilesInRange(selectedUnit.AttackRange, null, false, true, false);
+            }
         }
 
         // Highlight area in range to special attack

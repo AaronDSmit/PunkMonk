@@ -10,8 +10,8 @@ public class MenuHelper : MonoBehaviour
 
     private bool cinematic = false;
 
-    private RectTransform topBar;
-    private RectTransform botBar;
+    [SerializeField] private RectTransform topBar;
+    [SerializeField] private RectTransform botBar;
 
     private float blackBarTimer = 0;
 
@@ -23,7 +23,7 @@ public class MenuHelper : MonoBehaviour
     private void Start()
     {
         currentSettings = SettingsLoader.Instance.CurrentSettings;
-        defaultSettings = SettingsLoader.Instance.DefaultSettings; 
+        defaultSettings = SettingsLoader.Instance.DefaultSettings;
     }
 
     void Update()

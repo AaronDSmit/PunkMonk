@@ -20,6 +20,13 @@ public class ProfileSwitcher : MonoBehaviour
     [SerializeField]
     private Vector2 secondaryScale = Vector2.one;
 
+    [SerializeField]
+    private Sprite lightningUnitBasic;
+
+    [SerializeField]
+    private Sprite lightningUnitSpecial;
+
+
     #endregion
 
     #region Local Fields
@@ -37,6 +44,10 @@ public class ProfileSwitcher : MonoBehaviour
     private Button lightningProfileButton;
 
     private bool earthSelected = true;
+
+    private Sprite earthUnitBasic;
+
+    private Sprite earthUnitSpecial;
 
     #endregion
 
@@ -72,7 +83,7 @@ public class ProfileSwitcher : MonoBehaviour
             //StartCoroutine(MoveProfile(earthProfile, secondaryPos, primaryPos));
             StartCoroutine(Scale(earthProfile, secondaryScale, primaryScale));
 
-           // StartCoroutine(MoveProfile(lightningProfile, primaryPos, secondaryPos));
+            // StartCoroutine(MoveProfile(lightningProfile, primaryPos, secondaryPos));
             StartCoroutine(Scale(lightningProfile, primaryScale, secondaryScale));
 
             earthProfileButton.GetComponent<Image>().raycastTarget = false;
@@ -99,8 +110,8 @@ public class ProfileSwitcher : MonoBehaviour
 
     private void Awake()
     {
-        earthProfile = transform.GetChild(0).GetComponent<RectTransform>();
-        lightningProfile = transform.GetChild(1).GetComponent<RectTransform>();
+        earthProfile = transform.GetChild(1).GetComponent<RectTransform>();
+        lightningProfile = transform.GetChild(2).GetComponent<RectTransform>();
 
         earthProfileButton = earthProfile.GetComponent<Button>();
         lightningProfileButton = lightningProfile.GetComponent<Button>();
@@ -118,6 +129,10 @@ public class ProfileSwitcher : MonoBehaviour
 
         earthProfileButton.GetComponent<Image>().raycastTarget = false;
         lightningProfileButton.GetComponent<Image>().raycastTarget = true;
+
+        earthUnitBasic = transform.parent.GetChild(1).GetChild(1).GetComponent<Image>().sprite;
+        earthUnitSpecial = transform.parent.GetChild(5).GetChild(0).GetComponent<Image>().sprite;
+
     }
 
     #endregion
@@ -155,6 +170,20 @@ public class ProfileSwitcher : MonoBehaviour
             a_rect.localScale = Vector3.Lerp(a_from, a_target, t);
 
             yield return null;
+        }
+    }
+
+    public void SwitchAbilityButtons()
+    {
+        if (earthSelected)
+        {
+            transform.parent.GetChild(1).GetChild(1).GetComponent<Image>().sprite = lightningUnitBasic;
+            transform.parent.GetChild(5).GetChild(0).GetComponent<Image>().sprite = lightningUnitSpecial;
+        }
+        else
+        {
+            transform.parent.GetChild(1).GetChild(1).GetComponent<Image>().sprite = earthUnitBasic;
+            transform.parent.GetChild(5).GetChild(0).GetComponent<Image>().sprite = earthUnitSpecial;
         }
     }
 

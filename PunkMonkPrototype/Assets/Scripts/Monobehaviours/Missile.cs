@@ -11,7 +11,7 @@ public class Missile : MonoBehaviour
 
     private bool done = false;
 
-    public bool Done { get { return animator; } }
+    public bool Done { get { return done; } }
 
     private void Awake()
     {

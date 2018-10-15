@@ -49,6 +49,8 @@ public class StateTransitionPoint : MonoBehaviour
     [SerializeField]
     private Hex checkPoint;
 
+    private CameraController cam;
+
     public bool triggered = false;
 
     public int voltGiven;
@@ -110,6 +112,11 @@ public class StateTransitionPoint : MonoBehaviour
         set { conversation = value; }
     }
 
+    private void Awake()
+    {
+        cam = GameObject.FindGameObjectWithTag("CameraRig").GetComponent<CameraController>();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (!triggered && (other.CompareTag("EarthUnit") || other.CompareTag("LightningUnit")))
@@ -117,6 +124,11 @@ public class StateTransitionPoint : MonoBehaviour
             if (Manager.instance.StateController.CurrentGameState == fromState)
             {
                 PlayerController player = Manager.instance.PlayerController;
+
+                if (cam.TargetUnit != player.EarthUnit)
+                {
+                    cam.SwitchOverworldTargetUnit();
+                }
 
                 player.EncounterKillLimit = numberToKill;
                 player.EncounterHasBoss = hasBoss;
@@ -137,6 +149,8 @@ public class StateTransitionPoint : MonoBehaviour
 
                 Manager.instance.TurnController.BattleID = index;
                 Manager.instance.StateController.ChangeGameStateAfterDelay(targetState, StateManager.stateTransitionTime + 0.1f);
+
+
 
                 triggered = true;
                 MyEvent.Post(gameObject);

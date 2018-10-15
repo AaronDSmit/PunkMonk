@@ -86,9 +86,14 @@ public class CameraController : MonoBehaviour
     bool cinemachine = false;
     new GameObject camera = null;
 
+    public Unit TargetUnit
+    {
+        get
+        {
+            return targetUnit;
+        }
 
-
-
+    }
 
     private void Awake()
     {

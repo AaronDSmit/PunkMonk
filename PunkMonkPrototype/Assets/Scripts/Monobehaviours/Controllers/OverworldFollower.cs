@@ -85,11 +85,13 @@ public class OverworldFollower : MonoBehaviour
 
     private void Update()
     {
-        Vector3 vecBetween = otherUnit.transform.position - transform.position;
+        if (inOverworld == true)
+        {
+            Vector3 vecBetween = otherUnit.transform.position - transform.position;
 
-        cc.Move(vecBetween.normalized * ((vecBetween.magnitude - distanceToOther) * (movementSpeed / 100)));
-        transform.rotation = Quaternion.LookRotation(vecBetween.normalized);
-
+            cc.Move(vecBetween.normalized * ((vecBetween.magnitude - distanceToOther) * (movementSpeed / 100)));
+            transform.rotation = Quaternion.LookRotation(vecBetween.normalized);
+        }
     }
 
     #endregion

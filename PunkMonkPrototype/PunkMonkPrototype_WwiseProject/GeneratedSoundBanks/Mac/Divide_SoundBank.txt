@@ -1,0 +1,43 @@
+Event	ID	Name			Wwise Object Path	Notes
+	244970891	Player_Turn_NoActions			\SFX\Battle\General\Turns\Player_Turn_NoActions	
+	312517388	Die_Enemy			\SFX\Battle\Die\Die_Enemy	
+	334189263	Attack_Clade_Special			\SFX\Battle\Attack\Clade\Attack_Clade_Special	
+	353790175	Hex_Hover			\SFX\Battle\General\Hex\Hex_Hover	
+	465316945	Clade_TakeDamage			\SFX\Battle\General\TakeDamage\Clade_TakeDamage	
+	702987074	Attack_Gen_Special			\SFX\Battle\Attack\Gen\Attack_Gen_Special	
+	712508295	Die_Clade			\SFX\Battle\Die\Die_Clade	
+	797344207	FreeRoam_Enter			\Music\FreeRoam_Enter	
+	814543256	Button_Click			\SFX\UI\Menu\Button_Click	
+	842135496	Enemy_TakeDamage			\SFX\Battle\General\TakeDamage\Enemy_TakeDamage	
+	875726824	Ambient_Outside_Enter			\Ambient\Ambient_Outside_Enter	
+	896483856	Volt_Use			\SFX\UI\BattleHUD\Volt_Use	
+	906289856	Battle_Enter			\Music\Battle_Enter	
+	1074448873	Enemy_Turn_Begin			\SFX\Battle\General\Turns\Enemy_Turn_Begin	
+	1242751957	Attack_Enemy_Missile			\SFX\Battle\Attack\Enemy\Attack_Enemy_Missile	
+	1536291209	Ambient_Inside_Exit			\Ambient\Ambient_Inside_Exit	
+	1598033226	Player_Turn_Begin			\SFX\Battle\General\Turns\Player_Turn_Begin	
+	1638856449	Enemy_Turn_End			\SFX\Battle\General\Turns\Enemy_Turn_End	
+	1701177942	Button_Hover			\SFX\UI\Menu\Button_Hover	
+	1701828612	Volt_Obtain			\SFX\UI\BattleHUD\Volt_Obtain	
+	1743658261	Ambient_Inside_Enter			\Ambient\Ambient_Inside_Enter	
+	1862866977	Gen_Footsteps			\SFX\World\Footsteps\Gen_Footsteps	
+	1899938162	Ambient_Outside_Exit			\Ambient\Ambient_Outside_Exit	
+	1918548877	Attack_Enemy_Melee			\SFX\Battle\Attack\Enemy\Attack_Enemy_Melee	
+	1941636804	Attack_Clade_Basic			\SFX\Battle\Attack\Clade\Attack_Clade_Basic	
+	2204292864	Button_Confirm			\SFX\UI\Menu\Button_Confirm	
+	2208713685	Hex_Click			\SFX\Battle\General\Hex\Hex_Click	
+	2430535526	Die_Gen			\SFX\Battle\Die\Die_Gen	
+	2560478693	Attack_Gen_Basic			\SFX\Battle\Attack\Gen\Attack_Gen_Basic	
+	2739219866	Attack_Enemy_Ranged			\SFX\Battle\Attack\Enemy\Attack_Enemy_Ranged	
+	2779589181	EnemySpawn_Warning			\SFX\Battle\General\Feedback\EnemySpawn_Warning	
+	2984028375	FreeRoam_Exit			\Music\FreeRoam_Exit	
+	3217092839	Enemy_Footsteps			\SFX\World\Footsteps\Enemy_Footsteps	
+	3307071726	Player_Turn_End			\SFX\Battle\General\Turns\Player_Turn_End	
+	3570767616	Clade_Footsteps			\SFX\World\Footsteps\Clade_Footsteps	
+	3999616186	Gen_TakeDamage			\SFX\Battle\General\TakeDamage\Gen_TakeDamage	
+	4139651882	Battle_Exit			\Music\Battle_Exit	
+
+In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	148414472	Die_Enemy_03	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Mac\SFX\Die_Enemy_03_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\Battle\Die\Die\Die_Enemy\Die_Enemy_03	Wilhelm Scream	197076
+	683211502	Combat_FullLoop_v1	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Mac\SFX\Combat_FullLoop_v1_8956FC97.wem		\Interactive Music Hierarchy\Music\Battle\Music_Battle\Combat_FullLoop_v1		6248280
+

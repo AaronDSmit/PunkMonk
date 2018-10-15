@@ -489,7 +489,6 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-
     #endregion
 
     #region Unity Life-cycle Methods
@@ -1181,6 +1180,8 @@ public class PlayerController : MonoBehaviour
             Manager.instance.StateController.ChangeGameStateAfterDelay(GameState.overworld, 1.0f);
         }
     }
+
+
 
     #region Earth Attack highlighting
 

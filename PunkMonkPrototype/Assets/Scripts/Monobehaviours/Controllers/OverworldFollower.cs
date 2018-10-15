@@ -10,7 +10,11 @@ public class OverworldFollower : MonoBehaviour
     #region Unity Inspector Fields
 
     [SerializeField]
+    [Range(0, 100)]
     private float movementSpeed;
+
+    [SerializeField]
+    private float distanceToOther;
 
     #endregion
 
@@ -26,12 +30,21 @@ public class OverworldFollower : MonoBehaviour
     private bool inOverworld;
     private Vector3 vecBetween;
     private Queue<Vector3> nodes = new Queue<Vector3>();
+    private Unit otherUnit;
 
     public Queue<Vector3> Nodes
     {
         get
         {
             return nodes;
+        }
+    }
+
+    public Unit OtherUnit
+    {
+        set
+        {
+            otherUnit = value;
         }
     }
     #endregion
@@ -43,16 +56,15 @@ public class OverworldFollower : MonoBehaviour
 
         cc = GetComponent<CharacterController>();
 
-        //GameObject earthGO = GameObject.FindGameObjectWithTag("EarthUnit");
 
-        //if (earthGO)
-        //{
-        //    earthUnit = GameObject.FindGameObjectWithTag("EarthUnit").GetComponent<Unit>();
-        //}
-        //else
-        //{
-        //    Debug.LogError("No Earth unit found!");
-        //}
+        if (GetComponent<EarthUnit>() == null)
+        {
+            otherUnit = GameObject.FindGameObjectWithTag("EarthUnit").GetComponent<Unit>();
+        }
+        else
+        {
+            otherUnit = GameObject.FindGameObjectWithTag("LightningUnit").GetComponent<Unit>();
+        }
     }
 
     #endregion
@@ -62,6 +74,8 @@ public class OverworldFollower : MonoBehaviour
     private void Awake()
     {
         Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
+        cc = GetComponent<CharacterController>();
+
     }
 
     private void OnDestroy()
@@ -71,16 +85,11 @@ public class OverworldFollower : MonoBehaviour
 
     private void Update()
     {
-        if (inOverworld && nodes.Count > 1)
-        {
-            vecBetween = nodes.Peek() - transform.position;
-            cc.Move(vecBetween.normalized * movementSpeed * Mathf.Clamp(nodes.Count, 1, 3) * Time.deltaTime);
+        Vector3 vecBetween = otherUnit.transform.position - transform.position;
 
-            if (Vector3.Distance(transform.position, nodes.Peek()) < 0.1)
-            {
-                nodes.Dequeue();
-            }
-        }
+        cc.Move(vecBetween.normalized * ((vecBetween.magnitude - distanceToOther) * (movementSpeed / 100)));
+        transform.rotation = Quaternion.LookRotation(vecBetween.normalized);
+
     }
 
     #endregion

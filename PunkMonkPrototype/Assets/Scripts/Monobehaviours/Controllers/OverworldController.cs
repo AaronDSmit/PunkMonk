@@ -24,11 +24,9 @@ public class OverworldController : MonoBehaviour
 
     #region References
 
-    private CharacterController earthCC = null;
+    private CharacterController controller = null;
 
-    private CharacterController lightningCC = null;
 
-    private OverworldFollower follower;
 
     #endregion
 
@@ -43,6 +41,15 @@ public class OverworldController : MonoBehaviour
     private bool mouseInput = false;
     private bool keyboardInput = false;
 
+    public CharacterController Controller
+    {
+
+        set
+        {
+            controller = value;
+        }
+    }
+
     #endregion
 
 
@@ -56,10 +63,8 @@ public class OverworldController : MonoBehaviour
         Manager.instance.StateController.OnGameStateChanged -= GameStateChanged;
     }
 
-    private void Start()
-    {
-        DropNode();
-    }
+
+
 
     private void GameStateChanged(GameState a_oldstate, GameState a_newstate)
     {
@@ -78,11 +83,6 @@ public class OverworldController : MonoBehaviour
                 ProcessKeyboardInput();
 
             Movement();
-
-            if (Vector3.Distance(earthCC.transform.position, currentNode) >= newNodeDistance)
-            {
-                DropNode();
-            }
         }
     }
 
@@ -90,8 +90,8 @@ public class OverworldController : MonoBehaviour
     {
         if ((mouseInput || keyboardInput) && direction.sqrMagnitude != 0)
         {
-            earthCC.Move(direction.normalized * movementSpeed * Time.deltaTime);
-            earthCC.transform.rotation = Quaternion.Slerp(earthCC.transform.rotation, Quaternion.LookRotation(direction.normalized, Vector3.up), 10.0f * Time.deltaTime);
+            controller.Move(direction.normalized * movementSpeed * Time.deltaTime);
+            controller.transform.rotation = Quaternion.Slerp(controller.transform.rotation, Quaternion.LookRotation(direction.normalized, Vector3.up), 10.0f * Time.deltaTime);
         }
     }
 
@@ -128,7 +128,7 @@ public class OverworldController : MonoBehaviour
     {
         mouseInput = false;
 
-        if (inOverworld && earthCC && lightningCC)
+        if (inOverworld && controller)
         {
             if (Input.GetMouseButton(0))
             {
@@ -148,7 +148,7 @@ public class OverworldController : MonoBehaviour
                 if (plane.Raycast(ray, out distance))
                 {
                     Vector3 hitPoint = ray.GetPoint(distance);
-                    Vector3 vecBetween = hitPoint - earthCC.transform.position;
+                    Vector3 vecBetween = hitPoint - controller.transform.position;
                     vecBetween.y = 0;
 
                     if (vecBetween.sqrMagnitude > 1)
@@ -161,11 +161,7 @@ public class OverworldController : MonoBehaviour
         }
     }
 
-    private void DropNode()
-    {
-        currentNode = earthCC.transform.position;
-        follower.Nodes.Enqueue(currentNode);
-    }
+
 
     // Initialisation function called when the scene is ready, sets up unit references
     public void Init()
@@ -174,23 +170,12 @@ public class OverworldController : MonoBehaviour
 
         if (earthGO)
         {
-            earthCC = GameObject.FindGameObjectWithTag("EarthUnit").GetComponent<CharacterController>();
+            Controller = GameObject.FindGameObjectWithTag("EarthUnit").GetComponent<CharacterController>();
         }
         else
         {
             Debug.LogError("No Earth unit found!");
         }
 
-        GameObject lightningGO = GameObject.FindGameObjectWithTag("LightningUnit");
-
-        if (lightningGO)
-        {
-            lightningCC = GameObject.FindGameObjectWithTag("LightningUnit").GetComponent<CharacterController>();
-            follower = lightningCC.GetComponent<OverworldFollower>();
-        }
-        else
-        {
-            Debug.LogError("No lightning unit found!");
-        }
     }
 }

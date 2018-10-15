@@ -25,8 +25,11 @@ public class CameraController : MonoBehaviour
     private Unit earthUnit;
     private Unit lightningUnit;
 
+    private Unit targetUnit;
+
     private bool inOverworld;
 
+    private OverworldController overworldController;
 
     private Vector3 rigTargetPos;
     private Vector3 cameraTargetPos;
@@ -85,11 +88,15 @@ public class CameraController : MonoBehaviour
 
 
 
+
+
     private void Awake()
     {
         Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
         camera = transform.GetChild(0).gameObject;
         settings = SettingsLoader.Instance.CurrentSettings;
+
+        overworldController = GameObject.FindGameObjectWithTag("Player").GetComponent<OverworldController>();
     }
 
     private void Start()
@@ -209,6 +216,9 @@ public class CameraController : MonoBehaviour
         {
             lightningUnit = GameObject.FindGameObjectWithTag("LightningUnit").GetComponent<Unit>();
         }
+
+        targetUnit = earthUnit;
+
     }
 
     // Process Keyboard Input
@@ -275,9 +285,15 @@ public class CameraController : MonoBehaviour
 
     private void ProcessOverworldCamera()
     {
-        if (earthUnit != null)
+        if (targetUnit != null)
         {
-            rigTargetPos = earthUnit.transform.position;
+            rigTargetPos = targetUnit.transform.position;
+
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                SwitchOverworldTargetUnit();
+            }
+
         }
         else
         {
@@ -393,6 +409,31 @@ public class CameraController : MonoBehaviour
         onGlamCamEnd();
     }
 
+
+
+    public void SwitchOverworldTargetUnit()
+    {
+
+
+        targetUnit.GetComponent<OverworldFollower>().enabled = true;
+
+        if (targetUnit == earthUnit)
+        {
+            earthUnit.GetComponent<OverworldFollower>().OtherUnit = lightningUnit;
+            targetUnit = lightningUnit;
+        }
+        else
+        {
+            lightningUnit.GetComponent<OverworldFollower>().OtherUnit = earthUnit;
+            targetUnit = earthUnit;
+        }
+
+
+
+        overworldController.Controller = targetUnit.GetComponent<CharacterController>();
+        targetUnit.GetComponent<OverworldFollower>().enabled = false;
+
+    }
 
 
 

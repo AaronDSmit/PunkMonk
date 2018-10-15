@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{19DB632E-BDAA-4DD2-8EA9-D61DFD814A2F}" SchemaVersion="89">
+	<Events>
+		<WorkUnit Name="Music" ID="{19DB632E-BDAA-4DD2-8EA9-D61DFD814A2F}" PersistMode="Standalone">
+			<ChildrenList>
+				<Event Name="Battle_Enter" ID="{98DC1ED8-0C7B-4F37-9CF3-B3C078D0034C}">
+					<ChildrenList>
+						<Action Name="" ID="{2D0A69C7-B072-4415-B18C-0EA403EB269C}" ShortID="311370763">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="1"/>
+								<Property Name="Delay" Type="Real64" Value="0.5"/>
+								<Property Name="FadeInCurve" Type="int16" Value="1"/>
+								<Property Name="FadeTime" Type="Real64" Value="0.5"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Battle" ID="{A04F6A5C-55B9-47F6-8805-01AD6E83441D}" WorkUnitID="{480BEEB4-E973-4879-8438-D429C81A278F}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Battle_Exit" ID="{4313FA18-A758-4D13-B792-6F91DEB6776D}">
+					<ChildrenList>
+						<Action Name="" ID="{65605A1A-3223-4A78-B603-7CC3D8873BD3}" ShortID="292945093">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="FadeTime" Type="Real64" Value="0.5"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Battle" ID="{A04F6A5C-55B9-47F6-8805-01AD6E83441D}" WorkUnitID="{480BEEB4-E973-4879-8438-D429C81A278F}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="FreeRoam_Enter" ID="{28BCB3EA-EC34-49CC-B6CC-341347049C3D}">
+					<ChildrenList>
+						<Action Name="" ID="{B7144C5F-6154-4803-B7EE-D7CB1EC59C74}" ShortID="262260025">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="1"/>
+								<Property Name="Delay" Type="Real64" Value="0.5"/>
+								<Property Name="FadeInCurve" Type="int16" Value="1"/>
+								<Property Name="FadeTime" Type="Real64" Value="0.5"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="FreeRoam" ID="{453E122F-9C7C-4431-88E6-8DCBBBBB87C5}" WorkUnitID="{480BEEB4-E973-4879-8438-D429C81A278F}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="FreeRoam_Exit" ID="{070A3D7C-4C45-4151-BFF1-D181534466F0}">
+					<ChildrenList>
+						<Action Name="" ID="{89FB0384-61E2-480D-94CE-F0E32786DD34}" ShortID="1034705503">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="FadeTime" Type="Real64" Value="0.5"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="FreeRoam" ID="{453E122F-9C7C-4431-88E6-8DCBBBBB87C5}" WorkUnitID="{480BEEB4-E973-4879-8438-D429C81A278F}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
+		</WorkUnit>
+	</Events>
+</WwiseDocument>

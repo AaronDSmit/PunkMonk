@@ -277,7 +277,7 @@
 										</Reference>
 									</ReferenceList>
 									<ChildrenList>
-										<Sound Name="Attack_Clade_Special_Launch" ID="{56BC57AE-8A5B-4D5E-9904-6DFFA7B41AAE}" ShortID="861926406">
+										<Sound Name="Attack_Clade_Special" ID="{56BC57AE-8A5B-4D5E-9904-6DFFA7B41AAE}" ShortID="861926406">
 											<ReferenceList>
 												<Reference Name="Conversion">
 													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{D4C10CFF-54D1-43E8-9949-15A35C036BE6}"/>
@@ -288,26 +288,6 @@
 											</ReferenceList>
 										</Sound>
 										<Sound Name="Attack_Clade_Basic" ID="{5B9D8F49-2043-4294-A60B-643394130EA7}" ShortID="237441496">
-											<ReferenceList>
-												<Reference Name="Conversion">
-													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{D4C10CFF-54D1-43E8-9949-15A35C036BE6}"/>
-												</Reference>
-												<Reference Name="OutputBus">
-													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{17B85F81-D4B6-4851-8C1E-9D808D7B1DC8}"/>
-												</Reference>
-											</ReferenceList>
-										</Sound>
-										<Sound Name="Attack_Clade_Special_Air" ID="{EDBDA4FE-1CCA-4167-A995-196B510630A6}" ShortID="56651956">
-											<ReferenceList>
-												<Reference Name="Conversion">
-													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{D4C10CFF-54D1-43E8-9949-15A35C036BE6}"/>
-												</Reference>
-												<Reference Name="OutputBus">
-													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{17B85F81-D4B6-4851-8C1E-9D808D7B1DC8}"/>
-												</Reference>
-											</ReferenceList>
-										</Sound>
-										<Sound Name="Attack_Clade_Special_Impact" ID="{20C842FD-7BB2-4984-8729-176E34C63861}" ShortID="647650178">
 											<ReferenceList>
 												<Reference Name="Conversion">
 													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{D4C10CFF-54D1-43E8-9949-15A35C036BE6}"/>
@@ -505,7 +485,7 @@
 						</Folder>
 					</ChildrenList>
 				</Folder>
-				<Folder Name="General" ID="{E7013E30-672F-49F0-8EA3-E5453336E945}" ShortID="242526625">
+				<Folder Name="World" ID="{E7013E30-672F-49F0-8EA3-E5453336E945}" ShortID="242526625">
 					<ChildrenList>
 						<ActorMixer Name="Footsteps" ID="{39D7E52A-1E06-4E8F-B2D7-14549D840388}" ShortID="257125218">
 							<ReferenceList>

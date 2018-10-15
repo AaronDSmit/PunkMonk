@@ -444,14 +444,39 @@ public class Unit : LivingEntity
     {
         actionsPerforming++;
 
-        int index = 0;
-
-        while (index < a_path.Count)
+        float totalDistance = Vector3.Distance(transform.position, a_path[0].transform.position);
+        for (int i = 0; i < a_path.Count - 1; i++)
         {
-            yield return StartCoroutine(WalkToHex(a_path[index]));
-
-            index++;
+            totalDistance += Vector3.Distance(a_path[i].transform.position, a_path[i + 1].transform.position);
         }
+
+        float distanceTraveled = 0;
+
+        currentTile.Exit();
+
+        int targetHexIndex = 0;
+
+        while (distanceTraveled < totalDistance)
+        {
+            targetHexIndex = (int)Mathf.Floor((distanceTraveled / totalDistance) * a_path.Count);
+
+            Vector3 targetPos = a_path[targetHexIndex].transform.position;
+
+            StartCoroutine(Rotate(targetPos));
+
+            Vector3 vecBetween = targetPos - transform.position;
+
+            transform.position += vecBetween.normalized * Time.deltaTime * walkSpeed;
+
+            distanceTraveled += (vecBetween.normalized * Time.deltaTime * walkSpeed).magnitude;
+
+            yield return null;
+        }
+
+        transform.position = a_path[a_path.Count - 1].transform.position;
+
+        a_path[a_path.Count - 1].Enter(this);
+        currentTile = a_path[a_path.Count - 1];
 
         CanMove = false;
         finishedWalking();

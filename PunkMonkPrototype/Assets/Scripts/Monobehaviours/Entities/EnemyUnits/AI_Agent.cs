@@ -11,9 +11,15 @@ public class AI_Agent : Unit
     [Header("Enemy")]
     [SerializeField]
     protected int damage = 3;
-    [SerializeField] protected float damageDelayTimer = 0;
-    [SerializeField] private GameObject bullet;
-    [SerializeField] private float bulletSpeed = 3;
+
+    [SerializeField]
+    protected float damageDelayTimer = 0;
+
+    [SerializeField]
+    private GameObject bullet;
+
+    [SerializeField]
+    private float bulletSpeed = 3;
 
     #endregion
 

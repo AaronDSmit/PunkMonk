@@ -6,7 +6,7 @@ public class MenuHelper : MonoBehaviour
     [SerializeField] private ConfirmationPopup confirmationPopup = null;
 
     [SerializeField] private float cinematicBarDistance = 300;
-    [SerializeField] private float cinematicBarSpeed = 1;
+    //[SerializeField] private float cinematicBarSpeed = 1;
 
     private bool cinematic = false;
 

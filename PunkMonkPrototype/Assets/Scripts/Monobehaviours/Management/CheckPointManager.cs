@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CheckPointManager : MonoBehaviour
 {
-    private StateTransitionPoint firstEncounter;
+    //private StateTransitionPoint firstEncounter;
     private StateTransitionPoint lastEncounter;
     private CameraController cameraRig;
 
@@ -18,16 +18,16 @@ public class CheckPointManager : MonoBehaviour
 
     public void Init()
     {
-        GameObject[] points = GameObject.FindGameObjectsWithTag("StateTransition");
+        //GameObject[] points = GameObject.FindGameObjectsWithTag("StateTransition");
 
-        foreach (GameObject point in points)
-        {
-            if (point.GetComponent<StateTransitionPoint>().index == 0)
-            {
-                firstEncounter = point.GetComponent<StateTransitionPoint>();
-                break;
-            }
-        }
+        //foreach (GameObject point in points)
+        //{
+        //    if (point.GetComponent<StateTransitionPoint>().index == 0)
+        //    {
+        //        firstEncounter = point.GetComponent<StateTransitionPoint>();
+        //        break;
+        //    }
+        //}
     }
 
     public void SetCheckPoint(StateTransitionPoint a_lastEncounter, Vector3 a_position)

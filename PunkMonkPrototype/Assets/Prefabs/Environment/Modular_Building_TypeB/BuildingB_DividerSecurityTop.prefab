@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4011890831832938}
   - component: {fileID: 33439343533277406}
   - component: {fileID: 23424166873325260}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BuildingB_DividerSecurityTop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34,13 +34,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1341603309798628}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9, y: 0, z: -8}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.0000029504295}
+  m_LocalPosition: {x: 50, y: 0.01999998, z: 50}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180.00002, z: 0}
 --- !u!23 &23424166873325260
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -55,7 +55,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 7763f0c897db4d04fa23fce9a0b57273, type: 3}
+  - {fileID: 2100000, guid: b888875394abf97408ada5a9d7d55972, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

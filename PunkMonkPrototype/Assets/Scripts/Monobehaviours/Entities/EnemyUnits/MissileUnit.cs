@@ -16,6 +16,8 @@ public class MissileUnit : AI_Agent
 
     private int missileFallCount = 0;
 
+    private bool doneMissiles = false;
+
     protected override void Start()
     {
         base.Start();
@@ -42,9 +44,9 @@ public class MissileUnit : AI_Agent
             Manager.instance.HexHighlighter.RemoveHighlights(this);
 
             StartCoroutine(ShootMissiles());
+            doneMissiles = false;
 
-            yield return new WaitForSeconds(2f);
-            yield return new WaitUntil(() => missileFallCount == 0);
+            yield return new WaitUntil(() => doneMissiles == true);
 
             turns = rechargeTurns;
 
@@ -65,6 +67,8 @@ public class MissileUnit : AI_Agent
 
     private IEnumerator ShootMissiles()
     {
+            doneMissiles = false;
+
         GameObject missileParent = Instantiate(missilePrefab);
         missileParent.transform.position = transform.position;
         Missile missile = missileParent.transform.GetChild(0).GetComponent<Missile>();
@@ -82,6 +86,8 @@ public class MissileUnit : AI_Agent
         }
 
         yield return new WaitUntil(() => missileFallCount == 0);
+
+        doneMissiles = true;
 
         FinishedAction();
     }
@@ -117,10 +123,21 @@ public class MissileUnit : AI_Agent
         if (turns == 1 || rechargeTurns == 0)
         {
             // Select Area to shoot to
-            float distanceToEarth = Vector3.Distance(CurrentTile.transform.position, Manager.instance.PlayerController.EarthUnit.CurrentTile.transform.position);
-            float distanceToLightning = Vector3.Distance(CurrentTile.transform.position, Manager.instance.PlayerController.LightningUnit.CurrentTile.transform.position);
-            Hex furthestPlayerTile = distanceToEarth > distanceToLightning ? Manager.instance.PlayerController.EarthUnit.CurrentTile : Manager.instance.PlayerController.LightningUnit.CurrentTile;
-
+            Hex furthestPlayerTile = null;
+            if (Manager.instance.PlayerController.EarthUnit.IsDead || Manager.instance.PlayerController.EarthUnit == null)
+            {
+                furthestPlayerTile = Manager.instance.PlayerController.LightningUnit.CurrentTile;
+            }
+            else if (Manager.instance.PlayerController.LightningUnit.IsDead || Manager.instance.PlayerController.LightningUnit == null)
+            {
+                furthestPlayerTile = Manager.instance.PlayerController.EarthUnit.CurrentTile;
+            }
+            else
+            {
+                float distanceToEarth = Vector3.Distance(CurrentTile.transform.position, Manager.instance.PlayerController.EarthUnit.CurrentTile.transform.position);
+                float distanceToLightning = Vector3.Distance(CurrentTile.transform.position, Manager.instance.PlayerController.LightningUnit.CurrentTile.transform.position);
+                furthestPlayerTile = distanceToEarth > distanceToLightning ? Manager.instance.PlayerController.EarthUnit.CurrentTile : Manager.instance.PlayerController.LightningUnit.CurrentTile;
+            }
             // Attack the hex behind the furthest player
             Hex hexToAttack = furthestPlayerTile.GetNeighbour(HexUtility.VecToHexDirection(furthestPlayerTile.transform.position - CurrentTile.transform.position));
 

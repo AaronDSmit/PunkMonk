@@ -60,7 +60,6 @@ public class UIManager : MonoBehaviour
     private GameObject earthProfile;
     private GameObject lightningProfile;
 
-
     #endregion
 
     #region Local Fields
@@ -79,9 +78,6 @@ public class UIManager : MonoBehaviour
         get { return isReady; }
     }
 
-
-
-
     public Slider VoltBar { get { return voltBar; } }
 
     #endregion
@@ -99,7 +95,6 @@ public class UIManager : MonoBehaviour
             menuHelper.OpenConfirmationPopup(a_message, EndPlayersTurn);
         }
     }
-
 
     private void UpdateSmallAblilityIcons()
     {
@@ -156,27 +151,21 @@ public class UIManager : MonoBehaviour
         pauseMenu.SetActive(a_show);
     }
 
-
     public void UpdateSelectedUnit(Unit a_selectedUnit)
     {
         if (a_selectedUnit != selectedUnit)
         {
-
-
-
             if (selectedUnit != null)
             {
                 profiles.SwitchAbilityButtons();
 
                 profiles.Switch(a_selectedUnit.CompareTag("EarthUnit"));
 
-
                 selectedUnit.OnCanMoveChanged -= CanMove;
                 selectedUnit.OnCanAttackChanged -= CanAttack;
                 selectedUnit.OnCanSpecialChanged -= CanSpecialAttack;
 
             }
-
 
             selectedUnit = a_selectedUnit;
 
@@ -342,6 +331,11 @@ public class UIManager : MonoBehaviour
         if (a_oldstate != GameState.battle && a_newstate == GameState.battle)
         {
             battleUI.SetButtonsInteractable();
+        }
+
+        if (a_oldstate != GameState.battle && a_newstate == GameState.battle)
+        {
+            UpdateSelectedUnit(player.EarthUnit);
         }
     }
 

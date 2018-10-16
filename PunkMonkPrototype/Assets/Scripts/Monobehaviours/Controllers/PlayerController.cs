@@ -62,7 +62,6 @@ public class PlayerController : MonoBehaviour
 
     #region Local Fields
 
-
     private bool myTurn;
 
     private bool threatHeightlightTiles = false;
@@ -106,7 +105,6 @@ public class PlayerController : MonoBehaviour
     PointerEventData UIPointerEventData;
     EventSystem UIEventSystem;
 
-
     #endregion
 
     #region Properties
@@ -138,7 +136,6 @@ public class PlayerController : MonoBehaviour
 
         set { encounterBossDamageGoal = value; }
     }
-
 
     public EarthUnit EarthUnit { get { return earthUnit; } }
     public LightningUnit LightningUnit { get { return lightningUnit; } }
@@ -990,7 +987,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
     private List<Hex> HighlightEnemiesThreatTiles(List<AI_Agent> a_enemies, Color a_color)
     {
         List<Hex> area = new List<Hex>();
@@ -1180,8 +1176,6 @@ public class PlayerController : MonoBehaviour
             Manager.instance.StateController.ChangeGameStateAfterDelay(GameState.overworld, 1.0f);
         }
     }
-
-
 
     #region Earth Attack highlighting
 

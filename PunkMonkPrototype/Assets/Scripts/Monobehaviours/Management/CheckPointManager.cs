@@ -48,15 +48,7 @@ public class CheckPointManager : MonoBehaviour
     private IEnumerator ResetToFirstEncounter()
     {
         player.ResetUnitDeaths();
-        Manager.instance.StateController.ChangeStateAfterFade(GameState.overworld);
-
-        yield return new WaitUntil(() => Manager.instance.StateController.MidLoad);
-
-        player.SpawnEarthUnit(firstEncounter.CheckPoint);
-        player.SpawnLightningUnit(firstEncounter.CheckPoint);
-
-        player.GetComponent<OverworldController>().Init();
-        cameraRig.Init();
+        yield return StartCoroutine(Spawn());
 
         // find all spawn triggers belonging to the last encounter and enable them again
         StateTransitionPoint[] transitionPoints = FindObjectsOfType<StateTransitionPoint>();
@@ -77,15 +69,7 @@ public class CheckPointManager : MonoBehaviour
 
     private IEnumerator WaitTillFadeOutToSpawn()
     {
-        Manager.instance.StateController.ChangeStateAfterFade(GameState.overworld);
-
-        yield return new WaitUntil(() => Manager.instance.StateController.MidLoad);
-
-        player.SpawnEarthUnit(lastEncounter.CheckPoint);
-        player.SpawnLightningUnit(lastEncounter.CheckPoint);
-
-        player.GetComponent<OverworldController>().Init();
-        cameraRig.Init();
+        yield return StartCoroutine(Spawn());
 
         lastEncounter.triggered = false;
 
@@ -99,5 +83,18 @@ public class CheckPointManager : MonoBehaviour
                 spawn.triggered = false;
             }
         }
+    }
+
+    private IEnumerator Spawn()
+    {
+        Manager.instance.StateController.ChangeStateAfterFade(GameState.overworld);
+
+        yield return new WaitUntil(() => Manager.instance.StateController.MidLoad);
+
+        player.SpawnEarthUnit(lastEncounter.CheckPoint);
+        player.SpawnLightningUnit(lastEncounter.CheckPoint);
+
+        player.GetComponent<OverworldController>().Init();
+        cameraRig.Init();
     }
 }

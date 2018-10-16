@@ -123,9 +123,12 @@ public class AI_Agent : Unit
         float bestScore = int.MinValue;
         List<Hex> path = null;
 
+        players[0] = Manager.instance.PlayerController.EarthUnit;
+        players[1] = Manager.instance.PlayerController.LightningUnit;
+
         ScoringInfo[] scoringInfo = new ScoringInfo[2];
-        scoringInfo[0] = players[0] == null ? null : new ScoringInfo(a_grid, this, players[0]);
-        scoringInfo[1] = players[1] == null ? null : new ScoringInfo(a_grid, this, players[1]);
+        scoringInfo[0] = (players[0] == null || players[0].IsDead) ? null : new ScoringInfo(a_grid, this, players[0]);
+        scoringInfo[1] = (players[1] == null || players[1].IsDead) ? null : new ScoringInfo(a_grid, this, players[1]);
 
         foreach (AI_Action action in actions)
         {

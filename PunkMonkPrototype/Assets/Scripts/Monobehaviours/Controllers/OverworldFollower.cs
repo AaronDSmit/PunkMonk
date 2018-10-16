@@ -93,7 +93,10 @@ public class OverworldFollower : MonoBehaviour
             {
                 cc.Move(vecBetween.normalized * ((vecBetween.magnitude - distanceToOther) * (movementSpeed / 100)));
             }
-            transform.rotation = Quaternion.LookRotation(vecBetween.normalized);
+            if (vecBetween.sqrMagnitude > 0)
+            {
+                transform.rotation = Quaternion.LookRotation(vecBetween.normalized);
+            }
         }
     }
 

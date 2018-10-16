@@ -425,26 +425,19 @@ public class CameraController : MonoBehaviour
 
     public void SwitchOverworldTargetUnit()
     {
-
-
         targetUnit.GetComponent<OverworldFollower>().enabled = true;
 
         if (targetUnit == earthUnit)
         {
-            earthUnit.GetComponent<OverworldFollower>().OtherUnit = lightningUnit;
             targetUnit = lightningUnit;
         }
         else
         {
-            lightningUnit.GetComponent<OverworldFollower>().OtherUnit = earthUnit;
             targetUnit = earthUnit;
         }
 
-
-
         overworldController.Controller = targetUnit.GetComponent<CharacterController>();
         targetUnit.GetComponent<OverworldFollower>().enabled = false;
-
     }
 
 

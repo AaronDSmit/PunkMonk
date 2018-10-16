@@ -10,9 +10,6 @@ public class OverworldController : MonoBehaviour
     private float raycastPlaneYLevel = 0.0f;
 
     [SerializeField]
-    private float newNodeDistance = 1;
-
-    [SerializeField]
     private float movementSpeed = 1;
 
     [SerializeField]
@@ -25,8 +22,7 @@ public class OverworldController : MonoBehaviour
     #region References
 
     private CharacterController controller = null;
-
-
+    private Animator animator = null;
 
     #endregion
 
@@ -43,10 +39,10 @@ public class OverworldController : MonoBehaviour
 
     public CharacterController Controller
     {
-
         set
         {
             controller = value;
+            animator = controller.GetComponentInChildren<Animator>();
         }
     }
 
@@ -62,10 +58,7 @@ public class OverworldController : MonoBehaviour
     {
         Manager.instance.StateController.OnGameStateChanged -= GameStateChanged;
     }
-
-
-
-
+    
     private void GameStateChanged(GameState a_oldstate, GameState a_newstate)
     {
         // ensure this script knows it's in over-world state
@@ -90,8 +83,16 @@ public class OverworldController : MonoBehaviour
     {
         if ((mouseInput || keyboardInput) && direction.sqrMagnitude != 0)
         {
+            if (animator)
+                animator.SetBool("Running", true);
+
             controller.Move(direction.normalized * movementSpeed * Time.deltaTime);
             controller.transform.rotation = Quaternion.Slerp(controller.transform.rotation, Quaternion.LookRotation(direction.normalized, Vector3.up), 10.0f * Time.deltaTime);
+        }
+        else
+        {
+            if (animator)
+                animator.SetBool("Running", false);
         }
     }
 
@@ -160,8 +161,6 @@ public class OverworldController : MonoBehaviour
             }
         }
     }
-
-
 
     // Initialisation function called when the scene is ready, sets up unit references
     public void Init()

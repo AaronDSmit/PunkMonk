@@ -14,13 +14,17 @@ public class OverworldFollower : MonoBehaviour
     private float movementSpeed;
 
     [SerializeField]
-    private float distanceToOther;
+    private float closeDistanceToOther = 2f;
+
+    [SerializeField]
+    private float farDistanceToOther = 3f;
 
     #endregion
 
     #region References
 
     private CharacterController cc = null;
+    private Animator animator = null;
 
     #endregion
 
@@ -28,17 +32,9 @@ public class OverworldFollower : MonoBehaviour
 
     //private Unit earthUnit;
     private bool inOverworld;
-    private Vector3 vecBetween;
-    private Queue<Vector3> nodes = new Queue<Vector3>();
     private Unit otherUnit;
 
-    public Queue<Vector3> Nodes
-    {
-        get
-        {
-            return nodes;
-        }
-    }
+    private bool approaching = false;
 
     public Unit OtherUnit
     {
@@ -53,17 +49,15 @@ public class OverworldFollower : MonoBehaviour
 
     public void Init()
     {
-
         cc = GetComponent<CharacterController>();
-
 
         if (GetComponent<EarthUnit>() == null)
         {
-            otherUnit = GameObject.FindGameObjectWithTag("EarthUnit").GetComponent<Unit>();
+            otherUnit = Manager.instance.PlayerController.EarthUnit;
         }
         else
         {
-            otherUnit = GameObject.FindGameObjectWithTag("LightningUnit").GetComponent<Unit>();
+            otherUnit = Manager.instance.PlayerController.LightningUnit;
         }
     }
 
@@ -75,7 +69,11 @@ public class OverworldFollower : MonoBehaviour
     {
         Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
         cc = GetComponent<CharacterController>();
-
+        animator = transform.GetComponentInChildren<Animator>();
+        if (animator == null)
+        {
+            Debug.LogWarning("No Animator in the children of '" + gameObject.name + "'.", gameObject);
+        }
     }
 
     private void OnDestroy()
@@ -88,11 +86,27 @@ public class OverworldFollower : MonoBehaviour
         if (inOverworld == true)
         {
             Vector3 vecBetween = otherUnit.transform.position - transform.position;
+            if (animator)
+                animator.SetBool("Running", approaching);
 
-            if ((vecBetween.magnitude - distanceToOther) >= 0)
+
+            if (approaching)
             {
-                cc.Move(vecBetween.normalized * ((vecBetween.magnitude - distanceToOther) * (movementSpeed / 100)));
+                cc.Move(vecBetween.normalized * movementSpeed * Time.deltaTime);
+
+                if (vecBetween.magnitude < closeDistanceToOther)
+                {
+                    approaching = false;
+                }
             }
+            else
+            {
+                if (vecBetween.magnitude > farDistanceToOther)
+                {
+                    approaching = true;
+                }
+            }
+
             if (vecBetween.sqrMagnitude > 0)
             {
                 transform.rotation = Quaternion.LookRotation(vecBetween.normalized);
@@ -106,8 +120,6 @@ public class OverworldFollower : MonoBehaviour
 
     private void GameStateChanged(GameState _oldstate, GameState _newstate)
     {
-        nodes.Clear();
-
         // ensure this script knows it's in over-world state
         inOverworld = (_newstate == GameState.overworld);
     }

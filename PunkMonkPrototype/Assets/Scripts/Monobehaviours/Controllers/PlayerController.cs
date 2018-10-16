@@ -212,6 +212,10 @@ public class PlayerController : MonoBehaviour
 
         // Initialise the ToolTip to find the lightning and earth unit
         ToolTip.instance.Init();
+
+        lightningGO.GetComponent<OverworldFollower>().Init();
+        earthGO.GetComponent<OverworldFollower>().Init();
+
     }
 
     // Toggles between two player units, requires that both units are alive (used by tab)
@@ -1131,7 +1135,7 @@ public class PlayerController : MonoBehaviour
 
             if (earthDead)
             {
-                SpawnEarthUnit(earthStartingHex);
+                SpawnEarthUnit(earthStartingHex).GetComponent<OverworldFollower>().Init();
                 GetComponent<OverworldController>().Init();
             }
 

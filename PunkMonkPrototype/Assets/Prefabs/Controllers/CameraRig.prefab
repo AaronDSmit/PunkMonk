@@ -60,8 +60,6 @@ GameObject:
   - component: {fileID: 136375978918733958}
   - component: {fileID: 114059352692388130}
   - component: {fileID: 114988485817545998}
-  - component: {fileID: 114205413965813426}
-  - component: {fileID: 114584448197832164}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -263,19 +261,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: Cinemachine.CinemachineBrain+VcamEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &114205413965813426
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1331769141319558}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1466be5dabd0edf419c22714ffdf0808, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isDefaultListener: 1
-  listenerId: 0
 --- !u!114 &114234558445027884
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -320,27 +305,6 @@ MonoBehaviour:
     FarClipPlane: 5000
     Dutch: 0
   m_ComponentOwner: {fileID: 4315264739909882}
---- !u!114 &114584448197832164
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1331769141319558}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79cc389de5cc49942b80dfffd0098916, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_listeners:
-    initialListenerList: []
-    useDefaultListeners: 1
-  isEnvironmentAware: 0
-  isStaticObject: 0
-  m_positionOffsetData:
-    KeepMe: 0
-    positionOffset: {x: 0, y: 0, z: 0}
-  m_posOffsetData: {fileID: 0}
-  listenerMask: 1
 --- !u!114 &114720130553390944
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -393,7 +357,7 @@ MonoBehaviour:
   RotationalSpeed: 5
   scrollSpeed: 30
   inverseRotation: 0
-  screenPan: 1
+  screenPan: 0
   mousePanThresholdYUp: 5
   mousePanThresholdYDown: 5
   mousePanThresholdXLeft: 5

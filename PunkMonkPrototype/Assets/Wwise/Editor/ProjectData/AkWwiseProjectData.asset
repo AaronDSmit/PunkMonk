@@ -24,15 +24,15 @@ MonoBehaviour:
     List: []
   AuxBusWwu:
   - Guid: '{17B85F81-D4B6-4851-8C1E-9D808D7B1DC8}'
-    m_lastTimePart2: -1999228151
-    m_lastTimePsrt1: 877678140
+    m_lastTimePart2: -1999228143
+    m_lastTimePsrt1: -1565767560
     ParentPhysicalPath: 
     PhysicalPath: Master-Mixer Hierarchy\Default Work Unit.wwu
     List: []
   BankWwu:
   - Guid: '{A76D73F7-5EA3-46B5-B38F-16F7929AC7DF}'
-    m_lastTimePart2: -1999228147
-    m_lastTimePsrt1: -1773358376
+    m_lastTimePart2: -1999228143
+    m_lastTimePsrt1: -1563457560
     ParentPhysicalPath: 
     PhysicalPath: SoundBanks\Default Work Unit.wwu
     List:
@@ -47,8 +47,8 @@ MonoBehaviour:
         ObjectType: 7
   EventWwu:
   - Guid: '{39BFD4E9-6B27-4210-9595-772619309430}'
-    m_lastTimePart2: -1999228330
-    m_lastTimePsrt1: 1219354026
+    m_lastTimePart2: -1999228143
+    m_lastTimePsrt1: -1572167560
     ParentPhysicalPath: 
     PhysicalPath: Events\Ambient.wwu
     List:
@@ -101,14 +101,14 @@ MonoBehaviour:
       maxDuration: 0
       minDuration: 0
   - Guid: '{9B7E563D-D886-4529-9471-1F499F2670AE}'
-    m_lastTimePart2: -1999228330
-    m_lastTimePsrt1: 1219354026
+    m_lastTimePart2: -1999228143
+    m_lastTimePsrt1: -1572157560
     ParentPhysicalPath: 
     PhysicalPath: Events\Default Work Unit.wwu
     List: []
   - Guid: '{19DB632E-BDAA-4DD2-8EA9-D61DFD814A2F}'
-    m_lastTimePart2: -1999228147
-    m_lastTimePsrt1: -1773388376
+    m_lastTimePart2: -1999228143
+    m_lastTimePsrt1: -1572147560
     ParentPhysicalPath: 
     PhysicalPath: Events\Music.wwu
     List:
@@ -161,8 +161,8 @@ MonoBehaviour:
       maxDuration: 0
       minDuration: 0
   - Guid: '{97043EB5-8AFD-479B-B7EC-1820B945D1D5}'
-    m_lastTimePart2: -1999228166
-    m_lastTimePsrt1: 2132257596
+    m_lastTimePart2: -1999228143
+    m_lastTimePsrt1: -1572147560
     ParentPhysicalPath: 
     PhysicalPath: Events\SFX.wwu
     List:
@@ -669,11 +669,14 @@ MonoBehaviour:
   ExpandedItems:
   - /PunkMonkPrototype_WwiseProject
   - /PunkMonkPrototype_WwiseProject/Events
-  - /PunkMonkPrototype_WwiseProject/Events/Music
+  - /PunkMonkPrototype_WwiseProject/Events/SFX
+  - /PunkMonkPrototype_WwiseProject/Events/SFX/Battle
+  - /PunkMonkPrototype_WwiseProject/Events/SFX/Battle/Attack
+  - /PunkMonkPrototype_WwiseProject/Events/SFX/Battle/Attack/Enemy
   RtpcWwu:
   - Guid: '{0611EF02-C52F-4D22-840D-EF5CD7507B8B}'
-    m_lastTimePart2: -1999228166
-    m_lastTimePsrt1: 2132307596
+    m_lastTimePart2: -1999228143
+    m_lastTimePsrt1: -1572107560
     ParentPhysicalPath: 
     PhysicalPath: Game Parameters\Default Work Unit.wwu
     List:

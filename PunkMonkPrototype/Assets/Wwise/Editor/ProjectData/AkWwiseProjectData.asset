@@ -24,15 +24,15 @@ MonoBehaviour:
     List: []
   AuxBusWwu:
   - Guid: '{17B85F81-D4B6-4851-8C1E-9D808D7B1DC8}'
-    m_lastTimePart2: -1999228166
-    m_lastTimePsrt1: 2132107596
+    m_lastTimePart2: -1999228151
+    m_lastTimePsrt1: 877678140
     ParentPhysicalPath: 
     PhysicalPath: Master-Mixer Hierarchy\Default Work Unit.wwu
     List: []
   BankWwu:
   - Guid: '{A76D73F7-5EA3-46B5-B38F-16F7929AC7DF}'
-    m_lastTimePart2: -1999228166
-    m_lastTimePsrt1: 2132277596
+    m_lastTimePart2: -1999228147
+    m_lastTimePsrt1: -1773358376
     ParentPhysicalPath: 
     PhysicalPath: SoundBanks\Default Work Unit.wwu
     List:
@@ -107,8 +107,8 @@ MonoBehaviour:
     PhysicalPath: Events\Default Work Unit.wwu
     List: []
   - Guid: '{19DB632E-BDAA-4DD2-8EA9-D61DFD814A2F}'
-    m_lastTimePart2: -1999228330
-    m_lastTimePsrt1: 1219364026
+    m_lastTimePart2: -1999228147
+    m_lastTimePsrt1: -1773388376
     ParentPhysicalPath: 
     PhysicalPath: Events\Music.wwu
     List:
@@ -670,14 +670,6 @@ MonoBehaviour:
   - /PunkMonkPrototype_WwiseProject
   - /PunkMonkPrototype_WwiseProject/Events
   - /PunkMonkPrototype_WwiseProject/Events/Music
-  - /PunkMonkPrototype_WwiseProject/Events/SFX
-  - /PunkMonkPrototype_WwiseProject/Events/SFX/Battle
-  - /PunkMonkPrototype_WwiseProject/Events/SFX/Battle/Attack
-  - /PunkMonkPrototype_WwiseProject/Events/SFX/Battle/Attack/Clade
-  - /PunkMonkPrototype_WwiseProject/Events/SFX/Battle/Attack/Gen
-  - /PunkMonkPrototype_WwiseProject/Events/SFX/World
-  - /PunkMonkPrototype_WwiseProject/SoundBanks
-  - /PunkMonkPrototype_WwiseProject/SoundBanks/Default Work Unit
   RtpcWwu:
   - Guid: '{0611EF02-C52F-4D22-840D-EF5CD7507B8B}'
     m_lastTimePart2: -1999228166

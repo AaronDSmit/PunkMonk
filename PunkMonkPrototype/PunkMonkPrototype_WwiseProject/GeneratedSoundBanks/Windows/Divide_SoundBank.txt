@@ -2,10 +2,12 @@ Event	ID	Name			Wwise Object Path	Notes
 	312517388	Die_Enemy			\SFX\Battle\Die\Die_Enemy	
 	334189263	Attack_Clade_Special			\SFX\Battle\Attack\Clade\Attack_Clade_Special	
 	702987074	Attack_Gen_Special			\SFX\Battle\Attack\Gen\Attack_Gen_Special	
+	906289856	Battle_Enter			\Music\Battle_Enter	
 	1242751957	Attack_Enemy_Missile			\SFX\Battle\Attack\Enemy\Attack_Enemy_Missile	
 	1918548877	Attack_Enemy_Melee			\SFX\Battle\Attack\Enemy\Attack_Enemy_Melee	
 	1941636804	Attack_Clade_Basic			\SFX\Battle\Attack\Clade\Attack_Clade_Basic	
 	2560478693	Attack_Gen_Basic			\SFX\Battle\Attack\Gen\Attack_Gen_Basic	
+	4139651882	Battle_Exit			\Music\Battle_Exit	
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	81000000	Attack_Clade_Special	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\CladeAttack-heavy_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\Battle\Attack\Clade\Attack_Clade_Special		852704

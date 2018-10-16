@@ -14,7 +14,7 @@
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="Battle" ID="{A04F6A5C-55B9-47F6-8805-01AD6E83441D}" WorkUnitID="{480BEEB4-E973-4879-8438-D429C81A278F}"/>
+									<ObjectRef Name="Combat_FullLoop_v1" ID="{9772456A-2D26-4AF7-803B-F2CF8A85BD24}" WorkUnitID="{4DB86490-E208-4AE5-878B-DD391FBC0583}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
@@ -29,7 +29,7 @@
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="Battle" ID="{A04F6A5C-55B9-47F6-8805-01AD6E83441D}" WorkUnitID="{480BEEB4-E973-4879-8438-D429C81A278F}"/>
+									<ObjectRef Name="Combat_FullLoop_v1" ID="{9772456A-2D26-4AF7-803B-F2CF8A85BD24}" WorkUnitID="{4DB86490-E208-4AE5-878B-DD391FBC0583}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>

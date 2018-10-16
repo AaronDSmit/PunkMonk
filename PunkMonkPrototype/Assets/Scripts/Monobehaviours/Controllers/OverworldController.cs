@@ -17,6 +17,9 @@ public class OverworldController : MonoBehaviour
     [SerializeField]
     private bool useMouseInput = true;
 
+    [SerializeField]
+    bool startWithClade = false;
+
     #endregion
 
     #region References
@@ -58,7 +61,7 @@ public class OverworldController : MonoBehaviour
     {
         Manager.instance.StateController.OnGameStateChanged -= GameStateChanged;
     }
-    
+
     private void GameStateChanged(GameState a_oldstate, GameState a_newstate)
     {
         // ensure this script knows it's in over-world state
@@ -166,14 +169,34 @@ public class OverworldController : MonoBehaviour
     public void Init()
     {
         GameObject earthGO = GameObject.FindGameObjectWithTag("EarthUnit");
-
-        if (earthGO)
+        GameObject lightninghGO = GameObject.FindGameObjectWithTag("LightningUnit");
+        if (startWithClade)
         {
-            Controller = GameObject.FindGameObjectWithTag("EarthUnit").GetComponent<CharacterController>();
+
+            if (earthGO)
+            {
+                Controller = GameObject.FindGameObjectWithTag("EarthUnit").GetComponent<CharacterController>();
+                earthGO.GetComponent<OverworldFollower>().enabled = false;
+                lightninghGO.GetComponent<OverworldFollower>().enabled = true;
+            }
+            else
+            {
+                Debug.LogError("No Earth unit found!", gameObject);
+            }
         }
         else
         {
-            Debug.LogError("No Earth unit found!");
+
+            if (lightninghGO)
+            {
+                Controller = GameObject.FindGameObjectWithTag("LightningUnit").GetComponent<CharacterController>();
+                earthGO.GetComponent<OverworldFollower>().enabled = true;
+                lightninghGO.GetComponent<OverworldFollower>().enabled = false;
+            }
+            else
+            {
+                Debug.LogError("No Lightning unit found!", gameObject);
+            }
         }
 
     }

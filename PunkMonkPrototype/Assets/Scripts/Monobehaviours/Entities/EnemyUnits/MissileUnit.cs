@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MissileUnit : AI_Agent
 {
+    [Header("Missile Unit")]
     [SerializeField]
     private int rechargeTurns = 1;
 
@@ -67,18 +68,17 @@ public class MissileUnit : AI_Agent
 
     private IEnumerator ShootMissiles()
     {
-            doneMissiles = false;
+        doneMissiles = false;
 
-        GameObject missileParent = Instantiate(missilePrefab);
-        missileParent.transform.position = transform.position;
-        Missile missile = missileParent.transform.GetChild(0).GetComponent<Missile>();
+        GameObject missileGO = Instantiate(missilePrefab, transform.position, missilePrefab.transform.rotation);
+        Missile missile = missileGO.transform.GetChild(0).GetComponent<Missile>();
         missile.TriggerUp();
 
-        yield return new WaitForSeconds(0.001f);
+        yield return new WaitForSeconds(0.1f);
         yield return new WaitUntil(() => missile.Done);
 
-        missileParent.transform.position = Vector3.zero;
-        Destroy(missileParent);
+        missileGO.transform.position = Vector3.zero;
+        Destroy(missileGO);
 
         foreach (Hex tile in tilesToAttack)
         {
@@ -96,16 +96,16 @@ public class MissileUnit : AI_Agent
     {
         missileFallCount++;
 
-        GameObject missileParent = Instantiate(missilePrefab);
-        missileParent.transform.position = a_tile.transform.position;
-        Missile missile = missileParent.transform.GetChild(0).GetComponent<Missile>();
+        GameObject missileGO = Instantiate(missilePrefab);
+        missileGO.transform.position = a_tile.transform.position;
+        Missile missile = missileGO.transform.GetChild(0).GetComponent<Missile>();
         missile.TriggerDown();
 
         yield return new WaitForSeconds(0.001f);
         yield return new WaitUntil(() => missile.Done);
 
-        missileParent.transform.position = Vector3.zero;
-        Destroy(missileParent);
+        missileGO.transform.position = Vector3.zero;
+        Destroy(missileGO);
 
         if (a_tile.CurrentUnit != null)
         {

@@ -549,7 +549,7 @@ MonoBehaviour:
   bullet: {fileID: 1807508469817726, guid: 8d964f9dbfc1a434db92cf7a0e64fa65, type: 2}
   bulletSpeed: 40
   rechargeTurns: 0
-  missilePrefab: {fileID: 1681990613770570, guid: c2613c03c9931ac4a8a53221163e68b1,
+  missilePrefab: {fileID: 1774984587406650, guid: c2613c03c9931ac4a8a53221163e68b1,
     type: 2}
 --- !u!114 &114420571058143936
 MonoBehaviour:

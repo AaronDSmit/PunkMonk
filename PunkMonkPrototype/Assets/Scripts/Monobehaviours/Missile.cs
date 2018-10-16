@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class Missile : MonoBehaviour
 {
-    [Header("Missile")]
     [SerializeField]
-    private ParticleSystem landParticleSystem = null;
+    private GameObject landParticlePrefab = null;
 
     private Animator animator;
 
     private bool done = false;
-
-    private bool landParticles = false;
 
     public bool Done { get { return done; } }
 
@@ -33,8 +30,8 @@ public class Missile : MonoBehaviour
 
     public void PlayLandParticles()
     {
-        landParticleSystem.Play();
-        landParticles = true;
+        GameObject particleGO = Instantiate(landParticlePrefab, transform.parent.position, landParticlePrefab.transform.rotation);
+        particleGO.GetComponent<ParticleSystem>().Play();
     }
 
     public void StartedAnimation()
@@ -45,12 +42,6 @@ public class Missile : MonoBehaviour
     public void FinishedAnimation()
     {
         //Invoke("Finished", landParticles ? landParticleSystem.main.duration : 0);
-        Invoke("Finished", landParticles ? 2 : 0);
-        landParticles = false;
-    }
-
-    private void Finished()
-    {
         done = true;
     }
 }

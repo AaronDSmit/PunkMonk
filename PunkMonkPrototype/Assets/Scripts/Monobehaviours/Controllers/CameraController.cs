@@ -229,8 +229,7 @@ public class CameraController : MonoBehaviour
             lightningUnit = GameObject.FindGameObjectWithTag("LightningUnit").GetComponent<Unit>();
         }
 
-        targetUnit = earthUnit;
-
+        targetUnit = Manager.instance.PlayerController.GetComponent<OverworldController>().startWithClade ? earthUnit : lightningUnit;
     }
 
     // Process Keyboard Input

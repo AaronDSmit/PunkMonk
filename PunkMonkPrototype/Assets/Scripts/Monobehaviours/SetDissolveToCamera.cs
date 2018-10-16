@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class SetDissolveToCamera : MonoBehaviour
 {
-    private Camera camera;
+    private Camera mainCamera;
     private Material material;
 
 	void Awake()
     {
-        camera = Camera.main;
+        mainCamera = Camera.main;
         material = GetComponent<Renderer>().material;
 	}
 	
 	void Update ()
     {
-        material.SetVector("_RayDirection", camera.transform.forward);
-        material.SetVector("_RayOrigin", camera.transform.position);
+        material.SetVector("_RayDirection", mainCamera.transform.forward);
+        material.SetVector("_RayOrigin", mainCamera.transform.position);
     }
 }

@@ -54,6 +54,7 @@ public class Unit : LivingEntity
     #region Reference Fields
 
     protected CameraController cameraController;
+    protected Animator animator;
 
     #endregion
 
@@ -164,11 +165,13 @@ public class Unit : LivingEntity
 
     public void BasicAttack(Hex[] a_targetTiles, System.Action a_start, System.Action a_finished)
     {
+        animator.SetTrigger("BasicAttack");
         StartCoroutine(DelayedBasicAction(a_targetTiles, a_start, a_finished));
     }
 
     public void SpecialAttack(Hex[] a_targetTiles, System.Action a_start, System.Action a_finished)
     {
+        animator.SetTrigger("SpecialAttack");
         StartCoroutine(DelayedSpecialAction(a_targetTiles, a_start, a_finished));
     }
 
@@ -304,6 +307,7 @@ public class Unit : LivingEntity
         base.Awake();
 
         cameraController = GameObject.FindGameObjectWithTag("CameraRig").GetComponent<CameraController>();
+        animator = GetComponentInChildren<Animator>();
 
         Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
 
@@ -313,6 +317,12 @@ public class Unit : LivingEntity
 
         cameraController.onGlamCamStart += healthBar.Hide;
         cameraController.onGlamCamEnd += healthBar.Show;
+    }
+
+    private void OnDestroy()
+    {
+        cameraController.onGlamCamStart -= healthBar.Hide;
+        cameraController.onGlamCamEnd -= healthBar.Show;
     }
 
     #endregion
@@ -367,6 +377,7 @@ public class Unit : LivingEntity
     private IEnumerator WalkDirectlyTo(Hex a_targetHex, HexDirection a_direction)
     {
         actionsPerforming++;
+        animator.SetBool("Running", true);
 
         Vector3 targetPos = a_targetHex.transform.position;
         targetPos.y = transform.position.y;
@@ -400,6 +411,7 @@ public class Unit : LivingEntity
         currentTile.Enter(this);
         transform.position = targetPos;
 
+        animator.SetBool("Running", false);
         actionsPerforming--;
     }
 
@@ -451,6 +463,7 @@ public class Unit : LivingEntity
     protected IEnumerator Walk(List<Hex> a_path)
     {
         actionsPerforming++;
+        animator.SetBool("Running", true);
 
         float totalDistance = Vector3.Distance(transform.position, a_path[0].transform.position);
         for (int i = 0; i < a_path.Count - 1; i++)
@@ -489,12 +502,14 @@ public class Unit : LivingEntity
         CanMove = false;
         finishedWalking();
 
+        animator.SetBool("Running", false);
         actionsPerforming--;
     }
 
     protected IEnumerator WalkToHex(Hex a_hex)
     {
         actionsPerforming++;
+        animator.SetBool("Running", true);
 
         Vector3 targetPos = a_hex.transform.position;
         targetPos.y = transform.position.y;
@@ -521,6 +536,7 @@ public class Unit : LivingEntity
         currentTile = a_hex;
         currentTile.Enter(this);
 
+        animator.SetBool("Running", false);
         actionsPerforming--;
     }
 
@@ -546,12 +562,6 @@ public class Unit : LivingEntity
     protected virtual void DoSpecialAttack(Hex[] a_targetTiles, System.Action a_start, System.Action a_finished)
     {
         // Keep empty
-    }
-
-    private void OnDestroy()
-    {
-        cameraController.onGlamCamStart -= healthBar.Hide;
-        cameraController.onGlamCamEnd -= healthBar.Show;
     }
 
     protected override void VoltChanged()

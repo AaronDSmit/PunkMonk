@@ -89,7 +89,7 @@ public class CameraController : MonoBehaviour
     private Cinemachine.CinemachineBrain cinemachineBrain;
 
     bool cinemachine = false;
-    new GameObject camera = null;
+    //new GameObject camera = null;
 
     public Unit TargetUnit
     {
@@ -103,7 +103,7 @@ public class CameraController : MonoBehaviour
     private void Awake()
     {
         Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
-        camera = transform.GetChild(0).gameObject;
+        //camera = transform.GetChild(0).gameObject;
         settings = SettingsLoader.Instance.CurrentSettings;
 
         overworldController = GameObject.FindGameObjectWithTag("Player").GetComponent<OverworldController>();

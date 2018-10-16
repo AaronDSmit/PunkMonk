@@ -31,9 +31,9 @@ public class ProfileSwitcher : MonoBehaviour
 
     #region Local Fields
 
-    private Vector2 primaryPos;
+    //private Vector2 primaryPos;
 
-    private Vector2 secondaryPos;
+    //private Vector2 secondaryPos;
 
     private RectTransform earthProfile;
 
@@ -116,8 +116,8 @@ public class ProfileSwitcher : MonoBehaviour
         earthProfileButton = earthProfile.GetComponent<Button>();
         lightningProfileButton = lightningProfile.GetComponent<Button>();
 
-        primaryPos = earthProfile.anchoredPosition;
-        secondaryPos = lightningProfile.anchoredPosition;
+        //primaryPos = earthProfile.anchoredPosition;
+        //secondaryPos = lightningProfile.anchoredPosition;
 
         lightningProfile.localScale = secondaryScale;
 

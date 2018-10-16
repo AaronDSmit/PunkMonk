@@ -65,7 +65,7 @@ public class UIManager : MonoBehaviour
     #region Local Fields
 
     private bool[] buttonState;
-    private bool[] initialButtonState;
+    //private bool[] initialButtonState;
 
     private bool isReady;
 
@@ -295,7 +295,7 @@ public class UIManager : MonoBehaviour
             buttonState[i] = buttons[i].interactable;
         }
 
-        initialButtonState = buttonState;
+        //initialButtonState = buttonState;
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }

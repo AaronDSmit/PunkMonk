@@ -5,12 +5,14 @@
 			<PropertyList>
 				<Property Name="Event Action List\{139D58F9-18D5-4BD7-B74E-599B5A89ABD8}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{3239C110-54C1-4C46-BAD2-033CD75865B1}\x64_Expand States" Type="string" Value=""/>
+				<Property Name="Event Action List\{4313FA18-A758-4D13-B792-6F91DEB6776D}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{5A50D0BA-C02B-4F19-9021-C83331C3CF3B}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{6354384E-0A72-4ED6-A8E4-D5E0F81263D8}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{6BFDA7F3-EE62-49BE-B1D9-23D9B64995E7}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{6F16C831-CB0B-4B77-BCD5-30446C8A6DBB}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{7B44D88D-DE64-4051-96C7-78E32DB946B0}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{7C463F49-386D-4418-BB84-028C4E842829}\x64_Expand States" Type="string" Value=""/>
+				<Property Name="Event Action List\{7E5BE673-01E5-4A4D-8DEA-6CE812A8B912}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{9243709B-6518-45C7-A94E-DC9CB628ED90}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{98DC1ED8-0C7B-4F37-9CF3-B3C078D0034C}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{AC1AFF20-1393-45BA-8138-948653B8B587}\x64_Expand States" Type="string" Value=""/>
@@ -28,7 +30,7 @@
 						<Value Platform="Mac">GeneratedSoundBanks\Mac\</Value>
 					</ValueList>
 				</Property>
-				<Property Name="GenerateSoundBanks\x64_SelectedLanguages" Type="string" Value="BvDMKA=="/>
+				<Property Name="GenerateSoundBanks\x64_SelectedLanguages" Type="string" Value=""/>
 				<Property Name="GenerateSoundBanks\x64_SelectedPlatforms" Type="string" Value="V6hr/4fpMku1F30Y00IfXQ=="/>
 				<Property Name="GenerateSoundBanks\x64_SelectedSoundBanks" Type="string" Value="LY6sQaCDcU6OYMkjpiolHw=="/>
 				<Property Name="Interactive Music\x64_{10A650A1-19FC-46E1-BCA0-E1F9D1CCED8B} - SegmentEditorZoomInfo" Type="string" Value="AAAAAAAA8D8AAAAAAADwP0SXdAMiFjxAAAAAAAAA8D8AAAAAAAAAAAAAAAAAAAAA"/>

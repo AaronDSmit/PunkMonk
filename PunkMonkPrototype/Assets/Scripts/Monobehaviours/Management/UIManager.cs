@@ -221,7 +221,7 @@ public class UIManager : MonoBehaviour
 
     public void SwitchPlayerSelection()
     {
-        player.SwitchSelection();
+        player.SwitchSelection(selectedUnit);
     }
 
     public void LockUI()

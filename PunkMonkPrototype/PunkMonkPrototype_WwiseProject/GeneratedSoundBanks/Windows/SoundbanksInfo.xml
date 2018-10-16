@@ -40,6 +40,14 @@
 					<ShortName>Die_Enemy_03.wav</ShortName>
 					<Path>SFX\Die_Enemy_03_56D34C19.wem</Path>
 				</File>
+				<File Id="177537079" Language="SFX">
+					<ShortName>RunnerAttack4.wav</ShortName>
+					<Path>SFX\RunnerAttack4_56D34C19.wem</Path>
+				</File>
+				<File Id="190340128" Language="SFX">
+					<ShortName>RunnerAttack3.wav</ShortName>
+					<Path>SFX\RunnerAttack3_56D34C19.wem</Path>
+				</File>
 				<File Id="346333071" Language="SFX">
 					<ShortName>RunnerAttack1.wav</ShortName>
 					<Path>SFX\RunnerAttack1_56D34C19.wem</Path>
@@ -47,6 +55,10 @@
 				<File Id="472773207" Language="SFX">
 					<ShortName>GenAttack-normal.wav</ShortName>
 					<Path>SFX\GenAttack-normal_56D34C19.wem</Path>
+				</File>
+				<File Id="594679755" Language="SFX">
+					<ShortName>RunnerAttack2.wav</ShortName>
+					<Path>SFX\RunnerAttack2_56D34C19.wem</Path>
 				</File>
 				<File Id="602199033" Language="SFX">
 					<ShortName>GenAttack-heavy.wav</ShortName>

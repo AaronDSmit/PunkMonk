@@ -31,8 +31,8 @@ MonoBehaviour:
     List: []
   BankWwu:
   - Guid: '{A76D73F7-5EA3-46B5-B38F-16F7929AC7DF}'
-    m_lastTimePart2: -1999228143
-    m_lastTimePsrt1: -1563457560
+    m_lastTimePart2: -1999228133
+    m_lastTimePsrt1: 1535156776
     ParentPhysicalPath: 
     PhysicalPath: SoundBanks\Default Work Unit.wwu
     List:
@@ -107,8 +107,8 @@ MonoBehaviour:
     PhysicalPath: Events\Default Work Unit.wwu
     List: []
   - Guid: '{19DB632E-BDAA-4DD2-8EA9-D61DFD814A2F}'
-    m_lastTimePart2: -1999228143
-    m_lastTimePsrt1: -1572147560
+    m_lastTimePart2: -1999228133
+    m_lastTimePsrt1: 1406706776
     ParentPhysicalPath: 
     PhysicalPath: Events\Music.wwu
     List:
@@ -161,8 +161,8 @@ MonoBehaviour:
       maxDuration: 0
       minDuration: 0
   - Guid: '{97043EB5-8AFD-479B-B7EC-1820B945D1D5}'
-    m_lastTimePart2: -1999228143
-    m_lastTimePsrt1: -1572147560
+    m_lastTimePart2: -1999228133
+    m_lastTimePsrt1: 1406746776
     ParentPhysicalPath: 
     PhysicalPath: Events\SFX.wwu
     List:
@@ -669,10 +669,7 @@ MonoBehaviour:
   ExpandedItems:
   - /PunkMonkPrototype_WwiseProject
   - /PunkMonkPrototype_WwiseProject/Events
-  - /PunkMonkPrototype_WwiseProject/Events/SFX
-  - /PunkMonkPrototype_WwiseProject/Events/SFX/Battle
-  - /PunkMonkPrototype_WwiseProject/Events/SFX/Battle/Attack
-  - /PunkMonkPrototype_WwiseProject/Events/SFX/Battle/Attack/Enemy
+  - /PunkMonkPrototype_WwiseProject/Events/Music
   RtpcWwu:
   - Guid: '{0611EF02-C52F-4D22-840D-EF5CD7507B8B}'
     m_lastTimePart2: -1999228143

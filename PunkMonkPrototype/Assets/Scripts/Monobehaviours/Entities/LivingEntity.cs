@@ -150,6 +150,8 @@ public class LivingEntity : Entity
         {
             dead = true;
 
+            Manager.instance.PlayerController.SwitchSelection((Unit)this);
+
             if (healthBar)
             {
                 Destroy(healthBar.gameObject);

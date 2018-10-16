@@ -33,8 +33,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private int currentVolt = 0;
 
-    [SerializeField]
-    private AK.Wwise.Event endBattleState;
 
     #endregion
 
@@ -210,6 +208,10 @@ public class PlayerController : MonoBehaviour
             Debug.LogError("No lightning unit found!");
         }
 
+
+
+
+
         // Initialise the ToolTip to find the lightning and earth unit
         ToolTip.instance.Init();
 
@@ -219,13 +221,13 @@ public class PlayerController : MonoBehaviour
     }
 
     // Toggles between two player units, requires that both units are alive (used by tab)
-    public void SwitchSelection()
+    public void SwitchSelection(Unit a_currentUnit)
     {
         if (!earthDead && !lightningDead)
         {
             CancelCurrentAction();
 
-            if (selectedUnit == earthUnit)
+            if (a_currentUnit == earthUnit)
             {
                 SelectUnit(lightningUnit);
             }
@@ -234,6 +236,9 @@ public class PlayerController : MonoBehaviour
                 SelectUnit(earthUnit);
             }
         }
+
+
+
     }
 
     // Spawn's the earth unit and returns a reference to it, takes in an optional spawnHex
@@ -547,7 +552,7 @@ public class PlayerController : MonoBehaviour
         // Toggles between each unit, only works if both are alive.
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            SwitchSelection();
+            SwitchSelection(selectedUnit);
         }
 
         // Key shortcut to walk
@@ -1117,10 +1122,7 @@ public class PlayerController : MonoBehaviour
             lightningUnit.WalkDirectlyToTile(lightningStartingHex, lightningStartingDirection);
 
         }
-        if (a_oldstate == GameState.battle && a_newstate == GameState.transition)
-        {
-            endBattleState.Post(gameObject);
-        }
+
 
         // ensure this script knows it's in over-world state
         if (a_newstate == GameState.battle)

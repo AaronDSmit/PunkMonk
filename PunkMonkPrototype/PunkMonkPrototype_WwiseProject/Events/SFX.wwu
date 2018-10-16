@@ -81,7 +81,7 @@
 													</PropertyList>
 													<ReferenceList>
 														<Reference Name="Target">
-															<ObjectRef Name="Attack_Enemy_Melee" ID="{45C60036-6F59-4066-97DF-C88547C5E09E}" WorkUnitID="{BE193198-07FD-4919-8584-0C834CF482F7}"/>
+															<ObjectRef Name="Attack_Enemy_Runner" ID="{03A433A4-6523-4CBB-99EB-25A1AB362B32}" WorkUnitID="{BE193198-07FD-4919-8584-0C834CF482F7}"/>
 														</Reference>
 													</ReferenceList>
 												</Action>

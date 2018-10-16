@@ -18,7 +18,7 @@ public class OverworldController : MonoBehaviour
     private bool useMouseInput = true;
 
     [SerializeField]
-    bool startWithClade = false;
+    public bool startWithClade = false;
 
     #endregion
 

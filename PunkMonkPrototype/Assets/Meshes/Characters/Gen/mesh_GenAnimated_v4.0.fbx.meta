@@ -127,8 +127,8 @@ ModelImporter:
     3300000: mesh_GensRifle_v1_0_fbx
     4300000: mesh_Gen_v3_0_fbx
     4300002: mesh_GensRifle_v1_0_fbx
-    7400000: Gen_Run
-    7400002: Gen_Idle
+    7400000: Gen_Run(Obs)
+    7400002: Gen_Idle(Obs)
     9500000: //RootNode
     13700000: mesh_Gen_v3_0_fbx
   externalObjects:
@@ -172,7 +172,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Gen_Run
+      name: Gen_Run(Obs)
       takeName: Take 001
       firstFrame: 0
       lastFrame: 16
@@ -200,7 +200,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Gen_Idle
+      name: Gen_Idle(Obs)
       takeName: Take 001
       firstFrame: 18
       lastFrame: 116

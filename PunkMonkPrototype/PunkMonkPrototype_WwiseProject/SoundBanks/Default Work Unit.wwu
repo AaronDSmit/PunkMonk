@@ -5,9 +5,9 @@
 			<ChildrenList>
 				<SoundBank Name="Divide_SoundBank" ID="{41AC8E2D-83A0-4E71-8E60-C923A62A251F}">
 					<ObjectInclusionList>
-						<ObjectRef Name="Ambient" ID="{39BFD4E9-6B27-4210-9595-772619309430}" WorkUnitID="{39BFD4E9-6B27-4210-9595-772619309430}" Filter="7" Origin="Manual"/>
-						<ObjectRef Name="SFX" ID="{97043EB5-8AFD-479B-B7EC-1820B945D1D5}" WorkUnitID="{97043EB5-8AFD-479B-B7EC-1820B945D1D5}" Filter="7" Origin="Manual"/>
-						<ObjectRef Name="Music" ID="{19DB632E-BDAA-4DD2-8EA9-D61DFD814A2F}" WorkUnitID="{19DB632E-BDAA-4DD2-8EA9-D61DFD814A2F}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Ambient" ID="{7641300E-382C-4518-805A-56EF7E535C80}" WorkUnitID="{7641300E-382C-4518-805A-56EF7E535C80}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="SFX" ID="{BE193198-07FD-4919-8584-0C834CF482F7}" WorkUnitID="{BE193198-07FD-4919-8584-0C834CF482F7}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Default Work Unit" ID="{4DB86490-E208-4AE5-878B-DD391FBC0583}" WorkUnitID="{4DB86490-E208-4AE5-878B-DD391FBC0583}" Filter="7" Origin="Manual"/>
 					</ObjectInclusionList>
 					<ObjectExclusionList/>
 					<GameSyncExclusionList/>

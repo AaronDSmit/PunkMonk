@@ -24,159 +24,644 @@ MonoBehaviour:
     List: []
   AuxBusWwu:
   - Guid: '{17B85F81-D4B6-4851-8C1E-9D808D7B1DC8}'
-    m_lastTimePart2: -1999229294
-    m_lastTimePsrt1: 1489773716
+    m_lastTimePart2: -1999228166
+    m_lastTimePsrt1: 2132107596
     ParentPhysicalPath: 
     PhysicalPath: Master-Mixer Hierarchy\Default Work Unit.wwu
-    List:
-    - Guid: 572048f9c9e168458c2cce9bbf04eed9
-      ID: -1099981808
-      Name: Bus_Ambient
-      Path: Default Work Unit\Master Audio Bus\Bus_Ambient
-      PathAndIcons:
-      - ElementName: Default Work Unit
-        ObjectType: 12
-      - ElementName: Master Audio Bus
-        ObjectType: 2
-      - ElementName: Bus_Ambient
-        ObjectType: 1
-    - Guid: 8129cf49308a0345b0440072164b049b
-      ID: 1162281553
-      Name: Bus_Music
-      Path: Default Work Unit\Master Audio Bus\Bus_Music
-      PathAndIcons:
-      - ElementName: Default Work Unit
-        ObjectType: 12
-      - ElementName: Master Audio Bus
-        ObjectType: 2
-      - ElementName: Bus_Music
-        ObjectType: 1
-    - Guid: 23c718c326877f48870459ebce91c66d
-      ID: -399043451
-      Name: Bus_SFX
-      Path: Default Work Unit\Master Audio Bus\Bus_SFX
-      PathAndIcons:
-      - ElementName: Default Work Unit
-        ObjectType: 12
-      - ElementName: Master Audio Bus
-        ObjectType: 2
-      - ElementName: Bus_SFX
-        ObjectType: 1
+    List: []
   BankWwu:
   - Guid: '{A76D73F7-5EA3-46B5-B38F-16F7929AC7DF}'
-    m_lastTimePart2: -1999229340
-    m_lastTimePsrt1: 919395087
+    m_lastTimePart2: -1999228166
+    m_lastTimePsrt1: 2132277596
     ParentPhysicalPath: 
     PhysicalPath: SoundBanks\Default Work Unit.wwu
     List:
     - Guid: 2d8eac41a083714e8e60c923a62a251f
-      ID: -303024426
-      Name: Music
-      Path: Default Work Unit\Music
+      ID: 1947159716
+      Name: Divide_SoundBank
+      Path: Default Work Unit\Divide_SoundBank
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
-      - ElementName: Music
+      - ElementName: Divide_SoundBank
         ObjectType: 7
   EventWwu:
+  - Guid: '{39BFD4E9-6B27-4210-9595-772619309430}'
+    m_lastTimePart2: -1999228330
+    m_lastTimePsrt1: 1219354026
+    ParentPhysicalPath: 
+    PhysicalPath: Events\Ambient.wwu
+    List:
+    - Guid: 9373d5fb4a99b745bb38c412a4e1cc37
+      ID: 1743658261
+      Name: Ambient_Inside_Enter
+      Path: Ambient\Ambient_Inside_Enter
+      PathAndIcons:
+      - ElementName: Ambient
+        ObjectType: 12
+      - ElementName: Ambient_Inside_Enter
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - Guid: 89d69d070c08eb4d8e9320266600d402
+      ID: 1536291209
+      Name: Ambient_Inside_Exit
+      Path: Ambient\Ambient_Inside_Exit
+      PathAndIcons:
+      - ElementName: Ambient
+        ObjectType: 12
+      - ElementName: Ambient_Inside_Exit
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - Guid: 12a6baf6bdf35b48aaba85fc468a5c59
+      ID: 875726824
+      Name: Ambient_Outside_Enter
+      Path: Ambient\Ambient_Outside_Enter
+      PathAndIcons:
+      - ElementName: Ambient
+        ObjectType: 12
+      - ElementName: Ambient_Outside_Enter
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - Guid: 149bc5a719e5094cadf5c280cf455006
+      ID: 1899938162
+      Name: Ambient_Outside_Exit
+      Path: Ambient\Ambient_Outside_Exit
+      PathAndIcons:
+      - ElementName: Ambient
+        ObjectType: 12
+      - ElementName: Ambient_Outside_Exit
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
   - Guid: '{9B7E563D-D886-4529-9471-1F499F2670AE}'
-    m_lastTimePart2: -1999229340
-    m_lastTimePsrt1: 915375087
+    m_lastTimePart2: -1999228330
+    m_lastTimePsrt1: 1219354026
     ParentPhysicalPath: 
     PhysicalPath: Events\Default Work Unit.wwu
+    List: []
+  - Guid: '{19DB632E-BDAA-4DD2-8EA9-D61DFD814A2F}'
+    m_lastTimePart2: -1999228330
+    m_lastTimePsrt1: 1219364026
+    ParentPhysicalPath: 
+    PhysicalPath: Events\Music.wwu
     List:
-    - Guid: 9b7043921865c745a94edc9cb628ed90
-      ID: 1096437587
-      Name: EnterBattle
-      Path: Default Work Unit\EnterBattle
+    - Guid: d81edc987b0c374f9cf3b3c078d0034c
+      ID: 906289856
+      Name: Battle_Enter
+      Path: Music\Battle_Enter
       PathAndIcons:
-      - ElementName: Default Work Unit
+      - ElementName: Music
         ObjectType: 12
-      - ElementName: EnterBattle
+      - ElementName: Battle_Enter
         ObjectType: 3
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
-    - Guid: bad0505a2bc0194f9021c83331c3cf3b
-      ID: 929506175
-      Name: ExitBattle
-      Path: Default Work Unit\ExitBattle
+    - Guid: 18fa134358a7134db7926f91deb6776d
+      ID: -155315414
+      Name: Battle_Exit
+      Path: Music\Battle_Exit
       PathAndIcons:
-      - ElementName: Default Work Unit
+      - ElementName: Music
         ObjectType: 12
-      - ElementName: ExitBattle
+      - ElementName: Battle_Exit
         ObjectType: 3
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
-    - Guid: b69c68504dff594bb8c82608bee43c1b
-      ID: 795139033
-      Name: Play_Melee_Attack
-      Path: Default Work Unit\SFX\Enemies\Attack\Play_Melee_Attack
+    - Guid: eab3bc2834eccc49b6cc341347049c3d
+      ID: 797344207
+      Name: FreeRoam_Enter
+      Path: Music\FreeRoam_Enter
       PathAndIcons:
-      - ElementName: Default Work Unit
+      - ElementName: Music
         ObjectType: 12
+      - ElementName: FreeRoam_Enter
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - Guid: 7c3d0a07454c5141bff1d181534466f0
+      ID: -1310938921
+      Name: FreeRoam_Exit
+      Path: Music\FreeRoam_Exit
+      PathAndIcons:
+      - ElementName: Music
+        ObjectType: 12
+      - ElementName: FreeRoam_Exit
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+  - Guid: '{97043EB5-8AFD-479B-B7EC-1820B945D1D5}'
+    m_lastTimePart2: -1999228166
+    m_lastTimePsrt1: 2132257596
+    ParentPhysicalPath: 
+    PhysicalPath: Events\SFX.wwu
+    List:
+    - Guid: 3eb077df9777ad4d832262b213bdb676
+      ID: 1941636804
+      Name: Attack_Clade_Basic
+      Path: SFX\Battle\Attack\Clade\Attack_Clade_Basic
+      PathAndIcons:
       - ElementName: SFX
-        ObjectType: 4
-      - ElementName: Enemies
+        ObjectType: 12
+      - ElementName: Battle
         ObjectType: 4
       - ElementName: Attack
         ObjectType: 4
-      - ElementName: Play_Melee_Attack
+      - ElementName: Clade
+        ObjectType: 4
+      - ElementName: Attack_Clade_Basic
         ObjectType: 3
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
-    - Guid: 29ab5a0d8f3f9e438ae03ec0c9fd276d
-      ID: 973990149
-      Name: Play_Missile_Attack
-      Path: Default Work Unit\SFX\Enemies\Attack\Play_Missile_Attack
+    - Guid: 181d67deef774147ac84805e21320458
+      ID: 334189263
+      Name: Attack_Clade_Special
+      Path: SFX\Battle\Attack\Clade\Attack_Clade_Special
       PathAndIcons:
-      - ElementName: Default Work Unit
-        ObjectType: 12
       - ElementName: SFX
-        ObjectType: 4
-      - ElementName: Enemies
+        ObjectType: 12
+      - ElementName: Battle
         ObjectType: 4
       - ElementName: Attack
         ObjectType: 4
-      - ElementName: Play_Missile_Attack
+      - ElementName: Clade
+        ObjectType: 4
+      - ElementName: Attack_Clade_Special
         ObjectType: 3
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
-    - Guid: 18a6f5293a7dea4db5023bb7ce37d1f3
-      ID: 1520388910
-      Name: Play_Ranged_Attack
-      Path: Default Work Unit\SFX\Enemies\Attack\Play_Ranged_Attack
+    - Guid: 73e65b7ee5014d4a8dea6ce812a8b912
+      ID: 1918548877
+      Name: Attack_Enemy_Melee
+      Path: SFX\Battle\Attack\Enemy\Attack_Enemy_Melee
       PathAndIcons:
-      - ElementName: Default Work Unit
-        ObjectType: 12
       - ElementName: SFX
-        ObjectType: 4
-      - ElementName: Enemies
+        ObjectType: 12
+      - ElementName: Battle
         ObjectType: 4
       - ElementName: Attack
         ObjectType: 4
-      - ElementName: Play_Ranged_Attack
+      - ElementName: Enemy
+        ObjectType: 4
+      - ElementName: Attack_Enemy_Melee
         ObjectType: 3
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
-    - Guid: 12ad2f255dfbd24981d7beda565c85a9
-      ID: 1315981400
-      Name: Play_TakeDamage
-      Path: Default Work Unit\SFX\Enemies\TakeDamage\Play_TakeDamage
+    - Guid: 90add5d4ddabb646880bca832dc36b7d
+      ID: 1242751957
+      Name: Attack_Enemy_Missile
+      Path: SFX\Battle\Attack\Enemy\Attack_Enemy_Missile
       PathAndIcons:
-      - ElementName: Default Work Unit
-        ObjectType: 12
       - ElementName: SFX
+        ObjectType: 12
+      - ElementName: Battle
         ObjectType: 4
-      - ElementName: Enemies
+      - ElementName: Attack
+        ObjectType: 4
+      - ElementName: Enemy
+        ObjectType: 4
+      - ElementName: Attack_Enemy_Missile
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - Guid: efca4aaadc70544d8dc1991d5daee42a
+      ID: -1555747430
+      Name: Attack_Enemy_Ranged
+      Path: SFX\Battle\Attack\Enemy\Attack_Enemy_Ranged
+      PathAndIcons:
+      - ElementName: SFX
+        ObjectType: 12
+      - ElementName: Battle
+        ObjectType: 4
+      - ElementName: Attack
+        ObjectType: 4
+      - ElementName: Enemy
+        ObjectType: 4
+      - ElementName: Attack_Enemy_Ranged
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - Guid: f3a7fd6b62eebe49b1d923d9b64995e7
+      ID: -1734488603
+      Name: Attack_Gen_Basic
+      Path: SFX\Battle\Attack\Gen\Attack_Gen_Basic
+      PathAndIcons:
+      - ElementName: SFX
+        ObjectType: 12
+      - ElementName: Battle
+        ObjectType: 4
+      - ElementName: Attack
+        ObjectType: 4
+      - ElementName: Gen
+        ObjectType: 4
+      - ElementName: Attack_Gen_Basic
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - Guid: bacc455270670d46966f4b6104456e1c
+      ID: 702987074
+      Name: Attack_Gen_Special
+      Path: SFX\Battle\Attack\Gen\Attack_Gen_Special
+      PathAndIcons:
+      - ElementName: SFX
+        ObjectType: 12
+      - ElementName: Battle
+        ObjectType: 4
+      - ElementName: Attack
+        ObjectType: 4
+      - ElementName: Gen
+        ObjectType: 4
+      - ElementName: Attack_Gen_Special
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - Guid: 53e7a7207ab8be48ac2f28261b3faa5d
+      ID: 814543256
+      Name: Button_Click
+      Path: SFX\UI\Menu\Button_Click
+      PathAndIcons:
+      - ElementName: SFX
+        ObjectType: 12
+      - ElementName: UI
+        ObjectType: 4
+      - ElementName: Menu
+        ObjectType: 4
+      - ElementName: Button_Click
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - Guid: f9589d13d518d74bb74e599b5a89abd8
+      ID: -2090674432
+      Name: Button_Confirm
+      Path: SFX\UI\Menu\Button_Confirm
+      PathAndIcons:
+      - ElementName: SFX
+        ObjectType: 12
+      - ElementName: UI
+        ObjectType: 4
+      - ElementName: Menu
+        ObjectType: 4
+      - ElementName: Button_Confirm
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - Guid: 8dd8447b64de514096c778e32db946b0
+      ID: 1701177942
+      Name: Button_Hover
+      Path: SFX\UI\Menu\Button_Hover
+      PathAndIcons:
+      - ElementName: SFX
+        ObjectType: 12
+      - ElementName: UI
+        ObjectType: 4
+      - ElementName: Menu
+        ObjectType: 4
+      - ElementName: Button_Hover
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - Guid: abcbf8fb2699da47bcd60f674fc356db
+      ID: -724199680
+      Name: Clade_Footsteps
+      Path: SFX\World\Footsteps\Clade_Footsteps
+      PathAndIcons:
+      - ElementName: SFX
+        ObjectType: 12
+      - ElementName: World
+        ObjectType: 4
+      - ElementName: Footsteps
+        ObjectType: 4
+      - ElementName: Clade_Footsteps
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - Guid: 83efbf594dc5b44fa0e1df5ba191da0f
+      ID: 465316945
+      Name: Clade_TakeDamage
+      Path: SFX\Battle\General\TakeDamage\Clade_TakeDamage
+      PathAndIcons:
+      - ElementName: SFX
+        ObjectType: 12
+      - ElementName: Battle
+        ObjectType: 4
+      - ElementName: General
         ObjectType: 4
       - ElementName: TakeDamage
         ObjectType: 4
-      - ElementName: Play_TakeDamage
+      - ElementName: Clade_TakeDamage
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - Guid: d1671ce972000a4690ffa498d33d9b58
+      ID: 712508295
+      Name: Die_Clade
+      Path: SFX\Battle\Die\Die_Clade
+      PathAndIcons:
+      - ElementName: SFX
+        ObjectType: 12
+      - ElementName: Battle
+        ObjectType: 4
+      - ElementName: Die
+        ObjectType: 4
+      - ElementName: Die_Clade
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - Guid: 2973d0e9a251494993e2d933470f1357
+      ID: 312517388
+      Name: Die_Enemy
+      Path: SFX\Battle\Die\Die_Enemy
+      PathAndIcons:
+      - ElementName: SFX
+        ObjectType: 12
+      - ElementName: Battle
+        ObjectType: 4
+      - ElementName: Die
+        ObjectType: 4
+      - ElementName: Die_Enemy
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - Guid: 493f467c6d381844bb84028c4e842829
+      ID: -1864431770
+      Name: Die_Gen
+      Path: SFX\Battle\Die\Die_Gen
+      PathAndIcons:
+      - ElementName: SFX
+        ObjectType: 12
+      - ElementName: Battle
+        ObjectType: 4
+      - ElementName: Die
+        ObjectType: 4
+      - ElementName: Die_Gen
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - Guid: 652380dfaef16743b8859d6e9c91f33b
+      ID: -1077874457
+      Name: Enemy_Footsteps
+      Path: SFX\World\Footsteps\Enemy_Footsteps
+      PathAndIcons:
+      - ElementName: SFX
+        ObjectType: 12
+      - ElementName: World
+        ObjectType: 4
+      - ElementName: Footsteps
+        ObjectType: 4
+      - ElementName: Enemy_Footsteps
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - Guid: 7a70dcb00bca97409a96d35489b98327
+      ID: 842135496
+      Name: Enemy_TakeDamage
+      Path: SFX\Battle\General\TakeDamage\Enemy_TakeDamage
+      PathAndIcons:
+      - ElementName: SFX
+        ObjectType: 12
+      - ElementName: Battle
+        ObjectType: 4
+      - ElementName: General
+        ObjectType: 4
+      - ElementName: TakeDamage
+        ObjectType: 4
+      - ElementName: Enemy_TakeDamage
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - Guid: 8d2bbd773c99694a9a90839e929cf437
+      ID: 1074448873
+      Name: Enemy_Turn_Begin
+      Path: SFX\Battle\General\Turns\Enemy_Turn_Begin
+      PathAndIcons:
+      - ElementName: SFX
+        ObjectType: 12
+      - ElementName: Battle
+        ObjectType: 4
+      - ElementName: General
+        ObjectType: 4
+      - ElementName: Turns
+        ObjectType: 4
+      - ElementName: Enemy_Turn_Begin
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - Guid: af53f01b538f814bb47b1dc65de14f21
+      ID: 1638856449
+      Name: Enemy_Turn_End
+      Path: SFX\Battle\General\Turns\Enemy_Turn_End
+      PathAndIcons:
+      - ElementName: SFX
+        ObjectType: 12
+      - ElementName: Battle
+        ObjectType: 4
+      - ElementName: General
+        ObjectType: 4
+      - ElementName: Turns
+        ObjectType: 4
+      - ElementName: Enemy_Turn_End
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - Guid: eb57affb6042f24185b4d493b19b8bd0
+      ID: -1515378115
+      Name: EnemySpawn_Warning
+      Path: SFX\Battle\General\Feedback\EnemySpawn_Warning
+      PathAndIcons:
+      - ElementName: SFX
+        ObjectType: 12
+      - ElementName: Battle
+        ObjectType: 4
+      - ElementName: General
+        ObjectType: 4
+      - ElementName: Feedback
+        ObjectType: 4
+      - ElementName: EnemySpawn_Warning
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - Guid: d352435a47a39042a5b47e39378860cc
+      ID: 1862866977
+      Name: Gen_Footsteps
+      Path: SFX\World\Footsteps\Gen_Footsteps
+      PathAndIcons:
+      - ElementName: SFX
+        ObjectType: 12
+      - ElementName: World
+        ObjectType: 4
+      - ElementName: Footsteps
+        ObjectType: 4
+      - ElementName: Gen_Footsteps
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - Guid: 4971354cd32f6c459843be13ff2db32d
+      ID: -295351110
+      Name: Gen_TakeDamage
+      Path: SFX\Battle\General\TakeDamage\Gen_TakeDamage
+      PathAndIcons:
+      - ElementName: SFX
+        ObjectType: 12
+      - ElementName: Battle
+        ObjectType: 4
+      - ElementName: General
+        ObjectType: 4
+      - ElementName: TakeDamage
+        ObjectType: 4
+      - ElementName: Gen_TakeDamage
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - Guid: 0af5ac3de0ef5841aa180631a4fa5afd
+      ID: -2086253611
+      Name: Hex_Click
+      Path: SFX\Battle\General\Hex\Hex_Click
+      PathAndIcons:
+      - ElementName: SFX
+        ObjectType: 12
+      - ElementName: Battle
+        ObjectType: 4
+      - ElementName: General
+        ObjectType: 4
+      - ElementName: Hex
+        ObjectType: 4
+      - ElementName: Hex_Click
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - Guid: defa018273e3404eb6cf2c02a980f4a6
+      ID: 353790175
+      Name: Hex_Hover
+      Path: SFX\Battle\General\Hex\Hex_Hover
+      PathAndIcons:
+      - ElementName: SFX
+        ObjectType: 12
+      - ElementName: Battle
+        ObjectType: 4
+      - ElementName: General
+        ObjectType: 4
+      - ElementName: Hex
+        ObjectType: 4
+      - ElementName: Hex_Hover
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - Guid: 3672ae88cd130844af6f980f4e5a2b67
+      ID: 1598033226
+      Name: Player_Turn_Begin
+      Path: SFX\Battle\General\Turns\Player_Turn_Begin
+      PathAndIcons:
+      - ElementName: SFX
+        ObjectType: 12
+      - ElementName: Battle
+        ObjectType: 4
+      - ElementName: General
+        ObjectType: 4
+      - ElementName: Turns
+        ObjectType: 4
+      - ElementName: Player_Turn_Begin
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - Guid: 6b64ecbb98451248a0e24b3afbc20807
+      ID: -987895570
+      Name: Player_Turn_End
+      Path: SFX\Battle\General\Turns\Player_Turn_End
+      PathAndIcons:
+      - ElementName: SFX
+        ObjectType: 12
+      - ElementName: Battle
+        ObjectType: 4
+      - ElementName: General
+        ObjectType: 4
+      - ElementName: Turns
+        ObjectType: 4
+      - ElementName: Player_Turn_End
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - Guid: 95b28ca345d3a54c83e7fbd8484d87dc
+      ID: 244970891
+      Name: Player_Turn_NoActions
+      Path: SFX\Battle\General\Turns\Player_Turn_NoActions
+      PathAndIcons:
+      - ElementName: SFX
+        ObjectType: 12
+      - ElementName: Battle
+        ObjectType: 4
+      - ElementName: General
+        ObjectType: 4
+      - ElementName: Turns
+        ObjectType: 4
+      - ElementName: Player_Turn_NoActions
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - Guid: f1ecf9602a954044b6dbeac5ce283199
+      ID: 1701828612
+      Name: Volt_Obtain
+      Path: SFX\UI\BattleHUD\Volt_Obtain
+      PathAndIcons:
+      - ElementName: SFX
+        ObjectType: 12
+      - ElementName: UI
+        ObjectType: 4
+      - ElementName: BattleHUD
+        ObjectType: 4
+      - ElementName: Volt_Obtain
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - Guid: cbaa2ba36b4afb40b48a090841980a3b
+      ID: 896483856
+      Name: Volt_Use
+      Path: SFX\UI\BattleHUD\Volt_Use
+      PathAndIcons:
+      - ElementName: SFX
+        ObjectType: 12
+      - ElementName: UI
+        ObjectType: 4
+      - ElementName: BattleHUD
+        ObjectType: 4
+      - ElementName: Volt_Use
         ObjectType: 3
       maxAttenuation: 0
       maxDuration: 0
@@ -184,16 +669,55 @@ MonoBehaviour:
   ExpandedItems:
   - /PunkMonkPrototype_WwiseProject
   - /PunkMonkPrototype_WwiseProject/Events
-  - /PunkMonkPrototype_WwiseProject/Events/Default Work Unit
-  - /PunkMonkPrototype_WwiseProject/Events/Default Work Unit/SFX
+  - /PunkMonkPrototype_WwiseProject/Events/Music
+  - /PunkMonkPrototype_WwiseProject/Events/SFX
+  - /PunkMonkPrototype_WwiseProject/Events/SFX/Battle
+  - /PunkMonkPrototype_WwiseProject/Events/SFX/Battle/Attack
+  - /PunkMonkPrototype_WwiseProject/Events/SFX/Battle/Attack/Clade
+  - /PunkMonkPrototype_WwiseProject/Events/SFX/Battle/Attack/Gen
+  - /PunkMonkPrototype_WwiseProject/Events/SFX/World
   - /PunkMonkPrototype_WwiseProject/SoundBanks
+  - /PunkMonkPrototype_WwiseProject/SoundBanks/Default Work Unit
   RtpcWwu:
   - Guid: '{0611EF02-C52F-4D22-840D-EF5CD7507B8B}'
-    m_lastTimePart2: -1999229340
-    m_lastTimePsrt1: 915375087
+    m_lastTimePart2: -1999228166
+    m_lastTimePsrt1: 2132307596
     ParentPhysicalPath: 
     PhysicalPath: Game Parameters\Default Work Unit.wwu
-    List: []
+    List:
+    - Guid: 1d34be042525d6429527e8a007f6b6e9
+      ID: -1376955947
+      Name: MasterVolume
+      Path: Default Work Unit\Volume\MasterVolume
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Volume
+        ObjectType: 4
+      - ElementName: MasterVolume
+        ObjectType: 13
+    - Guid: b733180c392c0e409893b46799926b34
+      ID: -1948435988
+      Name: MusicVolume
+      Path: Default Work Unit\Volume\MusicVolume
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Volume
+        ObjectType: 4
+      - ElementName: MusicVolume
+        ObjectType: 13
+    - Guid: c0629d63e712c540ba06788dca8bb6c0
+      ID: 988953028
+      Name: SFXVolume
+      Path: Default Work Unit\Volume\SFXVolume
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Volume
+        ObjectType: 4
+      - ElementName: SFXVolume
+        ObjectType: 13
   StateWwu:
   - Guid: '{04CF6E00-4CA3-4424-9273-F0833B6CE0D5}'
     m_lastTimePart2: -1999229340

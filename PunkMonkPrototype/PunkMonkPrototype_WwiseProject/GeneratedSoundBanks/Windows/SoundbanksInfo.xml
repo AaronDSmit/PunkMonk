@@ -21,52 +21,46 @@
 			<ShortName>Divide_SoundBank</ShortName>
 			<Path>Divide_SoundBank.bnk</Path>
 			<IncludedEvents>
-				<Event Id="1743658261" Name="Ambient_Inside_Enter" ObjectPath="\Events\Ambient\Ambient_Inside_Enter"/>
-				<Event Id="1536291209" Name="Ambient_Inside_Exit" ObjectPath="\Events\Ambient\Ambient_Inside_Exit" MaxAttenuation="0.000000"/>
-				<Event Id="875726824" Name="Ambient_Outside_Enter" ObjectPath="\Events\Ambient\Ambient_Outside_Enter"/>
-				<Event Id="1899938162" Name="Ambient_Outside_Exit" ObjectPath="\Events\Ambient\Ambient_Outside_Exit" MaxAttenuation="0.000000"/>
 				<Event Id="1941636804" Name="Attack_Clade_Basic" ObjectPath="\Events\SFX\Battle\Attack\Clade\Attack_Clade_Basic"/>
 				<Event Id="334189263" Name="Attack_Clade_Special" ObjectPath="\Events\SFX\Battle\Attack\Clade\Attack_Clade_Special"/>
 				<Event Id="1918548877" Name="Attack_Enemy_Melee" ObjectPath="\Events\SFX\Battle\Attack\Enemy\Attack_Enemy_Melee"/>
 				<Event Id="1242751957" Name="Attack_Enemy_Missile" ObjectPath="\Events\SFX\Battle\Attack\Enemy\Attack_Enemy_Missile"/>
-				<Event Id="2739219866" Name="Attack_Enemy_Ranged" ObjectPath="\Events\SFX\Battle\Attack\Enemy\Attack_Enemy_Ranged"/>
 				<Event Id="2560478693" Name="Attack_Gen_Basic" ObjectPath="\Events\SFX\Battle\Attack\Gen\Attack_Gen_Basic"/>
 				<Event Id="702987074" Name="Attack_Gen_Special" ObjectPath="\Events\SFX\Battle\Attack\Gen\Attack_Gen_Special"/>
-				<Event Id="906289856" Name="Battle_Enter" ObjectPath="\Events\Music\Battle_Enter"/>
-				<Event Id="4139651882" Name="Battle_Exit" ObjectPath="\Events\Music\Battle_Exit" MaxAttenuation="0.000000"/>
-				<Event Id="814543256" Name="Button_Click" ObjectPath="\Events\SFX\UI\Menu\Button_Click" MaxAttenuation="0.000000"/>
-				<Event Id="2204292864" Name="Button_Confirm" ObjectPath="\Events\SFX\UI\Menu\Button_Confirm" MaxAttenuation="0.000000"/>
-				<Event Id="1701177942" Name="Button_Hover" ObjectPath="\Events\SFX\UI\Menu\Button_Hover" MaxAttenuation="0.000000"/>
-				<Event Id="3570767616" Name="Clade_Footsteps" ObjectPath="\Events\SFX\World\Footsteps\Clade_Footsteps"/>
-				<Event Id="465316945" Name="Clade_TakeDamage" ObjectPath="\Events\SFX\Battle\General\TakeDamage\Clade_TakeDamage"/>
-				<Event Id="712508295" Name="Die_Clade" ObjectPath="\Events\SFX\Battle\Die\Die_Clade"/>
 				<Event Id="312517388" Name="Die_Enemy" ObjectPath="\Events\SFX\Battle\Die\Die_Enemy"/>
-				<Event Id="2430535526" Name="Die_Gen" ObjectPath="\Events\SFX\Battle\Die\Die_Gen"/>
-				<Event Id="3217092839" Name="Enemy_Footsteps" ObjectPath="\Events\SFX\World\Footsteps\Enemy_Footsteps"/>
-				<Event Id="842135496" Name="Enemy_TakeDamage" ObjectPath="\Events\SFX\Battle\General\TakeDamage\Enemy_TakeDamage"/>
-				<Event Id="1074448873" Name="Enemy_Turn_Begin" ObjectPath="\Events\SFX\Battle\General\Turns\Enemy_Turn_Begin"/>
-				<Event Id="1638856449" Name="Enemy_Turn_End" ObjectPath="\Events\SFX\Battle\General\Turns\Enemy_Turn_End"/>
-				<Event Id="2779589181" Name="EnemySpawn_Warning" ObjectPath="\Events\SFX\Battle\General\Feedback\EnemySpawn_Warning"/>
-				<Event Id="797344207" Name="FreeRoam_Enter" ObjectPath="\Events\Music\FreeRoam_Enter"/>
-				<Event Id="2984028375" Name="FreeRoam_Exit" ObjectPath="\Events\Music\FreeRoam_Exit" MaxAttenuation="0.000000"/>
-				<Event Id="1862866977" Name="Gen_Footsteps" ObjectPath="\Events\SFX\World\Footsteps\Gen_Footsteps"/>
-				<Event Id="3999616186" Name="Gen_TakeDamage" ObjectPath="\Events\SFX\Battle\General\TakeDamage\Gen_TakeDamage"/>
-				<Event Id="2208713685" Name="Hex_Click" ObjectPath="\Events\SFX\Battle\General\Hex\Hex_Click"/>
-				<Event Id="353790175" Name="Hex_Hover" ObjectPath="\Events\SFX\Battle\General\Hex\Hex_Hover"/>
-				<Event Id="1598033226" Name="Player_Turn_Begin" ObjectPath="\Events\SFX\Battle\General\Turns\Player_Turn_Begin"/>
-				<Event Id="3307071726" Name="Player_Turn_End" ObjectPath="\Events\SFX\Battle\General\Turns\Player_Turn_End"/>
-				<Event Id="244970891" Name="Player_Turn_NoActions" ObjectPath="\Events\SFX\Battle\General\Turns\Player_Turn_NoActions"/>
-				<Event Id="1701828612" Name="Volt_Obtain" ObjectPath="\Events\SFX\UI\BattleHUD\Volt_Obtain" MaxAttenuation="0.000000"/>
-				<Event Id="896483856" Name="Volt_Use" ObjectPath="\Events\SFX\UI\BattleHUD\Volt_Use" MaxAttenuation="0.000000"/>
 			</IncludedEvents>
 			<IncludedMemoryFiles>
+				<File Id="81000000" Language="SFX">
+					<ShortName>CladeAttack-heavy.wav</ShortName>
+					<Path>SFX\CladeAttack-heavy_56D34C19.wem</Path>
+				</File>
 				<File Id="148414472" Language="SFX">
 					<ShortName>Die_Enemy_03.wav</ShortName>
 					<Path>SFX\Die_Enemy_03_56D34C19.wem</Path>
 				</File>
+				<File Id="346333071" Language="SFX">
+					<ShortName>RunnerAttack1.wav</ShortName>
+					<Path>SFX\RunnerAttack1_56D34C19.wem</Path>
+				</File>
+				<File Id="472773207" Language="SFX">
+					<ShortName>GenAttack-normal.wav</ShortName>
+					<Path>SFX\GenAttack-normal_56D34C19.wem</Path>
+				</File>
+				<File Id="602199033" Language="SFX">
+					<ShortName>GenAttack-heavy.wav</ShortName>
+					<Path>SFX\GenAttack-heavy_56D34C19.wem</Path>
+				</File>
+				<File Id="666064885" Language="SFX">
+					<ShortName>missileAttack1.wav</ShortName>
+					<Path>SFX\missileAttack1_56D34C19.wem</Path>
+				</File>
 				<File Id="683211502" Language="SFX">
 					<ShortName>Combat_FullLoop_v1.wav</ShortName>
 					<Path>SFX\Combat_FullLoop_v1_8956FC97.wem</Path>
+				</File>
+				<File Id="1059942235" Language="SFX">
+					<ShortName>CladeAttack-normal.wav</ShortName>
+					<Path>SFX\CladeAttack-normal_56D34C19.wem</Path>
 				</File>
 			</IncludedMemoryFiles>
 		</SoundBank>

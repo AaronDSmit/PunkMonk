@@ -79,6 +79,11 @@ public class CameraController : MonoBehaviour
 
     [SerializeField] private Transform cinemachineDefault;
 
+
+    //[Header("Wwise Settings")]
+    //[SerializeField]
+    //private AK.Wwise.AuxBus test;
+
     private Vector3 dir;
 
     private Cinemachine.CinemachineBrain cinemachineBrain;
@@ -129,6 +134,8 @@ public class CameraController : MonoBehaviour
     {
         inverseRotation = settings.InverseCameraRotation;
         screenPan = settings.ScreenEdgePan;
+
+
     }
 
     private void GameStateChanged(GameState a_oldstate, GameState a_newstate)

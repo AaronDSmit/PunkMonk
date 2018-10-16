@@ -677,16 +677,22 @@ MonoBehaviour:
   glamCam: 1
   glamCamChance: 15
   voltEffect: {fileID: 0}
+  basicAttackSFX:
+    ID: -1734488603
+    valueGuid: f3a7fd6b62eebe49b1d923d9b64995e7
+  specialAttackSFX:
+    ID: 702987074
+    valueGuid: bacc455270670d46966f4b6104456e1c
   lightningPrefab: {fileID: 106988, guid: 15dec7b07032b2f4aa6f855bfbe120f7, type: 2}
   specialDamage: 4
-  specialDamgeDelayTimer: 0.5
+  specialDamgeDelayTimer: 1.5
   basicRehitEnemies: 0
   basicRange: 4
   basicAmountOfBounces: 3
   basicLightningLifeTime: 1
   basicBounceDamage: 2
   basicFinalDamage: 2
-  basicDelayTime: 0.5
+  basicDelayTime: 2
 --- !u!114 &114239686414093768
 MonoBehaviour:
   m_ObjectHideFlags: 1

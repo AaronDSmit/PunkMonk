@@ -18,6 +18,13 @@
 									</ReferenceList>
 									<ChildrenList>
 										<RandomSequenceContainer Name="Gen_TakeDamage" ID="{D9DAC6ED-46E5-4895-84AB-A5563B1C2D16}" ShortID="415846675">
+											<PropertyList>
+												<Property Name="Inclusion" Type="bool">
+													<ValueList>
+														<Value>False</Value>
+													</ValueList>
+												</Property>
+											</PropertyList>
 											<ReferenceList>
 												<Reference Name="Conversion">
 													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{D4C10CFF-54D1-43E8-9949-15A35C036BE6}"/>
@@ -60,6 +67,13 @@
 											</ChildrenList>
 										</RandomSequenceContainer>
 										<RandomSequenceContainer Name="Enemy_TakeDamage" ID="{DC3F117B-7655-409F-9420-F64D16F1148E}" ShortID="813115134">
+											<PropertyList>
+												<Property Name="Inclusion" Type="bool">
+													<ValueList>
+														<Value>False</Value>
+													</ValueList>
+												</Property>
+											</PropertyList>
 											<ReferenceList>
 												<Reference Name="Conversion">
 													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{D4C10CFF-54D1-43E8-9949-15A35C036BE6}"/>
@@ -103,6 +117,11 @@
 										</RandomSequenceContainer>
 										<RandomSequenceContainer Name="Clade_TakeDamage" ID="{C5FD3D82-4C46-4526-8133-0D6D8927DAC3}" ShortID="935323000">
 											<PropertyList>
+												<Property Name="Inclusion" Type="bool">
+													<ValueList>
+														<Value>False</Value>
+													</ValueList>
+												</Property>
 												<Property Name="Pitch" Type="int32">
 													<ModifierList>
 														<ModifierInfo>
@@ -169,6 +188,13 @@
 									</ReferenceList>
 									<ChildrenList>
 										<Sound Name="Die_Gen" ID="{2DCD87F0-21B6-4D37-997C-18B93F76FDAF}" ShortID="828490571">
+											<PropertyList>
+												<Property Name="Inclusion" Type="bool">
+													<ValueList>
+														<Value>False</Value>
+													</ValueList>
+												</Property>
+											</PropertyList>
 											<ReferenceList>
 												<Reference Name="Conversion">
 													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{D4C10CFF-54D1-43E8-9949-15A35C036BE6}"/>
@@ -179,6 +205,13 @@
 											</ReferenceList>
 										</Sound>
 										<Sound Name="Die_Clade" ID="{6403A056-B453-4FC0-A179-B02E5E1F61BE}" ShortID="269722909">
+											<PropertyList>
+												<Property Name="Inclusion" Type="bool">
+													<ValueList>
+														<Value>False</Value>
+													</ValueList>
+												</Property>
+											</PropertyList>
 											<ReferenceList>
 												<Reference Name="Conversion">
 													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{D4C10CFF-54D1-43E8-9949-15A35C036BE6}"/>
@@ -200,6 +233,11 @@
 											<ChildrenList>
 												<Sound Name="Die_Enemy_01" ID="{D36FF792-8777-46A2-B8BD-B9977BF1C890}" ShortID="825983422">
 													<PropertyList>
+														<Property Name="Inclusion" Type="bool">
+															<ValueList>
+																<Value>False</Value>
+															</ValueList>
+														</Property>
 														<Property Name="Weight" Type="Real64">
 															<ValueList>
 																<Value>90</Value>
@@ -217,6 +255,11 @@
 												</Sound>
 												<Sound Name="Die_Enemy_02" ID="{F530DCAE-17C3-4055-9175-085FB41CEDD4}" ShortID="858613681">
 													<PropertyList>
+														<Property Name="Inclusion" Type="bool">
+															<ValueList>
+																<Value>False</Value>
+															</ValueList>
+														</Property>
 														<Property Name="Weight" Type="Real64">
 															<ValueList>
 																<Value>90</Value>
@@ -286,6 +329,15 @@
 													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{17B85F81-D4B6-4851-8C1E-9D808D7B1DC8}"/>
 												</Reference>
 											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="CladeAttack-heavy" ID="{A7118BC5-7ACC-4137-9CB4-8ACCF7C6B352}" ShortID="81000000">
+													<Language>SFX</Language>
+													<AudioFile>CladeAttack-heavy.wav</AudioFile>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="CladeAttack-heavy" ID="{A7118BC5-7ACC-4137-9CB4-8ACCF7C6B352}" Platform="Linked"/>
+											</ActiveSourceList>
 										</Sound>
 										<Sound Name="Attack_Clade_Basic" ID="{5B9D8F49-2043-4294-A60B-643394130EA7}" ShortID="237441496">
 											<ReferenceList>
@@ -296,6 +348,15 @@
 													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{17B85F81-D4B6-4851-8C1E-9D808D7B1DC8}"/>
 												</Reference>
 											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="CladeAttack-normal" ID="{C9B00997-BA0F-4E4D-8117-93A0C1193843}" ShortID="1059942235">
+													<Language>SFX</Language>
+													<AudioFile>CladeAttack-normal.wav</AudioFile>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="CladeAttack-normal" ID="{C9B00997-BA0F-4E4D-8117-93A0C1193843}" Platform="Linked"/>
+											</ActiveSourceList>
 										</Sound>
 									</ChildrenList>
 								</ActorMixer>
@@ -318,6 +379,15 @@
 													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{17B85F81-D4B6-4851-8C1E-9D808D7B1DC8}"/>
 												</Reference>
 											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="GenAttack-normal" ID="{834D4EF1-C581-41B3-B816-6C4AB804596C}" ShortID="472773207">
+													<Language>SFX</Language>
+													<AudioFile>GenAttack-normal.wav</AudioFile>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="GenAttack-normal" ID="{834D4EF1-C581-41B3-B816-6C4AB804596C}" Platform="Linked"/>
+											</ActiveSourceList>
 										</Sound>
 										<Sound Name="Attack_Gen_Special" ID="{C6C2FF98-224A-4CC9-8A6C-7425D36A8F11}" ShortID="626602009">
 											<ReferenceList>
@@ -328,6 +398,15 @@
 													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{17B85F81-D4B6-4851-8C1E-9D808D7B1DC8}"/>
 												</Reference>
 											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="GenAttack-heavy" ID="{5DDBAAFA-7AFD-450F-AFED-733C229011BC}" ShortID="602199033">
+													<Language>SFX</Language>
+													<AudioFile>GenAttack-heavy.wav</AudioFile>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="GenAttack-heavy" ID="{5DDBAAFA-7AFD-450F-AFED-733C229011BC}" Platform="Linked"/>
+											</ActiveSourceList>
 										</Sound>
 									</ChildrenList>
 								</ActorMixer>
@@ -350,8 +429,36 @@
 													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{17B85F81-D4B6-4851-8C1E-9D808D7B1DC8}"/>
 												</Reference>
 											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="RunnerAttack1" ID="{8816481C-4280-4066-8A8F-CDDDCD96A56E}" ShortID="346333071">
+													<Language>SFX</Language>
+													<AudioFile>RunnerAttack1.wav</AudioFile>
+												</AudioFileSource>
+												<AudioFileSource Name="RunnerAttack2" ID="{BBED5E7B-BC49-4AD1-8BC4-2019ADE979CB}" ShortID="828949010">
+													<Language>SFX</Language>
+													<AudioFile>RunnerAttack2.wav</AudioFile>
+												</AudioFileSource>
+												<AudioFileSource Name="RunnerAttack3" ID="{837B5F86-2FAA-4061-8090-07613664F0FE}" ShortID="190340128">
+													<Language>SFX</Language>
+													<AudioFile>RunnerAttack3.wav</AudioFile>
+												</AudioFileSource>
+												<AudioFileSource Name="RunnerAttack4" ID="{B577529D-5719-4B3B-861A-174A3F0C461C}" ShortID="177537079">
+													<Language>SFX</Language>
+													<AudioFile>RunnerAttack4.wav</AudioFile>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="RunnerAttack1" ID="{8816481C-4280-4066-8A8F-CDDDCD96A56E}" Platform="Linked"/>
+											</ActiveSourceList>
 										</Sound>
 										<Sound Name="Attack_Enemy_Ranged" ID="{803EE069-AD9C-4B09-BF58-2616EA833DC3}" ShortID="681433651">
+											<PropertyList>
+												<Property Name="Inclusion" Type="bool">
+													<ValueList>
+														<Value>False</Value>
+													</ValueList>
+												</Property>
+											</PropertyList>
 											<ReferenceList>
 												<Reference Name="Conversion">
 													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{D4C10CFF-54D1-43E8-9949-15A35C036BE6}"/>
@@ -370,6 +477,15 @@
 													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{17B85F81-D4B6-4851-8C1E-9D808D7B1DC8}"/>
 												</Reference>
 											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="missileAttack1" ID="{553CF131-E87C-4863-A96B-0F6D20EA3E8C}" ShortID="666064885">
+													<Language>SFX</Language>
+													<AudioFile>missileAttack1.wav</AudioFile>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="missileAttack1" ID="{553CF131-E87C-4863-A96B-0F6D20EA3E8C}" Platform="Linked"/>
+											</ActiveSourceList>
 										</Sound>
 									</ChildrenList>
 								</ActorMixer>
@@ -388,6 +504,13 @@
 									</ReferenceList>
 									<ChildrenList>
 										<Folder Name="Hex" ID="{43095F67-41A2-4987-81C4-ACABB83C8B09}" ShortID="511787028">
+											<PropertyList>
+												<Property Name="Inclusion" Type="bool">
+													<ValueList>
+														<Value>False</Value>
+													</ValueList>
+												</Property>
+											</PropertyList>
 											<ChildrenList>
 												<Sound Name="Hex_Hover" ID="{521A3867-0C86-4BED-BA3A-BDC74999BD25}" ShortID="515209271">
 													<ReferenceList>
@@ -412,6 +535,13 @@
 											</ChildrenList>
 										</Folder>
 										<Folder Name="EnemySpawn" ID="{4726509E-27E2-4779-8DE9-EA470D38D801}" ShortID="723628529">
+											<PropertyList>
+												<Property Name="Inclusion" Type="bool">
+													<ValueList>
+														<Value>False</Value>
+													</ValueList>
+												</Property>
+											</PropertyList>
 											<ChildrenList>
 												<Sound Name="EnemySpawn_Warning" ID="{F29D64B6-0D5E-489C-909B-B81272337A59}" ShortID="211971948">
 													<ReferenceList>
@@ -426,6 +556,13 @@
 											</ChildrenList>
 										</Folder>
 										<Folder Name="Turns" ID="{EB3F0AC1-8842-41CE-8E11-B3582002F067}" ShortID="701226272">
+											<PropertyList>
+												<Property Name="Inclusion" Type="bool">
+													<ValueList>
+														<Value>False</Value>
+													</ValueList>
+												</Property>
+											</PropertyList>
 											<ChildrenList>
 												<Sound Name="Player_Turn_Begin" ID="{729768DA-FDD0-4712-AADF-1F843CF77816}" ShortID="350041632">
 													<ReferenceList>
@@ -488,6 +625,13 @@
 				<Folder Name="World" ID="{E7013E30-672F-49F0-8EA3-E5453336E945}" ShortID="242526625">
 					<ChildrenList>
 						<ActorMixer Name="Footsteps" ID="{39D7E52A-1E06-4E8F-B2D7-14549D840388}" ShortID="257125218">
+							<PropertyList>
+								<Property Name="Inclusion" Type="bool">
+									<ValueList>
+										<Value>False</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{D4C10CFF-54D1-43E8-9949-15A35C036BE6}"/>
@@ -579,6 +723,13 @@
 				<Folder Name="UI" ID="{50EF318C-36A4-42B5-B7D5-1F1CFD466359}" ShortID="716150983">
 					<ChildrenList>
 						<ActorMixer Name="BattleHUD" ID="{BA1FE2F1-A3B0-44BD-BA91-6D2BE9161359}" ShortID="644337972">
+							<PropertyList>
+								<Property Name="Inclusion" Type="bool">
+									<ValueList>
+										<Value>False</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{D4C10CFF-54D1-43E8-9949-15A35C036BE6}"/>
@@ -611,6 +762,13 @@
 							</ChildrenList>
 						</ActorMixer>
 						<ActorMixer Name="Menu" ID="{BA284084-E707-479E-B866-66A72980077A}" ShortID="717482688">
+							<PropertyList>
+								<Property Name="Inclusion" Type="bool">
+									<ValueList>
+										<Value>False</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{D4C10CFF-54D1-43E8-9949-15A35C036BE6}"/>

@@ -4,6 +4,13 @@
 		<WorkUnit Name="Ambient" ID="{7641300E-382C-4518-805A-56EF7E535C80}" PersistMode="Standalone">
 			<ChildrenList>
 				<ActorMixer Name="Ambient" ID="{8F045FCE-A165-48E5-88CE-65B61F4FFC46}" ShortID="679454894">
+					<PropertyList>
+						<Property Name="Inclusion" Type="bool">
+							<ValueList>
+								<Value>False</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Conversion">
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{D4C10CFF-54D1-43E8-9949-15A35C036BE6}"/>

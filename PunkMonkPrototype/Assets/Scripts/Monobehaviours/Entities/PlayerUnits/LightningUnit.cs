@@ -74,6 +74,9 @@ public class LightningUnit : Unit
         basicFinishedFunc = finished;
 
 
+        basicAttackSFX.Post(gameObject);
+
+
         if (AIController == null)
         {
             AIController = GameObject.FindGameObjectWithTag("AI_Controller").GetComponent<AI_Controller>();
@@ -151,13 +154,13 @@ public class LightningUnit : Unit
             if (Random.Range(0, 100) <= glamCamChance)
             {
                 cameraController.PlayGlamCam(this);
-                StartCoroutine(BasicAttackDamageDelay(specialDamgeDelayTimer, 2));
+                StartCoroutine(BasicAttackDamageDelay(basicDelayTime, basicLightningLifeTime, 2));
                 return;
             }
         }
 
 
-        StartCoroutine(BasicAttackDamageDelay(basicLightningLifeTime));
+        StartCoroutine(BasicAttackDamageDelay(basicDelayTime, basicLightningLifeTime));
     }
 
     protected override void DoSpecialAttack(Hex[] targetTiles, System.Action start, System.Action finished)
@@ -173,6 +176,8 @@ public class LightningUnit : Unit
 
         //store the target tile
         specialTiles.AddRange(targetTiles);
+
+        specialAttackSFX.Post(gameObject);
 
         //store the finished function call
         specialFinishedFunction = finished;
@@ -226,9 +231,12 @@ public class LightningUnit : Unit
         tempGameobject2.transform.GetChild(1).position += Vector3.up * 0.5f;
 
 
+        if (glamCamDelay == 0)
+        {
+            //wait for timer before runing code
+            yield return new WaitForSeconds(a_timer);
+        }
 
-        //wait for timer before runing code
-        yield return new WaitForSeconds(a_timer);
 
         foreach (var tile in specialTiles)
         {
@@ -258,10 +266,9 @@ public class LightningUnit : Unit
     }
 
 
-    private IEnumerator SpecialAttackDamageDelay(float a_timer, int a_damage, LivingEntity a_unit)
+    private IEnumerator SpecialAttackDamageDelay(int a_damage, LivingEntity a_unit)
     {
-        yield return new WaitForSeconds(a_timer);
-
+        yield return null;
         if (a_unit != null)
         {
             if (a_unit.Team != TEAM.player)
@@ -271,9 +278,12 @@ public class LightningUnit : Unit
         }
     }
 
-    private IEnumerator BasicAttackDamageDelay(float a_timer, float glamCamDelay = 0)
+    private IEnumerator BasicAttackDamageDelay(float a_timer, float a_lightningLifetime, float glamCamDelay = 0)
     {
-
+        if (glamCamDelay == 0)
+        {
+            yield return new WaitForSeconds(a_timer);
+        }
 
         yield return new WaitForSeconds(glamCamDelay);
 
@@ -286,14 +296,14 @@ public class LightningUnit : Unit
 
         for (int i = 1; i < basicFinalTargets.Count - 1; i++)
         {
-            yield return new WaitForSeconds(a_timer);
+            yield return new WaitForSeconds(a_lightningLifetime);
 
 
             if (i + 1 < basicFinalTargets.Count)
             {
                 basicLightningGO.transform.GetChild(0).position = basicFinalTargets[i].transform.position + (transform.up * 0.8f);
                 basicLightningGO.transform.GetChild(1).position = basicFinalTargets[i + 1].transform.position + (transform.up * 0.8f);
-                StartCoroutine(SpecialAttackDamageDelay(basicDelayTime, basicBounceDamage, basicFinalTargets[i]));
+                StartCoroutine(SpecialAttackDamageDelay(basicBounceDamage, basicFinalTargets[i]));
             }
             else
             {
@@ -303,9 +313,9 @@ public class LightningUnit : Unit
 
         }
 
-        yield return new WaitForSeconds(a_timer);
+        yield return new WaitForSeconds(a_lightningLifetime);
 
-        StartCoroutine(SpecialAttackDamageDelay(basicDelayTime, basicFinalDamage, basicFinalTargets[basicFinalTargets.Count - 1]));
+        StartCoroutine(SpecialAttackDamageDelay(basicFinalDamage, basicFinalTargets[basicFinalTargets.Count - 1]));
 
         basicFinishedFunc();
 

@@ -99,6 +99,8 @@ public class EarthUnit : Unit
 
         //Vector3 tilePos = new Vector3(targetTiles[0].transform.position.x, transform.position.y, targetTiles[0].transform.position.z);
 
+        basicAttackSFX.Post(gameObject);
+
 
         if (glamCam)
         {
@@ -129,6 +131,8 @@ public class EarthUnit : Unit
 
         //store the finished function call
         specialFinishedFunc = finished;
+
+        specialAttackSFX.Post(gameObject);
 
         //store the start position
         specialStartPosition = transform.position;
@@ -182,11 +186,15 @@ public class EarthUnit : Unit
                 //set the new y position to the current distance though the y animationCurve
                 transform.position = new Vector3(transform.position.x, specialStartPosition.y + YCurve.Evaluate(specialTimer / specialJumpTime) * specialheight, transform.position.z);
 
+
+
                 //if the current timer is grater then the overall time
                 if (specialTimer > specialJumpTime)
                 {
                     //finish the animation
                     specialAttack = false;
+
+
 
                     //reset Timer
                     specialTimer -= specialJumpTime;

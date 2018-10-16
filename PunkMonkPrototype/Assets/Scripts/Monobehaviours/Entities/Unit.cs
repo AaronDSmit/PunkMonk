@@ -41,6 +41,14 @@ public class Unit : LivingEntity
     [SerializeField]
     private GameObject voltEffect = null;
 
+    [Header("Wwise")]
+    [SerializeField]
+    protected AK.Wwise.Event basicAttackSFX;
+    [SerializeField]
+    protected AK.Wwise.Event specialAttackSFX;
+
+
+
     #endregion
 
     #region Reference Fields

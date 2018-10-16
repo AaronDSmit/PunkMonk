@@ -618,6 +618,12 @@ MonoBehaviour:
   glamCam: 1
   glamCamChance: 15
   voltEffect: {fileID: 0}
+  basicAttackSFX:
+    ID: 1941636804
+    valueGuid: 3eb077df9777ad4d832262b213bdb676
+  specialAttackSFX:
+    ID: 334189263
+    valueGuid: 181d67deef774147ac84805e21320458
   basicDamage: 2
   basicDamgeDelayTimer: 0
   coneAreaLength: 4

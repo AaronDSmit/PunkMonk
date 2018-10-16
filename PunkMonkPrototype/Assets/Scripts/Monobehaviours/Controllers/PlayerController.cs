@@ -33,6 +33,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private int currentVolt = 0;
 
+    [SerializeField]
+    private AK.Wwise.Event endBattleMusic;
+
 
     #endregion
 
@@ -1123,6 +1126,10 @@ public class PlayerController : MonoBehaviour
 
         }
 
+        if (a_oldstate == GameState.battle)
+        {
+            endBattleMusic.Post(gameObject);
+        }
 
         // ensure this script knows it's in over-world state
         if (a_newstate == GameState.battle)

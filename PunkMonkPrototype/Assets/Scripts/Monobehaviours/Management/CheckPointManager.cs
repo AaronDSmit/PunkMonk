@@ -94,6 +94,8 @@ public class CheckPointManager : MonoBehaviour
         player.SpawnEarthUnit(lastEncounter.CheckPoint);
         player.SpawnLightningUnit(lastEncounter.CheckPoint);
 
+
+
         player.GetComponent<OverworldController>().Init();
         cameraRig.Init();
     }

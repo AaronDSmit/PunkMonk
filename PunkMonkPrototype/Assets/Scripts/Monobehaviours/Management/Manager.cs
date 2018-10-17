@@ -35,6 +35,7 @@ public class Manager : MonoBehaviour
     private Dialogue dialogueManager;
     private GridManager grid;
     private PlayerController playerController;
+    private SFXManager sfxManager;
 
     #endregion
 
@@ -83,12 +84,17 @@ public class Manager : MonoBehaviour
 
     public Dialogue DialogueManager
     {
-        get {  return dialogueManager; }
+        get { return dialogueManager; }
     }
 
     public PlayerController PlayerController
     {
-        get {  return playerController; }
+        get { return playerController; }
+    }
+
+    public SFXManager SfxManager
+    {
+        get { return sfxManager; }
     }
 
     #endregion
@@ -101,6 +107,7 @@ public class Manager : MonoBehaviour
         {
             instance = this;
 
+            sfxManager = GetComponent<SFXManager>();
             stateManager = GetComponent<StateManager>();
             transitionManager = GetComponent<TransitionManager>();
             uiManager = GetComponent<UIManager>();

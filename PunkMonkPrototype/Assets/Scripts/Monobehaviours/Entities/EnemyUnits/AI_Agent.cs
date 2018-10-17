@@ -113,7 +113,6 @@ public class AI_Agent : Unit
             Destroy(bulletGO, 0.5f);
         }
 
-        basicAttackSFX.Post(gameObject);
 
         StartCoroutine(BasicAttackDamageDelay(damageDelayTimer, a_finished));
     }

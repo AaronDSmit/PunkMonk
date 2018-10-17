@@ -6,19 +6,28 @@ Event	ID	Name			Wwise Object Path	Notes
 	1242751957	Attack_Enemy_Missile			\SFX\Battle\Attack\Enemy\Attack_Enemy_Missile	
 	1918548877	Attack_Enemy_Melee			\SFX\Battle\Attack\Enemy\Attack_Enemy_Melee	
 	1941636804	Attack_Clade_Basic			\SFX\Battle\Attack\Clade\Attack_Clade_Basic	
+	2385628198	Footsteps			\SFX\World\Footsteps	
 	2560478693	Attack_Gen_Basic			\SFX\Battle\Attack\Gen\Attack_Gen_Basic	
 	4139651882	Battle_Exit			\Music\Battle_Exit	
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	2960415	Footstep_01	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Mac\SFX\footstep2_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\World\Footsteps\Footstep_01		58212
 	81000000	Attack_Clade_Special	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Mac\SFX\CladeAttack-heavy_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\Battle\Attack\Clade\Attack_Clade_Special		852704
+	146746479	Footstep_04	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Mac\SFX\footstep5_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\World\Footsteps\Footstep_04		59756
 	148414472	Die_Enemy_03	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Mac\SFX\Die_Enemy_03_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\Battle\Die\Die\Die_Enemy\Die_Enemy_03	Wilhelm Scream	197076
 	177537079	Attack_Enemy_Melee_03	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Mac\SFX\RunnerAttack4_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\Battle\Attack\Enemy\Attack_Enemy_Runner\Attack_Enemy_Melee_03		115264
 	190340128	Attack_Enemy_Melee_02	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Mac\SFX\RunnerAttack3_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\Battle\Attack\Enemy\Attack_Enemy_Runner\Attack_Enemy_Melee_02		192064
+	200744234	Footstep_02	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Mac\SFX\footstep3_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\World\Footsteps\Footstep_02		48140
 	346333071	Attack_Enemy_Melee_00	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Mac\SFX\RunnerAttack1_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\Battle\Attack\Enemy\Attack_Enemy_Runner\Attack_Enemy_Melee_00		153664
 	472773207	Attack_Gen_Basic	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Mac\SFX\GenAttack-normal_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\Battle\Attack\Gen\Attack_Gen_Basic		1136916
+	521172361	Footstep_06	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Mac\SFX\footstep7_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\World\Footsteps\Footstep_06		70272
+	537872262	Footstep_07	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Mac\SFX\footstep8_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\World\Footsteps\Footstep_07		49352
 	594679755	Attack_Enemy_Melee_01	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Mac\SFX\RunnerAttack2_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\Battle\Attack\Enemy\Attack_Enemy_Runner\Attack_Enemy_Melee_01		230464
 	602199033	Attack_Gen_Special	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Mac\SFX\GenAttack-heavy_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\Battle\Attack\Gen\Attack_Gen_Special		682176
 	666064885	Attack_Enemy_Missile	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Mac\SFX\missileAttack1_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\Battle\Attack\Enemy\Attack_Enemy_Missile		1562948
 	683211502	Combat_FullLoop_v1	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Mac\SFX\Combat_FullLoop_v1_8956FC97.wem		\Actor-Mixer Hierarchy\Default Work Unit\Combat_FullLoop_v1		6248280
+	765782898	Footstep_03	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Mac\SFX\footstep4_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\World\Footsteps\Footstep_03		51936
+	789413211	Footstep_05	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Mac\SFX\footstep6_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\World\Footsteps\Footstep_05		57596
+	980908635	Footstep_00	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Mac\SFX\footstep1_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\World\Footsteps\Footstep_00		66688
 	1059942235	Attack_Clade_Basic	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Mac\SFX\CladeAttack-normal_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\Battle\Attack\Clade\Attack_Clade_Basic		341120
 

@@ -30,11 +30,20 @@
 				<Event Id="906289856" Name="Battle_Enter" ObjectPath="\Events\Music\Battle_Enter"/>
 				<Event Id="4139651882" Name="Battle_Exit" ObjectPath="\Events\Music\Battle_Exit" MaxAttenuation="0.000000"/>
 				<Event Id="312517388" Name="Die_Enemy" ObjectPath="\Events\SFX\Battle\Die\Die_Enemy"/>
+				<Event Id="2385628198" Name="Footsteps" ObjectPath="\Events\SFX\World\Footsteps"/>
 			</IncludedEvents>
 			<IncludedMemoryFiles>
+				<File Id="2960415" Language="SFX">
+					<ShortName>footstep2.wav</ShortName>
+					<Path>SFX\footstep2_56D34C19.wem</Path>
+				</File>
 				<File Id="81000000" Language="SFX">
 					<ShortName>CladeAttack-heavy.wav</ShortName>
 					<Path>SFX\CladeAttack-heavy_56D34C19.wem</Path>
+				</File>
+				<File Id="146746479" Language="SFX">
+					<ShortName>footstep5.wav</ShortName>
+					<Path>SFX\footstep5_56D34C19.wem</Path>
 				</File>
 				<File Id="148414472" Language="SFX">
 					<ShortName>Die_Enemy_03.wav</ShortName>
@@ -48,6 +57,10 @@
 					<ShortName>RunnerAttack3.wav</ShortName>
 					<Path>SFX\RunnerAttack3_56D34C19.wem</Path>
 				</File>
+				<File Id="200744234" Language="SFX">
+					<ShortName>footstep3.wav</ShortName>
+					<Path>SFX\footstep3_56D34C19.wem</Path>
+				</File>
 				<File Id="346333071" Language="SFX">
 					<ShortName>RunnerAttack1.wav</ShortName>
 					<Path>SFX\RunnerAttack1_56D34C19.wem</Path>
@@ -55,6 +68,14 @@
 				<File Id="472773207" Language="SFX">
 					<ShortName>GenAttack-normal.wav</ShortName>
 					<Path>SFX\GenAttack-normal_56D34C19.wem</Path>
+				</File>
+				<File Id="521172361" Language="SFX">
+					<ShortName>footstep7.wav</ShortName>
+					<Path>SFX\footstep7_56D34C19.wem</Path>
+				</File>
+				<File Id="537872262" Language="SFX">
+					<ShortName>footstep8.wav</ShortName>
+					<Path>SFX\footstep8_56D34C19.wem</Path>
 				</File>
 				<File Id="594679755" Language="SFX">
 					<ShortName>RunnerAttack2.wav</ShortName>
@@ -71,6 +92,18 @@
 				<File Id="683211502" Language="SFX">
 					<ShortName>Combat_FullLoop_v1.wav</ShortName>
 					<Path>SFX\Combat_FullLoop_v1_8956FC97.wem</Path>
+				</File>
+				<File Id="765782898" Language="SFX">
+					<ShortName>footstep4.wav</ShortName>
+					<Path>SFX\footstep4_56D34C19.wem</Path>
+				</File>
+				<File Id="789413211" Language="SFX">
+					<ShortName>footstep6.wav</ShortName>
+					<Path>SFX\footstep6_56D34C19.wem</Path>
+				</File>
+				<File Id="980908635" Language="SFX">
+					<ShortName>footstep1.wav</ShortName>
+					<Path>SFX\footstep1_56D34C19.wem</Path>
 				</File>
 				<File Id="1059942235" Language="SFX">
 					<ShortName>CladeAttack-normal.wav</ShortName>

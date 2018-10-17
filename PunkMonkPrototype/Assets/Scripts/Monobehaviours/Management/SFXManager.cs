@@ -14,30 +14,30 @@ public class SFXManager : MonoBehaviour
 
 
 
-    public void FindSFXToPlay(string a_sfx)
+    public void FindSFXToPlay(string a_sfx, GameObject a_orginalGO)
     {
         switch (a_sfx)
         {
             case "Footstep":
-                footStepSFX.Post(gameObject);
+                footStepSFX.Post(a_orginalGO);
                 break;
             case "EarthBasic":
-                basicEarthAttack.Post(gameObject);
+                basicEarthAttack.Post(a_orginalGO);
                 break;
             case "EarthSpecial":
-                specialEarthAttack.Post(gameObject);
+                specialEarthAttack.Post(a_orginalGO);
                 break;
             case "LightningBasic":
-                basicLightingAttack.Post(gameObject);
+                basicLightingAttack.Post(a_orginalGO);
                 break;
             case "LightningSpecial":
-                specialLightingAttack.Post(gameObject);
+                specialLightingAttack.Post(a_orginalGO);
                 break;
             case "MeleeAttack":
-                enemyMeleeAttack.Post(gameObject);
+                enemyMeleeAttack.Post(a_orginalGO);
                 break;
             case "MissileAttack":
-                enemyMissileAttack.Post(gameObject);
+                enemyMissileAttack.Post(a_orginalGO);
                 break;
             default:
                 break;

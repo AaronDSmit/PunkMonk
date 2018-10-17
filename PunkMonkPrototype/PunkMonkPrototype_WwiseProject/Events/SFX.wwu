@@ -343,52 +343,20 @@
 				</Folder>
 				<Folder Name="World" ID="{5F5FF5BE-FD0F-4672-8A17-35396B97857A}" ShortID="81461075">
 					<ChildrenList>
-						<Folder Name="Footsteps" ID="{C13CE4CF-DE58-4B2A-8CC2-167DEFA6B930}" ShortID="965113003">
+						<Event Name="Footsteps" ID="{8E4A44CF-B5B5-4F39-A9FE-5D62F739E2A8}">
 							<ChildrenList>
-								<Event Name="Clade_Footsteps" ID="{FBF8CBAB-9926-47DA-BCD6-0F674FC356DB}">
-									<ChildrenList>
-										<Action Name="" ID="{EEA599D8-3324-47E3-A1B6-38F6072A5104}" ShortID="283834100">
-											<PropertyList>
-												<Property Name="ActionType" Type="int16" Value="1"/>
-											</PropertyList>
-											<ReferenceList>
-												<Reference Name="Target">
-													<ObjectRef Name="Footstep_Heavy" ID="{5F76FCB6-C5B2-4566-8174-974109754921}" WorkUnitID="{BE193198-07FD-4919-8584-0C834CF482F7}"/>
-												</Reference>
-											</ReferenceList>
-										</Action>
-									</ChildrenList>
-								</Event>
-								<Event Name="Gen_Footsteps" ID="{5A4352D3-A347-4290-A5B4-7E39378860CC}">
-									<ChildrenList>
-										<Action Name="" ID="{3D88E601-CCC6-45E9-BDD9-AD364A6C4EC9}" ShortID="91203269">
-											<PropertyList>
-												<Property Name="ActionType" Type="int16" Value="1"/>
-											</PropertyList>
-											<ReferenceList>
-												<Reference Name="Target">
-													<ObjectRef Name="Footstep_Light" ID="{3643D779-697F-4406-A8C9-A9F21A2BD562}" WorkUnitID="{BE193198-07FD-4919-8584-0C834CF482F7}"/>
-												</Reference>
-											</ReferenceList>
-										</Action>
-									</ChildrenList>
-								</Event>
-								<Event Name="Enemy_Footsteps" ID="{DF802365-F1AE-4367-B885-9D6E9C91F33B}">
-									<ChildrenList>
-										<Action Name="" ID="{242253A0-4CC1-4608-B403-BCB17ADFF719}" ShortID="605549137">
-											<PropertyList>
-												<Property Name="ActionType" Type="int16" Value="1"/>
-											</PropertyList>
-											<ReferenceList>
-												<Reference Name="Target">
-													<ObjectRef Name="Footstep_Medium" ID="{790F1899-195E-4F44-91E9-CA62A171C0F4}" WorkUnitID="{BE193198-07FD-4919-8584-0C834CF482F7}"/>
-												</Reference>
-											</ReferenceList>
-										</Action>
-									</ChildrenList>
-								</Event>
+								<Action Name="" ID="{48766AE6-570B-4F6E-97C9-0A3AAB65F0FC}" ShortID="725911189">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Footsteps" ID="{26795972-CF62-4681-93E7-B6B51FB837D3}" WorkUnitID="{BE193198-07FD-4919-8584-0C834CF482F7}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
 							</ChildrenList>
-						</Folder>
+						</Event>
 					</ChildrenList>
 				</Folder>
 				<Folder Name="UI" ID="{2CD57E96-6909-4654-A173-35F84DB68E43}" ShortID="771191676">

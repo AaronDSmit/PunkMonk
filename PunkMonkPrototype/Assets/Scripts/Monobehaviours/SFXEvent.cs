@@ -6,7 +6,7 @@ public class SFXEvent : MonoBehaviour
 {
     public void PlaySFX(string a_sfx)
     {
-        Manager.instance.SfxManager.FindSFXToPlay(a_sfx);
+        Manager.instance.SfxManager.FindSFXToPlay(a_sfx, gameObject);
     }
 
 }

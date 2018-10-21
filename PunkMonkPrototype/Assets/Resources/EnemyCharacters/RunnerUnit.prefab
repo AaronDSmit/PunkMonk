@@ -1058,8 +1058,8 @@ MonoBehaviour:
   glamCamChance: 10
   voltEffect: {fileID: 1095805367975636}
   basicAttackSFX:
-    ID: 1918548877
-    valueGuid: 73e65b7ee5014d4a8dea6ce812a8b912
+    ID: 0
+    valueGuid: 00000000000000000000000000000000
   specialAttackSFX:
     ID: 0
     valueGuid: 00000000000000000000000000000000

@@ -161,8 +161,8 @@ MonoBehaviour:
       maxDuration: 0
       minDuration: 0
   - Guid: '{97043EB5-8AFD-479B-B7EC-1820B945D1D5}'
-    m_lastTimePart2: -1999228133
-    m_lastTimePsrt1: 1406746776
+    m_lastTimePart2: -1999227960
+    m_lastTimePsrt1: -1661958522
     ParentPhysicalPath: 
     PhysicalPath: Events\SFX.wwu
     List:
@@ -340,22 +340,6 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
-    - Guid: abcbf8fb2699da47bcd60f674fc356db
-      ID: -724199680
-      Name: Clade_Footsteps
-      Path: SFX\World\Footsteps\Clade_Footsteps
-      PathAndIcons:
-      - ElementName: SFX
-        ObjectType: 12
-      - ElementName: World
-        ObjectType: 4
-      - ElementName: Footsteps
-        ObjectType: 4
-      - ElementName: Clade_Footsteps
-        ObjectType: 3
-      maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
     - Guid: 83efbf594dc5b44fa0e1df5ba191da0f
       ID: 465316945
       Name: Clade_TakeDamage
@@ -418,22 +402,6 @@ MonoBehaviour:
       - ElementName: Die
         ObjectType: 4
       - ElementName: Die_Gen
-        ObjectType: 3
-      maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
-    - Guid: 652380dfaef16743b8859d6e9c91f33b
-      ID: -1077874457
-      Name: Enemy_Footsteps
-      Path: SFX\World\Footsteps\Enemy_Footsteps
-      PathAndIcons:
-      - ElementName: SFX
-        ObjectType: 12
-      - ElementName: World
-        ObjectType: 4
-      - ElementName: Footsteps
-        ObjectType: 4
-      - ElementName: Enemy_Footsteps
         ObjectType: 3
       maxAttenuation: 0
       maxDuration: 0
@@ -510,18 +478,16 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
-    - Guid: d352435a47a39042a5b47e39378860cc
-      ID: 1862866977
-      Name: Gen_Footsteps
-      Path: SFX\World\Footsteps\Gen_Footsteps
+    - Guid: cf444a8eb5b5394fa9fe5d62f739e2a8
+      ID: -1909339098
+      Name: Footsteps
+      Path: SFX\World\Footsteps
       PathAndIcons:
       - ElementName: SFX
         ObjectType: 12
       - ElementName: World
         ObjectType: 4
       - ElementName: Footsteps
-        ObjectType: 4
-      - ElementName: Gen_Footsteps
         ObjectType: 3
       maxAttenuation: 0
       maxDuration: 0
@@ -669,7 +635,7 @@ MonoBehaviour:
   ExpandedItems:
   - /PunkMonkPrototype_WwiseProject
   - /PunkMonkPrototype_WwiseProject/Events
-  - /PunkMonkPrototype_WwiseProject/Events/Music
+  - /PunkMonkPrototype_WwiseProject/Events/SFX
   RtpcWwu:
   - Guid: '{0611EF02-C52F-4D22-840D-EF5CD7507B8B}'
     m_lastTimePart2: -1999228143

@@ -59,6 +59,8 @@ public class OverworldFollower : MonoBehaviour
         {
             otherUnit = Manager.instance.PlayerController.LightningUnit;
         }
+
+
     }
 
     #endregion
@@ -85,6 +87,18 @@ public class OverworldFollower : MonoBehaviour
     {
         if (inOverworld == true)
         {
+            if (otherUnit == null)
+            {
+                if (GetComponent<EarthUnit>() == null)
+                {
+                    otherUnit = Manager.instance.PlayerController.EarthUnit;
+                }
+                else
+                {
+                    otherUnit = Manager.instance.PlayerController.LightningUnit;
+                }
+
+            }
             Vector3 vecBetween = otherUnit.transform.position - transform.position;
             if (animator)
                 animator.SetBool("Running", approaching);

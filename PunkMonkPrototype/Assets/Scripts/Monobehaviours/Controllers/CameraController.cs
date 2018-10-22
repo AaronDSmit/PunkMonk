@@ -39,7 +39,6 @@ public class CameraController : MonoBehaviour
 
     private Vector3 vel;
 
-
     private bool lookAtObject = false;
     private bool canMove = true;
 
@@ -67,6 +66,11 @@ public class CameraController : MonoBehaviour
     [SerializeField] private bool inverseRotation;
     [SerializeField] private bool screenPan = true;
 
+	[SerializeField] private int zMax;
+	[SerializeField] private int zMin;
+	[SerializeField] private int xMax;
+	[SerializeField] private int xMin;
+
     [SerializeField] private int mousePanThresholdYUp = 100;
     [SerializeField] private int mousePanThresholdYDown = 100;
     [SerializeField] private int mousePanThresholdXLeft = 100;
@@ -80,9 +84,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Transform cinemachineDefault;
 
 
-    //[Header("Wwise Settings")]
-    //[SerializeField]
-    //private AK.Wwise.AuxBus test;
+
 
     private Vector3 dir;
 
@@ -117,6 +119,7 @@ public class CameraController : MonoBehaviour
         distance = overworldDistance;
         targetRot = transform.rotation;
 
+
         // Subscribe to the settings changing delegate
         settings.onSettingsChanged += SettingsChanged;
         SettingsChanged();
@@ -134,8 +137,6 @@ public class CameraController : MonoBehaviour
     {
         inverseRotation = settings.InverseCameraRotation;
         screenPan = settings.ScreenEdgePan;
-
-
     }
 
     private void GameStateChanged(GameState a_oldstate, GameState a_newstate)
@@ -200,10 +201,20 @@ public class CameraController : MonoBehaviour
                     }
                 }
             }
-            cameraTargetPos = (cameraStartPos).normalized * distance;
+            
+			cameraTargetPos = (cameraStartPos).normalized * distance;
             cinemachineDefault.localPosition = Vector3.Slerp(cinemachineDefault.localPosition, cameraTargetPos, Time.deltaTime * overworldSpeed);
 
-            transform.position = Vector3.Slerp(transform.position, rigTargetPos, Time.deltaTime * overworldSpeed);
+
+			transform.position = Vector3.Slerp(transform.position, rigTargetPos, Time.deltaTime * overworldSpeed);
+
+			transform.position = new Vector3 (Mathf.Clamp (transform.position.x, xMin, xMax), transform.position.y, Mathf.Clamp (transform.position.z, zMin, zMax)); 
+
+			if (transform.position.x == xMin || transform.position.x == xMax || transform.position.z == zMin || transform.position.z == zMax) 
+			{
+				rigTargetPos = transform.position;
+			}
+
             //transform.position = Vector3.Slerp(transform.position, new Vector3(transform.position.x, targetY, transform.position.z), Time.deltaTime * scrollSpeed);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.deltaTime * RotationalSpeed);
         }

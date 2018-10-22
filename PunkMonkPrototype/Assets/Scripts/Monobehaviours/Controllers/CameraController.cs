@@ -81,9 +81,9 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float minDistance = 5;
     [SerializeField] private float maxDistance = 30;
 
+	[SerializeField][Range(0,100)]private float glamCamChance = 15f;
+
     [SerializeField] private Transform cinemachineDefault;
-
-
 
 
     private Vector3 dir;
@@ -101,6 +101,8 @@ public class CameraController : MonoBehaviour
         }
 
     }
+
+	public float GlamCamChance { get { return glamCamChance; } }
 
     private void Awake()
     {

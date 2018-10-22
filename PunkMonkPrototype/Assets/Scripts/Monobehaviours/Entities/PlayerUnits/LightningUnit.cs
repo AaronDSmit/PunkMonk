@@ -148,18 +148,6 @@ public class LightningUnit : Unit
         tilePos.y = transform.position.y;
 
 
-
-        if (glamCam)
-        {
-            if (Random.Range(0, 100) <= glamCamChance)
-            {
-                cameraController.PlayGlamCam(this);
-                StartCoroutine(BasicAttackDamageDelay(basicDelayTime, basicLightningLifeTime, 2));
-                return;
-            }
-        }
-
-
         StartCoroutine(BasicAttackDamageDelay(basicDelayTime, basicLightningLifeTime));
     }
 
@@ -192,15 +180,6 @@ public class LightningUnit : Unit
         startTilePos.y = transform.position.y;
         endTilePos.y = startTilePos.y;
 
-        if (glamCam)
-        {
-            if (Random.Range(0, 100) <= glamCamChance)
-            {
-                cameraController.PlayGlamCam(this);
-                StartCoroutine(SpecialAttackDamageDelay(specialDamgeDelayTimer, 2));
-                return;
-            }
-        }
 
         //call the basicAttackDamageDelay coroutine 
         StartCoroutine(SpecialAttackDamageDelay(specialDamgeDelayTimer));

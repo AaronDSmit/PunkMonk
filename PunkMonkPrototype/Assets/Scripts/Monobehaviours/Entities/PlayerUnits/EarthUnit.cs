@@ -97,20 +97,7 @@ public class EarthUnit : Unit
         //store the target tile
         basicTiles = targetTiles;
 
-        //Vector3 tilePos = new Vector3(targetTiles[0].transform.position.x, transform.position.y, targetTiles[0].transform.position.z);
 
-        basicAttackSFX.Post(gameObject);
-
-
-        if (glamCam)
-        {
-            if (Random.Range(0, 100) <= glamCamChance)
-            {
-                cameraController.PlayGlamCam(this);
-                StartCoroutine(BasicAttackDamageDelay(basicDamgeDelayTimer, finished, 2));
-                return;
-            }
-        }
         //call the basicAttackDamageDelay coroutine 
         StartCoroutine(BasicAttackDamageDelay(basicDamgeDelayTimer, finished));
 
@@ -147,20 +134,9 @@ public class EarthUnit : Unit
         //get the vector between the start position and the target position
         specialVecBetween = specialTargetPosition - specialStartPosition;
 
-        //start the glamCam
-        if (glamCam)
-        {
-            if (Random.Range(0, 100) <= glamCamChance)
-            {
-                cameraController.PlayGlamCam(this);
-                specialGlamCamTimer = 2;
-            }
 
-            else
-            {
-                specialGlamCamTimer = 0;
-            }
-        }
+         specialGlamCamTimer = 0;
+
         //Start the Update Loop
         specialAttack = true;
     }

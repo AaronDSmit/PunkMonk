@@ -32,11 +32,7 @@ public class Unit : LivingEntity
     [SerializeField]
     protected Transform projectilePosition;
     [Tooltip("Toggles on and off the glamCam")]
-    [SerializeField]
-    protected bool glamCam;
-    [Range(0, 100)]
-    [SerializeField]
-    protected float glamCamChance = 10;
+
 
     [SerializeField]
     private GameObject voltEffect = null;

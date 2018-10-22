@@ -727,6 +727,7 @@ GameObject:
   - component: {fileID: 4190249694457618}
   - component: {fileID: 95037973393386032}
   - component: {fileID: 114993028712921246}
+  - component: {fileID: 114903751770443542}
   m_Layer: 0
   m_Name: mesh_GenAnimated_v4.1
   m_TagString: Untagged
@@ -2184,8 +2185,6 @@ MonoBehaviour:
   rotationTime: 0.2
   walkSpeed: 5
   projectilePosition: {fileID: 4970049176054302}
-  glamCam: 1
-  glamCamChance: 15
   voltEffect: {fileID: 0}
   basicAttackSFX:
     ID: -1734488603
@@ -2506,6 +2505,17 @@ MonoBehaviour:
     FarClipPlane: 5000
     Dutch: 0
   m_ComponentOwner: {fileID: 4053981427846102}
+--- !u!114 &114903751770443542
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1663557856404168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b636ef5f876f8144af47b30a97542ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114953798840971852
 MonoBehaviour:
   m_ObjectHideFlags: 1

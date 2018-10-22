@@ -31,7 +31,6 @@ public class Missile : MonoBehaviour
     public void PlayLandParticles()
     {
         GameObject particleGO = Instantiate(landParticlePrefab, transform.parent.position, landParticlePrefab.transform.rotation);
-        particleGO.GetComponent<ParticleSystem>().Play();
     }
 
     public void StartedAnimation()

@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f51c28d4cdd77d46a9eaeb64435a8be, type: 3}
   m_Name: LightningUnitBasicAttack
   m_EditorClassIdentifier: 
-  name: Chain Lightning
-  flavourText: Electrocute enemies in a chain
+  name: CHAIN LIGHTNING
+  flavourText: Electrocute up to 3 enemies
   ruleset: {fileID: 11400000, guid: a3970bbe37755b04783eacdffb38652a, type: 2}
   otherRuleset: []
   coolDown: 0

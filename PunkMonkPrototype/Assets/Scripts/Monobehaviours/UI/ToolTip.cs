@@ -99,7 +99,7 @@ public class ToolTip : MonoBehaviour
                 title.text = earthUnit.GetAction(0).name;
                 flavourText.text = earthUnit.GetAction(0).flavourText;
 
-                range.text = "Range: " + earthUnit.MoveRange.ToString();
+                range.text = "RNG: " + earthUnit.MoveRange.ToString();
                 damage.text = "";
             }
             else if (buttonType == ActionType.attack)
@@ -107,16 +107,16 @@ public class ToolTip : MonoBehaviour
                 title.text = earthUnit.GetAction(1).name;
                 flavourText.text = earthUnit.GetAction(1).flavourText;
 
-                range.text = "Range: " + earthUnit.AttackRange.ToString();
-                damage.text = "Damage " + earthUnit.BasicAttackDamage.ToString();
+                range.text = "RNG: " + earthUnit.AttackRange.ToString();
+                damage.text = "DMG " + earthUnit.BasicAttackDamage.ToString();
             }
             else if (buttonType == ActionType.specialAttack)
             {
                 title.text = earthUnit.GetAction(2).name;
                 flavourText.text = earthUnit.GetAction(2).flavourText;
 
-                range.text = "Range: " + earthUnit.AttackRange.ToString();
-                damage.text = "Damage (" + earthUnit.MinSpecialDamage.ToString() + " - " + earthUnit.GetSpecialDamage(0).ToString() + ")";
+                range.text = "RNG: " + earthUnit.AttackRange.ToString();
+                damage.text = "DMG: " + earthUnit.MinSpecialDamage.ToString() + " - " + earthUnit.GetSpecialDamage(0).ToString();
             }
         }
         else
@@ -126,7 +126,7 @@ public class ToolTip : MonoBehaviour
                 title.text = lightningUnit.GetAction(0).name;
                 flavourText.text = lightningUnit.GetAction(0).flavourText;
 
-                range.text = "Range: " + lightningUnit.MoveRange.ToString();
+                range.text = "RNG: " + lightningUnit.MoveRange.ToString();
                 damage.text = "";
             }
             else if (buttonType == ActionType.attack)
@@ -134,16 +134,16 @@ public class ToolTip : MonoBehaviour
                 title.text = lightningUnit.GetAction(1).name;
                 flavourText.text = lightningUnit.GetAction(1).flavourText;
 
-                range.text = "Range: " + lightningUnit.AttackRange.ToString();
-                damage.text = "Damage " + lightningUnit.SpecialAttackDamage.ToString();
+                range.text = "RNG: " + lightningUnit.AttackRange.ToString();
+                damage.text = "DMG: " + lightningUnit.MinBasicDamage.ToString();
             }
             else if (buttonType == ActionType.specialAttack)
             {
                 title.text = lightningUnit.GetAction(2).name;
                 flavourText.text = lightningUnit.GetAction(2).flavourText;
 
-                range.text = "Range: " + lightningUnit.AttackRange.ToString();
-                damage.text = "Damage (" + lightningUnit.MinBasicDamage.ToString() + " - " + lightningUnit.MaxBasicDamage.ToString() + ")";
+                range.text = "RNG: " + lightningUnit.AttackRange.ToString();
+                damage.text = "DMG: " + lightningUnit.SpecialAttackDamage.ToString();
             }
         }
     }

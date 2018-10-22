@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f51c28d4cdd77d46a9eaeb64435a8be, type: 3}
   m_Name: LightningUnitSpecialAttack
   m_EditorClassIdentifier: 
-  name: Arc Conductor
+  name: ARC CONDUCTOR
   flavourText: Place two conductors down to electrocute everything in between
   ruleset: {fileID: 11400000, guid: b6f0f11b6388ecf45b0550712b5c25f8, type: 2}
   otherRuleset:

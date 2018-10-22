@@ -527,7 +527,7 @@ MonoBehaviour:
   RotationalSpeed: 5
   scrollSpeed: 30
   inverseRotation: 0
-  screenPan: 0
+  screenPan: 1
   zMax: 90
   zMin: 5
   xMax: 95

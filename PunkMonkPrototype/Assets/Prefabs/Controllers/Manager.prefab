@@ -1352,6 +1352,7 @@ GameObject:
   - component: {fileID: 114673470431896482}
   - component: {fileID: 114890338806912142}
   - component: {fileID: 114920138732627972}
+  - component: {fileID: 114826432720992972}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Manager
@@ -4978,6 +4979,38 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114826432720992972
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1961717202760684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 685335d2295f8fe4c8f3bd2c6c1c8317, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  footStepSFX:
+    ID: -1909339098
+    valueGuid: cf444a8eb5b5394fa9fe5d62f739e2a8
+  basicEarthAttack:
+    ID: 1941636804
+    valueGuid: 3eb077df9777ad4d832262b213bdb676
+  specialEarthAttack:
+    ID: 334189263
+    valueGuid: 181d67deef774147ac84805e21320458
+  basicLightingAttack:
+    ID: -1734488603
+    valueGuid: f3a7fd6b62eebe49b1d923d9b64995e7
+  specialLightingAttack:
+    ID: 702987074
+    valueGuid: bacc455270670d46966f4b6104456e1c
+  enemyMeleeAttack:
+    ID: 1918548877
+    valueGuid: 73e65b7ee5014d4a8dea6ce812a8b912
+  enemyMissileAttack:
+    ID: 1242751957
+    valueGuid: 90add5d4ddabb646880bca832dc36b7d
 --- !u!114 &114843331619665564
 MonoBehaviour:
   m_ObjectHideFlags: 1

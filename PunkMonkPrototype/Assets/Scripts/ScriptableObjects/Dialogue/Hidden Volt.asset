@@ -16,6 +16,6 @@ MonoBehaviour:
   - speaker: 1
     text: Someone threw out some perfectly good volt.
   - speaker: 0
-    text: Be a shame to let it go to waste
+    text: Be a shame to let it go to waste.
   - speaker: 0
     text: '[+1 Volt]'

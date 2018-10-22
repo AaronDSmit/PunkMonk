@@ -60,9 +60,9 @@ MonoBehaviour:
   currentRuleset: {fileID: 0}
   maxVolt: 3
   currentVolt: 0
-  endBattleState:
-    ID: -155315414
-    valueGuid: 18fa134358a7134db7926f91deb6776d
+  endBattleMusic:
+    ID: 0
+    valueGuid: 00000000000000000000000000000000
 --- !u!114 &114752336446416580
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -78,6 +78,7 @@ MonoBehaviour:
   movementSpeed: 5
   useKeyboardInput: 1
   useMouseInput: 1
+  startWithClade: 0
 --- !u!114 &114765109545479262
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -104,14 +105,14 @@ LineRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1466322186341554}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_MotionVectors: 0
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 2100000, guid: 25b0cd8d1848b1f4a83e3fa96f6d0869, type: 2}
+  - {fileID: 2100000, guid: 6ecd88588992d6e46b51eedb0c7d766b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

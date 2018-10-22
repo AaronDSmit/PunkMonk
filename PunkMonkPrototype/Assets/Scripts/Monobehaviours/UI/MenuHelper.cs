@@ -17,8 +17,8 @@ public class MenuHelper : MonoBehaviour
 
     private float blackBarTime = 0;
 
-    private Settings currentSettings = null;
-    private Settings defaultSettings = null;
+    private GameSettings currentSettings = null;
+    private GameSettings defaultSettings = null;
 
     private void Start()
     {

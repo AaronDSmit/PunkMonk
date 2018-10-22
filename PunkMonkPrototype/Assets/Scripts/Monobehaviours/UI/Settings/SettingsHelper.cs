@@ -6,7 +6,7 @@ public class SettingsHelper : MonoBehaviour
     [SerializeField]
     SettingsInitialiser settingsInitialiser = null;
 
-    private Settings currentSettings;
+    private GameSettings currentSettings;
 
     private void Awake()
     {

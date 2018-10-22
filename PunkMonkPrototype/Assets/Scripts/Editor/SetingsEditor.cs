@@ -5,7 +5,7 @@ using UnityEditorInternal;
 using UnityEditor;
 #endif
 
-[CustomEditor(typeof(Settings))]
+[CustomEditor(typeof(GameSettings))]
 public class SetingsEditor : Editor
 {
     // Gameplay

@@ -1,16 +1,19 @@
 using UnityEngine;
-using UnityEngine.PostProcessing;
-using System;
+//using UnityEngine.PostProcessing;
+//using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace UnityEditor.PostProcessing
 {
-    using Settings = ColorGradingModel.Settings;
-    using Tonemapper = ColorGradingModel.Tonemapper;
-	using ColorWheelMode = ColorGradingModel.ColorWheelMode;
+    using Settings = UnityEngine.PostProcessing.ColorGradingModel.Settings;
+    using Tonemapper = UnityEngine.PostProcessing.ColorGradingModel.Tonemapper;
+	using ColorWheelMode = UnityEngine.PostProcessing.ColorGradingModel.ColorWheelMode;
 
-    [PostProcessingModelEditor(typeof(ColorGradingModel))]
+    [PostProcessingModelEditor(typeof(UnityEngine.PostProcessing.ColorGradingModel))]
     public class ColorGradingModelEditor : PostProcessingModelEditor
     {
         static GUIContent[] s_Tonemappers =
@@ -274,7 +277,7 @@ namespace UnityEditor.PostProcessing
                 );
 
 			// Precompute some values
-            var tonemap = ((ColorGradingModel)target).settings.tonemapping;
+            var tonemap = ((UnityEngine.PostProcessing.ColorGradingModel)target).settings.tonemapping;
 
 		    const float scaleFactor = 20f;
             const float scaleFactorHalf = scaleFactor * 0.5f;

@@ -45,7 +45,7 @@ public class CameraController : MonoBehaviour
     //private Vector3 oldCamPosition;
     //private Quaternion oldCamRotation;
 
-    private Settings settings;
+    private GameSettings settings;
 
     public delegate void GlamCamEvent();
 

@@ -32,8 +32,8 @@ public class SettingsInitialiser : MonoBehaviour
 
     #region References
 
-    private Settings defaultSettings = null;
-    private Settings currentSettings = null;
+    private GameSettings defaultSettings = null;
+    private GameSettings currentSettings = null;
 
     #endregion
 
@@ -63,7 +63,7 @@ public class SettingsInitialiser : MonoBehaviour
         Initialize(defaultSettings);
     }
 
-    public void Initialize(Settings a_settings)
+    public void Initialize(GameSettings a_settings)
     {
         // Gameplay
         if (inverseCameraRotationToggle)

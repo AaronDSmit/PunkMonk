@@ -5,6 +5,10 @@ using System.Globalization;
 using System.Reflection;
 using UnityEngine.PostProcessing;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 namespace UnityEditor.PostProcessing
 {
     public static class EditorGUIHelper

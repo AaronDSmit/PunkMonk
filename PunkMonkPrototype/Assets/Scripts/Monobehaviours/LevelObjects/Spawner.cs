@@ -115,6 +115,14 @@ public class Spawner : MonoBehaviour
 
             yield return new WaitUntil(() => newUnit.IsPerformingAction == false);
         }
+        else
+        {
+            float distanceToEarth = Vector3.Distance(currentHex.transform.position, Manager.instance.PlayerController.EarthUnit.CurrentTile.transform.position);
+            float distanceToLightning = Vector3.Distance(currentHex.transform.position, Manager.instance.PlayerController.LightningUnit.CurrentTile.transform.position);
+            Hex closestPlayerTile = distanceToEarth <= distanceToLightning ? Manager.instance.PlayerController.EarthUnit.CurrentTile : Manager.instance.PlayerController.LightningUnit.CurrentTile;
+
+            newUnit.RotateTo(closestPlayerTile.transform.position);
+        }
 
         turnController.RemoveSpawner();
 

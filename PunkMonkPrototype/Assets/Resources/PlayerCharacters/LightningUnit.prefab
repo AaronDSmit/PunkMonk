@@ -2192,7 +2192,8 @@ MonoBehaviour:
   specialAttackSFX:
     ID: 702987074
     valueGuid: bacc455270670d46966f4b6104456e1c
-  lightningPrefab: {fileID: 106988, guid: 15dec7b07032b2f4aa6f855bfbe120f7, type: 2}
+  lightningPrefab: {fileID: 1444706430059100, guid: 91709e1cc4e1a514dbcb409cf26385c5,
+    type: 2}
   specialDamage: 4
   specialDamgeDelayTimer: 1.5
   basicRehitEnemies: 0

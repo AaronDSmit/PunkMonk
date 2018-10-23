@@ -34,7 +34,7 @@ public class LightningUnit : Unit
     private List<LivingEntity> basicSortedList = new List<LivingEntity>();
     private List<LivingEntity> basicFinalTargets = new List<LivingEntity>();
     private List<LivingEntity> basicDirtyList = new List<LivingEntity>();
-    private GameObject basicLightningGO;
+    private GameObject[] basicLightningGOs = new GameObject[3];
     private AI_Controller AIController;
     private System.Action basicFinishedFunc;
 
@@ -266,10 +266,10 @@ public class LightningUnit : Unit
 
         yield return new WaitForSeconds(glamCamDelay);
 
-        basicLightningGO = Instantiate(lightningPrefab);
+        basicLightningGOs[0] = Instantiate(lightningPrefab);
 
-        basicLightningGO.transform.GetChild(0).position = basicFinalTargets[0].transform.position + (transform.up * 0.8f);
-        basicLightningGO.transform.GetChild(1).position = basicFinalTargets[1].transform.position + (transform.up * 0.8f);
+        basicLightningGOs[0].transform.GetChild(0).position = basicFinalTargets[0].transform.position + (transform.up * 0.8f);
+        basicLightningGOs[0].transform.GetChild(1).position = basicFinalTargets[1].transform.position + (transform.up * 0.8f);
 
 
 
@@ -280,13 +280,15 @@ public class LightningUnit : Unit
 
             if (i + 1 < basicFinalTargets.Count)
             {
-                basicLightningGO.transform.GetChild(0).position = basicFinalTargets[i].transform.position + (transform.up * 0.8f);
-                basicLightningGO.transform.GetChild(1).position = basicFinalTargets[i + 1].transform.position + (transform.up * 0.8f);
+                basicLightningGOs[i] = Instantiate(lightningPrefab);
+
+                basicLightningGOs[i].transform.GetChild(0).position = basicFinalTargets[i].transform.position + (transform.up * 0.8f);
+                basicLightningGOs[i].transform.GetChild(1).position = basicFinalTargets[i + 1].transform.position + (transform.up * 0.8f);
                 StartCoroutine(SpecialAttackDamageDelay(basicBounceDamage, basicFinalTargets[i]));
             }
             else
             {
-                basicLightningGO.transform.GetChild(1).position = basicLightningGO.transform.GetChild(0).position;
+                basicLightningGOs[i].transform.GetChild(1).position = basicLightningGOs[i].transform.GetChild(0).position;
                 break;
             }
 
@@ -298,7 +300,11 @@ public class LightningUnit : Unit
 
         basicFinishedFunc();
 
-        Destroy(basicLightningGO);
+        foreach (var basicLightningGO in basicLightningGOs)
+        { 
+            Destroy(basicLightningGO);
+        }
+
         basicDirtyList.Clear();
         basicFinalTargets.Clear();
         basicSortedList.Clear();

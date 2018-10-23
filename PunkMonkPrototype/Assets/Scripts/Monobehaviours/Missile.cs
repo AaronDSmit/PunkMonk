@@ -30,7 +30,7 @@ public class Missile : MonoBehaviour
 
     public void PlayLandParticles()
     {
-        GameObject particleGO = Instantiate(landParticlePrefab, transform.parent.position, landParticlePrefab.transform.rotation);
+        Instantiate(landParticlePrefab, transform.parent.position, landParticlePrefab.transform.rotation);
     }
 
     public void StartedAnimation()

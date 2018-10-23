@@ -116,13 +116,13 @@ public class GameSettings
 
     public void Save()
     {
+        version = currentVersion;
+
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/" + name + ".settings");
         bf.Serialize(file, this);
         file.Close();
-
-        version = currentVersion;
-
+        
         Debug.Log("Settings saved to: '" + Application.persistentDataPath + "/" + name + ".settings" + "'.");
     }
 

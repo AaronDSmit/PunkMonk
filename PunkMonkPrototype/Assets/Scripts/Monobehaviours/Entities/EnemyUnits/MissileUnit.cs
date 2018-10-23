@@ -70,7 +70,7 @@ public class MissileUnit : AI_Agent
     {
         doneMissiles = false;
 
-        GameObject missileGO = Instantiate(missilePrefab, transform.position, missilePrefab.transform.rotation);
+        GameObject missileGO = Instantiate(missilePrefab, projectilePosition.position, missilePrefab.transform.rotation);
         Missile missile = missileGO.transform.GetChild(0).GetComponent<Missile>();
         missile.TriggerUp();
 

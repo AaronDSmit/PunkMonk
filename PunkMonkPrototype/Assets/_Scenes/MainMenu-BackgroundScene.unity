@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.038679052, g: 0.00068725785, b: 0.21761009, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -89,7 +89,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
-  m_LightingDataAsset: {fileID: 112000002, guid: a08eca75158a50845a9b3e403f3a7111,
+  m_LightingDataAsset: {fileID: 112002078, guid: 033b1b1dc22fbe64c9d2d325be7ef0a7,
     type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -9827,8 +9827,8 @@ Light:
   serializedVersion: 8
   m_Type: 2
   m_Color: {r: 0, g: 0.004563858, b: 0.66176474, a: 1}
-  m_Intensity: 11
-  m_Range: 7
+  m_Intensity: 2
+  m_Range: 8
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
@@ -35977,8 +35977,8 @@ Light:
   serializedVersion: 8
   m_Type: 2
   m_Color: {r: 0, g: 0.48402622, b: 0.6102941, a: 1}
-  m_Intensity: 5
-  m_Range: 7
+  m_Intensity: 2
+  m_Range: 5
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
@@ -37073,7 +37073,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 89ec4f96ca2dc1f40baccbccf8d3d87e, type: 2}
+  - {fileID: 2100000, guid: d32b2fc85a74f5e4a8a5bb5895feb911, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -44874,8 +44874,8 @@ Light:
   serializedVersion: 8
   m_Type: 2
   m_Color: {r: 0, g: 0.8161765, b: 0.545994, a: 1}
-  m_Intensity: 5
-  m_Range: 7
+  m_Intensity: 2
+  m_Range: 5
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
@@ -46411,7 +46411,7 @@ Prefab:
     - target: {fileID: 224853056172303456, guid: 35e3feef52644f344b98d93fe87bddb1,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: -196.1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114791896200844440, guid: 35e3feef52644f344b98d93fe87bddb1,
         type: 2}
@@ -46677,6 +46677,16 @@ Prefab:
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140677044967618, guid: 35e3feef52644f344b98d93fe87bddb1,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1887629514}
+    - target: {fileID: 114140677044967618, guid: 35e3feef52644f344b98d93fe87bddb1,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: StartGame
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 35e3feef52644f344b98d93fe87bddb1, type: 2}
@@ -59521,8 +59531,8 @@ Light:
   serializedVersion: 8
   m_Type: 2
   m_Color: {r: 0, g: 0.6648071, b: 0.83823526, a: 1}
-  m_Intensity: 4
-  m_Range: 15
+  m_Intensity: 2
+  m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
@@ -64922,8 +64932,8 @@ Light:
   serializedVersion: 8
   m_Type: 2
   m_Color: {r: 0.75, g: 0, b: 0.51206875, a: 1}
-  m_Intensity: 5
-  m_Range: 7
+  m_Intensity: 2
+  m_Range: 5
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:

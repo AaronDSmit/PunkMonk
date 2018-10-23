@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-
 public enum PlayerAttack { earthBasic, earthSpecial, lightningBasic, lightningSpecial, lightningSpecial2 }
 
 /// <summary>

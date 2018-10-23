@@ -22,8 +22,11 @@ public class MenuHelper : MonoBehaviour
 
     private void Start()
     {
-        currentSettings = SettingsLoader.Instance.CurrentSettings;
-        defaultSettings = SettingsLoader.Instance.DefaultSettings;
+        if (SettingsLoader.Instance != null)
+        {
+            currentSettings = SettingsLoader.Instance.CurrentSettings;
+            defaultSettings = SettingsLoader.Instance.DefaultSettings;
+        }
     }
 
     void Update()

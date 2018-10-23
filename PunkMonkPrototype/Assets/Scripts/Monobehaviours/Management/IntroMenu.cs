@@ -57,7 +57,7 @@ public class IntroMenu : MonoBehaviour
 
     private void Start()
     {
-        // StartCoroutine(LoadScene());
+     //   StartCoroutine(LoadScene());
     }
 
     #endregion
@@ -94,27 +94,27 @@ public class IntroMenu : MonoBehaviour
         }
     }
 
-    //private IEnumerator LoadScene()
-    //{
-    //    async = SceneManager.LoadSceneAsync(1, LoadSceneMode.Single);
-    //    async.allowSceneActivation = false;
+    private IEnumerator LoadScene()
+    {
+        async = SceneManager.LoadSceneAsync(1, LoadSceneMode.Single);
+        async.allowSceneActivation = false;
 
-    //    while (async.progress <= 0.89f)
-    //    {
-    //        progress = async.progress;
-    //        yield return null;
-    //    }
-    //}
+        while (async.progress <= 0.89f)
+        {
+            progress = async.progress;
+            yield return null;
+        }
+    }
 
     private IEnumerator ChangeScenes()
     {
-        StartCoroutine(Fade(Color.clear, Color.black, 1, FadePlane));
-        StartCoroutine(Fade(Color.clear, Color.white, 1, loading));
+        //StartCoroutine(Fade(Color.clear, Color.black, 1, FadePlane));
+        //StartCoroutine(Fade(Color.clear, Color.white, 1, loading));
 
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(0);
 
         SceneManager.LoadScene(1);
-        // async.allowSceneActivation = true;
+       // async.allowSceneActivation = true;
     }
 
     #endregion

@@ -21,12 +21,12 @@ GameObject:
   - component: {fileID: 4554547925556716}
   - component: {fileID: 33456992167309486}
   - component: {fileID: 23836111305470492}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Prop_Rebar1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4554547925556716
 Transform:

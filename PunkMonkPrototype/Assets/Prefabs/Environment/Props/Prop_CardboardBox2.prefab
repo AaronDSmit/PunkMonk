@@ -21,12 +21,12 @@ GameObject:
   - component: {fileID: 4872470238631330}
   - component: {fileID: 33812242969540870}
   - component: {fileID: 23628125298290210}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Prop_CardboardBox2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4872470238631330
 Transform:
@@ -34,13 +34,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1422093501323328}
-  m_LocalRotation: {x: -0, y: -0.23121367, z: -0, w: 0.972903}
-  m_LocalPosition: {x: 15.704, y: 0.103, z: 20.659}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0.5615025, z: -0, w: 0.8274751}
+  m_LocalPosition: {x: 23.638, y: 0.02000001, z: 43.379}
+  m_LocalScale: {x: 0.9999999, y: 1, z: 0.9999999}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -26.737001, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -68.32, z: 0}
 --- !u!23 &23628125298290210
 MeshRenderer:
   m_ObjectHideFlags: 1

@@ -21,12 +21,12 @@ GameObject:
   - component: {fileID: 4495192103799304}
   - component: {fileID: 33973212781604244}
   - component: {fileID: 23361169213080692}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Prop_ConcreteSlab3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4495192103799304
 Transform:

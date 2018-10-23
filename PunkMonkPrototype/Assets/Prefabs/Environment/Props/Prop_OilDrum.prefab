@@ -21,12 +21,12 @@ GameObject:
   - component: {fileID: 4850215155374988}
   - component: {fileID: 33062505315256294}
   - component: {fileID: 23478066548415678}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Prop_OilDrum
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4850215155374988
 Transform:
@@ -34,8 +34,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1573416151525158}
-  m_LocalRotation: {x: -0.00391084, y: 0.9403681, z: -0.010817698, w: -0.33996412}
-  m_LocalPosition: {x: 17.54, y: -0.060000002, z: 13.75}
+  m_LocalRotation: {x: 0.008175581, y: 0.7034092, z: -0.008091798, w: 0.71069205}
+  m_LocalPosition: {x: 17.034, y: -0.060000002, z: 10.673}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

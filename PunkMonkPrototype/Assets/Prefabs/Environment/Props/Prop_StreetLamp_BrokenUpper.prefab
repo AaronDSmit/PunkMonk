@@ -21,12 +21,12 @@ GameObject:
   - component: {fileID: 4251841548767974}
   - component: {fileID: 33047662323233548}
   - component: {fileID: 23657559233232540}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Prop_StreetLamp_BrokenUpper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4251841548767974
 Transform:

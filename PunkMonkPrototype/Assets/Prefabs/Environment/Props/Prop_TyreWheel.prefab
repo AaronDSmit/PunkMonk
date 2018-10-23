@@ -21,12 +21,12 @@ GameObject:
   - component: {fileID: 4103213501002822}
   - component: {fileID: 33329255341429300}
   - component: {fileID: 23796217800701258}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Prop_TyreWheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4103213501002822
 Transform:
@@ -34,13 +34,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1628028276833298}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 45.62621, y: -0.25000006, z: 40.95152}
+  m_LocalRotation: {x: -0.035664503, y: 0.27238274, z: 0.1248324, w: 0.9533901}
+  m_LocalPosition: {x: 22.599, y: 0.773, z: 36.565}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -7.8170004, y: 31.015001, z: 12.747001}
 --- !u!23 &23796217800701258
 MeshRenderer:
   m_ObjectHideFlags: 1

@@ -21,12 +21,12 @@ GameObject:
   - component: {fileID: 4238319282842624}
   - component: {fileID: 33107628876988644}
   - component: {fileID: 23667499112151350}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Prop_ShippingPallet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4238319282842624
 Transform:
@@ -34,13 +34,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1358871716009128}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5, y: 0, z: -19}
+  m_LocalRotation: {x: -0, y: -0.09155545, z: -0, w: 0.9958}
+  m_LocalPosition: {x: 24.36, y: 1.3790001, z: 40.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -10.5060005, z: 0}
 --- !u!23 &23667499112151350
 MeshRenderer:
   m_ObjectHideFlags: 1

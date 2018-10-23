@@ -21,12 +21,12 @@ GameObject:
   - component: {fileID: 4593280842934686}
   - component: {fileID: 33185053695853998}
   - component: {fileID: 23748100105985270}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Prop_ConcreteSlab1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4593280842934686
 Transform:
@@ -34,13 +34,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1204381314794808}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 30.771, y: 0.112, z: 5.441}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0.49216515, y: -0.8629328, z: 0.08816781, w: 0.07312291}
+  m_LocalPosition: {x: -22.051, y: 0.51, z: -11.795}
+  m_LocalScale: {x: 1.000001, y: 1, z: 1.000001}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -27.546001, z: 0}
+  m_LocalEulerAnglesHint: {x: 4.5990005, y: -167.662, z: 59.893}
 --- !u!23 &23748100105985270
 MeshRenderer:
   m_ObjectHideFlags: 1

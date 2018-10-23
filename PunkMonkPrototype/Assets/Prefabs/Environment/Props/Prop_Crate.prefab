@@ -21,12 +21,12 @@ GameObject:
   - component: {fileID: 4489323571809478}
   - component: {fileID: 33155031511606270}
   - component: {fileID: 23275591771873138}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Prop_Crate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4489323571809478
 Transform:
@@ -34,13 +34,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1541039789128596}
-  m_LocalRotation: {x: -0, y: 0.026732994, z: -0, w: 0.9996426}
-  m_LocalPosition: {x: 15.346, y: 0.83, z: 22.711}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.008672606, y: 0.68911403, z: 0.0009169141, w: 0.7246005}
+  m_LocalPosition: {x: 16.55, y: 1.77, z: 38.47}
+  m_LocalScale: {x: 1.0000002, y: 1, z: 1.0000002}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 3.0640001, z: 0}
+  m_LocalEulerAnglesHint: {x: 0.648, y: 87.128006, z: 0.76100004}
 --- !u!23 &23275591771873138
 MeshRenderer:
   m_ObjectHideFlags: 1

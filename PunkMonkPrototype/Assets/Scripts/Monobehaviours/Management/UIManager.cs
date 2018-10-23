@@ -39,6 +39,8 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Slider voltBar;
 
+    [SerializeField]
+    private Button endTurnButton;
     #endregion
 
     #region Reference Fields
@@ -66,6 +68,7 @@ public class UIManager : MonoBehaviour
 
     private bool[] buttonState;
     //private bool[] initialButtonState;
+
 
     private bool isReady;
 
@@ -230,6 +233,8 @@ public class UIManager : MonoBehaviour
         {
             buttons[i].interactable = false;
         }
+        endTurnButton.interactable = false;
+
     }
 
     public void UnlockUI()
@@ -237,7 +242,10 @@ public class UIManager : MonoBehaviour
         for (int i = 0; i < buttons.Length; i++)
         {
             buttons[i].interactable = buttonState[i];
+
         }
+        endTurnButton.interactable = true;
+
         UpdateSmallAblilityIcons();
     }
 

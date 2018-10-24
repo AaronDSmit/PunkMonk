@@ -147,7 +147,7 @@ public class MissileUnit : AI_Agent
             StartCoroutine(Rotate(hexToAttack.transform.position));
 
             // Highlight the area around the hex
-            Manager.instance.HexHighlighter.HighLightArea(new List<Hex>(tilesToAttack), Color.yellow, Color.yellow, this);
+            Manager.instance.HexHighlighter.HighLightArea(new List<Hex>(tilesToAttack), Color.yellow, Color.yellow, this, null, HighlightType.FLAME);
 
             readyToAttack = true;
         }

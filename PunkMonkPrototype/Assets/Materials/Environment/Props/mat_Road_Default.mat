@@ -80,7 +80,7 @@ Material:
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
-    - _NormalStrength: 0.117
+    - _NormalStrength: 0.172
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
@@ -88,7 +88,7 @@ Material:
     - _SrcBlend: 1
     - _Tiling: 34.08
     - _UVSec: 0
-    - _Wetness: 0.189
+    - _Wetness: 0.843
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 0.39789778, g: 0.38770548, b: 0.52205884, a: 1}

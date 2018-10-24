@@ -4573,6 +4573,10 @@ MonoBehaviour:
   borderThickness: 0.2
   borderMaterial: {fileID: 2100000, guid: 9596434c0bbdf634a95d301d82a23dff, type: 2}
   fillMaterial: {fileID: 2100000, guid: f4cef4fc86cbe7d4383a2fb8040018cf, type: 2}
+  defaultTexture: {fileID: 2800000, guid: 496395e8da3425d48b36ae9d5ae785ba, type: 3}
+  exclamationTexture: {fileID: 2800000, guid: 445b17023ee69e6449c12eaea067e0d7, type: 3}
+  flameTexture: {fileID: 2800000, guid: 2fae0f724e72e3c45bd9b2faf48e14bd, type: 3}
+  burningTexture: {fileID: 2800000, guid: 50ab058e578b2e348a504ab23734af2c, type: 3}
 --- !u!114 &114688381770108164
 MonoBehaviour:
   m_ObjectHideFlags: 1

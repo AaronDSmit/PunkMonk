@@ -3,8 +3,17 @@ using System.Collections.Generic;
 //using UnityEditor;
 using UnityEngine;
 
+public enum HighlightType
+{
+    DEFAULT = 0,
+    EXCLAMATION,
+    FLAME,
+    BURNING
+}
+
 public class HexHighlighter : MonoBehaviour
 {
+
     #region Unity Inspector Fields
 
     [Tooltip("Percentage Distance from edge to centre of hex")]
@@ -18,6 +27,18 @@ public class HexHighlighter : MonoBehaviour
     [Tooltip("Material used for inside of area")]
     [SerializeField]
     private Material fillMaterial = null;
+
+    [SerializeField]
+    private Texture defaultTexture = null;
+
+    [SerializeField]
+    private Texture exclamationTexture = null;
+
+    [SerializeField]
+    private Texture flameTexture = null;
+
+    [SerializeField]
+    private Texture burningTexture = null;
 
     #endregion
 
@@ -62,7 +83,7 @@ public class HexHighlighter : MonoBehaviour
     /// <param name="a_fillColour">Colour of the filled area inside the border</param>
     /// <param name="a_script">The script which owns this area</param>
     /// <param name="a_excludedHexes">List of hexes that shouldn't be highlighted</param>
-    public void HighLightArea(List<Hex> a_area, Color a_borderColour, Color a_fillColour, MonoBehaviour a_script, List<Hex> a_excludedHexes = null)
+    public void HighLightArea(List<Hex> a_area, Color a_borderColour, Color a_fillColour, MonoBehaviour a_script, List<Hex> a_excludedHexes = null, HighlightType a_highlightType = 0)
     {
         // invert the thickness available in the inspector
         inverseThickness = 1.0f - borderThickness;
@@ -90,6 +111,24 @@ public class HexHighlighter : MonoBehaviour
         MeshRenderer areaRenderer = areaGO.AddComponent<MeshRenderer>();
         areaRenderer.material = fillMaterial;
         areaRenderer.material.color = a_fillColour;
+        switch (a_highlightType)
+        {
+            case HighlightType.DEFAULT:
+                areaRenderer.material.SetTexture("_AlphaTex", defaultTexture);
+                break;
+            case HighlightType.EXCLAMATION:
+                areaRenderer.material.SetTexture("_AlphaTex", exclamationTexture);
+                break;
+            case HighlightType.FLAME:
+                areaRenderer.material.SetTexture("_AlphaTex", flameTexture);
+                break;
+            case HighlightType.BURNING:
+                areaRenderer.material.SetTexture("_AlphaTex", burningTexture);
+                break;
+            default:
+                areaRenderer.material.SetTexture("_AlphaTex", defaultTexture);
+                break;
+        }
 
         MeshRenderer borderRenderer = borderGO.AddComponent<MeshRenderer>();
         borderRenderer.material = borderMaterial;

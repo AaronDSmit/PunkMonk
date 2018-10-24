@@ -24,9 +24,8 @@ public class HexHighlighter : MonoBehaviour
     [SerializeField]
     private Material borderMaterial = null;
 
-    [Tooltip("Material used for inside of area")]
     [SerializeField]
-    private Material fillMaterial = null;
+    private GameObject hexHighlightPrefab = null;
 
     [SerializeField]
     private Texture defaultTexture = null;
@@ -113,27 +112,33 @@ public class HexHighlighter : MonoBehaviour
         // add the area gameObject to the script which called this function
         highlightedAreas[a_script].Add(areaGO);
 
-        // Add a MeshRenderer and MeshFilter to both gameObjects
-        MeshRenderer areaRenderer = areaGO.AddComponent<MeshRenderer>();
-        areaRenderer.material = fillMaterial;
-        areaRenderer.material.color = a_fillColour;
-        switch (a_highlightType)
+        foreach (var hex in a_area)
         {
-            case HighlightType.DEFAULT:
-                areaRenderer.material.SetTexture("_AlphaTex", defaultTexture);
-                break;
-            case HighlightType.EXCLAMATION:
-                areaRenderer.material.SetTexture("_AlphaTex", exclamationTexture);
-                break;
-            case HighlightType.FLAME:
-                areaRenderer.material.SetTexture("_AlphaTex", flameTexture);
-                break;
-            case HighlightType.BURNING:
-                areaRenderer.material.SetTexture("_AlphaTex", burningTexture);
-                break;
-            default:
-                areaRenderer.material.SetTexture("_AlphaTex", defaultTexture);
-                break;
+            GameObject hexGO = Instantiate(hexHighlightPrefab, hex.transform.position, hexHighlightPrefab.transform.rotation);
+            hexGO.transform.parent = areaGO.transform;
+
+            Renderer hexRenderer = hexGO.GetComponent<Renderer>();
+
+            hexRenderer.material.color = a_fillColour;
+
+            switch (a_highlightType)
+            {
+                case HighlightType.DEFAULT:
+                    hexRenderer.material.SetTexture("_AlphaTex", defaultTexture);
+                    break;
+                case HighlightType.EXCLAMATION:
+                    hexRenderer.material.SetTexture("_AlphaTex", exclamationTexture);
+                    break;
+                case HighlightType.FLAME:
+                    hexRenderer.material.SetTexture("_AlphaTex", flameTexture);
+                    break;
+                case HighlightType.BURNING:
+                    hexRenderer.material.SetTexture("_AlphaTex", burningTexture);
+                    break;
+                default:
+                    hexRenderer.material.SetTexture("_AlphaTex", defaultTexture);
+                    break;
+            }
         }
 
         MeshRenderer borderRenderer = borderGO.AddComponent<MeshRenderer>();
@@ -141,7 +146,7 @@ public class HexHighlighter : MonoBehaviour
         borderRenderer.material.color = a_borderColour;
 
         Mesh borderMesh = borderGO.AddComponent<MeshFilter>().mesh;
-        Mesh areaMesh = areaGO.AddComponent<MeshFilter>().mesh;
+        //Mesh areaMesh = areaGO.AddComponent<MeshFilter>().mesh;
 
         Clear();
 
@@ -153,15 +158,15 @@ public class HexHighlighter : MonoBehaviour
 
         borderMesh.RecalculateNormals();
 
-        Clear();
+        //Clear();
 
-        TriangulateArea(ref a_area, ref a_excludedHexes);
+        //TriangulateArea(ref a_area, ref a_excludedHexes);
 
-        areaMesh.SetVertices(vertices);
-        areaMesh.SetUVs(0, uvs);
-        areaMesh.SetTriangles(triangles, 0);
+        //areaMesh.SetVertices(vertices);
+        //areaMesh.SetUVs(0, uvs);
+        //areaMesh.SetTriangles(triangles, 0);
 
-        areaMesh.RecalculateNormals();
+        //areaMesh.RecalculateNormals();
     }
 
     // Remove all highlighted areas for a particular script

@@ -4570,9 +4570,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc6619250b6bcb44788ed7d685ce9057, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  borderThickness: 0.2
+  borderThickness: 0.1
   borderMaterial: {fileID: 2100000, guid: 9596434c0bbdf634a95d301d82a23dff, type: 2}
-  fillMaterial: {fileID: 2100000, guid: f4cef4fc86cbe7d4383a2fb8040018cf, type: 2}
+  hexHighlightPrefab: {fileID: 1927270126060240, guid: d4eb7120816af814a8fd3316fdc5f419,
+    type: 2}
   defaultTexture: {fileID: 2800000, guid: 496395e8da3425d48b36ae9d5ae785ba, type: 3}
   exclamationTexture: {fileID: 2800000, guid: 445b17023ee69e6449c12eaea067e0d7, type: 3}
   flameTexture: {fileID: 2800000, guid: 2fae0f724e72e3c45bd9b2faf48e14bd, type: 3}
@@ -5048,6 +5049,9 @@ MonoBehaviour:
   footStepSFX:
     ID: -1909339098
     valueGuid: cf444a8eb5b5394fa9fe5d62f739e2a8
+  footStepOutsideSFX:
+    ID: -1416296217
+    valueGuid: 9e2f5d68f962ea419d1737fa2f08f70a
   basicEarthAttack:
     ID: 1941636804
     valueGuid: 3eb077df9777ad4d832262b213bdb676

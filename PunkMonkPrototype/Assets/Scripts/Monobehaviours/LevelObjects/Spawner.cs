@@ -72,7 +72,7 @@ public class Spawner : MonoBehaviour
         {
             if (a_newState == TurnManager.TurnState.start)
             {
-                hexHighlighter.HighLightArea(new List<Hex> { targetHex == null ? currentHex : targetHex }, Color.red, Color.red, this);
+                hexHighlighter.HighLightArea(new List<Hex> { targetHex == null ? currentHex : targetHex }, Color.red, Color.red, this, null, HighlightType.EXCLAMATION);
             }
             if (a_newState == TurnManager.TurnState.end)
             {

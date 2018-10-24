@@ -15,6 +15,12 @@ public class EarthUnit : Unit
     [SerializeField]
     private int coneAreaLength = 4;
 
+    [SerializeField]
+    private GameObject basicParticles = null;
+
+    [SerializeField]
+    private float basicSpeed = 0.1f;
+
     [Header("Special Attack")]
 
     [SerializeField]
@@ -32,6 +38,9 @@ public class EarthUnit : Unit
     private AnimationCurve YCurve;
     [SerializeField]
     private AnimationCurve ZCurve;
+
+    [SerializeField]
+    private GameObject specialLandParticles = null;
 
     private Vector3 specialTargetPosition;
     private Vector3 specialStartPosition;
@@ -87,26 +96,26 @@ public class EarthUnit : Unit
         base.Awake();
     }
 
-    protected override void DoBasicAttack(Hex[] targetTiles, System.Action start, System.Action finished)
+    protected override void DoBasicAttack(Hex[] a_targetTiles, System.Action a_start, System.Action a_finished)
     {
         //call the start call back function
-        start();
+        a_start();
 
         CanAttack = false;
 
         //store the target tile
-        basicTiles = targetTiles;
+        basicTiles = a_targetTiles;
 
 
         //call the basicAttackDamageDelay coroutine 
-        StartCoroutine(BasicAttackDamageDelay(basicDamgeDelayTimer, finished));
+        StartCoroutine(BasicAttackDamageDelay(basicDamgeDelayTimer, a_finished));
 
     }
 
-    protected override void DoSpecialAttack(Hex[] targetTiles, System.Action start, System.Action finished)
+    protected override void DoSpecialAttack(Hex[] a_targetTiles, System.Action a_start, System.Action a_finished)
     {
         //call the start call back function
-        start();
+        a_start();
 
         Manager.instance.PlayerController.CurrentVolt--;
         hasUsedSpecialAttack = true;
@@ -114,10 +123,10 @@ public class EarthUnit : Unit
         CanSpecialAttack = false;
 
         //store the target tile
-        specialTiles = targetTiles;
+        specialTiles = a_targetTiles;
 
         //store the finished function call
-        specialFinishedFunc = finished;
+        specialFinishedFunc = a_finished;
 
         specialAttackSFX.Post(gameObject);
 
@@ -125,7 +134,7 @@ public class EarthUnit : Unit
         specialStartPosition = transform.position;
 
         //store the target position
-        specialTargetPosition = targetTiles[0].transform.position;
+        specialTargetPosition = a_targetTiles[0].transform.position;
 
 
         //make sure the target's y is the same as the start's y
@@ -140,8 +149,6 @@ public class EarthUnit : Unit
         //Start the Update Loop
         specialAttack = true;
     }
-
-
 
     private void Update()
     {
@@ -163,14 +170,11 @@ public class EarthUnit : Unit
                 transform.position = new Vector3(transform.position.x, specialStartPosition.y + YCurve.Evaluate(specialTimer / specialJumpTime) * specialheight, transform.position.z);
 
 
-
                 //if the current timer is grater then the overall time
                 if (specialTimer > specialJumpTime)
                 {
                     //finish the animation
                     specialAttack = false;
-
-
 
                     //reset Timer
                     specialTimer -= specialJumpTime;
@@ -187,44 +191,48 @@ public class EarthUnit : Unit
 
                     //enter target tile
                     currentTile.Enter(this);
+
+                    // Spawn the land particles
+                    Destroy(Instantiate(specialLandParticles, transform.position, specialLandParticles.transform.rotation), 10);
                 }
             }
         }
     }
 
-    private IEnumerator BasicAttackDamageDelay(float a_timer, System.Action a_finished, float glamCamDelay = 0)
+    private IEnumerator BasicAttackDamageDelay(float a_timer, System.Action a_finished, float a_glamCamDelay = 0)
     {
         //wait for glamCam to catch up
-        yield return new WaitForSeconds(glamCamDelay);
-
-
+        yield return new WaitForSeconds(a_glamCamDelay);
 
         //wait for timer before runing code
         yield return new WaitForSeconds(a_timer);
 
         //go though each tile and deal damage to the enemy
-        foreach (Hex x in basicTiles)
+        foreach (Hex hex in basicTiles)
         {
-            //if there is a unit
-            if (x.CurrentUnit != null)
-            {
-                //make sure we arent damaging the player or team
-                if (x.CurrentUnit.Team != TEAM.player)
-                {
-                    //deal damage to that unit
-                    x.CurrentUnit.TakeDamage(basicDamage, this);
-                }
-            }
+            float distance = Vector3.Distance(hex.transform.position, transform.position);
+            StartCoroutine(BasicAttackTileHitDelay(distance * basicSpeed, hex));
         }
-
-
-
-
 
         //call the finished call back function
         a_finished();
     }
 
+    private IEnumerator BasicAttackTileHitDelay(float a_timer, Hex a_tile)
+    {
+        yield return new WaitForSeconds(a_timer);
+
+        Destroy(Instantiate(basicParticles, a_tile.transform.position, basicParticles.transform.rotation), 10);
+
+        if (a_tile.CurrentUnit != null)
+        {
+            if (a_tile.CurrentUnit.Team != TEAM.player)
+            {
+                a_tile.CurrentUnit.TakeDamage(basicDamage, this);
+            }
+        }
+
+    }
 
     private IEnumerator SpecialAttackDamageDelay(float a_timer)
     {

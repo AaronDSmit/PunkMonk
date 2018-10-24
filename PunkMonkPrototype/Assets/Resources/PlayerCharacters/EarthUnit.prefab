@@ -1185,7 +1185,7 @@ Transform:
   - {fileID: 4605505304393378}
   m_Father: {fileID: 4112002504260936}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: -15, y: 0.000001573382, z: 87.999985}
+  m_LocalEulerAnglesHint: {x: -14.999995, y: 0, z: 78}
 --- !u!4 &4034326527892198
 Transform:
   m_ObjectHideFlags: 1
@@ -1212,7 +1212,7 @@ Transform:
   - {fileID: 4937441897562400}
   m_Father: {fileID: 4458270477495802}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: -6.868212, y: -176.98245, z: -80.20404}
+  m_LocalEulerAnglesHint: {x: -6.868213, y: -176.98245, z: -80.20404}
 --- !u!4 &4106939251183300
 Transform:
   m_ObjectHideFlags: 1
@@ -1409,7 +1409,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4405825393696242}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 20.000002, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -26.386728, y: -18.79489, z: 37.443714}
 --- !u!4 &4306051729938480
 Transform:
   m_ObjectHideFlags: 1
@@ -1438,7 +1438,7 @@ Transform:
   - {fileID: 4124620066398098}
   m_Father: {fileID: 4606606285000220}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -14.977427, y: -3.105001, z: 0.8622165}
+  m_LocalEulerAnglesHint: {x: -14.977424, y: -3.105003, z: 0.8622178}
 --- !u!4 &4319087534689710
 Transform:
   m_ObjectHideFlags: 1
@@ -1515,7 +1515,7 @@ Transform:
   - {fileID: 4578779621820416}
   m_Father: {fileID: 4191100951738872}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 80.00001, y: -0.0000003149211, z: -0.00000037561173}
+  m_LocalEulerAnglesHint: {x: 80.00001, y: -0.00000043809433, z: -0.0000005225223}
 --- !u!4 &4405825393696242
 Transform:
   m_ObjectHideFlags: 1
@@ -1529,7 +1529,7 @@ Transform:
   - {fileID: 4271887005428198}
   m_Father: {fileID: 4112002504260936}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 65.18578, y: 35.416615, z: 38.076252}
+  m_LocalEulerAnglesHint: {x: 25.230883, y: -11.773569, z: 37.863197}
 --- !u!4 &4414480957903856
 Transform:
   m_ObjectHideFlags: 1
@@ -1575,7 +1575,7 @@ Transform:
   - {fileID: 4034326527892198}
   m_Father: {fileID: 4256875554530326}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 80.00001, y: -0.0000003149211, z: -0.00000037561173}
+  m_LocalEulerAnglesHint: {x: 80.00001, y: -0.00000043809433, z: -0.0000005225223}
 --- !u!4 &4444572396314564
 Transform:
   m_ObjectHideFlags: 1
@@ -1768,7 +1768,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4033147417188622}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 87.99999}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 77.99999}
 --- !u!4 &4606606285000220
 Transform:
   m_ObjectHideFlags: 1
@@ -2056,7 +2056,7 @@ Transform:
   - {fileID: 4691116601912904}
   m_Father: {fileID: 4458270477495802}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 6.8682084, y: -3.017558, z: 99.79596}
+  m_LocalEulerAnglesHint: {x: 6.868208, y: -3.0175564, z: 99.79596}
 --- !u!4 &4958538149743456
 Transform:
   m_ObjectHideFlags: 1
@@ -2084,7 +2084,7 @@ Transform:
   - {fileID: 4259265602202560}
   m_Father: {fileID: 4937441897562400}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 11.435629, y: 9.772427, z: 40.980835}
+  m_LocalEulerAnglesHint: {x: 11.435632, y: 9.772425, z: 40.980835}
 --- !u!4 &4996165132686904
 Transform:
   m_ObjectHideFlags: 1
@@ -2244,6 +2244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23366b87b8889f445b685d8ba3496b15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sfx: []
 --- !u!114 &114125604001659330
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2290,8 +2291,11 @@ MonoBehaviour:
     ID: 334189263
     valueGuid: 181d67deef774147ac84805e21320458
   basicDamage: 2
-  basicDamgeDelayTimer: 0
+  basicDamgeDelayTimer: 1.2
   coneAreaLength: 4
+  basicParticles: {fileID: 1885929935691002, guid: 4384bc4f44b79d44fb059ad4f6e1d583,
+    type: 2}
+  basicSpeed: 0.05
   specialDamage: 0400000002000000
   specialheight: 5
   specialJumpTime: 1.5
@@ -2363,6 +2367,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+  specialLandParticles: {fileID: 1047006726007716, guid: 8edd0e6178b791346b38e5b6453c934c,
+    type: 2}
 --- !u!114 &114205554951368226
 MonoBehaviour:
   m_ObjectHideFlags: 1

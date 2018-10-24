@@ -179,6 +179,10 @@ public class Manager : MonoBehaviour
 
         hexHighlighter.Init();
 
+        yield return new WaitUntil(() => hexHighlighter.IsReady);
+
+        sfxManager.Init();
+
         stateManager.StartGame();
     }
 

@@ -32,9 +32,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private int currentVolt = 0;
 
-    [SerializeField]
-    private AK.Wwise.Event endBattleMusic;
-
 
     #endregion
 
@@ -1018,8 +1015,6 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-
-
         Manager.instance.HexHighlighter.HighLightArea(area, a_color, a_color, this);
 
         return area;
@@ -1126,10 +1121,6 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        if (a_oldstate == GameState.battle)
-        {
-            endBattleMusic.Post(gameObject);
-        }
 
         // ensure this script knows it's in over-world state
         if (a_newstate == GameState.battle)

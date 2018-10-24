@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <SoundBanksInfo Platform="Mac" BasePlatform="Mac" SchemaVersion="11" SoundbankVersion="132">
 	<RootPaths>
-		<ProjectRoot>C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\</ProjectRoot>
-		<SourceFilesRoot>C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Mac\</SourceFilesRoot>
-		<SoundBanksRoot>C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\GeneratedSoundBanks\Mac\</SoundBanksRoot>
+		<ProjectRoot>C:\Users\Owner\Desktop\Game Dev\Punk Monk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\</ProjectRoot>
+		<SourceFilesRoot>C:\Users\Owner\Desktop\Game Dev\Punk Monk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Mac\</SourceFilesRoot>
+		<SoundBanksRoot>C:\Users\Owner\Desktop\Game Dev\Punk Monk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\GeneratedSoundBanks\Mac\</SoundBanksRoot>
 		<ExternalSourcesInputFile></ExternalSourcesInputFile>
-		<ExternalSourcesOutputRoot>C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\GeneratedSoundBanks\Mac</ExternalSourcesOutputRoot>
+		<ExternalSourcesOutputRoot>C:\Users\Owner\Desktop\Game Dev\Punk Monk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\GeneratedSoundBanks\Mac</ExternalSourcesOutputRoot>
 	</RootPaths>
 	<DialogueEvents/>
 	<StreamedFiles/>
@@ -21,6 +21,8 @@
 			<ShortName>Divide_SoundBank</ShortName>
 			<Path>Divide_SoundBank.bnk</Path>
 			<IncludedEvents>
+				<Event Id="1743658261" Name="Ambient_Inside_Enter" ObjectPath="\Events\Ambient\Ambient_Inside_Enter"/>
+				<Event Id="875726824" Name="Ambient_Outside_Enter" ObjectPath="\Events\Ambient\Ambient_Outside_Enter"/>
 				<Event Id="1941636804" Name="Attack_Clade_Basic" ObjectPath="\Events\SFX\Battle\Attack\Clade\Attack_Clade_Basic"/>
 				<Event Id="334189263" Name="Attack_Clade_Special" ObjectPath="\Events\SFX\Battle\Attack\Clade\Attack_Clade_Special"/>
 				<Event Id="1918548877" Name="Attack_Enemy_Melee" ObjectPath="\Events\SFX\Battle\Attack\Enemy\Attack_Enemy_Melee"/>
@@ -31,11 +33,16 @@
 				<Event Id="4139651882" Name="Battle_Exit" ObjectPath="\Events\Music\Battle_Exit" MaxAttenuation="0.000000"/>
 				<Event Id="312517388" Name="Die_Enemy" ObjectPath="\Events\SFX\Battle\Die\Die_Enemy"/>
 				<Event Id="2385628198" Name="Footsteps" ObjectPath="\Events\SFX\World\Footsteps"/>
+				<Event Id="2878671079" Name="FootstepsOutside" ObjectPath="\Events\SFX\World\FootstepsOutside"/>
 			</IncludedEvents>
 			<IncludedMemoryFiles>
 				<File Id="2960415" Language="SFX">
 					<ShortName>footstep2.wav</ShortName>
 					<Path>SFX\footstep2_56D34C19.wem</Path>
+				</File>
+				<File Id="19429705" Language="SFX">
+					<ShortName>rainfall2.wav</ShortName>
+					<Path>SFX\rainfall2_56D34C19.wem</Path>
 				</File>
 				<File Id="81000000" Language="SFX">
 					<ShortName>CladeAttack-heavy.wav</ShortName>
@@ -76,6 +83,10 @@
 				<File Id="537872262" Language="SFX">
 					<ShortName>footstep8.wav</ShortName>
 					<Path>SFX\footstep8_56D34C19.wem</Path>
+				</File>
+				<File Id="592930613" Language="SFX">
+					<ShortName>rainfall.wav</ShortName>
+					<Path>SFX\rainfall_56D34C19.wem</Path>
 				</File>
 				<File Id="594679755" Language="SFX">
 					<ShortName>RunnerAttack2.wav</ShortName>

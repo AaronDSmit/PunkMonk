@@ -4,9 +4,28 @@ using UnityEngine;
 
 public class SFXEvent : MonoBehaviour
 {
+    [SerializeField] string[] sfx;
+    bool inside = false;
+
     public void PlaySFX(string a_sfx)
     {
         Manager.instance.SfxManager.FindSFXToPlay(a_sfx, gameObject);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "EarthUnit")
+        {
+            inside = !inside;
+            if (inside == true)
+            {
+                Manager.instance.SfxManager.FindSFXToPlay(sfx[0], gameObject);
+            }
+            else
+            {
+                Manager.instance.SfxManager.FindSFXToPlay(sfx[1], gameObject);
+            }
+        }
     }
 
 }

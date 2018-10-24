@@ -13,6 +13,8 @@ namespace AK
 {
     namespace EVENTS
     {
+        static const AkUniqueID AMBIENT_INSIDE_ENTER = 1743658261U;
+        static const AkUniqueID AMBIENT_OUTSIDE_ENTER = 875726824U;
         static const AkUniqueID ATTACK_CLADE_BASIC = 1941636804U;
         static const AkUniqueID ATTACK_CLADE_SPECIAL = 334189263U;
         static const AkUniqueID ATTACK_ENEMY_MELEE = 1918548877U;
@@ -23,6 +25,7 @@ namespace AK
         static const AkUniqueID BATTLE_EXIT = 4139651882U;
         static const AkUniqueID DIE_ENEMY = 312517388U;
         static const AkUniqueID FOOTSTEPS = 2385628198U;
+        static const AkUniqueID FOOTSTEPSOUTSIDE = 2878671079U;
     } // namespace EVENTS
 
     namespace GAME_PARAMETERS

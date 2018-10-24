@@ -60,6 +60,11 @@ public class HexHighlighter : MonoBehaviour
     private List<Vector2> uvs;
     private List<int> triangles;
 
+
+    bool isReady = false;
+
+    public bool IsReady{ get { return isReady;} }
+
     #endregion
 
     #region Public Methods
@@ -73,6 +78,7 @@ public class HexHighlighter : MonoBehaviour
         triangles = new List<int>();
 
         highlightedAreas = new Dictionary<MonoBehaviour, List<GameObject>>();
+        isReady = true;
     }
 
     /// <summary>

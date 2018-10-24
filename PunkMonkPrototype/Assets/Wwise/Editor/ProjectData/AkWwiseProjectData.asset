@@ -24,15 +24,15 @@ MonoBehaviour:
     List: []
   AuxBusWwu:
   - Guid: '{17B85F81-D4B6-4851-8C1E-9D808D7B1DC8}'
-    m_lastTimePart2: -1999228143
-    m_lastTimePsrt1: -1565767560
+    m_lastTimePart2: -1999227725
+    m_lastTimePsrt1: 1778788309
     ParentPhysicalPath: 
     PhysicalPath: Master-Mixer Hierarchy\Default Work Unit.wwu
     List: []
   BankWwu:
   - Guid: '{A76D73F7-5EA3-46B5-B38F-16F7929AC7DF}'
-    m_lastTimePart2: -1999228133
-    m_lastTimePsrt1: 1535156776
+    m_lastTimePart2: -1999227725
+    m_lastTimePsrt1: 1780547746
     ParentPhysicalPath: 
     PhysicalPath: SoundBanks\Default Work Unit.wwu
     List:
@@ -47,8 +47,8 @@ MonoBehaviour:
         ObjectType: 7
   EventWwu:
   - Guid: '{39BFD4E9-6B27-4210-9595-772619309430}'
-    m_lastTimePart2: -1999228143
-    m_lastTimePsrt1: -1572167560
+    m_lastTimePart2: -1999226488
+    m_lastTimePsrt1: 127116533
     ParentPhysicalPath: 
     PhysicalPath: Events\Ambient.wwu
     List:
@@ -60,18 +60,6 @@ MonoBehaviour:
       - ElementName: Ambient
         ObjectType: 12
       - ElementName: Ambient_Inside_Enter
-        ObjectType: 3
-      maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
-    - Guid: 89d69d070c08eb4d8e9320266600d402
-      ID: 1536291209
-      Name: Ambient_Inside_Exit
-      Path: Ambient\Ambient_Inside_Exit
-      PathAndIcons:
-      - ElementName: Ambient
-        ObjectType: 12
-      - ElementName: Ambient_Inside_Exit
         ObjectType: 3
       maxAttenuation: 0
       maxDuration: 0
@@ -88,27 +76,15 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
-    - Guid: 149bc5a719e5094cadf5c280cf455006
-      ID: 1899938162
-      Name: Ambient_Outside_Exit
-      Path: Ambient\Ambient_Outside_Exit
-      PathAndIcons:
-      - ElementName: Ambient
-        ObjectType: 12
-      - ElementName: Ambient_Outside_Exit
-        ObjectType: 3
-      maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
   - Guid: '{9B7E563D-D886-4529-9471-1F499F2670AE}'
-    m_lastTimePart2: -1999228143
-    m_lastTimePsrt1: -1572157560
+    m_lastTimePart2: -1999227725
+    m_lastTimePsrt1: 1776389036
     ParentPhysicalPath: 
     PhysicalPath: Events\Default Work Unit.wwu
     List: []
   - Guid: '{19DB632E-BDAA-4DD2-8EA9-D61DFD814A2F}'
-    m_lastTimePart2: -1999228126
-    m_lastTimePsrt1: -1247071592
+    m_lastTimePart2: -1999226488
+    m_lastTimePsrt1: -320108752
     ParentPhysicalPath: 
     PhysicalPath: Events\Music.wwu
     List:
@@ -161,8 +137,8 @@ MonoBehaviour:
       maxDuration: 0
       minDuration: 0
   - Guid: '{97043EB5-8AFD-479B-B7EC-1820B945D1D5}'
-    m_lastTimePart2: -1999227960
-    m_lastTimePsrt1: -1661958522
+    m_lastTimePart2: -1999226487
+    m_lastTimePsrt1: -1740558965
     ParentPhysicalPath: 
     PhysicalPath: Events\SFX.wwu
     List:
@@ -492,6 +468,20 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
+    - Guid: 9e2f5d68f962ea419d1737fa2f08f70a
+      ID: -1416296217
+      Name: FootstepsOutside
+      Path: SFX\World\FootstepsOutside
+      PathAndIcons:
+      - ElementName: SFX
+        ObjectType: 12
+      - ElementName: World
+        ObjectType: 4
+      - ElementName: FootstepsOutside
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
     - Guid: 4971354cd32f6c459843be13ff2db32d
       ID: -295351110
       Name: Gen_TakeDamage
@@ -635,11 +625,13 @@ MonoBehaviour:
   ExpandedItems:
   - /PunkMonkPrototype_WwiseProject
   - /PunkMonkPrototype_WwiseProject/Events
+  - /PunkMonkPrototype_WwiseProject/Events/Ambient
   - /PunkMonkPrototype_WwiseProject/Events/SFX
+  - /PunkMonkPrototype_WwiseProject/Events/SFX/World
   RtpcWwu:
   - Guid: '{0611EF02-C52F-4D22-840D-EF5CD7507B8B}'
-    m_lastTimePart2: -1999228143
-    m_lastTimePsrt1: -1572107560
+    m_lastTimePart2: -1999227725
+    m_lastTimePsrt1: 1776419026
     ParentPhysicalPath: 
     PhysicalPath: Game Parameters\Default Work Unit.wwu
     List:

@@ -5039,6 +5039,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 685335d2295f8fe4c8f3bd2c6c1c8317, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rainOutside:
+    ID: 875726824
+    valueGuid: 12a6baf6bdf35b48aaba85fc468a5c59
+  rainInside:
+    ID: 1743658261
+    valueGuid: 9373d5fb4a99b745bb38c412a4e1cc37
   footStepSFX:
     ID: -1909339098
     valueGuid: cf444a8eb5b5394fa9fe5d62f739e2a8
@@ -5060,6 +5066,9 @@ MonoBehaviour:
   enemyMissileAttack:
     ID: 1242751957
     valueGuid: 90add5d4ddabb646880bca832dc36b7d
+  stopBattleMusic:
+    ID: -155315414
+    valueGuid: 18fa134358a7134db7926f91deb6776d
 --- !u!114 &114843331619665564
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6301,7 +6310,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 215.4043, y: 375.801}
+  m_AnchoredPosition: {x: 215.40625, y: 375.801}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224062810909254436

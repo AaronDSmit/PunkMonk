@@ -357,6 +357,20 @@
 								</Action>
 							</ChildrenList>
 						</Event>
+						<Event Name="FootstepsOutside" ID="{685D2F9E-62F9-41EA-9D17-37FA2F08F70A}">
+							<ChildrenList>
+								<Action Name="" ID="{C87E72DF-84BF-474F-AD2E-1356E920D87D}" ShortID="887920715">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="FootstepsOutside" ID="{9CE4DE83-028A-412B-A3F3-C02DD92E1063}" WorkUnitID="{BE193198-07FD-4919-8584-0C834CF482F7}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
 					</ChildrenList>
 				</Folder>
 				<Folder Name="UI" ID="{2CD57E96-6909-4654-A173-35F84DB68E43}" ShortID="771191676">

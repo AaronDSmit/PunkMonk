@@ -11,7 +11,18 @@
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="Ambient_Inside" ID="{156C1549-ABE7-481C-8B74-134D9E5C4AFA}" WorkUnitID="{FF5042AA-D3FD-4DF0-A50D-A492CAB1733A}"/>
+									<ObjectRef Name="RainInside" ID="{97C4E710-9FF4-4FF5-BDBC-80E940281675}" WorkUnitID="{7641300E-382C-4518-805A-56EF7E535C80}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{AE6005E1-1140-479F-8BBB-B1559A143ABA}" ShortID="155512100">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="Scope" Type="int16" Value="1"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Rain" ID="{9358B488-DAA3-4441-BE2B-7B26DB26C6B2}" WorkUnitID="{7641300E-382C-4518-805A-56EF7E535C80}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
@@ -19,39 +30,26 @@
 				</Event>
 				<Event Name="Ambient_Outside_Enter" ID="{F6BAA612-F3BD-485B-AABA-85FC468A5C59}">
 					<ChildrenList>
-						<Action Name="" ID="{299648E3-EA38-4EFD-B07D-24F1573FFCB5}" ShortID="324889107">
+						<Action Name="" ID="{8E9D65D2-467E-4D0C-B218-043247F77A47}" ShortID="652538632">
 							<PropertyList>
 								<Property Name="ActionType" Type="int16" Value="1"/>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="Ambient_Outside" ID="{9B716B64-AFC3-473B-B627-021B2E049D8E}" WorkUnitID="{FF5042AA-D3FD-4DF0-A50D-A492CAB1733A}"/>
+									<ObjectRef Name="Rain" ID="{9358B488-DAA3-4441-BE2B-7B26DB26C6B2}" WorkUnitID="{7641300E-382C-4518-805A-56EF7E535C80}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
-					</ChildrenList>
-				</Event>
-				<Event Name="Ambient_Inside_Exit" ID="{079DD689-080C-4DEB-8E93-20266600D402}">
-					<ChildrenList>
-						<Action Name="" ID="{BE052FF9-C480-4277-8422-32CBE86E94CC}" ShortID="790766616">
+						<Action Name="" ID="{3F8EC6E3-91D5-4F47-BD42-F4E57E57D64C}" ShortID="765361161">
 							<PropertyList>
 								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="Scope" Type="int16" Value="1"/>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="Ambient_Inside" ID="{156C1549-ABE7-481C-8B74-134D9E5C4AFA}" WorkUnitID="{FF5042AA-D3FD-4DF0-A50D-A492CAB1733A}"/>
+									<ObjectRef Name="RainInside" ID="{97C4E710-9FF4-4FF5-BDBC-80E940281675}" WorkUnitID="{7641300E-382C-4518-805A-56EF7E535C80}"/>
 								</Reference>
 							</ReferenceList>
-						</Action>
-					</ChildrenList>
-				</Event>
-				<Event Name="Ambient_Outside_Exit" ID="{A7C59B14-E519-4C09-ADF5-C280CF455006}">
-					<ChildrenList>
-						<Action Name="" ID="{2892EF5B-39DD-415C-87E5-D2EB6B2451E9}" ShortID="481548928">
-							<PropertyList>
-								<Property Name="ActionType" Type="int16" Value="2"/>
-							</PropertyList>
-							<ReferenceList/>
 						</Action>
 					</ChildrenList>
 				</Event>

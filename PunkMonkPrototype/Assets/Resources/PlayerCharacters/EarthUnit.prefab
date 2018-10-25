@@ -2291,7 +2291,7 @@ MonoBehaviour:
     ID: 334189263
     valueGuid: 181d67deef774147ac84805e21320458
   basicDamage: 2
-  basicDamgeDelayTimer: 1.2
+  basicDamgeDelayTimer: 1.1
   coneAreaLength: 4
   basicParticles: {fileID: 1885929935691002, guid: 4384bc4f44b79d44fb059ad4f6e1d583,
     type: 2}

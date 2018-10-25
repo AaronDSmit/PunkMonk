@@ -43,8 +43,6 @@ public class Unit : LivingEntity
     [SerializeField]
     protected AK.Wwise.Event specialAttackSFX;
 
-
-
     #endregion
 
     #region Reference Fields

@@ -42,16 +42,12 @@ public class CameraController : MonoBehaviour
     private bool lookAtObject = false;
     private bool canMove = true;
 
-    //private Vector3 oldCamPosition;
-    //private Quaternion oldCamRotation;
-
     private GameSettings settings;
 
     public delegate void GlamCamEvent();
 
     public GlamCamEvent onGlamCamStart;
     public GlamCamEvent onGlamCamEnd;
-
 
     [Header("Overworld")]
     [SerializeField]
@@ -66,10 +62,10 @@ public class CameraController : MonoBehaviour
     [SerializeField] private bool inverseRotation;
     [SerializeField] private bool screenPan = true;
 
-	[SerializeField] private int zMax;
-	[SerializeField] private int zMin;
-	[SerializeField] private int xMax;
-	[SerializeField] private int xMin;
+    [SerializeField] private int zMax;
+    [SerializeField] private int zMin;
+    [SerializeField] private int xMax;
+    [SerializeField] private int xMin;
 
     [SerializeField] private int mousePanThresholdYUp = 100;
     [SerializeField] private int mousePanThresholdYDown = 100;
@@ -81,7 +77,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float minDistance = 5;
     [SerializeField] private float maxDistance = 30;
 
-	[SerializeField][Range(0,100)]private float glamCamChance = 15f;
+    [SerializeField] [Range(0, 100)] private float glamCamChance = 15f;
 
     [SerializeField] private Transform cinemachineDefault;
 
@@ -91,7 +87,6 @@ public class CameraController : MonoBehaviour
     private Cinemachine.CinemachineBrain cinemachineBrain;
 
     bool cinemachine = false;
-    //new GameObject camera = null;
 
     public Unit TargetUnit
     {
@@ -102,7 +97,7 @@ public class CameraController : MonoBehaviour
 
     }
 
-	public float GlamCamChance { get { return glamCamChance; } }
+    public float GlamCamChance { get { return glamCamChance; } }
 
     private void Awake()
     {
@@ -203,19 +198,19 @@ public class CameraController : MonoBehaviour
                     }
                 }
             }
-            
-			cameraTargetPos = (cameraStartPos).normalized * distance;
+
+            cameraTargetPos = (cameraStartPos).normalized * distance;
             cinemachineDefault.localPosition = Vector3.Slerp(cinemachineDefault.localPosition, cameraTargetPos, Time.deltaTime * overworldSpeed);
 
 
-			transform.position = Vector3.Slerp(transform.position, rigTargetPos, Time.deltaTime * overworldSpeed);
+            transform.position = Vector3.Slerp(transform.position, rigTargetPos, Time.deltaTime * overworldSpeed);
 
-			transform.position = new Vector3 (Mathf.Clamp (transform.position.x, xMin, xMax), transform.position.y, Mathf.Clamp (transform.position.z, zMin, zMax)); 
+            transform.position = new Vector3(Mathf.Clamp(transform.position.x, xMin, xMax), transform.position.y, Mathf.Clamp(transform.position.z, zMin, zMax));
 
-			if (transform.position.x == xMin || transform.position.x == xMax || transform.position.z == zMin || transform.position.z == zMax) 
-			{
-				rigTargetPos = transform.position;
-			}
+            if (transform.position.x == xMin || transform.position.x == xMax || transform.position.z == zMin || transform.position.z == zMax)
+            {
+                rigTargetPos = transform.position;
+            }
 
             //transform.position = Vector3.Slerp(transform.position, new Vector3(transform.position.x, targetY, transform.position.z), Time.deltaTime * scrollSpeed);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.deltaTime * RotationalSpeed);
@@ -326,7 +321,6 @@ public class CameraController : MonoBehaviour
         // transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * overworldSpeed);
     }
 
-
     public void SetRotation(CameraDirection a_dir)
     {
         transform.rotation = Quaternion.Euler(new Vector3(0, CalculateRot(a_dir), 0));
@@ -371,15 +365,26 @@ public class CameraController : MonoBehaviour
     {
         Vector3 oldPos = transform.position;
 
-        if (a_time == 0)
+        Plane plane = new Plane(Vector3.up, transform.position);
+        Ray ray = new Ray(cinemachineDefault.transform.position, cinemachineDefault.transform.forward);
+        float enterDistance = -1;
+        if (plane.Raycast(ray, out enterDistance))
+        {
+            Vector3 hitpos = ray.GetPoint(enterDistance);
+            rigTargetPos = a_position - (hitpos - transform.position);
+        }
+        else
         {
             rigTargetPos = a_position;
+        }
+
+        if (a_time == 0)
+        {
             canMove = false;
         }
         else
         {
             lookAtObject = true;
-            rigTargetPos = a_position;
             StartCoroutine(LookAtTimer(a_time, oldPos));
         }
     }
@@ -391,8 +396,6 @@ public class CameraController : MonoBehaviour
         lookAtObject = false;
         rigTargetPos = a_pos;
     }
-
-
 
     public void PlayGlamCam(Unit a_unit)
     {
@@ -406,7 +409,6 @@ public class CameraController : MonoBehaviour
         StartCoroutine(ChangeGlamCam(a_unit));
 
     }
-
 
     private IEnumerator ChangeGlamCam(Unit a_unit)
     {
@@ -433,8 +435,6 @@ public class CameraController : MonoBehaviour
         onGlamCamEnd();
     }
 
-
-
     public void SwitchOverworldTargetUnit()
     {
         targetUnit.GetComponent<OverworldFollower>().enabled = true;
@@ -451,7 +451,5 @@ public class CameraController : MonoBehaviour
         overworldController.Controller = targetUnit.GetComponent<CharacterController>();
         targetUnit.GetComponent<OverworldFollower>().enabled = false;
     }
-
-
 
 }

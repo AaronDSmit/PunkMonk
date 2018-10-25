@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class LightningUnit : Unit
 {
-    [SerializeField] private GameObject lightningPrefab;
 
     [Header("Special Attack")]
 
@@ -29,6 +28,7 @@ public class LightningUnit : Unit
     [SerializeField] private int basicBounceDamage = 1;
     [SerializeField] private int basicFinalDamage = 1;
     [SerializeField] private float basicDelayTime = 1;
+    [SerializeField] private GameObject lightningPrefab;
 
     private List<AI_Agent> basicEnemies;
     private List<LivingEntity> basicSortedList = new List<LivingEntity>();
@@ -37,11 +37,6 @@ public class LightningUnit : Unit
     private GameObject[] basicLightningGOs = new GameObject[3];
     private AI_Controller AIController;
     private System.Action basicFinishedFunc;
-
-
-
-
-    //TODO - Add partical effect for basic attack
 
     public int SpecialAttackDamage
     {
@@ -57,7 +52,6 @@ public class LightningUnit : Unit
     {
         get { return basicBounceDamage; }
     }
-
 
     protected override void Awake()
     {
@@ -186,7 +180,6 @@ public class LightningUnit : Unit
 
     }
 
-
     private IEnumerator SpecialAttackDamageDelay(float a_timer, float glamCamDelay = 0)
     {
         yield return new WaitForSeconds(glamCamDelay);
@@ -243,7 +236,6 @@ public class LightningUnit : Unit
 
 
     }
-
 
     private IEnumerator SpecialAttackDamageDelay(int a_damage, LivingEntity a_unit)
     {
@@ -313,7 +305,6 @@ public class LightningUnit : Unit
 
     }
 
-
     private void Update()
     {
         if (specialLightningAnimation)
@@ -328,6 +319,5 @@ public class LightningUnit : Unit
             }
         }
     }
-
 
 }

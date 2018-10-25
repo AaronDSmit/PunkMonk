@@ -963,16 +963,14 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     // Set which unit is currently selected
-    private void SelectUnit(Unit a_newSelectedUnit)
+    private void SelectUnit(Unit a_newSelectedUnit, bool focusCamera = true)
     {
         if (a_newSelectedUnit != null)
         {
             if (selectedUnit)
             {
                 if (selectedUnit == a_newSelectedUnit)
-                {
                     return;
-                }
 
                 DeselectUnit();
             }
@@ -983,7 +981,9 @@ public class PlayerController : MonoBehaviour
             selectedUnit.Select(true, currentRuleset.ValidHighlightColour);
         }
 
-        cameraRig.LookAtPosition(selectedUnit.transform.position);
+        if (focusCamera)
+            cameraRig.LookAtPosition(selectedUnit.transform.position);
+
     }
 
     // Remove current selection, used when it's not the player's turn
@@ -1071,9 +1071,9 @@ public class PlayerController : MonoBehaviour
     {
         if (a_newState == TurnManager.TurnState.start)
         {
-            // Re-spawn at checkpoint if both are dead
             enemiesAlive = AI_controller.Agents;
 
+            // Re-spawn at checkpoint if both are dead
             if (lightningDead && earthDead)
             {
                 Manager.instance.CheckPointController.ResetToLastCheckPoint();
@@ -1083,23 +1083,24 @@ public class PlayerController : MonoBehaviour
             myTurn = true;
             canInteract = true;
 
-            if (!earthDead && !lightningDead)
-            {
+            if (!earthDead)
                 earthUnit.Refresh();
+            if (!lightningDead)
                 lightningUnit.Refresh();
 
-                SelectUnit(earthUnit);
+            if (selectedUnit != null && !selectedUnit.IsDead)
+            {
+                SelectUnit(selectedUnit);
             }
             else if (!earthDead)
             {
-                earthUnit.Refresh();
                 SelectUnit(earthUnit);
             }
             else
             {
-                lightningUnit.Refresh();
                 SelectUnit(lightningUnit);
             }
+
         }
         else if (a_newState == TurnManager.TurnState.end)
         {
@@ -1361,7 +1362,6 @@ public class PlayerController : MonoBehaviour
     }
 
     #endregion
-
 
     #region Lighting Attack Highlighting
 

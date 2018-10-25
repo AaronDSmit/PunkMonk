@@ -11,6 +11,8 @@ public class Missile : MonoBehaviour
 
     private bool done = false;
 
+    private bool playedLandParticles = false;
+
     public bool Done { get { return done; } }
 
     private void Awake()
@@ -31,6 +33,7 @@ public class Missile : MonoBehaviour
     public void PlayLandParticles()
     {
         Instantiate(landParticlePrefab, transform.parent.position, landParticlePrefab.transform.rotation);
+        playedLandParticles = true;
     }
 
     public void StartedAnimation()
@@ -40,7 +43,19 @@ public class Missile : MonoBehaviour
 
     public void FinishedAnimation()
     {
-        //Invoke("Finished", landParticles ? landParticleSystem.main.duration : 0);
+        if (playedLandParticles)
+        {
+            Invoke("Finished", 1);
+            playedLandParticles = false;
+        }
+        else
+        {
+            done = true;
+        }
+    }
+
+    private void Finished()
+    {
         done = true;
     }
 }

@@ -173,6 +173,9 @@ public class EarthUnit : Unit
                 //if the current timer is grater then the overall time
                 if (specialTimer > specialJumpTime)
                 {
+                    // Spawn the land particles
+                    Destroy(Instantiate(specialLandParticles, transform.position, specialLandParticles.transform.rotation), 10);
+
                     //finish the animation
                     specialAttack = false;
 
@@ -191,9 +194,6 @@ public class EarthUnit : Unit
 
                     //enter target tile
                     currentTile.Enter(this);
-
-                    // Spawn the land particles
-                    Destroy(Instantiate(specialLandParticles, transform.position, specialLandParticles.transform.rotation), 10);
                 }
             }
         }

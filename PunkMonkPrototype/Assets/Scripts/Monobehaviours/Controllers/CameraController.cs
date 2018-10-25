@@ -429,7 +429,7 @@ public class CameraController : MonoBehaviour
 
         Manager.instance.transform.GetChild(0).GetComponent<MenuHelper>().StopBlackBars();
 
-        a_unit.transform.GetChild(6).gameObject.SetActive(false);
+        a_unit.transform.GetChild(5).gameObject.SetActive(false);
         transform.GetChild(1).gameObject.SetActive(true);
 
         onGlamCamEnd();

@@ -2285,6 +2285,7 @@ MonoBehaviour:
   basicDamageDelayTime: 1.2
   lightningPrefab: {fileID: 1405863678438086, guid: 9f9b11d31f4557e4ebdb86a209122f41,
     type: 2}
+  lightningGunParticles: {fileID: 1887895105770002}
 --- !u!114 &114239686414093768
 MonoBehaviour:
   m_ObjectHideFlags: 1

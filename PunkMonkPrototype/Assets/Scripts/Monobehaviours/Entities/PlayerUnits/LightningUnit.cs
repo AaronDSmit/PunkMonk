@@ -30,6 +30,7 @@ public class LightningUnit : Unit
     [SerializeField] private float basicDelayTime = 1;
     [SerializeField] private float basicDamageDelayTime = 1;
     [SerializeField] private GameObject lightningPrefab;
+    [SerializeField] private GameObject lightningGunParticles;
 
     private List<AI_Agent> basicEnemies;
     private List<LivingEntity> basicSortedList = new List<LivingEntity>();
@@ -238,18 +239,6 @@ public class LightningUnit : Unit
 
     }
 
-    private IEnumerator SpecialAttackDamageDelay(int a_damage, LivingEntity a_unit)
-    {
-        yield return null;
-        if (a_unit != null)
-        {
-            if (a_unit.Team != TEAM.player)
-            {
-                a_unit.TakeDamage(a_damage, this);
-            }
-        }
-    }
-
     private IEnumerator BasicAttackDamageDelay(float a_timer, float a_lightningLifetime, float glamCamDelay = 0)
     {
         if (glamCamDelay != 0)
@@ -259,9 +248,12 @@ public class LightningUnit : Unit
 
         yield return new WaitForSeconds(a_timer);
 
+        lightningGunParticles.SetActive(true);
+
         basicLightningGOs[0] = Instantiate(lightningPrefab);
 
-        basicLightningGOs[0].transform.GetChild(0).position = basicFinalTargets[0].transform.position + (transform.up * 0.8f);
+        //basicLightningGOs[0].transform.GetChild(0).position = basicFinalTargets[0].transform.position + (transform.up * 0.8f);
+        basicLightningGOs[0].transform.GetChild(0).position = projectilePosition.position;
         basicLightningGOs[0].transform.GetChild(1).position = basicFinalTargets[1].transform.position + (transform.up * 0.8f);
 
 
@@ -288,6 +280,8 @@ public class LightningUnit : Unit
         StartCoroutine(DamageDelay(basicBounceDamage, basicFinalTargets[basicFinalTargets.Count - 1], basicDamageDelayTime));
 
         yield return new WaitForSeconds(a_lightningLifetime);
+
+        lightningGunParticles.SetActive(false);
 
         basicFinishedFunc();
 

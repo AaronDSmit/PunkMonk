@@ -415,8 +415,8 @@ public class CameraController : MonoBehaviour
         yield return new WaitForSeconds(cinemachineBrain.m_DefaultBlend.m_Time);
 
 
-        a_unit.transform.GetChild(5).gameObject.SetActive(false);
-        a_unit.transform.GetChild(6).gameObject.SetActive(true);
+        a_unit.transform.GetChild(4).gameObject.SetActive(false);
+        a_unit.transform.GetChild(5).gameObject.SetActive(true);
 
         Manager.instance.transform.GetChild(0).GetComponent<MenuHelper>().PlayBlackBars(cinemachineBrain.m_CustomBlends.m_CustomBlends[0].m_Blend.m_Time);
 

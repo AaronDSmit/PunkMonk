@@ -28,6 +28,7 @@ public class LightningUnit : Unit
     [SerializeField] private int basicBounceDamage = 1;
     [SerializeField] private int basicFinalDamage = 1;
     [SerializeField] private float basicDelayTime = 1;
+    [SerializeField] private float basicDamageDelayTime = 1;
     [SerializeField] private GameObject lightningPrefab;
 
     private List<AI_Agent> basicEnemies;
@@ -251,12 +252,12 @@ public class LightningUnit : Unit
 
     private IEnumerator BasicAttackDamageDelay(float a_timer, float a_lightningLifetime, float glamCamDelay = 0)
     {
-        if (glamCamDelay == 0)
+        if (glamCamDelay != 0)
         {
-            yield return new WaitForSeconds(a_timer);
+            yield return new WaitForSeconds(glamCamDelay);
         }
 
-        yield return new WaitForSeconds(glamCamDelay);
+        yield return new WaitForSeconds(a_timer);
 
         basicLightningGOs[0] = Instantiate(lightningPrefab);
 
@@ -264,19 +265,17 @@ public class LightningUnit : Unit
         basicLightningGOs[0].transform.GetChild(1).position = basicFinalTargets[1].transform.position + (transform.up * 0.8f);
 
 
-
         for (int i = 1; i < basicFinalTargets.Count - 1; i++)
         {
-            yield return new WaitForSeconds(a_lightningLifetime);
+            //yield return new WaitForSeconds(a_lightningLifetime);
 
-
-            if (i + 1 < basicFinalTargets.Count)
+            if (i < basicFinalTargets.Count - 1)
             {
                 basicLightningGOs[i] = Instantiate(lightningPrefab);
 
                 basicLightningGOs[i].transform.GetChild(0).position = basicFinalTargets[i].transform.position + (transform.up * 0.8f);
                 basicLightningGOs[i].transform.GetChild(1).position = basicFinalTargets[i + 1].transform.position + (transform.up * 0.8f);
-                StartCoroutine(SpecialAttackDamageDelay(basicBounceDamage, basicFinalTargets[i]));
+                StartCoroutine(DamageDelay(basicBounceDamage, basicFinalTargets[i], basicDamageDelayTime));
             }
             else
             {
@@ -286,14 +285,14 @@ public class LightningUnit : Unit
 
         }
 
-        yield return new WaitForSeconds(a_lightningLifetime);
+        StartCoroutine(DamageDelay(basicBounceDamage, basicFinalTargets[basicFinalTargets.Count - 1], basicDamageDelayTime));
 
-        StartCoroutine(SpecialAttackDamageDelay(basicFinalDamage, basicFinalTargets[basicFinalTargets.Count - 1]));
+        yield return new WaitForSeconds(a_lightningLifetime);
 
         basicFinishedFunc();
 
         foreach (var basicLightningGO in basicLightningGOs)
-        { 
+        {
             Destroy(basicLightningGO);
         }
 
@@ -301,8 +300,19 @@ public class LightningUnit : Unit
         basicFinalTargets.Clear();
         basicSortedList.Clear();
 
+    }
 
+    private IEnumerator DamageDelay(int a_damage, LivingEntity a_unit, float a_waitTime)
+    {
+        yield return new WaitForSeconds(a_waitTime);
 
+        if (a_unit != null)
+        {
+            if (a_unit.Team != TEAM.player)
+            {
+                a_unit.TakeDamage(a_damage, this);
+            }
+        }
     }
 
     private void Update()

@@ -500,7 +500,7 @@ public class Unit : LivingEntity
         actionsPerforming--;
     }
 
-    protected IEnumerator WalkToHex(Hex a_hex)
+    protected IEnumerator WalkToHex(Hex a_hex, System.Action a_finishedAction = null)
     {
         actionsPerforming++;
         animator.SetBool("Running", true);
@@ -531,6 +531,10 @@ public class Unit : LivingEntity
         currentTile.Enter(this);
 
         animator.SetBool("Running", false);
+
+        if (a_finishedAction != null)
+            a_finishedAction();
+
         actionsPerforming--;
     }
 

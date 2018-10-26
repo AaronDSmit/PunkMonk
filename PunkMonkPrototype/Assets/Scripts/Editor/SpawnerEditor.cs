@@ -73,6 +73,12 @@ public class SpawnerEditor : Editor
                     DrawArrow.ForGizmo(spawner.doorHex.transform.position, spawner.targetHex.transform.position - spawner.doorHex.transform.position);
                 }
             }
+
+            if (spawner.runHex)
+            {
+                Gizmos.color = Color.gray;
+                DrawArrow.ForGizmo(spawner.transform.position, spawner.runHex.transform.position - spawner.transform.position);
+            }
         }
     }
 }

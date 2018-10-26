@@ -9,7 +9,7 @@ public class DestroyOnTimer : MonoBehaviour
     [SerializeField]
     private float time = 1f;
     
-	void Awake()
+	void OnEnable()
     {
         Destroy(gameObject, time);
 	}

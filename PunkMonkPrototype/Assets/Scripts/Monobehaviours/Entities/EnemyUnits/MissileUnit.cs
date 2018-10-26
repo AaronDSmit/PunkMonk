@@ -19,6 +19,12 @@ public class MissileUnit : AI_Agent
 
     private bool doneMissiles = false;
 
+    private bool running = false;
+
+    private Hex runHex = null;
+
+    public Hex RunHex { get { return runHex; } set { runHex = value; } }
+
     protected override void Start()
     {
         base.Start();
@@ -40,6 +46,12 @@ public class MissileUnit : AI_Agent
 
     protected override IEnumerator DoTurn(GridManager a_grid)
     {
+        if (running)
+        {
+            turnComplete = true;
+            yield break;
+        }
+
         if (readyToAttack)
         {
             Manager.instance.HexHighlighter.RemoveHighlights(this);
@@ -155,7 +167,35 @@ public class MissileUnit : AI_Agent
 
     public override void TakeDamage(int a_damageAmount, Unit a_damageFrom)
     {
-        base.TakeDamage(a_damageAmount, a_damageFrom);
+        if (Manager.instance.PlayerController.EncounterHasBoss && Manager.instance.PlayerController.EncounterBossDamageGoal <= (MaxHealth - CurrentHealth) + a_damageAmount)
+        {
+            int remainingHp = CurrentHealth - a_damageAmount;
+            if (remainingHp <= 0)
+            {
+                base.TakeDamage(CurrentHealth - 1, a_damageFrom);
+            }
+            else
+            {
+                base.TakeDamage(a_damageAmount, a_damageFrom);
+            }
+
+            running = true;
+            Manager.instance.HexHighlighter.RemoveHighlights(this);
+            if (RunHex == null)
+            {
+                Debug.LogError("The missile unit doesn't have a hex to run too. Set this on the spawner for the missile unit.", gameObject);
+                Die();
+            }
+            else
+            {
+                StartCoroutine(WalkToHex(RunHex, Die));
+            }
+
+        }
+        else
+        {
+            base.TakeDamage(a_damageAmount, a_damageFrom);
+        }
 
         Manager.instance.PlayerController.EncounterBossDamage += a_damageAmount;
     }

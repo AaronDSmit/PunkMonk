@@ -888,54 +888,87 @@ public class EasyDesignEditor : EditorWindow
                 EditorGUILayout.BeginHorizontal();
                 {
                     EditorGUI.BeginDisabledGroup(!hasSpawnerSelected);
-
-                    if (ColouredButton("Set Door Hex", yellowColour))
                     {
-                        // Find a hex that isn't a spawner
-                        Hex hex = null;
-                        foreach (GameObject go in Selection.gameObjects)
+                        if (ColouredButton("Set Door Hex", yellowColour))
                         {
-                            if (go.GetComponentInChildren<Spawner>() == false)
+                            // Find a hex that isn't a spawner
+                            Hex hex = null;
+                            foreach (GameObject go in Selection.gameObjects)
                             {
-                                hex = go.GetComponent<Hex>();
-                                break;
+                                if (go.GetComponentInChildren<Spawner>() == false)
+                                {
+                                    hex = go.GetComponent<Hex>();
+                                    break;
+                                }
+                            }
+                            // If a hex was found set all selected spawners to use it
+                            if (hex)
+                            {
+                                foreach (Spawner spawner in selectedSpawners)
+                                {
+                                    spawner.doorHex = hex;
+                                }
                             }
                         }
-                        // If a hex was found set all selected spawners to use it
-                        if (hex)
+
+                        if (ColouredButton("Set Target Hex", orangeColour))
                         {
-                            foreach (Spawner spawner in selectedSpawners)
+                            // Find a hex that isn't a spawner
+                            Hex hex = null;
+                            foreach (GameObject go in Selection.gameObjects)
                             {
-                                spawner.doorHex = hex;
+                                if (go.GetComponentInChildren<Spawner>() == false)
+                                {
+                                    hex = go.GetComponent<Hex>();
+                                    break;
+                                }
+                            }
+                            // If a hex was found set all selected spawners to use it
+                            if (hex)
+                            {
+                                foreach (Spawner spawner in selectedSpawners)
+                                {
+                                    spawner.targetHex = hex;
+                                }
                             }
                         }
                     }
-
-                    if (ColouredButton("Set Target Hex", orangeColour))
-                    {
-                        // Find a hex that isn't a spawner
-                        Hex hex = null;
-                        foreach (GameObject go in Selection.gameObjects)
-                        {
-                            if (go.GetComponentInChildren<Spawner>() == false)
-                            {
-                                hex = go.GetComponent<Hex>();
-                                break;
-                            }
-                        }
-                        // If a hex was found set all selected spawners to use it
-                        if (hex)
-                        {
-                            foreach (Spawner spawner in selectedSpawners)
-                            {
-                                spawner.targetHex = hex;
-                            }
-                        }
-                    }
-
                     EditorGUI.EndDisabledGroup();
                 }
                 EditorGUILayout.EndHorizontal();
+
+                EditorGUILayout.Space();
+
+                if (hasSpawnerSelected && enemyType == UnitType.missile)
+                {
+                    EditorGUILayout.BeginHorizontal();
+                    {
+
+                        if (ColouredButton("Set run hex", yellowColour))
+                        {
+                            // Find a hex that isn't a spawner
+                            Hex hex = null;
+                            foreach (GameObject go in Selection.gameObjects)
+                            {
+                                if (go.GetComponentInChildren<Spawner>() == false)
+                                {
+                                    hex = go.GetComponent<Hex>();
+                                    break;
+                                }
+                            }
+                            // If a hex was found set all selected spawners to use it
+                            if (hex)
+                            {
+                                foreach (Spawner spawner in selectedSpawners)
+                                {
+                                    spawner.runHex = hex;
+                                }
+                            }
+                        }
+
+                    }
+                    EditorGUILayout.EndHorizontal();
+                }
 
                 EditorGUILayout.Space();
 

@@ -9,6 +9,12 @@ public class StateTransitionPoint : MonoBehaviour
 
     [SerializeField] private Conversation conversation;
 
+    [SerializeField]
+    public bool hasBoss;
+
+    [SerializeField]
+    public int bossDamage;
+
     [HideInInspector]
     [SerializeField]
     public bool drawText;
@@ -20,14 +26,6 @@ public class StateTransitionPoint : MonoBehaviour
     [HideInInspector]
     [SerializeField]
     public int numberToKill;
-
-    [HideInInspector]
-    [SerializeField]
-    public bool hasBoss;
-
-    [HideInInspector]
-    [SerializeField]
-    public int bossDamage;
 
     [HideInInspector]
     [SerializeField]

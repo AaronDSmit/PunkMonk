@@ -46,6 +46,10 @@ public class Spawner : MonoBehaviour
     [SerializeField]
     public Hex doorHex = null;
 
+    [HideInInspector]
+    [SerializeField]
+    public Hex runHex = null;
+
     private bool doneSpawning = false;
 
     private TurnManager turnController = null;
@@ -142,6 +146,13 @@ public class Spawner : MonoBehaviour
             unit.HasVolt = hasVolt;
 
             Manager.instance.PlayerController.SubscribeToUnitDeath(unit);
+
+            //if (spawnType == UnitType.missile)
+            {
+                MissileUnit missileUnit = unit.GetComponent<MissileUnit>();
+                if (missileUnit)
+                    missileUnit.RunHex = runHex;
+            }
 
             return unit;
         }

@@ -628,7 +628,7 @@ MonoBehaviour:
   attackRange: 6
   specialAttackRange: 0
   rotationTime: 0
-  walkSpeed: 0
+  walkSpeed: 5
   projectilePosition: {fileID: 4408833779778438}
   voltEffect: {fileID: 0}
   basicAttackSFX:

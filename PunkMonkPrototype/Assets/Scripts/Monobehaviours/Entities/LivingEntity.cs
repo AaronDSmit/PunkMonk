@@ -101,7 +101,7 @@ public class LivingEntity : Entity
             healthBar.CurrentHealth = currentHealth;
         }
 
-        if (currentHealth <= 0.0f && !dead)
+        if (currentHealth <= 0 && !dead)
         {
             if (HasVolt)
             {

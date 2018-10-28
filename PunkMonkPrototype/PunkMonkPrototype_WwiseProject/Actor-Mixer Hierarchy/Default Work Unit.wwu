@@ -25,6 +25,47 @@
 						<ActiveSource Name="Combat_FullLoop_v1" ID="{CA88927E-9DF5-419C-9762-6350DFBCB03D}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
+				<Sound Name="combat" ID="{8025F084-360F-44F0-A30C-392B6B5B1F08}" ShortID="64413580">
+					<PropertyList>
+						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{D4C10CFF-54D1-43E8-9949-15A35C036BE6}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{17B85F81-D4B6-4851-8C1E-9D808D7B1DC8}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="combat" ID="{08ADDF65-451E-460C-8F37-BE997B35659C}" ShortID="624930658">
+							<Language>SFX</Language>
+							<AudioFile>combat.wav</AudioFile>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="combat" ID="{08ADDF65-451E-460C-8F37-BE997B35659C}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="menu" ID="{44A8519B-A1DE-4C96-85F6-239D2392FE7D}" ShortID="195482033">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{D4C10CFF-54D1-43E8-9949-15A35C036BE6}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{17B85F81-D4B6-4851-8C1E-9D808D7B1DC8}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="menu" ID="{C2131C8F-C36B-4003-9E56-ED5470864E1F}" ShortID="466976067">
+							<Language>SFX</Language>
+							<AudioFile>menu.wav</AudioFile>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="menu" ID="{C2131C8F-C36B-4003-9E56-ED5470864E1F}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
 			</ChildrenList>
 		</WorkUnit>
 	</AudioObjects>

@@ -59,6 +59,11 @@
 				</RandomSequenceContainer>
 				<RandomSequenceContainer Name="RainInside" ID="{97C4E710-9FF4-4FF5-BDBC-80E940281675}" ShortID="336202284">
 					<PropertyList>
+						<Property Name="Lowpass" Type="int16">
+							<ValueList>
+								<Value>40</Value>
+							</ValueList>
+						</Property>
 						<Property Name="PlayMechanismLoop" Type="bool" Value="True"/>
 						<Property Name="PlayMechanismStepOrContinuous" Type="int16" Value="0"/>
 					</PropertyList>

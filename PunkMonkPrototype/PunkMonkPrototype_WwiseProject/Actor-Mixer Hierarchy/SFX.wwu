@@ -687,6 +687,25 @@
 										</Folder>
 									</ChildrenList>
 								</ActorMixer>
+								<Sound Name="combat-start" ID="{0D92CD72-8254-4E2F-8F2C-1A6E9E8511EF}" ShortID="78817918">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{D4C10CFF-54D1-43E8-9949-15A35C036BE6}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{17B85F81-D4B6-4851-8C1E-9D808D7B1DC8}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="combat-start" ID="{A329DFA7-5407-4328-B2FD-86BE91A7CA86}" ShortID="54080017">
+											<Language>SFX</Language>
+											<AudioFile>combat-start.wav</AudioFile>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="combat-start" ID="{A329DFA7-5407-4328-B2FD-86BE91A7CA86}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
 							</ChildrenList>
 						</Folder>
 					</ChildrenList>
@@ -703,7 +722,7 @@
 								</Reference>
 							</ReferenceList>
 							<ChildrenList>
-								<Sound Name="Footstep_00" ID="{2ADE600D-6FFC-4FF3-A537-F34B4E376A15}" ShortID="435178037">
+								<Sound Name="dryfootstep1" ID="{7E96D00E-4E99-48BE-BBAF-1A676860836F}" ShortID="928019290">
 									<ReferenceList>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{D4C10CFF-54D1-43E8-9949-15A35C036BE6}"/>
@@ -713,16 +732,16 @@
 										</Reference>
 									</ReferenceList>
 									<ChildrenList>
-										<AudioFileSource Name="footstep1" ID="{79739530-37D6-4071-ADC1-735E105C9A51}" ShortID="980908635">
+										<AudioFileSource Name="dryfootstep1" ID="{8B98470F-7D74-4E00-878D-5030CF829E39}" ShortID="171387652">
 											<Language>SFX</Language>
-											<AudioFile>footstep1.wav</AudioFile>
+											<AudioFile>dryfootstep1.wav</AudioFile>
 										</AudioFileSource>
 									</ChildrenList>
 									<ActiveSourceList>
-										<ActiveSource Name="footstep1" ID="{79739530-37D6-4071-ADC1-735E105C9A51}" Platform="Linked"/>
+										<ActiveSource Name="dryfootstep1" ID="{8B98470F-7D74-4E00-878D-5030CF829E39}" Platform="Linked"/>
 									</ActiveSourceList>
 								</Sound>
-								<Sound Name="Footstep_01" ID="{B8152C69-7519-4A59-833D-131B9B032302}" ShortID="261727205">
+								<Sound Name="dryfootstep2" ID="{942B0661-6F47-4058-BC65-80314FF7F0F9}" ShortID="620305780">
 									<ReferenceList>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{D4C10CFF-54D1-43E8-9949-15A35C036BE6}"/>
@@ -732,16 +751,16 @@
 										</Reference>
 									</ReferenceList>
 									<ChildrenList>
-										<AudioFileSource Name="footstep2" ID="{510E650E-C67B-4BB7-AC36-20C1921668CB}" ShortID="2960415">
+										<AudioFileSource Name="dryfootstep2" ID="{648EA7BD-B0A1-4A99-BCC5-09367B40235C}" ShortID="661323299">
 											<Language>SFX</Language>
-											<AudioFile>footstep2.wav</AudioFile>
+											<AudioFile>dryfootstep2.wav</AudioFile>
 										</AudioFileSource>
 									</ChildrenList>
 									<ActiveSourceList>
-										<ActiveSource Name="footstep2" ID="{510E650E-C67B-4BB7-AC36-20C1921668CB}" Platform="Linked"/>
+										<ActiveSource Name="dryfootstep2" ID="{648EA7BD-B0A1-4A99-BCC5-09367B40235C}" Platform="Linked"/>
 									</ActiveSourceList>
 								</Sound>
-								<Sound Name="Footstep_02" ID="{62A0EF02-9395-40E6-95CC-98B1E6578968}" ShortID="82988478">
+								<Sound Name="dryfootstep3" ID="{69796B8B-AD6B-4D5A-A9A5-B23640F1A68F}" ShortID="297424663">
 									<ReferenceList>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{D4C10CFF-54D1-43E8-9949-15A35C036BE6}"/>
@@ -751,16 +770,16 @@
 										</Reference>
 									</ReferenceList>
 									<ChildrenList>
-										<AudioFileSource Name="footstep3" ID="{E32AF213-6837-4497-8EE0-53A4B78F0A63}" ShortID="200744234">
+										<AudioFileSource Name="dryfootstep3" ID="{EF39F3D5-9F9E-4F30-AAA1-88E5781237BB}" ShortID="873129758">
 											<Language>SFX</Language>
-											<AudioFile>footstep3.wav</AudioFile>
+											<AudioFile>dryfootstep3.wav</AudioFile>
 										</AudioFileSource>
 									</ChildrenList>
 									<ActiveSourceList>
-										<ActiveSource Name="footstep3" ID="{E32AF213-6837-4497-8EE0-53A4B78F0A63}" Platform="Linked"/>
+										<ActiveSource Name="dryfootstep3" ID="{EF39F3D5-9F9E-4F30-AAA1-88E5781237BB}" Platform="Linked"/>
 									</ActiveSourceList>
 								</Sound>
-								<Sound Name="Footstep_03" ID="{AFA20215-10C9-4DD0-956C-2AA3CCDE1CB0}" ShortID="65133925">
+								<Sound Name="dryfootstep4" ID="{3F913AF0-777A-4FCB-B151-E93CAE2D050A}" ShortID="23027029">
 									<ReferenceList>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{D4C10CFF-54D1-43E8-9949-15A35C036BE6}"/>
@@ -770,16 +789,16 @@
 										</Reference>
 									</ReferenceList>
 									<ChildrenList>
-										<AudioFileSource Name="footstep4" ID="{FF895F7B-04BE-4827-BF72-44E74EBCF75A}" ShortID="765782898">
+										<AudioFileSource Name="dryfootstep4" ID="{CC2F4726-8C60-4602-A20B-9F08D0DDD0B2}" ShortID="837258743">
 											<Language>SFX</Language>
-											<AudioFile>footstep4.wav</AudioFile>
+											<AudioFile>dryfootstep4.wav</AudioFile>
 										</AudioFileSource>
 									</ChildrenList>
 									<ActiveSourceList>
-										<ActiveSource Name="footstep4" ID="{FF895F7B-04BE-4827-BF72-44E74EBCF75A}" Platform="Linked"/>
+										<ActiveSource Name="dryfootstep4" ID="{CC2F4726-8C60-4602-A20B-9F08D0DDD0B2}" Platform="Linked"/>
 									</ActiveSourceList>
 								</Sound>
-								<Sound Name="Footstep_04" ID="{AC9AC06F-293C-4613-86B3-2171E7C763BA}" ShortID="548575671">
+								<Sound Name="dryfootstep5" ID="{C9EC38A4-6B8B-4228-B520-1D0763DA168C}" ShortID="640068952">
 									<ReferenceList>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{D4C10CFF-54D1-43E8-9949-15A35C036BE6}"/>
@@ -789,16 +808,16 @@
 										</Reference>
 									</ReferenceList>
 									<ChildrenList>
-										<AudioFileSource Name="footstep5" ID="{4B323260-3D4D-415B-A009-6384FC333F94}" ShortID="146746479">
+										<AudioFileSource Name="dryfootstep5" ID="{62C51C5D-363B-4E58-9E17-6BE4FF4E2430}" ShortID="1008118080">
 											<Language>SFX</Language>
-											<AudioFile>footstep5.wav</AudioFile>
+											<AudioFile>dryfootstep5.wav</AudioFile>
 										</AudioFileSource>
 									</ChildrenList>
 									<ActiveSourceList>
-										<ActiveSource Name="footstep5" ID="{4B323260-3D4D-415B-A009-6384FC333F94}" Platform="Linked"/>
+										<ActiveSource Name="dryfootstep5" ID="{62C51C5D-363B-4E58-9E17-6BE4FF4E2430}" Platform="Linked"/>
 									</ActiveSourceList>
 								</Sound>
-								<Sound Name="Footstep_05" ID="{693F00C7-5AA3-46E0-901C-8530134D5ED0}" ShortID="818728645">
+								<Sound Name="dryfootstep6" ID="{9D9744AF-2344-4C5C-8522-C145417DF5FE}" ShortID="665844022">
 									<ReferenceList>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{D4C10CFF-54D1-43E8-9949-15A35C036BE6}"/>
@@ -808,16 +827,16 @@
 										</Reference>
 									</ReferenceList>
 									<ChildrenList>
-										<AudioFileSource Name="footstep6" ID="{F73CB729-7EB6-477D-A535-CC859312C6B0}" ShortID="789413211">
+										<AudioFileSource Name="dryfootstep6" ID="{E9D1FDCC-82BA-4FCF-8AC5-52F510F964B2}" ShortID="588447581">
 											<Language>SFX</Language>
-											<AudioFile>footstep6.wav</AudioFile>
+											<AudioFile>dryfootstep6.wav</AudioFile>
 										</AudioFileSource>
 									</ChildrenList>
 									<ActiveSourceList>
-										<ActiveSource Name="footstep6" ID="{F73CB729-7EB6-477D-A535-CC859312C6B0}" Platform="Linked"/>
+										<ActiveSource Name="dryfootstep6" ID="{E9D1FDCC-82BA-4FCF-8AC5-52F510F964B2}" Platform="Linked"/>
 									</ActiveSourceList>
 								</Sound>
-								<Sound Name="Footstep_06" ID="{A82EA6E0-325F-4873-B1C0-3991D3467FE7}" ShortID="1018213317">
+								<Sound Name="dryfootstep7" ID="{07E10D24-30D6-4C5F-8D71-8F0BC04D5421}" ShortID="783862813">
 									<ReferenceList>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{D4C10CFF-54D1-43E8-9949-15A35C036BE6}"/>
@@ -827,16 +846,16 @@
 										</Reference>
 									</ReferenceList>
 									<ChildrenList>
-										<AudioFileSource Name="footstep7" ID="{9C1E58D6-DFB4-4A53-A8B3-E3D77A20317C}" ShortID="521172361">
+										<AudioFileSource Name="dryfootstep7" ID="{4C40788D-1312-45D8-942C-FE15D3D74045}" ShortID="72898358">
 											<Language>SFX</Language>
-											<AudioFile>footstep7.wav</AudioFile>
+											<AudioFile>dryfootstep7.wav</AudioFile>
 										</AudioFileSource>
 									</ChildrenList>
 									<ActiveSourceList>
-										<ActiveSource Name="footstep7" ID="{9C1E58D6-DFB4-4A53-A8B3-E3D77A20317C}" Platform="Linked"/>
+										<ActiveSource Name="dryfootstep7" ID="{4C40788D-1312-45D8-942C-FE15D3D74045}" Platform="Linked"/>
 									</ActiveSourceList>
 								</Sound>
-								<Sound Name="Footstep_07" ID="{382BAA92-59D8-482C-AE03-750D8D8A464C}" ShortID="342753998">
+								<Sound Name="dryfootstep8" ID="{E7F8D2C1-7859-4897-B2AE-1DAD14D9FC19}" ShortID="481296442">
 									<ReferenceList>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{D4C10CFF-54D1-43E8-9949-15A35C036BE6}"/>
@@ -846,13 +865,13 @@
 										</Reference>
 									</ReferenceList>
 									<ChildrenList>
-										<AudioFileSource Name="footstep8" ID="{B7E343E4-96DD-4A7A-B2D9-9950CF95A5D1}" ShortID="537872262">
+										<AudioFileSource Name="dryfootstep8" ID="{C085F071-5141-4AFD-9B09-AC892CAD50F7}" ShortID="561083839">
 											<Language>SFX</Language>
-											<AudioFile>footstep8.wav</AudioFile>
+											<AudioFile>dryfootstep8.wav</AudioFile>
 										</AudioFileSource>
 									</ChildrenList>
 									<ActiveSourceList>
-										<ActiveSource Name="footstep8" ID="{B7E343E4-96DD-4A7A-B2D9-9950CF95A5D1}" Platform="Linked"/>
+										<ActiveSource Name="dryfootstep8" ID="{C085F071-5141-4AFD-9B09-AC892CAD50F7}" Platform="Linked"/>
 									</ActiveSourceList>
 								</Sound>
 							</ChildrenList>

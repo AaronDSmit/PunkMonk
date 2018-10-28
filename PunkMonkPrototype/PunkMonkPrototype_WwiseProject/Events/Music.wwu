@@ -8,13 +8,11 @@
 						<Action Name="" ID="{2D0A69C7-B072-4415-B18C-0EA403EB269C}" ShortID="311370763">
 							<PropertyList>
 								<Property Name="ActionType" Type="int16" Value="1"/>
-								<Property Name="Delay" Type="Real64" Value="0.5"/>
 								<Property Name="FadeInCurve" Type="int16" Value="1"/>
-								<Property Name="FadeTime" Type="Real64" Value="0.5"/>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="Combat_FullLoop_v1" ID="{9772456A-2D26-4AF7-803B-F2CF8A85BD24}" WorkUnitID="{4DB86490-E208-4AE5-878B-DD391FBC0583}"/>
+									<ObjectRef Name="combat" ID="{8025F084-360F-44F0-A30C-392B6B5B1F08}" WorkUnitID="{4DB86490-E208-4AE5-878B-DD391FBC0583}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
@@ -38,6 +36,16 @@
 							<ReferenceList>
 								<Reference Name="Target">
 									<ObjectRef Name="Bus_Ambient" ID="{C670AFFA-7BE7-49F5-8F3D-09EC259CD1DA}" WorkUnitID="{17B85F81-D4B6-4851-8C1E-9D808D7B1DC8}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{F6B713F7-4FB4-4DD6-801A-6447043FD8CA}" ShortID="979817079">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="1"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="combat-start" ID="{0D92CD72-8254-4E2F-8F2C-1A6E9E8511EF}" WorkUnitID="{BE193198-07FD-4919-8584-0C834CF482F7}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
@@ -86,6 +94,35 @@
 							<ReferenceList>
 								<Reference Name="Target">
 									<ObjectRef Name="FreeRoam" ID="{453E122F-9C7C-4431-88E6-8DCBBBBB87C5}" WorkUnitID="{480BEEB4-E973-4879-8438-D429C81A278F}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="MenuStart" ID="{2EB35268-2942-4848-A1DD-C83C5D9CEDE4}">
+					<ChildrenList>
+						<Action Name="" ID="{92400FB1-6BE5-45C0-9CF8-CEC18BBC8353}" ShortID="454225822">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="1"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="menu" ID="{44A8519B-A1DE-4C96-85F6-239D2392FE7D}" WorkUnitID="{4DB86490-E208-4AE5-878B-DD391FBC0583}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="MenuEnd" ID="{CF56F973-D747-4D85-A676-B26FBDE838C2}">
+					<ChildrenList>
+						<Action Name="" ID="{7405E758-B916-4BAB-86BB-6C6E13239FE0}" ShortID="960706151">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="Scope" Type="int16" Value="1"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="menu" ID="{44A8519B-A1DE-4C96-85F6-239D2392FE7D}" WorkUnitID="{4DB86490-E208-4AE5-878B-DD391FBC0583}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>

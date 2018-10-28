@@ -47,8 +47,8 @@ MonoBehaviour:
         ObjectType: 7
   EventWwu:
   - Guid: '{39BFD4E9-6B27-4210-9595-772619309430}'
-    m_lastTimePart2: -1999226488
-    m_lastTimePsrt1: 127116533
+    m_lastTimePart2: -1999225561
+    m_lastTimePsrt1: 923621317
     ParentPhysicalPath: 
     PhysicalPath: Events\Ambient.wwu
     List:
@@ -83,8 +83,8 @@ MonoBehaviour:
     PhysicalPath: Events\Default Work Unit.wwu
     List: []
   - Guid: '{19DB632E-BDAA-4DD2-8EA9-D61DFD814A2F}'
-    m_lastTimePart2: -1999226488
-    m_lastTimePsrt1: -320108752
+    m_lastTimePart2: -1999225555
+    m_lastTimePsrt1: 107167541
     ParentPhysicalPath: 
     PhysicalPath: Events\Music.wwu
     List:
@@ -136,9 +136,33 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
+    - Guid: 73f956cf47d7854da676b26fbde838c2
+      ID: -325953673
+      Name: MenuEnd
+      Path: Music\MenuEnd
+      PathAndIcons:
+      - ElementName: Music
+        ObjectType: 12
+      - ElementName: MenuEnd
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - Guid: 6852b32e42294848a1ddc83c5d9cede4
+      ID: 1447920996
+      Name: MenuStart
+      Path: Music\MenuStart
+      PathAndIcons:
+      - ElementName: Music
+        ObjectType: 12
+      - ElementName: MenuStart
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
   - Guid: '{97043EB5-8AFD-479B-B7EC-1820B945D1D5}'
-    m_lastTimePart2: -1999226487
-    m_lastTimePsrt1: -1740558965
+    m_lastTimePart2: -1999225561
+    m_lastTimePsrt1: 923661317
     ParentPhysicalPath: 
     PhysicalPath: Events\SFX.wwu
     List:
@@ -625,9 +649,8 @@ MonoBehaviour:
   ExpandedItems:
   - /PunkMonkPrototype_WwiseProject
   - /PunkMonkPrototype_WwiseProject/Events
-  - /PunkMonkPrototype_WwiseProject/Events/Ambient
+  - /PunkMonkPrototype_WwiseProject/Events/Music
   - /PunkMonkPrototype_WwiseProject/Events/SFX
-  - /PunkMonkPrototype_WwiseProject/Events/SFX/World
   RtpcWwu:
   - Guid: '{0611EF02-C52F-4D22-840D-EF5CD7507B8B}'
     m_lastTimePart2: -1999227725

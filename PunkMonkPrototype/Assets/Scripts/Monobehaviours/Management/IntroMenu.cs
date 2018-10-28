@@ -20,6 +20,12 @@ public class IntroMenu : MonoBehaviour
     [SerializeField]
     private GameObject Credits;
 
+    [SerializeField]
+    private AK.Wwise.Event startMenuMusic;
+
+    [SerializeField]
+    private AK.Wwise.Event endMenuMusic;
+
     #endregion
 
     #region Local Fields
@@ -40,6 +46,8 @@ public class IntroMenu : MonoBehaviour
 
         StopAllCoroutines();
 
+        endMenuMusic.Post(gameObject);
+
         StartCoroutine(ChangeScenes());
     }
 
@@ -57,6 +65,7 @@ public class IntroMenu : MonoBehaviour
 
     private void Start()
     {
+        startMenuMusic.Post(gameObject);
      //   StartCoroutine(LoadScene());
     }
 

@@ -47,6 +47,10 @@ public class OverworldController : MonoBehaviour
             controller = value;
             animator = controller.GetComponentInChildren<Animator>();
         }
+        get
+        {
+            return controller;
+        }
     }
 
     #endregion

@@ -14,7 +14,7 @@ public class SFXEvent : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "EarthUnit")
+        if (other.tag == Manager.instance.PlayerController.GetComponent<OverworldController>().Controller.gameObject.tag)
         {
             inside = !inside;
             if (inside == true)

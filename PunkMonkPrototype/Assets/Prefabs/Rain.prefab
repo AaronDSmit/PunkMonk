@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 198662502168888584}
   - component: {fileID: 199174907768812560}
   m_Layer: 0
-  m_Name: Particle System
+  m_Name: Rain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

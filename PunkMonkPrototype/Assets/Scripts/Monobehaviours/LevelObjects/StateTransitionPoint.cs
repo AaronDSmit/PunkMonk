@@ -9,6 +9,8 @@ public class StateTransitionPoint : MonoBehaviour
 
     [SerializeField] private Conversation conversation;
 
+    [SerializeField] private int camZMax, camZMin, camXMax, camXMin;
+
     [SerializeField]
     public bool hasBoss;
 
@@ -148,6 +150,13 @@ public class StateTransitionPoint : MonoBehaviour
                 Manager.instance.TurnController.BattleID = index;
                 Manager.instance.StateController.ChangeGameStateAfterDelay(targetState, StateManager.stateTransitionTime + 0.1f);
 
+                if(camZMax != 0)
+                {
+                    cam.ZMax = camZMax;
+                    cam.ZMin = camZMin;
+                    cam.XMax = camXMax;
+                    cam.XMin = camXMin;
+                }
 
 
                 triggered = true;

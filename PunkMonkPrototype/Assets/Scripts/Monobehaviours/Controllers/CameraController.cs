@@ -99,6 +99,38 @@ public class CameraController : MonoBehaviour
 
     public float GlamCamChance { get { return glamCamChance; } }
 
+    public int ZMax
+    {
+        set
+        {
+            zMax = value;
+        }
+    }
+
+    public int ZMin
+    {
+        set
+        {
+            zMin = value;
+        }
+    }
+
+    public int XMax
+    {
+        set
+        {
+            xMax = value;
+        }
+    }
+
+    public int XMin
+    {
+        set
+        {
+            xMin = value;
+        }
+    }
+
     private void Awake()
     {
         Manager.instance.StateController.OnGameStateChanged += GameStateChanged;

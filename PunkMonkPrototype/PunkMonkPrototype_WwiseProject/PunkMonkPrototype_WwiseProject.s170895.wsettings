@@ -83,10 +83,10 @@
 				<Property Name="ProjectExplorer\x64_Expanded_17_1" Type="string" Value=""/>
 				<Property Name="ProjectExplorer\x64_Expanded_18_1" Type="string" Value=""/>
 				<Property Name="ProjectExplorer\x64_Expanded_19_1" Type="string" Value=""/>
-				<Property Name="ProjectExplorer\x64_Expanded_1_1" Type="string" Value=""/>
+				<Property Name="ProjectExplorer\x64_Expanded_1_1" Type="string" Value="2KQUFaYdKkGhfnXKDCFJ84FfuBe21FFIjB6dgI17Hcg="/>
 				<Property Name="ProjectExplorer\x64_Expanded_20_1" Type="string" Value=""/>
 				<Property Name="ProjectExplorer\x64_Expanded_21_1" Type="string" Value=""/>
-				<Property Name="ProjectExplorer\x64_Expanded_2_1" Type="string" Value="kGS4TQji5UqHi905H7wFgw=="/>
+				<Property Name="ProjectExplorer\x64_Expanded_2_1" Type="string" Value="jDHvUKQ2tUK31R8c/UZjWQ4wQXYsOBhFgFpW735TXIDTJWZvM+UJRot1BsjbjYI/v+pdJIcV70eVPETR6EoYe5gxGb79BxlJhYQMg0z0gvcwPgHnL2fwSY6j5UUzNulFkGS4TQji5UqHi905H7wFgwsmpm5fvhFNvd2dzjHFzsFjmN6rTrSOT687vHwLBVdpyn6qML3dtE+RelRnzSOwPw=="/>
 				<Property Name="ProjectExplorer\x64_Expanded_3_1" Type="string" Value="6lSmWnc8c0GZz6Gjh/WvlunUvzknaxBClZV3JhkwlDBnSqFq9VPeRInCDtuT12UvtT4El/2Km0e37BgguUXR1Z3YcZbr245Lh+4CKBVzLWwuY9sZqr3STY6p1h39gUov"/>
 				<Property Name="ProjectExplorer\x64_Expanded_4_1" Type="string" Value=""/>
 				<Property Name="ProjectExplorer\x64_Expanded_5_1" Type="string" Value=""/>
@@ -96,6 +96,7 @@
 				<Property Name="RTPC\GameParameterSimValue\{04BE341D-2525-42D6-9527-E8A007F6B6E9}" Type="Real64" Value="50"/>
 				<Property Name="RTPC\GameParameterSimValue\{0C1833B7-2C39-400E-9893-B46799926B34}" Type="Real64" Value="50"/>
 				<Property Name="RTPC\GameParameterSimValue\{639D62C0-12E7-40C5-BA06-788DCA8BB6C0}" Type="Real64" Value="50"/>
+				<Property Name="RTPC\GameParameterSimValue\{FBA1B490-8D83-4297-918C-0C1B2430ECB2}" Type="Real64" Value="50"/>
 				<Property Name="SoundBank Manager\x64_Expand States" Type="string" Value="93Ntp6NetUazjxb3kprH3w=="/>
 				<Property Name="SoundBankHeaderFilePath" Type="string" Value="GeneratedSoundBanks\"/>
 				<Property Name="SoundBankPaths" Type="string">

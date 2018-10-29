@@ -648,9 +648,6 @@ MonoBehaviour:
       minDuration: 0
   ExpandedItems:
   - /PunkMonkPrototype_WwiseProject
-  - /PunkMonkPrototype_WwiseProject/Events
-  - /PunkMonkPrototype_WwiseProject/Events/Music
-  - /PunkMonkPrototype_WwiseProject/Events/SFX
   RtpcWwu:
   - Guid: '{0611EF02-C52F-4D22-840D-EF5CD7507B8B}'
     m_lastTimePart2: -1999227725

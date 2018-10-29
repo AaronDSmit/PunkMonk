@@ -8,7 +8,7 @@ public class SettingsHelper : MonoBehaviour
 
     private GameSettings currentSettings;
 
-    private void Awake()
+    private void OnEnable()
     {
         currentSettings = SettingsLoader.Instance.CurrentSettings;
     }
@@ -57,7 +57,8 @@ public class SettingsHelper : MonoBehaviour
 
     public void SetMasterVolumeSlider(Slider a_slider)
     {
-        currentSettings.Master = a_slider.value;
+        if (currentSettings != null)
+            currentSettings.Master = a_slider.value;
     }
 
     public void SetMusicVolumeSlider(Slider a_slider)

@@ -1,5 +1,7 @@
 Game Parameter	ID	Name			Wwise Object Path	Notes
+	988953028	SFXVolume			\Default Work Unit\Volume\SFXVolume	
 	2918011349	MasterVolume			\Default Work Unit\Volume\MasterVolume	
+	3546521921	AmbientVolume			\Default Work Unit\Volume\AmbientVolume	
 
 Audio Bus	ID	Name			Wwise Object Path	Notes
 	1162281553	Bus_Music			\Default Work Unit\Master Audio Bus\Bus_Music	

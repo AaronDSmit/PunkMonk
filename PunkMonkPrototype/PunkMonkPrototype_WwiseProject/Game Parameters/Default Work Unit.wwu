@@ -8,6 +8,7 @@
 						<GameParameter Name="MasterVolume" ID="{04BE341D-2525-42D6-9527-E8A007F6B6E9}"/>
 						<GameParameter Name="MusicVolume" ID="{0C1833B7-2C39-400E-9893-B46799926B34}"/>
 						<GameParameter Name="SFXVolume" ID="{639D62C0-12E7-40C5-BA06-788DCA8BB6C0}"/>
+						<GameParameter Name="AmbientVolume" ID="{FBA1B490-8D83-4297-918C-0C1B2430ECB2}"/>
 					</ChildrenList>
 				</Folder>
 			</ChildrenList>

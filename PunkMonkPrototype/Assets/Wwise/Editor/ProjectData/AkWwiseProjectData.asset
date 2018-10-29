@@ -24,8 +24,8 @@ MonoBehaviour:
     List: []
   AuxBusWwu:
   - Guid: '{17B85F81-D4B6-4851-8C1E-9D808D7B1DC8}'
-    m_lastTimePart2: -1999227725
-    m_lastTimePsrt1: 1778788309
+    m_lastTimePart2: -1999225515
+    m_lastTimePsrt1: -2048136259
     ParentPhysicalPath: 
     PhysicalPath: Master-Mixer Hierarchy\Default Work Unit.wwu
     List: []
@@ -650,11 +650,22 @@ MonoBehaviour:
   - /PunkMonkPrototype_WwiseProject
   RtpcWwu:
   - Guid: '{0611EF02-C52F-4D22-840D-EF5CD7507B8B}'
-    m_lastTimePart2: -1999227725
-    m_lastTimePsrt1: 1776419026
+    m_lastTimePart2: -1999225515
+    m_lastTimePsrt1: -2048026259
     ParentPhysicalPath: 
     PhysicalPath: Game Parameters\Default Work Unit.wwu
     List:
+    - Guid: 90b4a1fb838d9742918c0c1b2430ecb2
+      ID: -748445375
+      Name: AmbientVolume
+      Path: Default Work Unit\Volume\AmbientVolume
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Volume
+        ObjectType: 4
+      - ElementName: AmbientVolume
+        ObjectType: 13
     - Guid: 1d34be042525d6429527e8a007f6b6e9
       ID: -1376955947
       Name: MasterVolume

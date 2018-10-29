@@ -157,6 +157,13 @@ public class Unit : LivingEntity
 
     #region Public Methods
 
+    public override void TakeDamage(int a_damageAmount, Unit a_damageFrom)
+    {
+        base.TakeDamage(a_damageAmount, a_damageFrom);
+
+        animator.SetTrigger("Damage");
+    }
+
     public void BasicAttack(Hex[] a_targetTiles, System.Action a_start, System.Action a_finished)
     {
         animator.SetTrigger("BasicAttack");

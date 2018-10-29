@@ -9,6 +9,9 @@ public class MissileUnit : AI_Agent
     private int rechargeTurns = 1;
 
     [SerializeField]
+    private bool friendlyFire = true;
+
+    [SerializeField]
     private GameObject missilePrefab = null;
 
     private int turns = 0;
@@ -121,7 +124,7 @@ public class MissileUnit : AI_Agent
 
         if (a_tile.CurrentUnit != null)
         {
-            if (a_tile.CurrentUnit.Team != TEAM.ai)
+            if (friendlyFire || a_tile.CurrentUnit.Team == TEAM.player)
             {
                 a_tile.CurrentUnit.TakeDamage(damage, this);
             }

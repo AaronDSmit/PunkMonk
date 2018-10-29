@@ -5,6 +5,11 @@
 			<ChildrenList>
 				<Sound Name="Combat_FullLoop_v1" ID="{9772456A-2D26-4AF7-803B-F2CF8A85BD24}" ShortID="762252470">
 					<PropertyList>
+						<Property Name="Inclusion" Type="bool">
+							<ValueList>
+								<Value>False</Value>
+							</ValueList>
+						</Property>
 						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
 					</PropertyList>
 					<ReferenceList>
@@ -48,6 +53,9 @@
 					</ActiveSourceList>
 				</Sound>
 				<Sound Name="menu" ID="{44A8519B-A1DE-4C96-85F6-239D2392FE7D}" ShortID="195482033">
+					<PropertyList>
+						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Conversion">
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{D4C10CFF-54D1-43E8-9949-15A35C036BE6}"/>

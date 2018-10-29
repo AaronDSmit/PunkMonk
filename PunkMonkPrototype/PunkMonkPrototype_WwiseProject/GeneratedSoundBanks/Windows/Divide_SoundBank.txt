@@ -13,7 +13,6 @@ Event	ID	Name			Wwise Object Path	Notes
 	2560478693	Attack_Gen_Basic			\SFX\Battle\Attack\Gen\Attack_Gen_Basic	
 	2878671079	FootstepsOutside			\SFX\World\FootstepsOutside	
 	3969013623	MenuEnd			\Music\MenuEnd	
-	4139651882	Battle_Exit			\Music\Battle_Exit	
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	2960415	footstep2	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\footstep2_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\World\FootstepsOutside\footstep2		88264
@@ -28,7 +27,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	190340128	Attack_Enemy_Melee_02	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\RunnerAttack3_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\Battle\Attack\Enemy\Attack_Enemy_Runner\Attack_Enemy_Melee_02		192064
 	200744234	footstep3	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\footstep3_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\World\FootstepsOutside\footstep3		88264
 	346333071	Attack_Enemy_Melee_00	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\RunnerAttack1_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\Battle\Attack\Enemy\Attack_Enemy_Runner\Attack_Enemy_Melee_00		153664
-	466976067	menu	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\menu_56D34C19.wem		\Actor-Mixer Hierarchy\Default Work Unit\menu		12567340
+	466976067	menu	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\menu_8956FC97.wem		\Actor-Mixer Hierarchy\Default Work Unit\menu		12567340
 	472773207	Attack_Gen_Basic	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\GenAttack-normal_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\Battle\Attack\Gen\Attack_Gen_Basic		1136916
 	521172361	footstep7	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\footstep7_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\World\FootstepsOutside\footstep7		88264
 	537872262	footstep8	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\footstep8_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\World\FootstepsOutside\footstep8		88264
@@ -40,7 +39,6 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	624930658	combat	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\combat_8956FC97.wem		\Actor-Mixer Hierarchy\Default Work Unit\combat		15574336
 	661323299	dryfootstep2	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\dryfootstep2_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\World\Footsteps\dryfootstep2		58212
 	666064885	Attack_Enemy_Missile	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\missileAttack1_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\Battle\Attack\Enemy\Attack_Enemy_Missile		1562948
-	683211502	Combat_FullLoop_v1	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\Combat_FullLoop_v1_8956FC97.wem		\Actor-Mixer Hierarchy\Default Work Unit\Combat_FullLoop_v1		6248280
 	765782898	footstep4	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\footstep4_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\World\FootstepsOutside\footstep4		88264
 	789413211	footstep6	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\footstep6_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\World\FootstepsOutside\footstep6		88264
 	837258743	dryfootstep4	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\dryfootstep4_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\World\Footsteps\dryfootstep4		51936

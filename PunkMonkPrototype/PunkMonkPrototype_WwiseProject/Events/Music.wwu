@@ -61,7 +61,17 @@
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="Combat_FullLoop_v1" ID="{9772456A-2D26-4AF7-803B-F2CF8A85BD24}" WorkUnitID="{4DB86490-E208-4AE5-878B-DD391FBC0583}"/>
+									<ObjectRef Name="combat" ID="{8025F084-360F-44F0-A30C-392B6B5B1F08}" WorkUnitID="{4DB86490-E208-4AE5-878B-DD391FBC0583}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{BFBDA18D-D174-4D22-BC97-45234423422E}" ShortID="289851898">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="1"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="combat-start" ID="{0D92CD72-8254-4E2F-8F2C-1A6E9E8511EF}" WorkUnitID="{BE193198-07FD-4919-8584-0C834CF482F7}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>

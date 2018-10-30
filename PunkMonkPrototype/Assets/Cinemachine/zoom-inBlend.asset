@@ -20,5 +20,5 @@ MonoBehaviour:
   - m_From: StartCam
     m_To: Default
     m_Blend:
-      m_Style: 2
+      m_Style: 1
       m_Time: 10

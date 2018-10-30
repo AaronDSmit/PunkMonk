@@ -567,10 +567,10 @@ MonoBehaviour:
   zMin: 5
   xMax: 95
   xMin: 5
-  mousePanThresholdYUp: 5
-  mousePanThresholdYDown: 5
-  mousePanThresholdXLeft: 5
-  mousePanThresholdXRight: 5
+  mousePanThresholdYUp: 1
+  mousePanThresholdYDown: 1
+  mousePanThresholdXLeft: 1
+  mousePanThresholdXRight: 1
   scrollAmount: 2
   distance: 26
   minDistance: 8

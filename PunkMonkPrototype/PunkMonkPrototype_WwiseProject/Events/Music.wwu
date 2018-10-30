@@ -8,6 +8,7 @@
 						<Action Name="" ID="{2D0A69C7-B072-4415-B18C-0EA403EB269C}" ShortID="311370763">
 							<PropertyList>
 								<Property Name="ActionType" Type="int16" Value="1"/>
+								<Property Name="Delay" Type="Real64" Value="1"/>
 								<Property Name="FadeInCurve" Type="int16" Value="1"/>
 							</PropertyList>
 							<ReferenceList>

@@ -131,10 +131,16 @@ public class StateTransitionPoint : MonoBehaviour
             if (Manager.instance.StateController.CurrentGameState == fromState)
             {
                 PlayerController player = Manager.instance.PlayerController;
-
-                if (cam.TargetUnit != player.EarthUnit)
+                if (cameraTargetHex == null)
                 {
-                    cam.SwitchOverworldTargetUnit();
+                    if (cam.TargetUnit != player.EarthUnit)
+                    {
+                        cam.SwitchOverworldTargetUnit();
+                    }
+                }
+                else
+                {
+                    cam.LookAtPosition(cameraTargetHex.transform.position);
                 }
 
                 player.EncounterKillLimit = numberToKill;
@@ -164,6 +170,8 @@ public class StateTransitionPoint : MonoBehaviour
                     cam.XMax = (int)camBounds.z;
                     cam.XMin = (int)camBounds.w;
                 }
+
+
 
                 triggered = true;
                 MyEvent.Post(gameObject);

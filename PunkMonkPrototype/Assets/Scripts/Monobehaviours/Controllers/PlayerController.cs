@@ -1127,8 +1127,9 @@ public class PlayerController : MonoBehaviour
         if (a_newstate == GameState.battle)
         {
             canInteract = true;
-            SelectUnit(earthUnit);
+            SelectUnit(earthUnit, false);
         }
+
         else if (Manager.instance.StateController.CurrentGameState == GameState.transition && Manager.instance.StateController.StateBeforeTransition == GameState.battle)
         {
             DeselectUnit();

@@ -29,6 +29,8 @@ public class SFXManager : MonoBehaviour
     {
         rainOutside.Post(gameObject);
 
+        Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
+
         isReady = true;
     }
 

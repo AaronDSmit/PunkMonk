@@ -212,7 +212,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1549690363822962}
   m_LocalRotation: {x: -0, y: 0.27336955, z: -0, w: 0.9619091}
-  m_LocalPosition: {x: -21.06, y: 1.15, z: 3.87}
+  m_LocalPosition: {x: -21.327, y: 1.15, z: 4.035}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4866090208792456}
@@ -259,7 +259,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1331769141319558}
   m_LocalRotation: {x: -0, y: 0.27336955, z: -0, w: 0.9619091}
-  m_LocalPosition: {x: -21.06, y: 1.15, z: 3.87}
+  m_LocalPosition: {x: -21.327, y: 1.15, z: 4.034999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4814036840382110}
@@ -373,7 +373,7 @@ MonoBehaviour:
   m_UpdateMethod: 2
   m_DefaultBlend:
     m_Style: 1
-    m_Time: 0.5
+    m_Time: 0
   m_CustomBlends: {fileID: 11400000, guid: 734c78e5d95ba8248b5dac0275094f00, type: 2}
   m_CameraCutEvent:
     m_PersistentCalls:
@@ -440,7 +440,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: 18.042185, y: 4.6540003, z: 9.960045}
+  m_FollowOffset: {x: 18.051983, y: 4.6540003, z: 10.2670765}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -4038,7 +4038,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1648131724
+  randomSeed: -1277530648
   InitialModule:
     serializedVersion: 3
     enabled: 1

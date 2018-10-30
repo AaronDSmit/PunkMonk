@@ -88,22 +88,6 @@ public class SegmentedHealthBar : MonoBehaviour
                 }
             }
 
-            // Set the segments invisible for the missing health
-            for (int i = 0; i < maxHealth; i++)
-            {
-                //segments.GetChild(i).GetComponent<Image>().enabled = (i < currentHealth);
-                Material newMat = null;
-                if (i < currentHealth)
-                {
-                    newMat = healthMat;
-                }
-                else
-                {
-                    newMat = missingHealthMat;
-                }
-                segments.GetChild(i).GetComponent<Image>().material = newMat;
-            }
-
             // Set the position and scale of each segment using the Horizontal Layout Group
             groupLayout.spacing = borderWidth / 2.0f;
             Vector3 newSize = bg.sizeDelta;
@@ -112,6 +96,24 @@ public class SegmentedHealthBar : MonoBehaviour
             segments.sizeDelta = newSize;
 
         }
+
+        // Set the segments invisible for the missing health
+        for (int i = 0; i < maxHealth; i++)
+        {
+            //segments.GetChild(i).GetComponent<Image>().enabled = (i < currentHealth);
+            Material newMat = null;
+            if (i < currentHealth)
+            {
+                newMat = healthMat;
+            }
+            else
+            {
+                newMat = missingHealthMat;
+            }
+            segments.GetChild(i).GetComponent<Image>().material = newMat;
+        }
+
+
 
         if (Manager.instance.StateController.CurrentGameState == GameState.battle)
         {

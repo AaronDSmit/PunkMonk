@@ -14,7 +14,7 @@ public class LightFlicker : MonoBehaviour
     [SerializeField] private float maxWaitTime;
     [SerializeField] private bool stopFlickering;
 
-    private Light light;
+    private new Light light;
     private float baseIntensity;
     private bool flickering;
 

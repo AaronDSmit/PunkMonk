@@ -46,7 +46,7 @@ public class EasyDesignEditor : EditorWindow
     [SerializeField]
     private bool hasTileSelected = false;
     [SerializeField]
-    private bool hasTransitionSelected = false;
+    private bool hasSceneTransitionSelected = false;
     [SerializeField]
     private bool hasStateTransitionSelected = false;
     [SerializeField]
@@ -100,6 +100,10 @@ public class EasyDesignEditor : EditorWindow
     private bool hasBoss = false;
     [SerializeField]
     private int bossDamageGoal = 0;
+    [SerializeField]
+    private Hex cameraTargetHex = null;
+    [SerializeField]
+    public Vector4 camBounds = new Vector4(10, 10, 10, 10);
 
     [SerializeField]
     private Conversation convo;
@@ -159,6 +163,16 @@ public class EasyDesignEditor : EditorWindow
 
     private Vector3 prevPosition;
 
+    enum SelectionHexType
+    {
+        None,
+        EmptyHex,
+        EnemySpawn,
+        StateTransition,
+        SceneTransition
+    }
+
+    private SelectionHexType currSelectionType = SelectionHexType.None;
 
     #endregion
 
@@ -697,6 +711,7 @@ public class EasyDesignEditor : EditorWindow
 
             else if (selectedTab == 1)
             {
+
                 #region Player Spawn points 
 
                 GUILayout.Label("Player Spawn Points", centeredText);
@@ -779,226 +794,573 @@ public class EasyDesignEditor : EditorWindow
 
                 #endregion
 
-                EditorGUILayout.Space();
-
-                #region Enemy Spawn Points
-
-                GUILayout.Label("Enemy Spawn Points", centeredText);
-
-                EditorGUI.BeginDisabledGroup(!hasTileSelected);
-
                 EditorGUILayout.BeginHorizontal();
 
-                // if the selected tile has a Spawner change it rather than add a new one
-                if (hasSpawnerSelected)
-                {
-                    if (ColouredButton("Change " + spawnerButtonName, orangeColour))
-                    {
-                        foreach (Spawner spawner in selectedSpawners)
-                        {
-                            spawner.index = currentID;
-                            spawner.TurnToSpawn = turnToSpawn;
-                            spawner.hasVolt = hasVolt;
+                GUILayout.Label("Battle ID:");
 
-                            if (enemyType == UnitType.watcher)
-                            {
-                                spawner.UnitToSpawn = Resources.Load<AI_Agent>("EnemyCharacters/WatcherUnit");
-                                spawner.TextColour = Color.magenta;
-                            }
-                            else if (enemyType == UnitType.runner)
-                            {
-                                spawner.UnitToSpawn = Resources.Load<AI_Agent>("EnemyCharacters/RunnerUnit");
-                                spawner.TextColour = Color.red;
-                            }
-                            else if (enemyType == UnitType.missile)
-                            {
-                                spawner.UnitToSpawn = Resources.Load<AI_Agent>("EnemyCharacters/MissileUnit");
-                                spawner.TextColour = Color.grey;
-                            }
-                        }
-
-                        UpdateTriggerConnections();
-                    }
-                }
-                else
-                {
-                    Hex[] selectedTiles = Selection.GetFiltered<Hex>(SelectionMode.Deep);
-
-                    string buttonName = (selectedTiles.Length == 1) ? "Add Spawner" : "Add Spawners";
-
-                    if (ColouredButton(buttonName, greenColour))
-                    {
-                        foreach (Hex tile in selectedTiles)
-                        {
-                            GameObject spawnerGO = new GameObject("EnemySpawner");
-                            Spawner spawner = spawnerGO.AddComponent<Spawner>();
-                            spawner.drawText = true;
-                            spawner.currentHex = tile;
-                            spawner.index = currentID;
-                            spawner.hasVolt = hasVolt;
-
-                            if (enemyType == UnitType.watcher)
-                            {
-                                spawner.UnitToSpawn = Resources.Load<Unit>("EnemyCharacters/WatcherUnit");
-                                spawner.TextColour = Color.red;
-                            }
-                            else if (enemyType == UnitType.runner)
-                            {
-                                spawner.UnitToSpawn = Resources.Load<Unit>("EnemyCharacters/RunnerUnit");
-                                spawner.TextColour = Color.red;
-                            }
-                            else if (enemyType == UnitType.missile)
-                            {
-                                spawner.UnitToSpawn = Resources.Load<AI_Agent>("EnemyCharacters/MissileUnit");
-                                spawner.TextColour = Color.grey;
-                            }
-
-                            spawner.transform.parent = tile.transform;
-                            spawner.transform.position = tile.transform.position;
-                            spawner.transform.localEulerAngles = new Vector3(180, 0.0f, 0.0f);
-                            spawner.TurnToSpawn = turnToSpawn;
-                        }
-
-                        UpdateSpawnerSelection();
-
-
-                    }
-                }
-
-                EditorGUI.EndDisabledGroup();
-
-                GUILayout.Label("Turn:");
-
-                turnToSpawn = EditorGUILayout.IntField(turnToSpawn);
+                currentID = EditorGUILayout.IntField(currentID);
 
                 EditorGUILayout.EndHorizontal();
 
-                EditorGUILayout.BeginHorizontal();
-
-                GUILayout.Label("Enemy: ");
-
-                enemyType = (UnitType)EditorGUILayout.EnumPopup(enemyType);
-
-                GUILayout.Label("Has volt: ");
-
-                hasVolt = EditorGUILayout.Toggle(hasVolt, skin.GetStyle("toggle"));
-
-                EditorGUILayout.EndHorizontal();
-
-                EditorGUILayout.BeginHorizontal();
+                switch (currSelectionType)
                 {
-                    EditorGUI.BeginDisabledGroup(!hasSpawnerSelected);
-                    {
-                        if (ColouredButton("Set Door Hex", yellowColour))
+                    case SelectionHexType.None:
+                        GUILayout.Label("Select a Hex!", centeredText);
+                        break;
+                    case SelectionHexType.EmptyHex:
                         {
-                            // Find a hex that isn't a spawner
-                            Hex hex = null;
-                            foreach (GameObject go in Selection.gameObjects)
-                            {
-                                if (go.GetComponentInChildren<Spawner>() == false)
-                                {
-                                    hex = go.GetComponent<Hex>();
-                                    break;
-                                }
-                            }
-                            // If a hex was found set all selected spawners to use it
-                            if (hex)
-                            {
-                                foreach (Spawner spawner in selectedSpawners)
-                                {
-                                    spawner.doorHex = hex;
-                                }
-                            }
-                        }
+                            GUILayout.Label("EmptyHex Selected", centeredText);
 
-                        if (ColouredButton("Set Target Hex", orangeColour))
-                        {
-                            // Find a hex that isn't a spawner
-                            Hex hex = null;
-                            foreach (GameObject go in Selection.gameObjects)
+                            EditorGUILayout.BeginHorizontal(); // Add spawners button
                             {
-                                if (go.GetComponentInChildren<Spawner>() == false)
+                                Hex[] selectedTiles = Selection.GetFiltered<Hex>(SelectionMode.Deep);
+                                string buttonName = (selectedTiles.Length == 1) ? "Add Spawner" : "Add Spawners";
+
+                                if (ColouredButton(buttonName, greenColour))
                                 {
-                                    hex = go.GetComponent<Hex>();
-                                    break;
+                                    foreach (Hex tile in selectedTiles)
+                                    {
+                                        GameObject spawnerGO = new GameObject("EnemySpawner");
+                                        Spawner spawner = spawnerGO.AddComponent<Spawner>();
+                                        spawner.drawText = true;
+                                        spawner.currentHex = tile;
+                                        spawner.index = currentID;
+                                        spawner.hasVolt = hasVolt;
+
+                                        if (enemyType == UnitType.watcher)
+                                        {
+                                            spawner.UnitToSpawn = Resources.Load<Unit>("EnemyCharacters/WatcherUnit");
+                                            spawner.TextColour = Color.red;
+                                        }
+                                        else if (enemyType == UnitType.runner)
+                                        {
+                                            spawner.UnitToSpawn = Resources.Load<Unit>("EnemyCharacters/RunnerUnit");
+                                            spawner.TextColour = Color.red;
+                                        }
+                                        else if (enemyType == UnitType.missile)
+                                        {
+                                            spawner.UnitToSpawn = Resources.Load<AI_Agent>("EnemyCharacters/MissileUnit");
+                                            spawner.TextColour = Color.grey;
+                                        }
+
+                                        spawner.transform.parent = tile.transform;
+                                        spawner.transform.position = tile.transform.position;
+                                        spawner.transform.localEulerAngles = new Vector3(180, 0.0f, 0.0f);
+                                        spawner.TurnToSpawn = turnToSpawn;
+
+                                        currSelectionType = SelectionHexType.EnemySpawn;
+                                    }
+
+                                    UpdateSpawnerSelection();
+
+
                                 }
                             }
-                            // If a hex was found set all selected spawners to use it
-                            if (hex)
+                            EditorGUILayout.EndHorizontal();
+
+                            EditorGUILayout.BeginHorizontal(); // Add State Transition button
                             {
-                                foreach (Spawner spawner in selectedSpawners)
+                                if (ColouredButton("Add State Transition", greenColour))
                                 {
-                                    spawner.targetHex = hex;
+                                    Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
+
+                                    GameObject transitionGO = new GameObject("stateTransition");
+
+                                    StateTransitionPoint sceneTransition = transitionGO.AddComponent<StateTransitionPoint>();
+                                    sceneTransition.TargetState = targetState;
+                                    sceneTransition.CurrentState = currentState;
+                                    sceneTransition.numberToKill = numberToKill;
+                                    sceneTransition.voltGiven = voltGiven;
+
+                                    sceneTransition.Conversation = convo;
+
+                                    sceneTransition.drawText = true;
+                                    sceneTransition.index = currentID;
+
+                                    BoxCollider trigger = transitionGO.AddComponent<BoxCollider>();
+                                    trigger.isTrigger = true;
+
+                                    sceneTransition.transform.parent = tile.transform;
+                                    sceneTransition.transform.position = tile.transform.position;
+
+                                    currSelectionType = SelectionHexType.StateTransition;
                                 }
                             }
+                            EditorGUILayout.EndHorizontal();
+
+                            EditorGUILayout.BeginHorizontal(); // Add Scene Transition button
+                            {
+                                if (ColouredButton("Add Scene Transition", greenColour))
+                                {
+                                    Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
+
+                                    GameObject transitionGO = new GameObject("SceneTransition");
+
+                                    SceneTransitionPoint transition = transitionGO.AddComponent<SceneTransitionPoint>();
+                                    transition.NextLevelIndex = loadLevel;
+                                    transition.drawText = true;
+
+                                    BoxCollider trigger = transitionGO.AddComponent<BoxCollider>();
+                                    trigger.isTrigger = true;
+
+                                    transition.transform.parent = tile.transform;
+                                    transition.transform.position = tile.transform.position;
+
+                                    currSelectionType = SelectionHexType.SceneTransition;
+                                }
+
+                            }
+                            EditorGUILayout.EndHorizontal();
                         }
-                    }
-                    EditorGUI.EndDisabledGroup();
+                        break;
+                    case SelectionHexType.EnemySpawn:
+                        {
+                            GUILayout.Label("Enemy Spawn Points", centeredText);
+
+                            EditorGUILayout.BeginHorizontal();
+
+                            // if the selected tile has a Spawner change it rather than add a new one
+                            if (hasSpawnerSelected)
+                            {
+                                if (ColouredButton("Change " + spawnerButtonName, orangeColour))
+                                {
+                                    foreach (Spawner spawner in selectedSpawners)
+                                    {
+                                        spawner.index = currentID;
+                                        spawner.TurnToSpawn = turnToSpawn;
+                                        spawner.hasVolt = hasVolt;
+
+                                        if (enemyType == UnitType.watcher)
+                                        {
+                                            spawner.UnitToSpawn = Resources.Load<AI_Agent>("EnemyCharacters/WatcherUnit");
+                                            spawner.TextColour = Color.magenta;
+                                        }
+                                        else if (enemyType == UnitType.runner)
+                                        {
+                                            spawner.UnitToSpawn = Resources.Load<AI_Agent>("EnemyCharacters/RunnerUnit");
+                                            spawner.TextColour = Color.red;
+                                        }
+                                        else if (enemyType == UnitType.missile)
+                                        {
+                                            spawner.UnitToSpawn = Resources.Load<AI_Agent>("EnemyCharacters/MissileUnit");
+                                            spawner.TextColour = Color.grey;
+                                        }
+                                    }
+
+                                    UpdateSpawnerSelection();
+                                }
+                            }
+
+                            GUILayout.Label("Turn:");
+
+                            turnToSpawn = EditorGUILayout.IntField(turnToSpawn);
+
+                            EditorGUILayout.EndHorizontal();
+
+                            EditorGUILayout.BeginHorizontal();
+
+                            GUILayout.Label("Enemy: ");
+
+                            enemyType = (UnitType)EditorGUILayout.EnumPopup(enemyType);
+
+                            GUILayout.Label("Has volt: ");
+
+                            hasVolt = EditorGUILayout.Toggle(hasVolt, skin.GetStyle("toggle"));
+
+                            EditorGUILayout.EndHorizontal();
+
+                            EditorGUILayout.BeginHorizontal();
+                            {
+
+                                if (ColouredButton("Set Door Hex", yellowColour))
+                                {
+                                    // Find a hex that isn't a spawner
+                                    Hex hex = null;
+                                    foreach (GameObject go in Selection.gameObjects)
+                                    {
+                                        if (go.GetComponentInChildren<Spawner>() == false)
+                                        {
+                                            hex = go.GetComponent<Hex>();
+                                            break;
+                                        }
+                                    }
+                                    // If a hex was found set all selected spawners to use it
+                                    if (hex)
+                                    {
+                                        foreach (Spawner spawner in selectedSpawners)
+                                        {
+                                            spawner.doorHex = hex;
+                                        }
+                                    }
+                                }
+
+                                if (ColouredButton("Set Target Hex", orangeColour))
+                                {
+                                    // Find a hex that isn't a spawner
+                                    Hex hex = null;
+                                    foreach (GameObject go in Selection.gameObjects)
+                                    {
+                                        if (go.GetComponentInChildren<Spawner>() == false)
+                                        {
+                                            hex = go.GetComponent<Hex>();
+                                            break;
+                                        }
+                                    }
+                                    // If a hex was found set all selected spawners to use it
+                                    if (hex)
+                                    {
+                                        foreach (Spawner spawner in selectedSpawners)
+                                        {
+                                            spawner.targetHex = hex;
+                                        }
+                                    }
+                                }
+
+                            }
+                            EditorGUILayout.EndHorizontal();
+
+                            EditorGUILayout.Space();
+
+                            if (hasSpawnerSelected && enemyType == UnitType.missile)
+                            {
+                                EditorGUILayout.BeginHorizontal();
+                                {
+
+                                    if (ColouredButton("Set run hex", yellowColour))
+                                    {
+                                        // Find a hex that isn't a spawner
+                                        Hex hex = null;
+                                        foreach (GameObject go in Selection.gameObjects)
+                                        {
+                                            if (go.GetComponentInChildren<Spawner>() == false)
+                                            {
+                                                hex = go.GetComponent<Hex>();
+                                                break;
+                                            }
+                                        }
+                                        // If a hex was found set all selected spawners to use it
+                                        if (hex)
+                                        {
+                                            foreach (Spawner spawner in selectedSpawners)
+                                            {
+                                                spawner.runHex = hex;
+                                            }
+                                        }
+                                    }
+
+                                }
+                                EditorGUILayout.EndHorizontal();
+                            }
+
+                            EditorGUILayout.Space();
+
+                            EditorGUILayout.BeginHorizontal();
+
+                            if (ColouredButton("Remove " + spawnerButtonName, redColour))
+                            {
+                                GameObject[] selectedObjects = Selection.gameObjects;
+
+                                foreach (GameObject obj in selectedObjects)
+                                {
+                                    Hex[] tiles = obj.GetComponentsInChildren<Hex>();
+
+                                    foreach (Hex tile in tiles)
+                                    {
+                                        if (tile.GetComponentInChildren<Spawner>())
+                                        {
+                                            DestroyImmediate(tile.GetComponentInChildren<Spawner>().gameObject);
+                                        }
+                                    }
+                                }
+
+                                UpdateTriggerConnections();
+                                UpdateSpawnerSelection();
+                                currentID = 0;
+
+                                UpdateSelection();
+                            }
+
+                            EditorGUILayout.EndHorizontal();
+                        }
+                        break;
+                    case SelectionHexType.StateTransition:
+                        {
+
+                            GUILayout.Label("State Transition:", centeredText);
+
+                            EditorGUILayout.BeginHorizontal();
+
+                            // if the selected tile has a scene transition change it rather than add a new one
+                            if (Selection.gameObjects.Length == 1 && Selection.gameObjects[0].GetComponentInChildren<StateTransitionPoint>())
+                            {
+                                if (ColouredButton("Change Transition", orangeColour))
+                                {
+                                    StateTransitionPoint newStateTransition = Selection.gameObjects[0].GetComponentInChildren<StateTransitionPoint>();
+                                    newStateTransition.TargetState = targetState;
+                                    newStateTransition.CurrentState = currentState;
+                                    newStateTransition.numberToKill = numberToKill;
+                                    newStateTransition.hasBoss = hasBoss;
+                                    newStateTransition.bossDamage = bossDamageGoal;
+                                    newStateTransition.voltGiven = voltGiven;
+                                    newStateTransition.EarthDirection = earthDirection;
+                                    newStateTransition.LightningDirection = lightningDirection;
+                                    newStateTransition.Conversation = convo;
+                                    newStateTransition.camBounds = camBounds;
+                                    newStateTransition.cameraTargetHex = cameraTargetHex;
+
+                                    newStateTransition.index = currentID;
+                                }
+                            }
+
+                            EditorGUILayout.EndHorizontal();
+
+                            EditorGUILayout.BeginHorizontal();
+
+                            GUILayout.Label("From ");
+
+                            currentState = (GameState)EditorGUILayout.EnumPopup(currentState);
+
+                            GUILayout.Label(" To ");
+
+                            targetState = (GameState)EditorGUILayout.EnumPopup(targetState);
+
+                            EditorGUILayout.EndHorizontal();
+
+                            if (targetState == GameState.battle)
+                            {
+                                EditorGUILayout.BeginHorizontal();
+                                {
+                                    GUILayout.Label("Enemies to kill ");
+                                    numberToKill = EditorGUILayout.IntField(numberToKill);
+                                    GUILayout.Label("Has Boss");
+                                    hasBoss = EditorGUILayout.Toggle(hasBoss);
+                                }
+                                EditorGUILayout.EndHorizontal();
+
+                                if (hasBoss)
+                                {
+                                    EditorGUILayout.BeginHorizontal();
+                                    {
+                                        GUILayout.Label("Boss Damage ");
+                                        bossDamageGoal = EditorGUILayout.IntField(bossDamageGoal);
+                                    }
+                                    EditorGUILayout.EndHorizontal();
+                                }
+                            }
+                            else if (targetState == GameState.cinematic)
+                            {
+                                EditorGUILayout.BeginHorizontal();
+                                {
+                                    GUILayout.Label("Conversation");
+                                    convo = EditorGUILayout.ObjectField("", convo, typeof(Conversation), true) as Conversation;
+                                }
+                                EditorGUILayout.EndHorizontal();
+                            }
+
+                            EditorGUILayout.BeginHorizontal();
+
+                            GUILayout.Label("Volt Given to the player");
+
+                            voltGiven = EditorGUILayout.IntField(voltGiven);
+
+                            EditorGUILayout.EndHorizontal();
+
+                            EditorGUILayout.Space();
+
+                            EditorGUILayout.BeginHorizontal();
+
+
+                            if (ColouredButton("Earth Hex", brownColour))
+                            {
+                                // Find a hex that isn't a State Transition
+                                Hex hex = null;
+                                foreach (GameObject go in Selection.gameObjects)
+                                {
+                                    if (go.GetComponentInChildren<StateTransitionPoint>() == false)
+                                    {
+                                        hex = go.GetComponent<Hex>();
+                                        break;
+                                    }
+                                }
+
+                                StateTransitionPoint[] transitions = FindObjectsOfType<StateTransitionPoint>();
+
+                                foreach (StateTransitionPoint point in selectedTransitionPoints)
+                                    point.EarthHex = hex;
+                            }
+
+                            earthDirection = (HexDirection)EditorGUILayout.EnumPopup(earthDirection);
+
+                            EditorGUILayout.EndHorizontal();
+
+                            EditorGUILayout.BeginHorizontal();
+
+                            if (ColouredButton("Lightning Hex", blueColour))
+                            {
+                                // Find a hex that isn't a State Transition
+                                Hex hex = null;
+                                foreach (GameObject go in Selection.gameObjects)
+                                {
+                                    if (go.GetComponentInChildren<StateTransitionPoint>() == false)
+                                    {
+                                        hex = go.GetComponent<Hex>();
+                                        break;
+                                    }
+                                }
+
+                                StateTransitionPoint[] transitions = FindObjectsOfType<StateTransitionPoint>();
+
+                                foreach (StateTransitionPoint point in selectedTransitionPoints)
+                                    point.LightningHex = hex;
+                            }
+
+                            lightningDirection = (HexDirection)EditorGUILayout.EnumPopup(lightningDirection);
+
+                            EditorGUILayout.EndHorizontal();
+
+                            EditorGUILayout.BeginHorizontal();
+                            {
+                                if (ColouredButton("Set Camera Hex", orangeColour))
+                                {
+                                    // Find a hex that isn't a State Transition
+                                    Hex hex = null;
+                                    foreach (GameObject go in Selection.gameObjects)
+                                    {
+                                        if (go.GetComponentInChildren<StateTransitionPoint>() == false)
+                                        {
+                                            hex = go.GetComponent<Hex>();
+                                            break;
+                                        }
+                                    }
+
+                                    StateTransitionPoint[] transitions = FindObjectsOfType<StateTransitionPoint>();
+
+                                    foreach (StateTransitionPoint point in selectedTransitionPoints)
+                                        point.cameraTargetHex = hex;
+                                }
+
+                            }
+                            EditorGUILayout.EndHorizontal();
+
+                            EditorGUILayout.BeginHorizontal();
+
+                            GUILayout.Label("CameraBounds");
+
+                            EditorGUILayout.EndHorizontal();
+                            EditorGUILayout.BeginHorizontal();
+
+                            GUILayout.Label("Z Max, Min");
+
+                            int camZMax = EditorGUILayout.IntField((int)camBounds.x);
+                            int camZMin = EditorGUILayout.IntField((int)camBounds.y);
+
+                            EditorGUILayout.EndHorizontal();
+                            EditorGUILayout.BeginHorizontal();
+
+                            GUILayout.Label("X Max, Min");
+
+                            int camXMax = EditorGUILayout.IntField((int)camBounds.z);
+                            int camXMin = EditorGUILayout.IntField((int)camBounds.w);
+
+                            camBounds = new Vector4(camZMax, camZMin, camXMax, camXMin);
+
+                            EditorGUILayout.EndHorizontal();
+
+                            // Check point
+                            if (ColouredButton("Check Point Hex", yellowColour))
+                            {
+                                // Find a hex that isn't a State Transition
+                                Hex hex = null;
+                                foreach (GameObject go in Selection.gameObjects)
+                                {
+                                    if (go.GetComponentInChildren<StateTransitionPoint>() == false)
+                                    {
+                                        hex = go.GetComponent<Hex>();
+                                        break;
+                                    }
+                                }
+
+                                StateTransitionPoint[] transitions = FindObjectsOfType<StateTransitionPoint>();
+
+                                foreach (StateTransitionPoint point in selectedTransitionPoints)
+                                    point.SetCheckPoint(hex);
+                            }
+
+                            EditorGUILayout.Space();
+
+                            EditorGUILayout.BeginHorizontal();
+
+                            if (ColouredButton("Remove State Transition", redColour))
+                            {
+                                GameObject[] selectedObjects = Selection.gameObjects;
+
+                                StateTransitionPoint transition = selectedObjects[0].GetComponentInChildren<StateTransitionPoint>();
+
+                                DestroyImmediate(transition.gameObject);
+
+                                UpdateSelection();
+                            }
+
+                            EditorGUILayout.EndHorizontal();
+
+                        }
+                        break;
+                    case SelectionHexType.SceneTransition:
+                        {
+                            GUILayout.Label("Scene Transition:", centeredText);
+
+                            EditorGUILayout.BeginHorizontal();
+
+                            // if the selected tile has a scene transition change it rather than add a new one
+                            if (Selection.gameObjects.Length == 1 && Selection.gameObjects[0].GetComponentInChildren<SceneTransitionPoint>())
+                            {
+                                if (ColouredButton("Change Transition", orangeColour))
+                                {
+                                    SceneTransitionPoint transition = Selection.gameObjects[0].GetComponentInChildren<SceneTransitionPoint>();
+                                    transition.NextLevelIndex = loadLevel;
+                                }
+                            }
+
+                            GUILayout.Label("Load Level:");
+
+                            loadLevel = EditorGUILayout.IntField(loadLevel);
+
+                            EditorGUILayout.EndHorizontal();
+
+                            EditorGUILayout.Space();
+
+                            EditorGUILayout.BeginHorizontal();
+
+                            if (ColouredButton("Remove Scene Transition", redColour))
+                            {
+                                GameObject[] selectedObjects = Selection.gameObjects;
+
+                                SceneTransitionPoint transition = selectedObjects[0].GetComponentInChildren<SceneTransitionPoint>();
+
+                                DestroyImmediate(transition.gameObject);
+
+                                UpdateSelection();
+                            }
+
+
+                            EditorGUILayout.EndHorizontal();
+
+                            EditorGUILayout.Space();
+
+                        }
+                        break;
+                    default:
+                        GUILayout.Label("Something went wrong. Contact programmer", centeredText);
+                        break;
                 }
-                EditorGUILayout.EndHorizontal();
 
                 EditorGUILayout.Space();
-
-                if (hasSpawnerSelected && enemyType == UnitType.missile)
-                {
-                    EditorGUILayout.BeginHorizontal();
-                    {
-
-                        if (ColouredButton("Set run hex", yellowColour))
-                        {
-                            // Find a hex that isn't a spawner
-                            Hex hex = null;
-                            foreach (GameObject go in Selection.gameObjects)
-                            {
-                                if (go.GetComponentInChildren<Spawner>() == false)
-                                {
-                                    hex = go.GetComponent<Hex>();
-                                    break;
-                                }
-                            }
-                            // If a hex was found set all selected spawners to use it
-                            if (hex)
-                            {
-                                foreach (Spawner spawner in selectedSpawners)
-                                {
-                                    spawner.runHex = hex;
-                                }
-                            }
-                        }
-
-                    }
-                    EditorGUILayout.EndHorizontal();
-                }
-
+                EditorGUILayout.Space();
+                EditorGUILayout.Space();
+                EditorGUILayout.Space();
                 EditorGUILayout.Space();
 
-                EditorGUILayout.BeginHorizontal();
-
-                EditorGUI.BeginDisabledGroup(!hasSpawnerSelected);
-
-                if (ColouredButton("Remove " + spawnerButtonName, redColour))
-                {
-                    GameObject[] selectedObjects = Selection.gameObjects;
-
-                    foreach (GameObject obj in selectedObjects)
-                    {
-                        Hex[] tiles = obj.GetComponentsInChildren<Hex>();
-
-                        foreach (Hex tile in tiles)
-                        {
-                            if (tile.GetComponentInChildren<Spawner>())
-                            {
-                                DestroyImmediate(tile.GetComponentInChildren<Spawner>().gameObject);
-                            }
-                        }
-                    }
-
-                    UpdateTriggerConnections();
-                    UpdateSpawnerSelection();
-                    currentID = 0;
-                }
-
-                EditorGUI.EndDisabledGroup();
+                #region Remove all
 
                 if (ColouredButton("Remove All Spawners", redColour))
                 {
@@ -1015,262 +1377,9 @@ public class EasyDesignEditor : EditorWindow
                     UpdateTriggerConnections();
                     UpdateSpawnerSelection();
                     currentID = 0;
+
+                    UpdateSelection();
                 }
-
-                EditorGUILayout.EndHorizontal();
-
-                #endregion
-
-                EditorGUILayout.Space();
-
-                #region Spawn Triggers
-
-                GUILayout.Label("Spawn Triggers:", centeredText);
-
-                EditorGUI.BeginDisabledGroup(Selection.gameObjects.Length != 1);
-
-                EditorGUILayout.BeginHorizontal();
-
-                // if the selected tile has a Spawner change it rather than add a new one
-                if (Selection.gameObjects.Length == 1 && Selection.gameObjects[0].GetComponentInChildren<SpawnTrigger>())
-                {
-
-                    if (ColouredButton("Change Trigger", orangeColour))
-                    {
-                        SpawnTrigger spawnTrigger = Selection.gameObjects[0].GetComponentInChildren<SpawnTrigger>();
-                        spawnTrigger.index = currentID;
-                        spawnTrigger.UpdateSpawnerList();
-                    }
-                }
-                else
-                {
-                    if (ColouredButton("Add Trigger", greenColour))
-                    {
-                        Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
-
-                        GameObject go = new GameObject("SpawnTrigger");
-                        go.transform.parent = tile.transform;
-                        go.transform.localPosition = Vector3.zero;
-
-                        BoxCollider collider = go.AddComponent<BoxCollider>();
-                        collider.isTrigger = true;
-
-                        SpawnTrigger spawnTrigger = go.AddComponent<SpawnTrigger>();
-                        spawnTrigger.UpdateSpawnerList();
-                    }
-                }
-
-                EditorGUI.EndDisabledGroup();
-
-                EditorGUI.BeginDisabledGroup(Selection.gameObjects.Length != 1 || !hasTriggerSelected);
-
-                if (ColouredButton("Remove Trigger", redColour))
-                {
-                    Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
-                    SpawnTrigger destroyedTrigger = tile.GetComponentInChildren<SpawnTrigger>();
-
-                    DestroyImmediate(destroyedTrigger);
-
-                    UpdateTriggerConnections();
-                    UpdateSpawnerSelection();
-                }
-
-                EditorGUILayout.EndHorizontal();
-
-                EditorGUI.EndDisabledGroup();
-
-                #endregion
-
-                EditorGUILayout.Space();
-
-                #region State Transition
-
-                GUILayout.Label("State Transition:", centeredText);
-
-                EditorGUI.BeginDisabledGroup(Selection.gameObjects.Length != 1 || !hasTileSelected);
-
-                EditorGUILayout.BeginHorizontal();
-
-                // if the selected tile has a scene transition change it rather than add a new one
-                if (Selection.gameObjects.Length == 1 && Selection.gameObjects[0].GetComponentInChildren<StateTransitionPoint>())
-                {
-                    if (ColouredButton("Change Transition", orangeColour))
-                    {
-                        StateTransitionPoint sceneTransition = Selection.gameObjects[0].GetComponentInChildren<StateTransitionPoint>();
-                        sceneTransition.TargetState = targetState;
-                        sceneTransition.CurrentState = currentState;
-                        sceneTransition.numberToKill = numberToKill;
-                        sceneTransition.hasBoss = hasBoss;
-                        sceneTransition.bossDamage = bossDamageGoal;
-                        sceneTransition.voltGiven = voltGiven;
-                        sceneTransition.EarthDirection = earthDirection;
-                        sceneTransition.LightningDirection = lightningDirection;
-                        sceneTransition.Conversation = convo;
-
-                        sceneTransition.index = currentID;
-                    }
-                }
-                else
-                {
-                    if (ColouredButton("Add Transition", greenColour))
-                    {
-                        Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
-
-                        GameObject transitionGO = new GameObject("stateTransition");
-
-                        StateTransitionPoint sceneTransition = transitionGO.AddComponent<StateTransitionPoint>();
-                        sceneTransition.TargetState = targetState;
-                        sceneTransition.CurrentState = currentState;
-                        sceneTransition.numberToKill = numberToKill;
-                        sceneTransition.voltGiven = voltGiven;
-
-                        sceneTransition.Conversation = convo;
-
-                        sceneTransition.drawText = true;
-                        sceneTransition.index = currentID;
-
-                        BoxCollider trigger = transitionGO.AddComponent<BoxCollider>();
-                        trigger.isTrigger = true;
-
-                        sceneTransition.transform.parent = tile.transform;
-                        sceneTransition.transform.position = tile.transform.position;
-                    }
-                }
-
-                EditorGUILayout.EndHorizontal();
-
-                EditorGUILayout.BeginHorizontal();
-
-                GUILayout.Label("From ");
-
-                currentState = (GameState)EditorGUILayout.EnumPopup(currentState);
-
-                GUILayout.Label(" To ");
-
-                targetState = (GameState)EditorGUILayout.EnumPopup(targetState);
-
-                EditorGUILayout.EndHorizontal();
-
-
-                if (targetState == GameState.battle)
-                {
-                    EditorGUILayout.BeginHorizontal();
-                    {
-                        GUILayout.Label("Enemies to kill ");
-                        numberToKill = EditorGUILayout.IntField(numberToKill);
-                        GUILayout.Label("Has Boss");
-                        hasBoss = EditorGUILayout.Toggle(hasBoss);
-                    }
-                    EditorGUILayout.EndHorizontal();
-
-                    if (hasBoss)
-                    {
-                        EditorGUILayout.BeginHorizontal();
-                        {
-                            GUILayout.Label("Boss Damage ");
-                            bossDamageGoal = EditorGUILayout.IntField(bossDamageGoal);
-                        }
-                        EditorGUILayout.EndHorizontal();
-                    }
-                }
-                else if (targetState == GameState.cinematic)
-                {
-                    EditorGUILayout.BeginHorizontal();
-                    {
-                        GUILayout.Label("Conversation");
-                        convo = EditorGUILayout.ObjectField("", convo, typeof(Conversation), true) as Conversation;
-                    }
-                    EditorGUILayout.EndHorizontal();
-                }
-
-                EditorGUILayout.BeginHorizontal();
-
-                GUILayout.Label("Volt Given to the player");
-
-                voltGiven = EditorGUILayout.IntField(voltGiven);
-
-                EditorGUILayout.EndHorizontal();
-
-                EditorGUILayout.Space();
-
-                EditorGUILayout.BeginHorizontal();
-
-                if (ColouredButton("Earth Hex", brownColour))
-                {
-                    Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
-
-                    StateTransitionPoint[] transitions = FindObjectsOfType<StateTransitionPoint>();
-
-                    foreach (StateTransitionPoint point in transitions)
-                    {
-                        if (point.index == currentID)
-                        {
-                            point.EarthHex = tile;
-                            point.EarthDirection = earthDirection;
-                        }
-                    }
-                }
-
-                earthDirection = (HexDirection)EditorGUILayout.EnumPopup(earthDirection);
-
-                EditorGUILayout.EndHorizontal();
-
-                EditorGUILayout.BeginHorizontal();
-
-                if (ColouredButton("Lightning Hex", blueColour))
-                {
-                    Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
-
-                    StateTransitionPoint[] transitions = FindObjectsOfType<StateTransitionPoint>();
-
-                    foreach (StateTransitionPoint point in transitions)
-                    {
-                        if (point.index == currentID)
-                        {
-                            point.LightningHex = tile;
-                            point.LightningDirection = lightningDirection;
-                        }
-                    }
-                }
-
-                lightningDirection = (HexDirection)EditorGUILayout.EnumPopup(lightningDirection);
-
-                EditorGUILayout.EndHorizontal();
-
-                // Check point
-                if (ColouredButton("Check Point Hex", yellowColour))
-                {
-                    Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
-
-                    StateTransitionPoint[] transitions = FindObjectsOfType<StateTransitionPoint>();
-
-                    foreach (StateTransitionPoint point in transitions)
-                    {
-                        if (point.index == currentID)
-                        {
-                            point.SetCheckPoint(tile);
-                        }
-                    }
-                }
-
-                EditorGUILayout.Space();
-
-                EditorGUI.EndDisabledGroup();
-
-                EditorGUILayout.BeginHorizontal();
-
-                EditorGUI.BeginDisabledGroup(!hasStateTransitionSelected || !hasTileSelected);
-
-                if (ColouredButton("Remove State Transition", redColour))
-                {
-                    GameObject[] selectedObjects = Selection.gameObjects;
-
-                    StateTransitionPoint transition = selectedObjects[0].GetComponentInChildren<StateTransitionPoint>();
-
-                    DestroyImmediate(transition.gameObject);
-                }
-
-                EditorGUI.EndDisabledGroup();
 
                 if (ColouredButton("Remove All State Transitions", redColour))
                 {
@@ -1280,75 +1389,9 @@ public class EasyDesignEditor : EditorWindow
                     {
                         DestroyImmediate(transition.gameObject);
                     }
+
+                    UpdateSelection();
                 }
-
-                EditorGUILayout.EndHorizontal();
-
-                #endregion
-
-                EditorGUILayout.Space();
-
-                #region Scene Transition
-
-                GUILayout.Label("Scene Transition:", centeredText);
-
-                EditorGUI.BeginDisabledGroup(Selection.gameObjects.Length != 1 || !hasTileSelected);
-
-                EditorGUILayout.BeginHorizontal();
-
-                // if the selected tile has a scene transition change it rather than add a new one
-                if (Selection.gameObjects.Length == 1 && Selection.gameObjects[0].GetComponentInChildren<SceneTransitionPoint>())
-                {
-                    if (ColouredButton("Change Transition", orangeColour))
-                    {
-                        SceneTransitionPoint transition = Selection.gameObjects[0].GetComponentInChildren<SceneTransitionPoint>();
-                        transition.NextLevelIndex = loadLevel;
-                    }
-                }
-                else
-                {
-                    if (ColouredButton("Add Transition", greenColour))
-                    {
-                        Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
-
-                        GameObject transitionGO = new GameObject("SceneTransition");
-
-                        SceneTransitionPoint transition = transitionGO.AddComponent<SceneTransitionPoint>();
-                        transition.NextLevelIndex = loadLevel;
-                        transition.drawText = true;
-
-                        BoxCollider trigger = transitionGO.AddComponent<BoxCollider>();
-                        trigger.isTrigger = true;
-
-                        transition.transform.parent = tile.transform;
-                        transition.transform.position = tile.transform.position;
-                    }
-                }
-
-                GUILayout.Label("Load Level :");
-
-                loadLevel = EditorGUILayout.IntField(loadLevel);
-
-                EditorGUILayout.EndHorizontal();
-
-                EditorGUI.EndDisabledGroup();
-
-                EditorGUILayout.Space();
-
-                EditorGUILayout.BeginHorizontal();
-
-                EditorGUI.BeginDisabledGroup(!hasTransitionSelected || !hasTileSelected);
-
-                if (ColouredButton("Remove Scene Transition", redColour))
-                {
-                    GameObject[] selectedObjects = Selection.gameObjects;
-
-                    SceneTransitionPoint transition = selectedObjects[0].GetComponentInChildren<SceneTransitionPoint>();
-
-                    DestroyImmediate(transition.gameObject);
-                }
-
-                EditorGUI.EndDisabledGroup();
 
                 if (ColouredButton("Remove All Scene Transitions", redColour))
                 {
@@ -1358,19 +1401,75 @@ public class EasyDesignEditor : EditorWindow
                     {
                         DestroyImmediate(transition.gameObject);
                     }
+
+                    UpdateSelection();
                 }
 
-                EditorGUILayout.EndHorizontal();
+                #endregion
 
                 EditorGUILayout.Space();
 
-                EditorGUILayout.BeginHorizontal();
+                #region Spawn Triggers
 
-                GUILayout.Label("ID:");
+                //GUILayout.Label("Spawn Triggers:", centeredText);
 
-                currentID = EditorGUILayout.IntField(currentID);
+                //EditorGUI.BeginDisabledGroup(Selection.gameObjects.Length != 1);
 
-                EditorGUILayout.EndHorizontal();
+                //EditorGUILayout.BeginHorizontal();
+
+                //// if the selected tile has a Spawner change it rather than add a new one
+                //if (Selection.gameObjects.Length == 1 && Selection.gameObjects[0].GetComponentInChildren<SpawnTrigger>())
+                //{
+
+                //    if (ColouredButton("Change Trigger", orangeColour))
+                //    {
+                //        SpawnTrigger spawnTrigger = Selection.gameObjects[0].GetComponentInChildren<SpawnTrigger>();
+                //        spawnTrigger.index = currentID;
+                //        spawnTrigger.UpdateSpawnerList();
+                //    }
+                //}
+                //else
+                //{
+                //    if (ColouredButton("Add Trigger", greenColour))
+                //    {
+                //        Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
+
+                //        GameObject go = new GameObject("SpawnTrigger");
+                //        go.transform.parent = tile.transform;
+                //        go.transform.localPosition = Vector3.zero;
+
+                //        BoxCollider collider = go.AddComponent<BoxCollider>();
+                //        collider.isTrigger = true;
+
+                //        SpawnTrigger spawnTrigger = go.AddComponent<SpawnTrigger>();
+                //        spawnTrigger.UpdateSpawnerList();
+                //    }
+                //}
+
+                //EditorGUI.EndDisabledGroup();
+
+                //EditorGUI.BeginDisabledGroup(Selection.gameObjects.Length != 1 || !hasTriggerSelected);
+
+                //if (ColouredButton("Remove Trigger", redColour))
+                //{
+                //    Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
+                //    SpawnTrigger destroyedTrigger = tile.GetComponentInChildren<SpawnTrigger>();
+
+                //    DestroyImmediate(destroyedTrigger);
+
+                //    UpdateTriggerConnections();
+                //    UpdateSpawnerSelection();
+                //}
+
+                //EditorGUILayout.EndHorizontal();
+
+                //EditorGUI.EndDisabledGroup();
+
+                #endregion
+
+                EditorGUILayout.Space();
+
+                #region Scene Transition
 
                 #endregion
             }
@@ -1631,23 +1730,37 @@ public class EasyDesignEditor : EditorWindow
 
         if (hasStateTransitionSelected)
         {
-            numberToKill = selectedTransitionPoints[0].numberToKill;
-            currentState = selectedTransitionPoints[0].CurrentState;
-            targetState = selectedTransitionPoints[0].TargetState;
+            StateTransitionPoint newStateTransition = selectedTransitionPoints[0];
 
-            currentID = selectedTransitionPoints[0].index;
+            currentID = newStateTransition.index;
 
-            voltGiven = selectedTransitionPoints[0].voltGiven;
+            targetState = newStateTransition.TargetState;
+            currentState = newStateTransition.CurrentState;
+            numberToKill = newStateTransition.numberToKill;
+            hasBoss = newStateTransition.hasBoss;
+            bossDamageGoal = newStateTransition.bossDamage;
+            voltGiven = newStateTransition.voltGiven;
+            earthDirection = newStateTransition.EarthDirection;
+            lightningDirection = newStateTransition.LightningDirection;
+            convo = newStateTransition.Conversation;
+            camBounds = newStateTransition.camBounds;
+            cameraTargetHex = newStateTransition.cameraTargetHex;
         }
     }
 
     private void OnSelectionChange()
     {
+        UpdateSelection();
+    }
+
+    private void UpdateSelection()
+    {
+
         if (Selection.gameObjects.Length > 0)
         {
             hasTileSelected = (Selection.gameObjects[0].GetComponentsInChildren<Hex>().Length > 0);
 
-            hasTransitionSelected = (Selection.gameObjects[0].GetComponentsInChildren<SceneTransitionPoint>().Length > 0);
+            hasSceneTransitionSelected = (Selection.gameObjects[0].GetComponentsInChildren<SceneTransitionPoint>().Length > 0);
 
             UpdateStateTransitionSelection();
 
@@ -1655,18 +1768,37 @@ public class EasyDesignEditor : EditorWindow
 
             hasTriggerSelected = (Selection.gameObjects[0].GetComponentsInChildren<SpawnTrigger>().Length > 0);
 
-            Repaint();
+            if (hasTileSelected)
+            {
+                currSelectionType = SelectionHexType.EmptyHex;
+            }
+            if (hasSceneTransitionSelected)
+            {
+                currSelectionType = SelectionHexType.SceneTransition;
+            }
+            if (hasStateTransitionSelected)
+            {
+                currSelectionType = SelectionHexType.StateTransition;
+            }
+            if (hasSpawnerSelected)
+            {
+                currSelectionType = SelectionHexType.EnemySpawn;
+            }
+
         }
         else
         {
+            currSelectionType = SelectionHexType.None;
+
             hasTileSelected = false;
-            hasTransitionSelected = false;
+            hasSceneTransitionSelected = false;
             hasStateTransitionSelected = false;
             hasSpawnerSelected = false;
             hasTriggerSelected = false;
 
-            Repaint();
         }
+
+        Repaint();
     }
 
     private void Update()

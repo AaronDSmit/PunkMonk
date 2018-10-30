@@ -4,12 +4,19 @@ using UnityEngine;
 
 public class StateTransitionPoint : MonoBehaviour
 {
-    [SerializeField] private GameState targetState;
-    [SerializeField] private GameState fromState;
+    [SerializeField]
+    private GameState targetState;
+    [SerializeField]
+    private GameState fromState;
 
-    [SerializeField] private Conversation conversation;
+    [SerializeField]
+    private Conversation conversation;
 
-    [SerializeField] private int camZMax, camZMin, camXMax, camXMin;
+    [SerializeField]
+    public Hex cameraTargetHex = null;
+
+    [SerializeField]
+    public Vector4 camBounds = new Vector4(10, 10, 10, 10);
 
     [SerializeField]
     public bool hasBoss;
@@ -150,14 +157,13 @@ public class StateTransitionPoint : MonoBehaviour
                 Manager.instance.TurnController.BattleID = index;
                 Manager.instance.StateController.ChangeGameStateAfterDelay(targetState, StateManager.stateTransitionTime + 0.1f);
 
-                if(camZMax != 0)
+                if (camBounds.x != 0)
                 {
-                    cam.ZMax = camZMax;
-                    cam.ZMin = camZMin;
-                    cam.XMax = camXMax;
-                    cam.XMin = camXMin;
+                    cam.ZMax = (int)camBounds.x;
+                    cam.ZMin = (int)camBounds.y;
+                    cam.XMax = (int)camBounds.z;
+                    cam.XMin = (int)camBounds.w;
                 }
-
 
                 triggered = true;
                 MyEvent.Post(gameObject);

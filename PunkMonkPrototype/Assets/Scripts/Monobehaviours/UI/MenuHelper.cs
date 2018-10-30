@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 using UnityEngine.UI;
 
 public class MenuHelper : MonoBehaviour
@@ -10,6 +11,8 @@ public class MenuHelper : MonoBehaviour
 
     private bool cinematic = false;
 
+    private bool startBlackBars = false;
+
     [SerializeField] private RectTransform topBar;
     [SerializeField] private RectTransform botBar;
 
@@ -20,6 +23,7 @@ public class MenuHelper : MonoBehaviour
     private GameSettings currentSettings = null;
     private GameSettings defaultSettings = null;
 
+
     private void Start()
     {
         if (SettingsLoader.Instance != null)
@@ -27,35 +31,45 @@ public class MenuHelper : MonoBehaviour
             currentSettings = SettingsLoader.Instance.CurrentSettings;
             defaultSettings = SettingsLoader.Instance.DefaultSettings;
         }
+        botBar = transform.GetChild(5).transform.GetChild(1).GetComponent<RectTransform>();
+        topBar = transform.GetChild(5).transform.GetChild(0).GetComponent<RectTransform>();
     }
 
     void Update()
     {
-        if (cinematic)
+        if (startBlackBars)
         {
-            blackBarTimer += Time.deltaTime;
-            float currentPercentage = blackBarTimer / blackBarTime;
-            if (topBar.sizeDelta.y < cinematicBarDistance)
+            if (cinematic)
             {
-                topBar.sizeDelta = Vector2.Lerp(new Vector2(0, 0), new Vector2(0, cinematicBarDistance), currentPercentage);
-                botBar.sizeDelta = Vector2.Lerp(new Vector2(0, 0), new Vector2(0, cinematicBarDistance), currentPercentage);
-            }
-        }
-        else
-        {
-            if (topBar == null)
-            {
-                return;
-            }
-            if (topBar.sizeDelta.y >= 0)
-            {
-                blackBarTimer -= Time.deltaTime;
+                blackBarTimer += Time.deltaTime;
                 float currentPercentage = blackBarTimer / blackBarTime;
-
-                topBar.sizeDelta = Vector2.Lerp(new Vector2(0, 0), new Vector2(0, cinematicBarDistance), currentPercentage);
-                botBar.sizeDelta = Vector2.Lerp(new Vector2(0, 0), new Vector2(0, cinematicBarDistance), currentPercentage);
+                if (topBar.sizeDelta.y < cinematicBarDistance)
+                {
+                    topBar.sizeDelta = Vector2.Lerp(new Vector2(0, 0), new Vector2(0, cinematicBarDistance), currentPercentage);
+                    botBar.sizeDelta = Vector2.Lerp(new Vector2(0, 0), new Vector2(0, cinematicBarDistance), currentPercentage);
+                }
             }
+            else
 
+            {
+                if (topBar == null)
+                {
+                    return;
+                }
+                if (topBar.sizeDelta.y >= 0)
+                {
+                    blackBarTimer -= Time.deltaTime;
+                    float currentPercentage = blackBarTimer / blackBarTime;
+
+                    topBar.sizeDelta = Vector2.Lerp(new Vector2(0, 0), new Vector2(0, cinematicBarDistance), currentPercentage);
+                    botBar.sizeDelta = Vector2.Lerp(new Vector2(0, 0), new Vector2(0, cinematicBarDistance), currentPercentage);
+                }
+                else
+                {
+                    startBlackBars = false;
+                }
+
+            }
         }
     }
 
@@ -146,12 +160,13 @@ public class MenuHelper : MonoBehaviour
     {
         if (!topBar || !botBar)
         {
-            botBar = transform.GetChild(6).transform.GetChild(1).GetComponent<RectTransform>();
-            topBar = transform.GetChild(6).transform.GetChild(0).GetComponent<RectTransform>();
+            botBar = transform.GetChild(5).transform.GetChild(1).GetComponent<RectTransform>();
+            topBar = transform.GetChild(5).transform.GetChild(0).GetComponent<RectTransform>();
         }
         blackBarTimer = 0;
         cinematic = true;
         blackBarTime = a_time;
+        startBlackBars = true;
     }
 
     public void StopBlackBars(bool instante = false)
@@ -163,6 +178,24 @@ public class MenuHelper : MonoBehaviour
 
         cinematic = false;
     }
+
+    public void StopIntroCutscene()
+    {
+        StartCoroutine(StopCutscene());
+    }
+
+
+    private IEnumerator StopCutscene()
+    {
+        while(topBar.sizeDelta.y >= 0)
+        {
+            topBar.sizeDelta -= new Vector2(0, Time.deltaTime * 100);
+            botBar.sizeDelta -= new Vector2(0, Time.deltaTime * 100);
+            yield return null;
+
+        }
+    }
+
 
     public void SaveSettings()
     {

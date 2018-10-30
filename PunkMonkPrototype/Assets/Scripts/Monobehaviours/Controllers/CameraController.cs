@@ -159,13 +159,22 @@ public class CameraController : MonoBehaviour
 
         cam = GetComponentInChildren<Camera>();
 
+        cinemachineBrain = gameObject.GetComponentInChildren<Cinemachine.CinemachineBrain>();
+
         StartCoroutine(StartCutscene());
+        StartCoroutine(FinishCutscene());
+
 
         // Subscribe to the settings changing delegate
         settings.onSettingsChanged += SettingsChanged;
         SettingsChanged();
 
-        cinemachineBrain = gameObject.GetComponentInChildren<Cinemachine.CinemachineBrain>();
+    }
+
+    private IEnumerator FinishCutscene()
+    {
+        yield return new WaitForSeconds(cinemachineBrain.m_CustomBlends.m_CustomBlends[1].m_Blend.m_Time);
+        Manager.instance.transform.GetChild(0).GetComponent<MenuHelper>().StopIntroCutscene();
     }
 
     private IEnumerator StartCutscene()
@@ -248,7 +257,6 @@ public class CameraController : MonoBehaviour
                 {
                     if (Vector3.Distance(transform.position, rigTargetPos) < 1f)
                     {
-
                         canMove = true;
                     }
                 }

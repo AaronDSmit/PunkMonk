@@ -237,7 +237,11 @@ public class CameraController : MonoBehaviour
 
             transform.position = Vector3.Slerp(transform.position, rigTargetPos, Time.deltaTime * overworldSpeed);
 
-            transform.position = new Vector3(Mathf.Clamp(transform.position.x, xMin, xMax), transform.position.y, Mathf.Clamp(transform.position.z, zMin, zMax));
+            if (!inOverworld)
+            {
+                transform.position = new Vector3(Mathf.Clamp(transform.position.x, xMin, xMax), transform.position.y, Mathf.Clamp(transform.position.z, zMin, zMax));
+            }
+
 
             if (transform.position.x == xMin || transform.position.x == xMax || transform.position.z == zMin || transform.position.z == zMax)
             {

@@ -29,8 +29,8 @@ public class VolumeSettings : MonoBehaviour
 
         AkSoundEngine.SetRTPCValue("MasterVolume", mute ? 0 : settings.Master * 100);
         AkSoundEngine.SetRTPCValue("MusicVolume", settings.Music * 100);
-        AkSoundEngine.SetRTPCValue("SFXVolume", settings.Effects);
-        AkSoundEngine.SetRTPCValue("AmbientVolume", settings.Dialouge);
+        AkSoundEngine.SetRTPCValue("SFXVolume", settings.Effects * 100);
+        AkSoundEngine.SetRTPCValue("AmbientVolume", settings.Dialouge * 100);
 
     }
 

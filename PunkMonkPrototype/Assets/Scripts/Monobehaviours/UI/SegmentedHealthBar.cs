@@ -3,10 +3,11 @@ using UnityEngine.UI;
 
 public class SegmentedHealthBar : MonoBehaviour
 {
-    [SerializeField] float borderWidth = 0.1f;
-    [SerializeField] Material healthMat = null;
-    [SerializeField] Material missingHealthMat = null;
-    [SerializeField] Material previewDamageHealthMat = null;
+    [SerializeField] private float borderWidth = 0.1f;
+    [SerializeField] private Material healthMat = null;
+    [SerializeField] private Material missingHealthMat = null;
+    [SerializeField] private Material previewDamageHealthMat = null;
+    [SerializeField] private bool automateLayoutGroup = false;
 
     private int maxHealth = 4;
     private int currentHealth = 4;
@@ -66,46 +67,51 @@ public class SegmentedHealthBar : MonoBehaviour
 
     private void Refresh()
     {
-        // First insure there is the correct amount of health bar segments
-        if (segments.childCount < maxHealth)
+        if (automateLayoutGroup)
         {
-            // Add health bars
-            for (int i = segments.childCount; i < maxHealth; ++i)
-            {
-                Instantiate(mainHealthBar, segments);
-            }
-        }
-        else if (segments.childCount > maxHealth)
-        {
-            // Remove unnecessary health segments
-            for (int i = segments.childCount - 1; i >= maxHealth; --i)
-            {
-                Destroy(segments.GetChild(i).gameObject);
-            }
-        }
 
-        // Set the segments invisible for the missing health
-        for (int i = 0; i < maxHealth; i++)
-        {
-            //segments.GetChild(i).GetComponent<Image>().enabled = (i < currentHealth);
-            Material newMat = null;
-            if (i < currentHealth)
+            // First insure there is the correct amount of health bar segments
+            if (segments.childCount < maxHealth)
             {
-                newMat = healthMat;
+                // Add health bars
+                for (int i = segments.childCount; i < maxHealth; ++i)
+                {
+                    Instantiate(mainHealthBar, segments);
+                }
             }
-            else
+            else if (segments.childCount > maxHealth)
             {
-                newMat = missingHealthMat;
+                // Remove unnecessary health segments
+                for (int i = segments.childCount - 1; i >= maxHealth; --i)
+                {
+                    Destroy(segments.GetChild(i).gameObject);
+                }
             }
-            segments.GetChild(i).GetComponent<Image>().material = newMat;
-        }
 
-        // Set the position and scale of each segment using the Horizontal Layout Group
-        groupLayout.spacing = borderWidth / 2.0f;
-        Vector3 newSize = bg.sizeDelta;
-        newSize.x -= borderWidth;
-        newSize.y -= borderWidth;
-        segments.sizeDelta = newSize;
+            // Set the segments invisible for the missing health
+            for (int i = 0; i < maxHealth; i++)
+            {
+                //segments.GetChild(i).GetComponent<Image>().enabled = (i < currentHealth);
+                Material newMat = null;
+                if (i < currentHealth)
+                {
+                    newMat = healthMat;
+                }
+                else
+                {
+                    newMat = missingHealthMat;
+                }
+                segments.GetChild(i).GetComponent<Image>().material = newMat;
+            }
+
+            // Set the position and scale of each segment using the Horizontal Layout Group
+            groupLayout.spacing = borderWidth / 2.0f;
+            Vector3 newSize = bg.sizeDelta;
+            newSize.x -= borderWidth;
+            newSize.y -= borderWidth;
+            segments.sizeDelta = newSize;
+
+        }
 
         if (Manager.instance.StateController.CurrentGameState == GameState.battle)
         {

@@ -2372,7 +2372,7 @@ MonoBehaviour:
   basicRehitEnemies: 0
   basicRange: 4
   basicAmountOfBounces: 3
-  basicLightningLifeTime: 3
+  basicLightningLifeTime: 1.5
   basicBounceDamage: 2
   basicFinalDamage: 2
   basicDelayTime: 1

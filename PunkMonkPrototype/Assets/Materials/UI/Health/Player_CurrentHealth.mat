@@ -32,4 +32,4 @@ Material:
     - _U_Speed: 0
     - _V_Speed: 0.1
     m_Colors:
-    - _Colour: {r: 0, g: 0.75735295, b: 0.0052230814, a: 0}
+    - _Colour: {r: 0, g: 0.75735295, b: 0.0052230814, a: 1}

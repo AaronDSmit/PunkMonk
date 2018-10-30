@@ -27,7 +27,7 @@ public class CameraController : MonoBehaviour
 
     private Unit targetUnit;
 
-    private bool inOverworld;
+    private bool inOverworld = true;
 
     private OverworldController overworldController;
 
@@ -38,6 +38,8 @@ public class CameraController : MonoBehaviour
     private Quaternion targetRot;
 
     private Vector3 vel;
+
+    private Camera cam;
 
     private bool lookAtObject = false;
     private bool canMove = true;
@@ -53,6 +55,12 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private float overworldSpeed;
     [SerializeField] private float overworldDistance;
+
+    [Header("CutScene")]
+    [SerializeField] private GameObject defaultCam;
+    [SerializeField] private GameObject startingCam;
+
+
     [Header("Game")]
     [SerializeField]
     private float speed;
@@ -86,7 +94,7 @@ public class CameraController : MonoBehaviour
 
     private Cinemachine.CinemachineBrain cinemachineBrain;
 
-    bool cinemachine = false;
+    bool cinemachine = true;
 
     public Unit TargetUnit
     {
@@ -142,12 +150,16 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
-        rigTargetPos = transform.position;
+        rigTargetPos = lightningUnit.transform.position;
         cameraTargetPos = cinemachineDefault.position;
         cameraStartPos = cinemachineDefault.localPosition;
         distance = overworldDistance;
         targetRot = transform.rotation;
 
+
+        cam = GetComponentInChildren<Camera>();
+
+        StartCoroutine(StartCutscene());
 
         // Subscribe to the settings changing delegate
         settings.onSettingsChanged += SettingsChanged;
@@ -155,6 +167,15 @@ public class CameraController : MonoBehaviour
 
         cinemachineBrain = gameObject.GetComponentInChildren<Cinemachine.CinemachineBrain>();
     }
+
+    private IEnumerator StartCutscene()
+    {
+        yield return new WaitForSeconds(2.0f);
+        startingCam.SetActive(false);
+        defaultCam.SetActive(true);
+        cinemachine = false;
+    }
+
 
     private void OnDestroy()
     {
@@ -170,6 +191,8 @@ public class CameraController : MonoBehaviour
 
     private void GameStateChanged(GameState a_oldstate, GameState a_newstate)
     {
+
+
         // ensure this script knows it's in over-world state
         inOverworld = (a_newstate == GameState.overworld);
 
@@ -232,10 +255,14 @@ public class CameraController : MonoBehaviour
             }
 
             cameraTargetPos = (cameraStartPos).normalized * distance;
-            cinemachineDefault.localPosition = Vector3.Slerp(cinemachineDefault.localPosition, cameraTargetPos, Time.deltaTime * overworldSpeed);
+           cinemachineDefault.localPosition = Vector3.Slerp(cinemachineDefault.localPosition, cameraTargetPos, Time.deltaTime * overworldSpeed);
 
 
-            transform.position = Vector3.Slerp(transform.position, rigTargetPos, Time.deltaTime * overworldSpeed);
+            if (Vector3.Distance(cam.transform.position, defaultCam.transform.position) < 0.1f)
+            {
+                transform.position = Vector3.Slerp(transform.position, rigTargetPos, Time.deltaTime * overworldSpeed);
+            }
+
 
             if (!inOverworld)
             {
@@ -439,7 +466,8 @@ public class CameraController : MonoBehaviour
         {
             onGlamCamStart();
         }
-        transform.GetChild(1).gameObject.SetActive(false);
+
+        defaultCam.SetActive(false);
         a_unit.transform.GetChild(5).gameObject.SetActive(true);
 
         StartCoroutine(ChangeGlamCam(a_unit));

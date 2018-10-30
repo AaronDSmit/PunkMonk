@@ -39,6 +39,7 @@ public class OverworldController : MonoBehaviour
 
     private bool mouseInput = false;
     private bool keyboardInput = false;
+    private bool canMove = false;
 
     public CharacterController Controller
     {
@@ -53,12 +54,25 @@ public class OverworldController : MonoBehaviour
         }
     }
 
+
+
     #endregion
 
 
     private void Awake()
     {
         Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
+    }
+
+    private void Start()
+    {
+        StartCoroutine(WaitForIntro());
+    }
+
+    private IEnumerator WaitForIntro()
+    {
+        yield return new WaitForSeconds(GameObject.FindGameObjectWithTag("CameraRig").GetComponentInChildren<Cinemachine.CinemachineBrain>().m_CustomBlends.m_CustomBlends[1].m_Blend.m_Time);
+        canMove = true;
     }
 
     private void OnDestroy()
@@ -75,7 +89,7 @@ public class OverworldController : MonoBehaviour
     private void Update()
     {
         // Don't update if in any other game state
-        if (inOverworld)
+        if (inOverworld && canMove)
         {
             if (useMouseInput)
                 ProcessMouseInput();

@@ -70,9 +70,6 @@ public class LightningUnit : Unit
         basicFinishedFunc = finished;
 
 
-        basicAttackSFX.Post(gameObject);
-
-
         if (AIController == null)
         {
             AIController = GameObject.FindGameObjectWithTag("AI_Controller").GetComponent<AI_Controller>();
@@ -160,8 +157,6 @@ public class LightningUnit : Unit
 
         //store the target tile
         specialTiles.AddRange(targetTiles);
-
-        specialAttackSFX.Post(gameObject);
 
         //store the finished function call
         specialFinishedFunction = finished;

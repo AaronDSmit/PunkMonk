@@ -30,3 +30,4 @@ PunkMonkPrototype/Assets/Wwise/Deployment/Plugins/Windows/x86_64/Profile/AkSound
 PunkMonkPrototype/Assets/Wwise/Deployment/Plugins/Windows/x86/Profile/AkWaapiClient.dll.meta
 PunkMonkPrototype/Assets/Wwise/Deployment/Plugins/Windows/x86/Profile/AkSoundEngine.dll.meta
 PunkMonkPrototype/obj/Debug/
+PunkMonkPrototype/Assets/WwiseSettings.xml

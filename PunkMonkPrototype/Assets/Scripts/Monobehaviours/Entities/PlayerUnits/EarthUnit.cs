@@ -128,7 +128,6 @@ public class EarthUnit : Unit
         //store the finished function call
         specialFinishedFunc = a_finished;
 
-        specialAttackSFX.Post(gameObject);
 
         //store the start position
         specialStartPosition = transform.position;
@@ -169,6 +168,7 @@ public class EarthUnit : Unit
                 //set the new y position to the current distance though the y animationCurve
                 transform.position = new Vector3(transform.position.x, specialStartPosition.y + YCurve.Evaluate(specialTimer / specialJumpTime) * specialheight, transform.position.z);
 
+                cameraController.LookAtPosition(transform.position);
 
                 //if the current timer is grater then the overall time
                 if (specialTimer > specialJumpTime)

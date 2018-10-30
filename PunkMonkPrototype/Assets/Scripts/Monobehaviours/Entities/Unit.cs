@@ -37,11 +37,6 @@ public class Unit : LivingEntity
     [SerializeField]
     private GameObject voltEffect = null;
 
-    [Header("Wwise")]
-    [SerializeField]
-    protected AK.Wwise.Event basicAttackSFX;
-    [SerializeField]
-    protected AK.Wwise.Event specialAttackSFX;
 
     #endregion
 
@@ -489,6 +484,8 @@ public class Unit : LivingEntity
             Vector3 vecBetween = targetPos - transform.position;
 
             transform.position += vecBetween.normalized * Time.deltaTime * walkSpeed;
+
+            cameraController.LookAtPosition(transform.position);
 
             distanceTraveled += (vecBetween.normalized * Time.deltaTime * walkSpeed).magnitude;
 

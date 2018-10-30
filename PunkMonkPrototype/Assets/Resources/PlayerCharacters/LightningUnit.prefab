@@ -1600,7 +1600,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1761558808058186}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 50.729164, y: -0.24999997, z: 46.27678}
+  m_LocalPosition: {x: 22.842348, y: -0.24999994, z: 26.560556}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4190249694457618}
@@ -2206,7 +2206,7 @@ MonoBehaviour:
   m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: b165892a815faa34da6b84d990f1862c, type: 2}
   m_Color: {r: 0, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
@@ -2331,9 +2331,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   borderWidth: 0.1
-  healthColour: {r: 0, g: 1, b: 0, a: 1}
-  missingHealthColour: {r: 0, g: 0, b: 0, a: 0}
-  previewDamageHealthColour: {r: 1, g: 0, b: 0, a: 1}
+  healthMat: {fileID: 2100000, guid: b165892a815faa34da6b84d990f1862c, type: 2}
+  missingHealthMat: {fileID: 2100000, guid: 299d689fbdb8ac944a87085b1ec5311b, type: 2}
+  previewDamageHealthMat: {fileID: 2100000, guid: 994636f5898d06347a0d725d7d7fd5fb,
+    type: 2}
 --- !u!114 &114434601809276096
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2351,7 +2352,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: 0.05
+  m_Spacing: -0.16
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
@@ -2405,7 +2406,7 @@ MonoBehaviour:
   m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: b165892a815faa34da6b84d990f1862c, type: 2}
   m_Color: {r: 0, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
@@ -2432,7 +2433,7 @@ MonoBehaviour:
   m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: b165892a815faa34da6b84d990f1862c, type: 2}
   m_Color: {r: 0, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
@@ -2484,7 +2485,7 @@ MonoBehaviour:
   m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: b165892a815faa34da6b84d990f1862c, type: 2}
   m_Color: {r: 0, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
@@ -2548,7 +2549,7 @@ MonoBehaviour:
   m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: b165892a815faa34da6b84d990f1862c, type: 2}
   m_Color: {r: 0, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
@@ -16537,8 +16538,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0.25}
-  m_SizeDelta: {x: 1.9, y: 0.4}
+  m_AnchoredPosition: {x: 0, y: -0.3}
+  m_SizeDelta: {x: 1.9, y: 0.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224930124101589802
 RectTransform:

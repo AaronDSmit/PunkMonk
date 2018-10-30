@@ -4,9 +4,9 @@ using UnityEngine.UI;
 public class SegmentedHealthBar : MonoBehaviour
 {
     [SerializeField] float borderWidth = 0.1f;
-    [SerializeField] Color healthColour = Color.green;
-    [SerializeField] Color missingHealthColour = new Color(0, 0, 0, 1);
-    [SerializeField] Color previewDamageHealthColour = new Color(1, 0, 0, 1);
+    [SerializeField] Material healthMat = null;
+    [SerializeField] Material missingHealthMat = null;
+    [SerializeField] Material previewDamageHealthMat = null;
 
     private int maxHealth = 4;
     private int currentHealth = 4;
@@ -50,11 +50,14 @@ public class SegmentedHealthBar : MonoBehaviour
         {
             if (i < (currentHealth - a_damage))
             {
-                segments.GetChild(i).GetComponent<Image>().color = healthColour;
+                //segments.GetChild(i).GetComponent<Material>().color = currentHealth;
+                segments.GetChild(i).GetComponent<Image>().material = healthMat;
             }
             else
             {
-                segments.GetChild(i).GetComponent<Image>().color = previewDamageHealthColour;
+                //segments.GetChild(i).GetComponent<Material>().color = previewDamageHealthColour;
+                //Color segColour = segments.GetChild(i).GetComponent<Material>().GetColor("_Colour");
+                segments.GetChild(i).GetComponent<Image>().material = previewDamageHealthMat;
             }
         }
 
@@ -85,16 +88,16 @@ public class SegmentedHealthBar : MonoBehaviour
         for (int i = 0; i < maxHealth; i++)
         {
             //segments.GetChild(i).GetComponent<Image>().enabled = (i < currentHealth);
-            Color newColour = Color.black;
+            Material newMat = null;
             if (i < currentHealth)
             {
-                newColour = healthColour;
+                newMat = healthMat;
             }
             else
             {
-                newColour = missingHealthColour;
+                newMat = missingHealthMat;
             }
-            segments.GetChild(i).GetComponent<Image>().color = newColour;
+            segments.GetChild(i).GetComponent<Image>().material = newMat;
         }
 
         // Set the position and scale of each segment using the Horizontal Layout Group

@@ -1708,7 +1708,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1976869441708334}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 22.726187, y: -0.37, z: 18.235157}
+  m_LocalPosition: {x: 25.51141, y: -0.25000006, z: 26.0458}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4536177329817736}
@@ -2089,7 +2089,7 @@ MonoBehaviour:
   m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: b165892a815faa34da6b84d990f1862c, type: 2}
   m_Color: {r: 0, g: 1, b: 0, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
@@ -2122,7 +2122,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: 0.05
+  m_Spacing: -0.16
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
@@ -2161,6 +2161,7 @@ MonoBehaviour:
   bullet: {fileID: 1807508469817726, guid: 8d964f9dbfc1a434db92cf7a0e64fa65, type: 2}
   bulletSpeed: 40
   rechargeTurns: 0
+  friendlyFire: 1
   missilePrefab: {fileID: 1774984587406650, guid: c2613c03c9931ac4a8a53221163e68b1,
     type: 2}
 --- !u!114 &114420571058143936
@@ -2174,7 +2175,7 @@ MonoBehaviour:
   m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: b165892a815faa34da6b84d990f1862c, type: 2}
   m_Color: {r: 0, g: 1, b: 0, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
@@ -2201,7 +2202,7 @@ MonoBehaviour:
   m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: b165892a815faa34da6b84d990f1862c, type: 2}
   m_Color: {r: 0, g: 1, b: 0, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
@@ -2239,7 +2240,7 @@ MonoBehaviour:
   m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: b165892a815faa34da6b84d990f1862c, type: 2}
   m_Color: {r: 0, g: 1, b: 0, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
@@ -2267,9 +2268,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   borderWidth: 0.1
-  healthColour: {r: 0.75735295, g: 0, b: 0, a: 1}
-  missingHealthColour: {r: 0.30147058, g: 0.30147058, b: 0.30147058, a: 0}
-  previewDamageHealthColour: {r: 0.9852941, g: 0.5334178, b: 0.12316176, a: 1}
+  healthMat: {fileID: 2100000, guid: 7e3383470fa6f4743a84848875374a27, type: 2}
+  missingHealthMat: {fileID: 2100000, guid: 3a0786bb4dea28349885c714cdc0fd0b, type: 2}
+  previewDamageHealthMat: {fileID: 2100000, guid: 994636f5898d06347a0d725d7d7fd5fb,
+    type: 2}
 --- !u!114 &114868200066302712
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2294,7 +2296,7 @@ MonoBehaviour:
   m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: b165892a815faa34da6b84d990f1862c, type: 2}
   m_Color: {r: 0, g: 1, b: 0, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
@@ -2701,8 +2703,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0.25}
-  m_SizeDelta: {x: 1.9, y: 0.4}
+  m_AnchoredPosition: {x: 0, y: -0.3}
+  m_SizeDelta: {x: 1.9, y: 0.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224776568123891518
 RectTransform:

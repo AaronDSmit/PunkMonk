@@ -51,8 +51,8 @@ public class EasyDesignEditor : EditorWindow
     private bool hasStateTransitionSelected = false;
     [SerializeField]
     private bool hasSpawnerSelected = false;
-    [SerializeField]
-    private bool hasTriggerSelected = false;
+    //[SerializeField]
+    //private bool hasTriggerSelected = false;
 
     [SerializeField]
     private HexState tileState = HexState.Traversable;
@@ -1183,8 +1183,6 @@ public class EasyDesignEditor : EditorWindow
                                     }
                                 }
 
-                                StateTransitionPoint[] transitions = FindObjectsOfType<StateTransitionPoint>();
-
                                 foreach (StateTransitionPoint point in selectedTransitionPoints)
                                     point.EarthHex = hex;
                             }
@@ -1208,8 +1206,6 @@ public class EasyDesignEditor : EditorWindow
                                     }
                                 }
 
-                                StateTransitionPoint[] transitions = FindObjectsOfType<StateTransitionPoint>();
-
                                 foreach (StateTransitionPoint point in selectedTransitionPoints)
                                     point.LightningHex = hex;
                             }
@@ -1232,8 +1228,6 @@ public class EasyDesignEditor : EditorWindow
                                             break;
                                         }
                                     }
-
-                                    StateTransitionPoint[] transitions = FindObjectsOfType<StateTransitionPoint>();
 
                                     foreach (StateTransitionPoint point in selectedTransitionPoints)
                                         point.cameraTargetHex = hex;
@@ -1279,8 +1273,6 @@ public class EasyDesignEditor : EditorWindow
                                         break;
                                     }
                                 }
-
-                                StateTransitionPoint[] transitions = FindObjectsOfType<StateTransitionPoint>();
 
                                 foreach (StateTransitionPoint point in selectedTransitionPoints)
                                     point.SetCheckPoint(hex);
@@ -1766,7 +1758,7 @@ public class EasyDesignEditor : EditorWindow
 
             UpdateSpawnerSelection();
 
-            hasTriggerSelected = (Selection.gameObjects[0].GetComponentsInChildren<SpawnTrigger>().Length > 0);
+            //hasTriggerSelected = (Selection.gameObjects[0].GetComponentsInChildren<SpawnTrigger>().Length > 0);
 
             if (hasTileSelected)
             {
@@ -1794,7 +1786,7 @@ public class EasyDesignEditor : EditorWindow
             hasSceneTransitionSelected = false;
             hasStateTransitionSelected = false;
             hasSpawnerSelected = false;
-            hasTriggerSelected = false;
+            //hasTriggerSelected = false;
 
         }
 

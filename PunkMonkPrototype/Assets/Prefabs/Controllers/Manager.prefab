@@ -6213,6 +6213,9 @@ MonoBehaviour:
   stopBattleMusic:
     ID: -155315414
     valueGuid: 18fa134358a7134db7926f91deb6776d
+  freeRoamMusic:
+    ID: 797344207
+    valueGuid: eab3bc2834eccc49b6cc341347049c3d
 --- !u!114 &114843331619665564
 MonoBehaviour:
   m_ObjectHideFlags: 1

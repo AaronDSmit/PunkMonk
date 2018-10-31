@@ -17,22 +17,22 @@ MonoBehaviour:
   m_lastPopulateTimePsrt1: 0
   AcousticTextureWwu:
   - Guid: '{8C506F3E-FAD5-4CC1-9F43-4559ED4E3FA7}'
-    m_lastTimePart2: -1999229340
-    m_lastTimePsrt1: 919435087
+    m_lastTimePart2: -1999225098
+    m_lastTimePsrt1: 822218205
     ParentPhysicalPath: 
     PhysicalPath: Virtual Acoustics\Default Work Unit.wwu
     List: []
   AuxBusWwu:
   - Guid: '{17B85F81-D4B6-4851-8C1E-9D808D7B1DC8}'
-    m_lastTimePart2: -1999225515
-    m_lastTimePsrt1: -2048136259
+    m_lastTimePart2: -1999225098
+    m_lastTimePsrt1: 821678205
     ParentPhysicalPath: 
     PhysicalPath: Master-Mixer Hierarchy\Default Work Unit.wwu
     List: []
   BankWwu:
   - Guid: '{A76D73F7-5EA3-46B5-B38F-16F7929AC7DF}'
-    m_lastTimePart2: -1999227725
-    m_lastTimePsrt1: 1780547746
+    m_lastTimePart2: -1999225098
+    m_lastTimePsrt1: 822328205
     ParentPhysicalPath: 
     PhysicalPath: SoundBanks\Default Work Unit.wwu
     List:
@@ -47,8 +47,8 @@ MonoBehaviour:
         ObjectType: 7
   EventWwu:
   - Guid: '{39BFD4E9-6B27-4210-9595-772619309430}'
-    m_lastTimePart2: -1999225561
-    m_lastTimePsrt1: 923621317
+    m_lastTimePart2: -1999225098
+    m_lastTimePsrt1: 821448205
     ParentPhysicalPath: 
     PhysicalPath: Events\Ambient.wwu
     List:
@@ -77,14 +77,14 @@ MonoBehaviour:
       maxDuration: 0
       minDuration: 0
   - Guid: '{9B7E563D-D886-4529-9471-1F499F2670AE}'
-    m_lastTimePart2: -1999227725
-    m_lastTimePsrt1: 1776389036
+    m_lastTimePart2: -1999225098
+    m_lastTimePsrt1: 821738205
     ParentPhysicalPath: 
     PhysicalPath: Events\Default Work Unit.wwu
     List: []
   - Guid: '{19DB632E-BDAA-4DD2-8EA9-D61DFD814A2F}'
-    m_lastTimePart2: -1999225555
-    m_lastTimePsrt1: 107167541
+    m_lastTimePart2: -1999225098
+    m_lastTimePsrt1: -301409091
     ParentPhysicalPath: 
     PhysicalPath: Events\Music.wwu
     List:
@@ -161,8 +161,8 @@ MonoBehaviour:
       maxDuration: 0
       minDuration: 0
   - Guid: '{97043EB5-8AFD-479B-B7EC-1820B945D1D5}'
-    m_lastTimePart2: -1999225561
-    m_lastTimePsrt1: 923661317
+    m_lastTimePart2: -1999225098
+    m_lastTimePsrt1: 821398205
     ParentPhysicalPath: 
     PhysicalPath: Events\SFX.wwu
     List:
@@ -648,10 +648,12 @@ MonoBehaviour:
       minDuration: 0
   ExpandedItems:
   - /PunkMonkPrototype_WwiseProject
+  - /PunkMonkPrototype_WwiseProject/Events
+  - /PunkMonkPrototype_WwiseProject/Events/Music
   RtpcWwu:
   - Guid: '{0611EF02-C52F-4D22-840D-EF5CD7507B8B}'
-    m_lastTimePart2: -1999225515
-    m_lastTimePsrt1: -2048026259
+    m_lastTimePart2: -1999225098
+    m_lastTimePsrt1: 822378205
     ParentPhysicalPath: 
     PhysicalPath: Game Parameters\Default Work Unit.wwu
     List:
@@ -701,22 +703,47 @@ MonoBehaviour:
         ObjectType: 13
   StateWwu:
   - Guid: '{04CF6E00-4CA3-4424-9273-F0833B6CE0D5}'
-    m_lastTimePart2: -1999229340
-    m_lastTimePsrt1: 919415087
+    m_lastTimePart2: -1999225098
+    m_lastTimePsrt1: -185969091
     ParentPhysicalPath: 
     PhysicalPath: States\Default Work Unit.wwu
-    List: []
+    List:
+    - Guid: 67564753aba67f43bebf3db9593573a9
+      ID: 258110631
+      Name: Game_Music
+      Path: Default Work Unit\Game_Music
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Game_Music
+        ObjectType: 9
+      ValueGuids:
+      - bytes: fa9e1b9ca9fe7a488819365d004c0b0f
+      - bytes: 9d88daacec809b44945cbb3f7100acc5
+      - bytes: 8b3addcd3ac3cd48bfcbb5e87b0f368d
+      ValueIcons:
+      - ElementName: Combat
+        ObjectType: 8
+      - ElementName: FreeRoam
+        ObjectType: 8
+      - ElementName: None
+        ObjectType: 8
+      valueIDs: bdf6c2a4d8e28010db3ba32c
+      values:
+      - Combat
+      - FreeRoam
+      - None
   SwitchWwu:
   - Guid: '{B6FD7C61-6C9F-48A5-8B29-05A62B27072C}'
-    m_lastTimePart2: -1999229340
-    m_lastTimePsrt1: 919425087
+    m_lastTimePart2: -1999225098
+    m_lastTimePsrt1: 821628205
     ParentPhysicalPath: 
     PhysicalPath: Switches\Default Work Unit.wwu
     List: []
   TriggerWwu:
   - Guid: '{F63834BC-6D92-48B9-A27B-98C86E0C3830}'
-    m_lastTimePart2: -1999229340
-    m_lastTimePsrt1: 919425087
+    m_lastTimePart2: -1999225098
+    m_lastTimePsrt1: 821888205
     ParentPhysicalPath: 
     PhysicalPath: Triggers\Default Work Unit.wwu
     List: []

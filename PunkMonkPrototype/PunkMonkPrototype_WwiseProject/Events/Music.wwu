@@ -5,15 +5,13 @@
 			<ChildrenList>
 				<Event Name="Battle_Enter" ID="{98DC1ED8-0C7B-4F37-9CF3-B3C078D0034C}">
 					<ChildrenList>
-						<Action Name="" ID="{2D0A69C7-B072-4415-B18C-0EA403EB269C}" ShortID="311370763">
+						<Action Name="" ID="{AA5AE7EA-F0A6-45A5-86AD-2E2722264C60}" ShortID="533742609">
 							<PropertyList>
-								<Property Name="ActionType" Type="int16" Value="1"/>
-								<Property Name="Delay" Type="Real64" Value="1"/>
-								<Property Name="FadeInCurve" Type="int16" Value="1"/>
+								<Property Name="ActionType" Type="int16" Value="22"/>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="combat" ID="{8025F084-360F-44F0-A30C-392B6B5B1F08}" WorkUnitID="{4DB86490-E208-4AE5-878B-DD391FBC0583}"/>
+									<ObjectRef Name="Combat" ID="{9C1B9EFA-FEA9-487A-8819-365D004C0B0F}" WorkUnitID="{04CF6E00-4CA3-4424-9273-F0833B6CE0D5}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
@@ -54,15 +52,13 @@
 				</Event>
 				<Event Name="Battle_Exit" ID="{4313FA18-A758-4D13-B792-6F91DEB6776D}">
 					<ChildrenList>
-						<Action Name="" ID="{65605A1A-3223-4A78-B603-7CC3D8873BD3}" ShortID="292945093">
+						<Action Name="" ID="{2E6AA9DF-6822-438B-933C-C47209801454}" ShortID="1070260724">
 							<PropertyList>
-								<Property Name="ActionType" Type="int16" Value="2"/>
-								<Property Name="FadeTime" Type="Real64" Value="0.5"/>
-								<Property Name="Scope" Type="int16" Value="1"/>
+								<Property Name="ActionType" Type="int16" Value="22"/>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="combat" ID="{8025F084-360F-44F0-A30C-392B6B5B1F08}" WorkUnitID="{4DB86490-E208-4AE5-878B-DD391FBC0583}"/>
+									<ObjectRef Name="FreeRoam" ID="{ACDA889D-80EC-449B-945C-BB3F7100ACC5}" WorkUnitID="{04CF6E00-4CA3-4424-9273-F0833B6CE0D5}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
@@ -80,16 +76,23 @@
 				</Event>
 				<Event Name="FreeRoam_Enter" ID="{28BCB3EA-EC34-49CC-B6CC-341347049C3D}">
 					<ChildrenList>
-						<Action Name="" ID="{B7144C5F-6154-4803-B7EE-D7CB1EC59C74}" ShortID="262260025">
+						<Action Name="" ID="{3B242110-C78C-486D-BF70-0DEAF917FECC}" ShortID="153538442">
 							<PropertyList>
-								<Property Name="ActionType" Type="int16" Value="1"/>
-								<Property Name="Delay" Type="Real64" Value="0.5"/>
-								<Property Name="FadeInCurve" Type="int16" Value="1"/>
-								<Property Name="FadeTime" Type="Real64" Value="0.5"/>
+								<Property Name="ActionType" Type="int16" Value="22"/>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="FreeRoam" ID="{453E122F-9C7C-4431-88E6-8DCBBBBB87C5}" WorkUnitID="{480BEEB4-E973-4879-8438-D429C81A278F}"/>
+									<ObjectRef Name="FreeRoam" ID="{ACDA889D-80EC-449B-945C-BB3F7100ACC5}" WorkUnitID="{04CF6E00-4CA3-4424-9273-F0833B6CE0D5}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{0143DD1A-8F37-4569-A0C5-54B91B5D35F8}" ShortID="796930887">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="1"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="combat" ID="{8025F084-360F-44F0-A30C-392B6B5B1F08}" WorkUnitID="{4DB86490-E208-4AE5-878B-DD391FBC0583}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>

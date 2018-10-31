@@ -26,9 +26,25 @@ namespace AK
         static const AkUniqueID DIE_ENEMY = 312517388U;
         static const AkUniqueID FOOTSTEPS = 2385628198U;
         static const AkUniqueID FOOTSTEPSOUTSIDE = 2878671079U;
+        static const AkUniqueID FREEROAM_ENTER = 797344207U;
         static const AkUniqueID MENUEND = 3969013623U;
         static const AkUniqueID MENUSTART = 1447920996U;
     } // namespace EVENTS
+
+    namespace STATES
+    {
+        namespace GAME_MUSIC
+        {
+            static const AkUniqueID GROUP = 258110631U;
+
+            namespace STATE
+            {
+                static const AkUniqueID COMBAT = 2764240573U;
+                static const AkUniqueID FREEROAM = 276882136U;
+            } // namespace STATE
+        } // namespace GAME_MUSIC
+
+    } // namespace STATES
 
     namespace GAME_PARAMETERS
     {

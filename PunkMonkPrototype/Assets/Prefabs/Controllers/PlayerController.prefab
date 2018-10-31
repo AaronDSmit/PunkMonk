@@ -60,9 +60,6 @@ MonoBehaviour:
   currentRuleset: {fileID: 0}
   maxVolt: 3
   currentVolt: 0
-  endBattleMusic:
-    ID: -155315414
-    valueGuid: 18fa134358a7134db7926f91deb6776d
 --- !u!114 &114752336446416580
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -90,7 +87,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82f975add6b5434438eae7b6b98000b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerList: f7e1664c
+  triggerList: ae8d9d44
   useOtherObject: 0
   bankName: Divide_SoundBank
   decodeBank: 0

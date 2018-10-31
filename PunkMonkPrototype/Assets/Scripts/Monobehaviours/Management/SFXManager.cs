@@ -15,6 +15,7 @@ public class SFXManager : MonoBehaviour
     [SerializeField] private AK.Wwise.Event enemyMeleeAttack;
     [SerializeField] private AK.Wwise.Event enemyMissileAttack;
     [SerializeField] private AK.Wwise.Event stopBattleMusic;
+    [SerializeField] private AK.Wwise.Event freeRoamMusic;
 
     private bool outside = true;
 
@@ -27,12 +28,20 @@ public class SFXManager : MonoBehaviour
 
     public void Init()
     {
-        rainOutside.Post(gameObject);
+        
 
         Manager.instance.StateController.OnGameStateChanged += GameStateChanged;
 
         isReady = true;
     }
+
+    public void Start()
+    {
+        rainOutside.Post(gameObject);
+        freeRoamMusic.Post(gameObject);
+    }
+
+
 
     private void GameStateChanged(GameState a_oldstate, GameState a_newstate)
     {

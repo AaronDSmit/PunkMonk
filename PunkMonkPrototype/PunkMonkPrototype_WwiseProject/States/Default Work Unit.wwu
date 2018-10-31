@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WwiseDocument Type="WorkUnit" ID="{04CF6E00-4CA3-4424-9273-F0833B6CE0D5}" SchemaVersion="89">
 	<States>
-		<WorkUnit Name="Default Work Unit" ID="{04CF6E00-4CA3-4424-9273-F0833B6CE0D5}" PersistMode="Standalone"/>
+		<WorkUnit Name="Default Work Unit" ID="{04CF6E00-4CA3-4424-9273-F0833B6CE0D5}" PersistMode="Standalone">
+			<ChildrenList>
+				<StateGroup Name="Game_Music" ID="{53475667-A6AB-437F-BEBF-3DB9593573A9}">
+					<ChildrenList>
+						<State Name="None" ID="{CDDD3A8B-C33A-48CD-BFCB-B5E87B0F368D}"/>
+						<State Name="Combat" ID="{9C1B9EFA-FEA9-487A-8819-365D004C0B0F}"/>
+						<State Name="FreeRoam" ID="{ACDA889D-80EC-449B-945C-BB3F7100ACC5}"/>
+					</ChildrenList>
+					<TransitionList>
+						<Transition>
+							<StartState Name="None" ID="{CDDD3A8B-C33A-48CD-BFCB-B5E87B0F368D}"/>
+							<EndState Name="FreeRoam" ID="{ACDA889D-80EC-449B-945C-BB3F7100ACC5}"/>
+							<Time>0</Time>
+							<IsShared>false</IsShared>
+						</Transition>
+						<Transition>
+							<StartState Name="FreeRoam" ID="{ACDA889D-80EC-449B-945C-BB3F7100ACC5}"/>
+							<EndState Name="Combat" ID="{9C1B9EFA-FEA9-487A-8819-365D004C0B0F}"/>
+							<Time>2.5</Time>
+							<IsShared>true</IsShared>
+						</Transition>
+					</TransitionList>
+				</StateGroup>
+			</ChildrenList>
+		</WorkUnit>
 	</States>
 </WwiseDocument>

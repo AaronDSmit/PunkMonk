@@ -48,6 +48,28 @@
 							<AudioFile>combat.wav</AudioFile>
 						</AudioFileSource>
 					</ChildrenList>
+					<StateInfo>
+						<StateGroupList>
+							<StateGroupInfo>
+								<StateGroupRef Name="Game_Music" ID="{53475667-A6AB-437F-BEBF-3DB9593573A9}"/>
+							</StateGroupInfo>
+						</StateGroupList>
+						<CustomStateList>
+							<CustomState>
+								<StateRef Name="FreeRoam" ID="{ACDA889D-80EC-449B-945C-BB3F7100ACC5}"/>
+								<State Name="" ID="{F694021B-2902-4687-B907-74EB0D8D68CC}" ShortID="107027840">
+									<PropertyList>
+										<Property Name="Lowpass" Type="int16" Value="62"/>
+										<Property Name="Volume" Type="Real64" Value="-2"/>
+									</PropertyList>
+								</State>
+							</CustomState>
+							<CustomState>
+								<StateRef Name="Combat" ID="{9C1B9EFA-FEA9-487A-8819-365D004C0B0F}"/>
+								<State Name="" ID="{D0EDE475-3FC1-4776-87FF-0554CDB4029F}" ShortID="621511322"/>
+							</CustomState>
+						</CustomStateList>
+					</StateInfo>
 					<ActiveSourceList>
 						<ActiveSource Name="combat" ID="{08ADDF65-451E-460C-8F37-BE997B35659C}" Platform="Linked"/>
 					</ActiveSourceList>

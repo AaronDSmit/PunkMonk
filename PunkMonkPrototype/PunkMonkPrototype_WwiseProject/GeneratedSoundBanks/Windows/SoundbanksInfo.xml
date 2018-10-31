@@ -34,6 +34,7 @@
 				<Event Id="312517388" Name="Die_Enemy" ObjectPath="\Events\SFX\Battle\Die\Die_Enemy"/>
 				<Event Id="2385628198" Name="Footsteps" ObjectPath="\Events\SFX\World\Footsteps"/>
 				<Event Id="2878671079" Name="FootstepsOutside" ObjectPath="\Events\SFX\World\FootstepsOutside"/>
+				<Event Id="797344207" Name="FreeRoam_Enter" ObjectPath="\Events\Music\FreeRoam_Enter"/>
 				<Event Id="3969013623" Name="MenuEnd" ObjectPath="\Events\Music\MenuEnd" MaxAttenuation="0.000000"/>
 				<Event Id="1447920996" Name="MenuStart" ObjectPath="\Events\Music\MenuStart"/>
 			</IncludedEvents>

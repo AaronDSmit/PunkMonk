@@ -1,0 +1,339 @@
+fileFormatVersion: 2
+guid: 663b3c645ff2e844a8b354ed1cbece68
+timeCreated: 1540943950
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: All_Together_Now
+    100002: Base_Jnt
+    100004: GunAnimated
+    100006: HeadTop_Jnt
+    100008: ikHandle1
+    100010: ikHandle2
+    100012: L_Ankle_Jnt
+    100014: L_Elbow_Jnt
+    100016: L_Finger1_Jnt
+    100018: L_Finger2_Jnt
+    100020: L_Finger3_Jnt
+    100022: L_FingerEnd_Jnt
+    100024: L_HIp_Jnt
+    100026: L_Index1_Jnt
+    100028: L_Index2_Jnt
+    100030: L_Index3_Jnt
+    100032: L_IndexEnd_Jnt
+    100034: L_Knee_Jnt
+    100036: L_Shoulder_Jnt
+    100038: L_Thumb1_Jnt
+    100040: L_Thumb2_Jnt
+    100042: L_ThumbEnd_Jnt
+    100044: L_ToeEnd_Jnt
+    100046: L_ToeRoll_Jnt
+    100048: L_Wrist_Jnt
+    100050: LeftFoot
+    100052: locator1
+    100054: mesh_Gen_v3_0_fbx
+    100056: //RootNode
+    100058: mesh_GensRifle_v1_0_fbx
+    100060: NeckBase_Jnt
+    100062: NeckTop_Jnt
+    100064: nurbsCircle12
+    100066: Pelvis_Jnt
+    100068: R_Ankle_Jnt
+    100070: R_Elbow_Jnt
+    100072: R_Finger1_Jnt
+    100074: R_Finger2_Jnt
+    100076: R_Finger3_Jnt
+    100078: R_FingerEnd_Jnt
+    100080: R_HIp_Jnt
+    100082: R_Index1_Jnt
+    100084: R_Index2_Jnt
+    100086: R_Index3_Jnt
+    100088: R_IndexEnd_Jnt
+    100090: R_Knee_Jnt
+    100092: R_Shoulder_Jnt
+    100094: R_Thumb1_Jnt
+    100096: R_Thumb2_Jnt
+    100098: R_ThumbEnd_Jnt
+    100100: R_ToeEnd_Jnt
+    100102: R_ToeRoll_Jnt
+    100104: R_Wrist_Jnt
+    100106: RightFoot
+    100108: Root_Jnt
+    100110: ShoulderBase_Jnt
+    100112: Spine1_Jnt
+    100114: Spine2_Jnt
+    100116: Spine3_Jnt
+    400000: All_Together_Now
+    400002: Base_Jnt
+    400004: GunAnimated
+    400006: HeadTop_Jnt
+    400008: ikHandle1
+    400010: ikHandle2
+    400012: L_Ankle_Jnt
+    400014: L_Elbow_Jnt
+    400016: L_Finger1_Jnt
+    400018: L_Finger2_Jnt
+    400020: L_Finger3_Jnt
+    400022: L_FingerEnd_Jnt
+    400024: L_HIp_Jnt
+    400026: L_Index1_Jnt
+    400028: L_Index2_Jnt
+    400030: L_Index3_Jnt
+    400032: L_IndexEnd_Jnt
+    400034: L_Knee_Jnt
+    400036: L_Shoulder_Jnt
+    400038: L_Thumb1_Jnt
+    400040: L_Thumb2_Jnt
+    400042: L_ThumbEnd_Jnt
+    400044: L_ToeEnd_Jnt
+    400046: L_ToeRoll_Jnt
+    400048: L_Wrist_Jnt
+    400050: LeftFoot
+    400052: locator1
+    400054: mesh_Gen_v3_0_fbx
+    400056: //RootNode
+    400058: mesh_GensRifle_v1_0_fbx
+    400060: NeckBase_Jnt
+    400062: NeckTop_Jnt
+    400064: nurbsCircle12
+    400066: Pelvis_Jnt
+    400068: R_Ankle_Jnt
+    400070: R_Elbow_Jnt
+    400072: R_Finger1_Jnt
+    400074: R_Finger2_Jnt
+    400076: R_Finger3_Jnt
+    400078: R_FingerEnd_Jnt
+    400080: R_HIp_Jnt
+    400082: R_Index1_Jnt
+    400084: R_Index2_Jnt
+    400086: R_Index3_Jnt
+    400088: R_IndexEnd_Jnt
+    400090: R_Knee_Jnt
+    400092: R_Shoulder_Jnt
+    400094: R_Thumb1_Jnt
+    400096: R_Thumb2_Jnt
+    400098: R_ThumbEnd_Jnt
+    400100: R_ToeEnd_Jnt
+    400102: R_ToeRoll_Jnt
+    400104: R_Wrist_Jnt
+    400106: RightFoot
+    400108: Root_Jnt
+    400110: ShoulderBase_Jnt
+    400112: Spine1_Jnt
+    400114: Spine2_Jnt
+    400116: Spine3_Jnt
+    2100000: lambert1
+    2100002: gun
+    2300000: mesh_GensRifle_v1_0_fbx
+    3300000: mesh_GensRifle_v1_0_fbx
+    4300000: mesh_Gen_v3_0_fbx
+    4300002: mesh_GensRifle_v1_0_fbx
+    7400000: Gen_Shoot
+    7400002: Gen_Run
+    7400004: Gen_Idle
+    7400006: Gen_TakeDamage
+    9500000: //RootNode
+    13700000: mesh_Gen_v3_0_fbx
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: gun
+    second: {fileID: 2100000, guid: c506d5be18246e4449ad3544b91ef9b9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert1
+    second: {fileID: 2100000, guid: 5f4796a1f6173d445ac3fef72567045d, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Gen_Run
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 16
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Gen_Idle
+      takeName: Take 001
+      firstFrame: 18
+      lastFrame: 114
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Gen_Shoot
+      takeName: Take 001
+      firstFrame: 114
+      lastFrame: 192
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Gen_TakeDamage
+      takeName: Take 001
+      firstFrame: 200
+      lastFrame: 280
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

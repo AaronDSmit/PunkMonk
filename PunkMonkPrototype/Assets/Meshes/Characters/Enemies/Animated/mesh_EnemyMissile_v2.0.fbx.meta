@@ -1,0 +1,221 @@
+fileFormatVersion: 2
+guid: f6296295cb23b09449766fe01d21805b
+timeCreated: 1540944889
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Cannon
+    100002: Enemies
+    100004: Enemy_Fists
+    100006: Enemy_Shoulders
+    100008: grp_Locator
+    100010: jnt_Ankle_L
+    100012: jnt_Ankle_R
+    100014: jnt_Ball_L
+    100016: jnt_Ball_R
+    100018: jnt_Clavicle_L
+    100020: jnt_Clavicle_OFFSET_L
+    100022: jnt_Clavicle_OFFSET_R
+    100024: jnt_Clavicle_R
+    100026: jnt_Crown
+    100028: jnt_Digit1_L
+    100030: jnt_Digit1_R
+    100032: jnt_Digit2_L
+    100034: jnt_Digit2_R
+    100036: jnt_Elbow_L
+    100038: jnt_Elbow_OFFSET_L
+    100040: jnt_Elbow_OFFSET_R
+    100042: jnt_Elbow_R
+    100044: jnt_Hand1_L
+    100046: jnt_Hand1_R
+    100048: jnt_Hand2_L
+    100050: jnt_Hand2_R
+    100052: jnt_Hand3_L
+    100054: jnt_Hand3_R
+    100056: jnt_Head
+    100058: jnt_Hip_L
+    100060: jnt_Hip_OFFSET_L
+    100062: jnt_Hip_OFFSET_R
+    100064: jnt_Hip_R
+    100066: jnt_Jaw
+    100068: jnt_Knee_L
+    100070: jnt_Knee_R
+    100072: jnt_Neck
+    100074: jnt_Pelvis
+    100076: jnt_Pelvis_OFFSET
+    100078: jnt_Root
+    100080: jnt_Shoulder
+    100082: jnt_Shoulder_L
+    100084: jnt_Shoulder_OFFSET_L
+    100086: jnt_Shoulder_OFFSET_R
+    100088: jnt_Shoulder_R
+    100090: jnt_Spine1
+    100092: jnt_Spine2
+    100094: jnt_Spine3
+    100096: jnt_Thumb_L
+    100098: jnt_Thumb_R
+    100100: jnt_Toe_L
+    100102: jnt_Toe_R
+    100104: jnt_Wrist_L
+    100106: jnt_Wrist_R
+    100108: locator1
+    100110: //RootNode
+    100112: Missile
+    100114: skel_DivideHuman_v1
+    400000: Cannon
+    400002: Enemies
+    400004: Enemy_Fists
+    400006: Enemy_Shoulders
+    400008: grp_Locator
+    400010: jnt_Ankle_L
+    400012: jnt_Ankle_R
+    400014: jnt_Ball_L
+    400016: jnt_Ball_R
+    400018: jnt_Clavicle_L
+    400020: jnt_Clavicle_OFFSET_L
+    400022: jnt_Clavicle_OFFSET_R
+    400024: jnt_Clavicle_R
+    400026: jnt_Crown
+    400028: jnt_Digit1_L
+    400030: jnt_Digit1_R
+    400032: jnt_Digit2_L
+    400034: jnt_Digit2_R
+    400036: jnt_Elbow_L
+    400038: jnt_Elbow_OFFSET_L
+    400040: jnt_Elbow_OFFSET_R
+    400042: jnt_Elbow_R
+    400044: jnt_Hand1_L
+    400046: jnt_Hand1_R
+    400048: jnt_Hand2_L
+    400050: jnt_Hand2_R
+    400052: jnt_Hand3_L
+    400054: jnt_Hand3_R
+    400056: jnt_Head
+    400058: jnt_Hip_L
+    400060: jnt_Hip_OFFSET_L
+    400062: jnt_Hip_OFFSET_R
+    400064: jnt_Hip_R
+    400066: jnt_Jaw
+    400068: jnt_Knee_L
+    400070: jnt_Knee_R
+    400072: jnt_Neck
+    400074: jnt_Pelvis
+    400076: jnt_Pelvis_OFFSET
+    400078: jnt_Root
+    400080: jnt_Shoulder
+    400082: jnt_Shoulder_L
+    400084: jnt_Shoulder_OFFSET_L
+    400086: jnt_Shoulder_OFFSET_R
+    400088: jnt_Shoulder_R
+    400090: jnt_Spine1
+    400092: jnt_Spine2
+    400094: jnt_Spine3
+    400096: jnt_Thumb_L
+    400098: jnt_Thumb_R
+    400100: jnt_Toe_L
+    400102: jnt_Toe_R
+    400104: jnt_Wrist_L
+    400106: jnt_Wrist_R
+    400108: locator1
+    400110: //RootNode
+    400112: Missile
+    400114: skel_DivideHuman_v1
+    2100000: basher_initialShadingGroup1
+    2100002: lambert1
+    2100004: mat_Cannon
+    2300000: Cannon
+    2300002: Missile
+    3300000: Cannon
+    3300002: Missile
+    4300000: Enemy_Shoulders
+    4300002: Enemy_Fists
+    4300004: Cannon
+    4300006: Missile
+    7400000: MissileRun
+    7400002: MissileAttack
+    7400004: MissileIdle
+    7400006: MissileStruck
+    9500000: //RootNode
+    13700000: Enemy_Fists
+    13700002: Enemy_Shoulders
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

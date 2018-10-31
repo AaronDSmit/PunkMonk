@@ -148,13 +148,25 @@ public class PlayerController : MonoBehaviour
 
             if (currentVolt > 0)
             {
-                earthUnit.HasVolt = true;
-                lightningUnit.HasVolt = true;
+                if (earthUnit != null)
+                {
+                    earthUnit.HasVolt = true;
+                }
+                if (lightningUnit != null)
+                {
+                    lightningUnit.HasVolt = true;
+                }
             }
             else
             {
-                earthUnit.HasVolt = false;
-                lightningUnit.HasVolt = false;
+                if (earthUnit != null)
+                {
+                    earthUnit.HasVolt = false;
+                }
+                if (lightningUnit != null)
+                {
+                    lightningUnit.HasVolt = false;
+                }
             }
 
             Manager.instance.UIController.VoltBar.value = currentVolt;

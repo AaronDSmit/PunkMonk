@@ -31,8 +31,11 @@ public class MenuHelper : MonoBehaviour
             currentSettings = SettingsLoader.Instance.CurrentSettings;
             defaultSettings = SettingsLoader.Instance.DefaultSettings;
         }
-        botBar = transform.GetChild(5).transform.GetChild(1).GetComponent<RectTransform>();
-        topBar = transform.GetChild(5).transform.GetChild(0).GetComponent<RectTransform>();
+        if (transform.GetChild(5).transform.GetChild(1).GetComponent<RectTransform>() != null)
+        {
+            botBar = transform.GetChild(5).transform.GetChild(1).GetComponent<RectTransform>();
+            topBar = transform.GetChild(5).transform.GetChild(0).GetComponent<RectTransform>();
+        }
     }
 
     void Update()
@@ -187,12 +190,11 @@ public class MenuHelper : MonoBehaviour
 
     private IEnumerator StopCutscene()
     {
-        while(topBar.sizeDelta.y >= 0)
+        while (topBar.sizeDelta.y >= 0)
         {
             topBar.sizeDelta -= new Vector2(0, Time.deltaTime * 100);
             botBar.sizeDelta -= new Vector2(0, Time.deltaTime * 100);
             yield return null;
-
         }
     }
 

@@ -61,7 +61,7 @@
 					<PropertyList>
 						<Property Name="Lowpass" Type="int16">
 							<ValueList>
-								<Value>40</Value>
+								<Value>45</Value>
 							</ValueList>
 						</Property>
 						<Property Name="PlayMechanismLoop" Type="bool" Value="True"/>

@@ -713,6 +713,13 @@
 				<Folder Name="World" ID="{E7013E30-672F-49F0-8EA3-E5453336E945}" ShortID="242526625">
 					<ChildrenList>
 						<RandomSequenceContainer Name="Footsteps" ID="{26795972-CF62-4681-93E7-B6B51FB837D3}" ShortID="107869179">
+							<PropertyList>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>12</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{D4C10CFF-54D1-43E8-9949-15A35C036BE6}"/>
@@ -1167,6 +1174,25 @@
 						</ActorMixer>
 					</ChildrenList>
 				</Folder>
+				<Sound Name="Dummy_Audio" ID="{E0A859C4-4E25-4836-A43B-038566B589B4}" ShortID="700212510">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{D4C10CFF-54D1-43E8-9949-15A35C036BE6}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{17B85F81-D4B6-4851-8C1E-9D808D7B1DC8}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="Dummy_Audio" ID="{CF25239A-514E-4512-8262-E1E6B6D4ADC5}" ShortID="727131690">
+							<Language>SFX</Language>
+							<AudioFile>Dummy_Audio.wav</AudioFile>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="Dummy_Audio" ID="{CF25239A-514E-4512-8262-E1E6B6D4ADC5}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
 			</ChildrenList>
 		</WorkUnit>
 	</AudioObjects>

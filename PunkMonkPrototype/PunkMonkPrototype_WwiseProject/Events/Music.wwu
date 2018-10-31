@@ -8,6 +8,11 @@
 						<Action Name="" ID="{AA5AE7EA-F0A6-45A5-86AD-2E2722264C60}" ShortID="533742609">
 							<PropertyList>
 								<Property Name="ActionType" Type="int16" Value="22"/>
+								<Property Name="Inclusion" Type="bool">
+									<ValueList>
+										<Value>False</Value>
+									</ValueList>
+								</Property>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Target">
@@ -44,7 +49,7 @@
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="combat-start" ID="{0D92CD72-8254-4E2F-8F2C-1A6E9E8511EF}" WorkUnitID="{BE193198-07FD-4919-8584-0C834CF482F7}"/>
+									<ObjectRef Name="Dummy_Audio" ID="{E0A859C4-4E25-4836-A43B-038566B589B4}" WorkUnitID="{BE193198-07FD-4919-8584-0C834CF482F7}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>

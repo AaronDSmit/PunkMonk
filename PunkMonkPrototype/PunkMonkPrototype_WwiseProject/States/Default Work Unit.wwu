@@ -11,16 +11,16 @@
 					</ChildrenList>
 					<TransitionList>
 						<Transition>
-							<StartState Name="None" ID="{CDDD3A8B-C33A-48CD-BFCB-B5E87B0F368D}"/>
-							<EndState Name="FreeRoam" ID="{ACDA889D-80EC-449B-945C-BB3F7100ACC5}"/>
-							<Time>0</Time>
-							<IsShared>false</IsShared>
-						</Transition>
-						<Transition>
 							<StartState Name="FreeRoam" ID="{ACDA889D-80EC-449B-945C-BB3F7100ACC5}"/>
 							<EndState Name="Combat" ID="{9C1B9EFA-FEA9-487A-8819-365D004C0B0F}"/>
 							<Time>2.5</Time>
 							<IsShared>true</IsShared>
+						</Transition>
+						<Transition>
+							<StartState Name="None" ID="{CDDD3A8B-C33A-48CD-BFCB-B5E87B0F368D}"/>
+							<EndState Name="FreeRoam" ID="{ACDA889D-80EC-449B-945C-BB3F7100ACC5}"/>
+							<Time>0</Time>
+							<IsShared>false</IsShared>
 						</Transition>
 					</TransitionList>
 				</StateGroup>

@@ -139,7 +139,22 @@ ModelImporter:
     9500000: //RootNode
     13700000: Enemy_Fists
     13700002: Enemy_Shoulders
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: basher_initialShadingGroup1
+    second: {fileID: 2100000, guid: ae53b04d711ce2049b7a362811bfb095, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert1
+    second: {fileID: 2100000, guid: ae53b04d711ce2049b7a362811bfb095, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mat_Cannon
+    second: {fileID: 2100000, guid: 98b0b665a2189ae439b7927c51fa30b2, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

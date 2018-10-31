@@ -1,0 +1,211 @@
+fileFormatVersion: 2
+guid: e0e1cf5808ff25945943ffbcfd4aa296
+timeCreated: 1540944855
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Enemies
+    100002: Enemy_Blades
+    100004: grp_Locator
+    100006: jnt_Ankle_L
+    100008: jnt_Ankle_R
+    100010: jnt_Ball_L
+    100012: jnt_Ball_R
+    100014: jnt_Clavicle_L
+    100016: jnt_Clavicle_OFFSET_L
+    100018: jnt_Clavicle_OFFSET_R
+    100020: jnt_Clavicle_R
+    100022: jnt_Crown
+    100024: jnt_Digit1_L
+    100026: jnt_Digit1_R
+    100028: jnt_Digit2_L
+    100030: jnt_Digit2_R
+    100032: jnt_Elbow_L
+    100034: jnt_Elbow_OFFSET_L
+    100036: jnt_Elbow_OFFSET_R
+    100038: jnt_Elbow_R
+    100040: jnt_Hand1_L
+    100042: jnt_Hand1_R
+    100044: jnt_Hand2_L
+    100046: jnt_Hand2_R
+    100048: jnt_Hand3_L
+    100050: jnt_Hand3_R
+    100052: jnt_Head
+    100054: jnt_Hip_L
+    100056: jnt_Hip_OFFSET_L
+    100058: jnt_Hip_OFFSET_R
+    100060: jnt_Hip_R
+    100062: jnt_Jaw
+    100064: jnt_Knee_L
+    100066: jnt_Knee_R
+    100068: jnt_Neck
+    100070: jnt_Pelvis
+    100072: jnt_Pelvis_OFFSET
+    100074: jnt_Root
+    100076: jnt_Shoulder
+    100078: jnt_Shoulder_L
+    100080: jnt_Shoulder_OFFSET_L
+    100082: jnt_Shoulder_OFFSET_R
+    100084: jnt_Shoulder_R
+    100086: jnt_Spine1
+    100088: jnt_Spine2
+    100090: jnt_Spine3
+    100092: jnt_Thumb_L
+    100094: jnt_Thumb_R
+    100096: jnt_Toe_L
+    100098: jnt_Toe_R
+    100100: jnt_Wrist_L
+    100102: jnt_Wrist_R
+    100104: locator1
+    100106: //RootNode
+    100108: skel_DivideHuman_v1
+    400000: Enemies
+    400002: Enemy_Blades
+    400004: grp_Locator
+    400006: jnt_Ankle_L
+    400008: jnt_Ankle_R
+    400010: jnt_Ball_L
+    400012: jnt_Ball_R
+    400014: jnt_Clavicle_L
+    400016: jnt_Clavicle_OFFSET_L
+    400018: jnt_Clavicle_OFFSET_R
+    400020: jnt_Clavicle_R
+    400022: jnt_Crown
+    400024: jnt_Digit1_L
+    400026: jnt_Digit1_R
+    400028: jnt_Digit2_L
+    400030: jnt_Digit2_R
+    400032: jnt_Elbow_L
+    400034: jnt_Elbow_OFFSET_L
+    400036: jnt_Elbow_OFFSET_R
+    400038: jnt_Elbow_R
+    400040: jnt_Hand1_L
+    400042: jnt_Hand1_R
+    400044: jnt_Hand2_L
+    400046: jnt_Hand2_R
+    400048: jnt_Hand3_L
+    400050: jnt_Hand3_R
+    400052: jnt_Head
+    400054: jnt_Hip_L
+    400056: jnt_Hip_OFFSET_L
+    400058: jnt_Hip_OFFSET_R
+    400060: jnt_Hip_R
+    400062: jnt_Jaw
+    400064: jnt_Knee_L
+    400066: jnt_Knee_R
+    400068: jnt_Neck
+    400070: jnt_Pelvis
+    400072: jnt_Pelvis_OFFSET
+    400074: jnt_Root
+    400076: jnt_Shoulder
+    400078: jnt_Shoulder_L
+    400080: jnt_Shoulder_OFFSET_L
+    400082: jnt_Shoulder_OFFSET_R
+    400084: jnt_Shoulder_R
+    400086: jnt_Spine1
+    400088: jnt_Spine2
+    400090: jnt_Spine3
+    400092: jnt_Thumb_L
+    400094: jnt_Thumb_R
+    400096: jnt_Toe_L
+    400098: jnt_Toe_R
+    400100: jnt_Wrist_L
+    400102: jnt_Wrist_R
+    400104: locator1
+    400106: //RootNode
+    400108: skel_DivideHuman_v1
+    2100000: lambert1
+    4300000: Enemy_Blades
+    7400000: MeleeStruck
+    7400002: MeleeRun
+    7400004: MeleeIdle
+    7400006: RangedAttack
+    7400008: MeleeAttack
+    9500000: //RootNode
+    13700000: Enemy_Blades
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert1
+    second: {fileID: 2100000, guid: 9c77b78ccbcb69944a7588f3047d13cd, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -39,6 +39,9 @@ public class ProfileSwitcher : MonoBehaviour
 
     private RectTransform lightningProfile;
 
+    private Unit currentUnit;
+
+
     private Button earthProfileButton;
 
     private Button lightningProfileButton;
@@ -68,6 +71,14 @@ public class ProfileSwitcher : MonoBehaviour
         }
     }
 
+    public Unit CurrentUnit
+    {
+        get
+        {
+            return currentUnit;
+        }
+    }
+
     #endregion
 
     #region Public Methods
@@ -79,6 +90,8 @@ public class ProfileSwitcher : MonoBehaviour
         if (earthSelected)
         {
             earthProfile.transform.SetAsLastSibling();
+
+            currentUnit = Manager.instance.PlayerController.EarthUnit;
 
             //StartCoroutine(MoveProfile(earthProfile, secondaryPos, primaryPos));
             StartCoroutine(Scale(earthProfile, secondaryScale, primaryScale));
@@ -92,6 +105,9 @@ public class ProfileSwitcher : MonoBehaviour
         else
         {
             lightningProfile.transform.SetAsLastSibling();
+
+            currentUnit = Manager.instance.PlayerController.LightningUnit;
+
 
             //StartCoroutine(MoveProfile(lightningProfile, secondaryPos, primaryPos));
             StartCoroutine(Scale(lightningProfile, secondaryScale, primaryScale));
@@ -135,11 +151,15 @@ public class ProfileSwitcher : MonoBehaviour
 
     }
 
-    #endregion
+    private void Start()
+    {
+        currentUnit = Manager.instance.PlayerController.EarthUnit;
+    }
+        #endregion
 
-    #region Local Methods
+        #region Local Methods
 
-    private IEnumerator MoveProfile(RectTransform a_rect, Vector2 a_from, Vector2 a_target)
+        private IEnumerator MoveProfile(RectTransform a_rect, Vector2 a_from, Vector2 a_target)
     {
         float currentLerpTime = 0;
         float t = 0;

@@ -449,6 +449,10 @@ public class PlayerController : MonoBehaviour
 
         currentRuleset = selectedUnit.GetAction(actionIndex).ruleset;
 
+        if(currentAttack == PlayerAttack.lightningSpecial && actionIndex != 2)
+        {
+            lightningAttackHex1 = null;
+        }
 
         // set the current attack
         if (selectedUnit == earthUnit)

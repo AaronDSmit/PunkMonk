@@ -104,6 +104,8 @@ public class MissileUnit : AI_Agent
 
         doneMissiles = true;
 
+        yield return new WaitForSeconds(0.1f);
+        
         FinishedAction();
     }
 

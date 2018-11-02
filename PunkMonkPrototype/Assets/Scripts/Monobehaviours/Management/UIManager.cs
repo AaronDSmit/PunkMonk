@@ -101,13 +101,33 @@ public class UIManager : MonoBehaviour
 
     private void UpdateSmallAblilityIcons()
     {
-        earthProfile.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = (player.EarthUnit.CanMove) ? hexIconFilled : hexIconEmpty;
-        earthProfile.transform.GetChild(0).GetChild(1).GetComponent<Image>().sprite = (player.EarthUnit.CanAttack) ? hexIconFilled : hexIconEmpty;
-        earthProfile.transform.GetChild(0).GetChild(2).GetComponent<Image>().sprite = (player.EarthUnit.CanSpecialAttack) ? hexIconFilled : hexIconEmpty;
+        if (!player.EarthUnit.IsDead)
+        {
+            earthProfile.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = (player.EarthUnit.CanMove) ? hexIconFilled : hexIconEmpty;
+            earthProfile.transform.GetChild(0).GetChild(1).GetComponent<Image>().sprite = (player.EarthUnit.CanAttack) ? hexIconFilled : hexIconEmpty;
+            earthProfile.transform.GetChild(0).GetChild(2).GetComponent<Image>().sprite = (player.EarthUnit.CanSpecialAttack) ? hexIconFilled : hexIconEmpty;
+        }
+        else
+        {
+            earthProfile.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = hexIconEmpty;
+            earthProfile.transform.GetChild(0).GetChild(1).GetComponent<Image>().sprite = hexIconEmpty;
+            earthProfile.transform.GetChild(0).GetChild(2).GetComponent<Image>().sprite = hexIconEmpty;
+        }
 
-        lightningProfile.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = (player.LightningUnit.CanMove) ? hexIconFilled : hexIconEmpty;
-        lightningProfile.transform.GetChild(0).GetChild(1).GetComponent<Image>().sprite = (player.LightningUnit.CanAttack) ? hexIconFilled : hexIconEmpty;
-        lightningProfile.transform.GetChild(0).GetChild(2).GetComponent<Image>().sprite = (player.LightningUnit.CanSpecialAttack) ? hexIconFilled : hexIconEmpty;
+
+        if (!player.LightningUnit.IsDead)
+        {
+            lightningProfile.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = (player.LightningUnit.CanMove) ? hexIconFilled : hexIconEmpty;
+            lightningProfile.transform.GetChild(0).GetChild(1).GetComponent<Image>().sprite = (player.LightningUnit.CanAttack) ? hexIconFilled : hexIconEmpty;
+            lightningProfile.transform.GetChild(0).GetChild(2).GetComponent<Image>().sprite = (player.LightningUnit.CanSpecialAttack) ? hexIconFilled : hexIconEmpty;
+        }
+        else
+        {
+            lightningProfile.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = hexIconEmpty;
+            lightningProfile.transform.GetChild(0).GetChild(1).GetComponent<Image>().sprite = hexIconEmpty;
+            lightningProfile.transform.GetChild(0).GetChild(2).GetComponent<Image>().sprite = hexIconEmpty;
+        }
+
     }
 
     public void Init()

@@ -130,15 +130,10 @@ public class StateTransitionPoint : MonoBehaviour
         {
             if (Manager.instance.StateController.CurrentGameState == fromState)
             {
+
                 PlayerController player = Manager.instance.PlayerController;
-                if (cameraTargetHex == null)
-                {
-                    if (cam.TargetUnit != player.EarthUnit)
-                    {
-                        cam.SwitchOverworldTargetUnit();
-                    }
-                }
-                else
+
+                if (cameraTargetHex != null)
                 {
                     cam.LookAtPosition(cameraTargetHex.transform.position);
                 }
@@ -170,6 +165,13 @@ public class StateTransitionPoint : MonoBehaviour
                     cam.XMax = (int)camBounds.z;
                     cam.XMin = (int)camBounds.w;
                 }
+
+                if(Manager.instance.GetComponentInChildren<ProfileSwitcher>().CurrentUnit != Manager.instance.PlayerController.EarthUnit)
+                {
+                    Manager.instance.GetComponentInChildren<ProfileSwitcher>().SwitchAbilityButtons();
+                    Manager.instance.GetComponentInChildren<ProfileSwitcher>().Switch(true);
+                }
+
 
 
 

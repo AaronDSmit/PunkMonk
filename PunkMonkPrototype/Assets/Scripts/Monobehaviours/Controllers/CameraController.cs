@@ -43,6 +43,7 @@ public class CameraController : MonoBehaviour
 
     private bool lookAtObject = false;
     private bool canMove = true;
+    private bool earthUnitOverworldTarget = false;
 
     private GameSettings settings;
 
@@ -200,8 +201,6 @@ public class CameraController : MonoBehaviour
 
     private void GameStateChanged(GameState a_oldstate, GameState a_newstate)
     {
-
-
         // ensure this script knows it's in over-world state
         inOverworld = (a_newstate == GameState.overworld);
 
@@ -210,6 +209,23 @@ public class CameraController : MonoBehaviour
             distance = overworldDistance;
             SetRotation(CameraDirection.NE);
         }
+
+        if (a_newstate == GameState.overworld)
+        {
+            if (targetUnit == null)
+            {
+                if (earthUnitOverworldTarget == true)
+                {
+                    targetUnit = Manager.instance.PlayerController.EarthUnit;
+                }
+                else
+                {
+                    targetUnit = Manager.instance.PlayerController.LightningUnit;
+                }
+            }
+        }
+
+
     }
 
     private void Update()
@@ -263,7 +279,7 @@ public class CameraController : MonoBehaviour
             }
 
             cameraTargetPos = (cameraStartPos).normalized * distance;
-           cinemachineDefault.localPosition = Vector3.Slerp(cinemachineDefault.localPosition, cameraTargetPos, Time.deltaTime * overworldSpeed);
+            cinemachineDefault.localPosition = Vector3.Slerp(cinemachineDefault.localPosition, cameraTargetPos, Time.deltaTime * overworldSpeed);
 
 
             if (Vector3.Distance(cam.transform.position, defaultCam.transform.position) < 0.1f)
@@ -309,6 +325,16 @@ public class CameraController : MonoBehaviour
         }
 
         targetUnit = Manager.instance.PlayerController.GetComponent<OverworldController>().startWithClade ? earthUnit : lightningUnit;
+
+        if (targetUnit == earthUnit)
+        {
+            earthUnitOverworldTarget = true;
+        }
+        else
+        {
+            earthUnitOverworldTarget = false;
+        }
+
     }
 
     // Process Keyboard Input
@@ -519,6 +545,7 @@ public class CameraController : MonoBehaviour
         {
             targetUnit = earthUnit;
         }
+        earthUnitOverworldTarget = !earthUnitOverworldTarget;
 
         overworldController.Controller = targetUnit.GetComponent<CharacterController>();
         targetUnit.GetComponent<OverworldFollower>().enabled = false;

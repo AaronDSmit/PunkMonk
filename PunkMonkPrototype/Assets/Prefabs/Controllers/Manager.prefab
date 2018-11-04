@@ -6195,9 +6195,12 @@ MonoBehaviour:
   basicEarthAttack:
     ID: 1941636804
     valueGuid: 3eb077df9777ad4d832262b213bdb676
-  specialEarthAttack:
-    ID: 334189263
+  specialEarthAttackLaunch:
+    ID: -1960774677
     valueGuid: 181d67deef774147ac84805e21320458
+  specialEarthAttackImpact:
+    ID: -1776979996
+    valueGuid: c36df0ccb605b54e9ad130a9d9ae705e
   basicLightingAttack:
     ID: -1734488603
     valueGuid: f3a7fd6b62eebe49b1d923d9b64995e7

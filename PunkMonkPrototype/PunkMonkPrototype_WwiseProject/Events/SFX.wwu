@@ -23,7 +23,7 @@
 												</Action>
 											</ChildrenList>
 										</Event>
-										<Event Name="Attack_Clade_Special" ID="{DE671D18-77EF-4741-AC84-805E21320458}">
+										<Event Name="Attack_Clade_Special_Launch" ID="{DE671D18-77EF-4741-AC84-805E21320458}">
 											<ChildrenList>
 												<Action Name="" ID="{096D8C24-2183-438E-93D3-48C6208BE983}" ShortID="1053909536">
 													<PropertyList>
@@ -31,7 +31,21 @@
 													</PropertyList>
 													<ReferenceList>
 														<Reference Name="Target">
-															<ObjectRef Name="Attack_Clade_Special" ID="{56BC57AE-8A5B-4D5E-9904-6DFFA7B41AAE}" WorkUnitID="{BE193198-07FD-4919-8584-0C834CF482F7}"/>
+															<ObjectRef Name="Attack_Clade_Special_Launch" ID="{56BC57AE-8A5B-4D5E-9904-6DFFA7B41AAE}" WorkUnitID="{BE193198-07FD-4919-8584-0C834CF482F7}"/>
+														</Reference>
+													</ReferenceList>
+												</Action>
+											</ChildrenList>
+										</Event>
+										<Event Name="Attack_Clade_Special_Impact" ID="{CCF06DC3-05B6-4EB5-9AD1-30A9D9AE705E}">
+											<ChildrenList>
+												<Action Name="" ID="{5DE33746-CC50-4ED0-A93B-4F4FDE3DCEE3}" ShortID="427788112">
+													<PropertyList>
+														<Property Name="ActionType" Type="int16" Value="1"/>
+													</PropertyList>
+													<ReferenceList>
+														<Reference Name="Target">
+															<ObjectRef Name="Attack_Clade_Special_Impact" ID="{F93FEAF4-9250-4FF7-9897-A9A9FA436769}" WorkUnitID="{BE193198-07FD-4919-8584-0C834CF482F7}"/>
 														</Reference>
 													</ReferenceList>
 												</Action>

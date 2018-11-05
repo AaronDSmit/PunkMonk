@@ -62,7 +62,10 @@ public class StateTransitionPoint : MonoBehaviour
 
     public int voltGiven;
 
-    public AK.Wwise.Event MyEvent = null;
+    public AK.Wwise.Event transitionEvent = null;
+    [SerializeField] private AK.Wwise.State transitionState = null;
+
+
 
     public Hex LightningHex
     {
@@ -176,7 +179,8 @@ public class StateTransitionPoint : MonoBehaviour
 
 
                 triggered = true;
-                MyEvent.Post(gameObject);
+                AkSoundEngine.SetState((uint)transitionState.groupID, (uint)transitionState.ID);
+                transitionEvent.Post(gameObject);
             }
         }
     }

@@ -5,6 +5,11 @@
 			<ChildrenList>
 				<RandomSequenceContainer Name="Rain" ID="{9358B488-DAA3-4441-BE2B-7B26DB26C6B2}" ShortID="339597239">
 					<PropertyList>
+						<Property Name="Lowpass" Type="int16">
+							<ValueList>
+								<Value>40</Value>
+							</ValueList>
+						</Property>
 						<Property Name="PlayMechanismLoop" Type="bool" Value="True"/>
 						<Property Name="PlayMechanismStepOrContinuous" Type="int16" Value="0"/>
 					</PropertyList>
@@ -56,71 +61,31 @@
 							</ActiveSourceList>
 						</Sound>
 					</ChildrenList>
-				</RandomSequenceContainer>
-				<RandomSequenceContainer Name="RainInside" ID="{97C4E710-9FF4-4FF5-BDBC-80E940281675}" ShortID="336202284">
-					<PropertyList>
-						<Property Name="Lowpass" Type="int16">
-							<ValueList>
-								<Value>45</Value>
-							</ValueList>
-						</Property>
-						<Property Name="PlayMechanismLoop" Type="bool" Value="True"/>
-						<Property Name="PlayMechanismStepOrContinuous" Type="int16" Value="0"/>
-					</PropertyList>
-					<ReferenceList>
-						<Reference Name="Conversion">
-							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{D4C10CFF-54D1-43E8-9949-15A35C036BE6}"/>
-						</Reference>
-						<Reference Name="OutputBus">
-							<ObjectRef Name="Bus_Ambient" ID="{C670AFFA-7BE7-49F5-8F3D-09EC259CD1DA}" WorkUnitID="{17B85F81-D4B6-4851-8C1E-9D808D7B1DC8}"/>
-						</Reference>
-					</ReferenceList>
-					<ChildrenList>
-						<Sound Name="Rain1" ID="{82E5C829-8CD7-4659-8EB9-D6CE250FA598}" ShortID="461376290">
-							<ReferenceList>
-								<Reference Name="Conversion">
-									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{D4C10CFF-54D1-43E8-9949-15A35C036BE6}"/>
-								</Reference>
-								<Reference Name="OutputBus">
-									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{17B85F81-D4B6-4851-8C1E-9D808D7B1DC8}"/>
-								</Reference>
-							</ReferenceList>
-							<ChildrenList>
-								<AudioFileSource Name="rainfall" ID="{FBAD458F-A9F4-4D42-9E41-4EC35F56A8D1}" ShortID="1053538036">
-									<Language>SFX</Language>
-									<AudioFile>rainfall.wav</AudioFile>
-									<ConvertedFileIDList>
-										<File ID="592930613"/>
-									</ConvertedFileIDList>
-								</AudioFileSource>
-							</ChildrenList>
-							<ActiveSourceList>
-								<ActiveSource Name="rainfall" ID="{FBAD458F-A9F4-4D42-9E41-4EC35F56A8D1}" Platform="Linked"/>
-							</ActiveSourceList>
-						</Sound>
-						<Sound Name="Rain2" ID="{F0DE5A81-25B9-4359-9A07-4A77EDECE1A6}" ShortID="309524698">
-							<ReferenceList>
-								<Reference Name="Conversion">
-									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{D4C10CFF-54D1-43E8-9949-15A35C036BE6}"/>
-								</Reference>
-								<Reference Name="OutputBus">
-									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{17B85F81-D4B6-4851-8C1E-9D808D7B1DC8}"/>
-								</Reference>
-							</ReferenceList>
-							<ChildrenList>
-								<AudioFileSource Name="rainfall2" ID="{61672172-6053-45CE-9293-403DC3F6D328}" ShortID="989238650">
-									<Language>SFX</Language>
-									<AudioFile>rainfall2.wav</AudioFile>
-									<ConvertedFileIDList>
-										<File ID="19429705"/>
-									</ConvertedFileIDList>
-								</AudioFileSource>
-							</ChildrenList>
-							<ActiveSourceList>
-								<ActiveSource Name="rainfall2" ID="{61672172-6053-45CE-9293-403DC3F6D328}" Platform="Linked"/>
-							</ActiveSourceList>
-						</Sound>
-					</ChildrenList>
+					<StateInfo>
+						<StateGroupList>
+							<StateGroupInfo>
+								<StateGroupRef Name="Game_Music" ID="{53475667-A6AB-437F-BEBF-3DB9593573A9}"/>
+							</StateGroupInfo>
+						</StateGroupList>
+						<CustomStateList>
+							<CustomState>
+								<StateRef Name="Inside" ID="{49A9B7F4-A6BE-431B-825E-70074F7A4AF6}"/>
+								<State Name="" ID="{3D6D928A-E4CA-4E50-ADB6-D396E67CB576}" ShortID="31090665">
+									<PropertyList>
+										<Property Name="Lowpass" Type="int16" Value="40"/>
+									</PropertyList>
+								</State>
+							</CustomState>
+							<CustomState>
+								<StateRef Name="FreeRoam" ID="{ACDA889D-80EC-449B-945C-BB3F7100ACC5}"/>
+								<State Name="" ID="{1D521CA5-C7E4-4F43-89EA-E8394556B104}" ShortID="424339282"/>
+							</CustomState>
+							<CustomState>
+								<StateRef Name="Combat" ID="{9C1B9EFA-FEA9-487A-8819-365D004C0B0F}"/>
+								<State Name="" ID="{B8C8ED5D-701D-4B38-B918-79E8A04CB9D6}" ShortID="880313655"/>
+							</CustomState>
+						</CustomStateList>
+					</StateInfo>
 				</RandomSequenceContainer>
 			</ChildrenList>
 		</WorkUnit>

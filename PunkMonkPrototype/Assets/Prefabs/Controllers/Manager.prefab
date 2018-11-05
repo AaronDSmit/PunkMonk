@@ -3705,6 +3705,8 @@ MonoBehaviour:
   hexIconEmpty: {fileID: 21300000, guid: 7e31864bc92f01f40a75345c75ffad2a, type: 3}
   voltBar: {fileID: 114162125227195842}
   endTurnButton: {fileID: 114145617712752594}
+  defeatSplashScreen: {fileID: 1060658616290964}
+  victorySplashScreen: {fileID: 1410393247648804}
 --- !u!114 &114312194263260790
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6302,7 +6304,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 19d9985637c0005438f1d1ba32854bc8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3e6110cf0751b5a48949902c3dfacd8d, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1

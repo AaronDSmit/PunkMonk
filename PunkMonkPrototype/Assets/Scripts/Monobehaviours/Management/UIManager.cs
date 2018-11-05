@@ -41,6 +41,13 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     private Button endTurnButton;
+
+    [SerializeField]
+    private GameObject defeatSplashScreen;
+
+    [SerializeField]
+    private GameObject victorySplashScreen;
+
     #endregion
 
     #region Reference Fields
@@ -275,6 +282,9 @@ public class UIManager : MonoBehaviour
         Manager.instance.TurnController.EndTurn(TEAM.player);
     }
 
+
+
+
     #endregion
 
     #region Unity Life-cycle Methods
@@ -355,7 +365,17 @@ public class UIManager : MonoBehaviour
         if (a_oldstate == GameState.battle)
         {
             battleUI.FadeOut();
+            if(Manager.instance.PlayerController.EarthUnit == null && Manager.instance.PlayerController.LightningUnit == null)
+            {
+                PlaySplashScreen(defeatSplashScreen.GetComponent<Animator>());
+            }
+            else
+            {
+                PlaySplashScreen(victorySplashScreen.GetComponent<Animator>());
+            }
         }
+
+        
 
         if (a_oldstate != GameState.battle && a_newstate == GameState.battle)
         {
@@ -393,6 +413,17 @@ public class UIManager : MonoBehaviour
         }
     }
 
+
+
+    private void PlaySplashScreen(Animator a_anim)
+    {
+        a_anim.gameObject.SetActive(true);
+        StartCoroutine(StopSplashScreen(a_anim));
+    }
+
+
+
+
     #region Coroutines
 
     private IEnumerator FadeIntoState()
@@ -404,6 +435,12 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
 
         StartCoroutine(FadeImage(1, 0, 1.0f));
+    }
+
+    private IEnumerator StopSplashScreen(Animator a_anim)
+    {
+        yield return new WaitUntil(() => !a_anim.GetCurrentAnimatorStateInfo(0).IsName("VictorySplash"));
+        a_anim.gameObject.SetActive(false);
     }
 
     private IEnumerator FadeOutLoading()

@@ -95,6 +95,7 @@ public class UIManager : MonoBehaviour
         }
         else
         {
+            LockUI();
             menuHelper.OpenConfirmationPopup(a_message, EndPlayersTurn);
         }
     }

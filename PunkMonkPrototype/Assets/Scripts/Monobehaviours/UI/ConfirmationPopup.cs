@@ -27,6 +27,12 @@ public class ConfirmationPopup : MonoBehaviour
         yesAction = a_yesAction;
     }
 
+
+    private void OnDisable()
+    {
+        Manager.instance.UIController.UnlockUI();
+    }
+
     public void Yes()
     {
         if (yesAction != null)

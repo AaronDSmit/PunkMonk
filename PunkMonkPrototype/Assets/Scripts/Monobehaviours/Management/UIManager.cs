@@ -439,7 +439,15 @@ public class UIManager : MonoBehaviour
 
     private IEnumerator StopSplashScreen(Animator a_anim)
     {
-        yield return new WaitUntil(() => !a_anim.GetCurrentAnimatorStateInfo(0).IsName("VictorySplash"));
+        if (a_anim == a_anim.GetCurrentAnimatorStateInfo(0).IsName("VictorySplash"))
+        {
+            yield return new WaitForSecondsRealtime(a_anim.GetCurrentAnimatorStateInfo(0).length);
+        }
+        else
+        {
+            yield return new WaitForSecondsRealtime(a_anim.GetCurrentAnimatorStateInfo(0).length);
+        }
+
         a_anim.gameObject.SetActive(false);
     }
 

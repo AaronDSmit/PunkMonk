@@ -6,6 +6,7 @@
 				<Property Name="Event Action List\{070A3D7C-4C45-4151-BFF1-D181534466F0}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{139D58F9-18D5-4BD7-B74E-599B5A89ABD8}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{28BCB3EA-EC34-49CC-B6CC-341347049C3D}\x64_Expand States" Type="string" Value=""/>
+				<Property Name="Event Action List\{2C9F0297-7436-42E1-AAE7-9B329F6C5CCB}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{2EB35268-2942-4848-A1DD-C83C5D9CEDE4}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{3239C110-54C1-4C46-BAD2-033CD75865B1}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{4313FA18-A758-4D13-B792-6F91DEB6776D}\x64_Expand States" Type="string" Value=""/>
@@ -32,13 +33,11 @@
 				<Property Name="ExternalSourcesInputPath" Type="string">
 					<ValueList>
 						<Value Platform="Windows"></Value>
-						<Value Platform="Mac"></Value>
 					</ValueList>
 				</Property>
 				<Property Name="ExternalSourcesOutputPath" Type="string">
 					<ValueList>
 						<Value Platform="Windows">GeneratedSoundBanks\Windows\</Value>
-						<Value Platform="Mac">GeneratedSoundBanks\Mac\</Value>
 					</ValueList>
 				</Property>
 				<Property Name="General\LatestLanguage" Type="int32" Value="684519430"/>
@@ -102,31 +101,26 @@
 				<Property Name="SoundBankPaths" Type="string">
 					<ValueList>
 						<Value Platform="Windows">GeneratedSoundBanks\Windows\</Value>
-						<Value Platform="Mac">GeneratedSoundBanks\Mac\</Value>
 					</ValueList>
 				</Property>
 				<Property Name="SoundBankPostGenerateCustomCmdDescription" Type="string">
 					<ValueList>
 						<Value Platform="Windows">Copy Streamed Files</Value>
-						<Value Platform="Mac">Copy Streamed Files</Value>
 					</ValueList>
 				</Property>
 				<Property Name="SoundBankPostGenerateCustomCmdLines" Type="string">
 					<ValueList>
 						<Value Platform="Windows">"$(WwiseExePath)\CopyStreamedFiles.exe" -info "$(InfoFilePath)" -outputpath "$(SoundBankPath)" -banks "$(SoundBankListAsTextFile)" -languages "$(LanguageList)"</Value>
-						<Value Platform="Mac">"$(WwiseExePath)\CopyStreamedFiles.exe" -info "$(InfoFilePath)" -outputpath "$(SoundBankPath)" -banks "$(SoundBankListAsTextFile)" -languages "$(LanguageList)"</Value>
 					</ValueList>
 				</Property>
 				<Property Name="SoundBankPreGenerateCustomCmdDescription" Type="string">
 					<ValueList>
 						<Value Platform="Windows"></Value>
-						<Value Platform="Mac"></Value>
 					</ValueList>
 				</Property>
 				<Property Name="SoundBankPreGenerateCustomCmdLines" Type="string">
 					<ValueList>
 						<Value Platform="Windows"></Value>
-						<Value Platform="Mac"></Value>
 					</ValueList>
 				</Property>
 			</PropertyList>

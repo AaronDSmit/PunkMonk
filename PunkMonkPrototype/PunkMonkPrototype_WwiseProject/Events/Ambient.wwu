@@ -3,55 +3,15 @@
 	<Events>
 		<WorkUnit Name="Ambient" ID="{39BFD4E9-6B27-4210-9595-772619309430}" PersistMode="Standalone">
 			<ChildrenList>
-				<Event Name="Ambient_Inside_Enter" ID="{FBD57393-994A-45B7-BB38-C412A4E1CC37}">
+				<Event Name="Rain" ID="{2C9F0297-7436-42E1-AAE7-9B329F6C5CCB}">
 					<ChildrenList>
-						<Action Name="" ID="{6EF441FD-81D8-463B-AF48-29C860B1B95C}" ShortID="134933851">
+						<Action Name="" ID="{DB8910C6-0DF3-4840-BFCB-837964614ABD}" ShortID="68095999">
 							<PropertyList>
 								<Property Name="ActionType" Type="int16" Value="1"/>
-								<Property Name="FadeTime" Type="Real64" Value="0.3"/>
-							</PropertyList>
-							<ReferenceList>
-								<Reference Name="Target">
-									<ObjectRef Name="RainInside" ID="{97C4E710-9FF4-4FF5-BDBC-80E940281675}" WorkUnitID="{7641300E-382C-4518-805A-56EF7E535C80}"/>
-								</Reference>
-							</ReferenceList>
-						</Action>
-						<Action Name="" ID="{AE6005E1-1140-479F-8BBB-B1559A143ABA}" ShortID="155512100">
-							<PropertyList>
-								<Property Name="ActionType" Type="int16" Value="2"/>
-								<Property Name="FadeTime" Type="Real64" Value="0.3"/>
-								<Property Name="Scope" Type="int16" Value="1"/>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Target">
 									<ObjectRef Name="Rain" ID="{9358B488-DAA3-4441-BE2B-7B26DB26C6B2}" WorkUnitID="{7641300E-382C-4518-805A-56EF7E535C80}"/>
-								</Reference>
-							</ReferenceList>
-						</Action>
-					</ChildrenList>
-				</Event>
-				<Event Name="Ambient_Outside_Enter" ID="{F6BAA612-F3BD-485B-AABA-85FC468A5C59}">
-					<ChildrenList>
-						<Action Name="" ID="{8E9D65D2-467E-4D0C-B218-043247F77A47}" ShortID="652538632">
-							<PropertyList>
-								<Property Name="ActionType" Type="int16" Value="1"/>
-								<Property Name="FadeTime" Type="Real64" Value="0.3"/>
-							</PropertyList>
-							<ReferenceList>
-								<Reference Name="Target">
-									<ObjectRef Name="Rain" ID="{9358B488-DAA3-4441-BE2B-7B26DB26C6B2}" WorkUnitID="{7641300E-382C-4518-805A-56EF7E535C80}"/>
-								</Reference>
-							</ReferenceList>
-						</Action>
-						<Action Name="" ID="{3F8EC6E3-91D5-4F47-BD42-F4E57E57D64C}" ShortID="765361161">
-							<PropertyList>
-								<Property Name="ActionType" Type="int16" Value="2"/>
-								<Property Name="FadeTime" Type="Real64" Value="0.3"/>
-								<Property Name="Scope" Type="int16" Value="1"/>
-							</PropertyList>
-							<ReferenceList>
-								<Reference Name="Target">
-									<ObjectRef Name="RainInside" ID="{97C4E710-9FF4-4FF5-BDBC-80E940281675}" WorkUnitID="{7641300E-382C-4518-805A-56EF7E535C80}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>

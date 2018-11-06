@@ -52,7 +52,8 @@ public class SettingsHelper : MonoBehaviour
 
     public void SetMuteAllToggle(Toggle a_toggle)
     {
-        currentSettings.MuteAll = a_toggle.isOn;
+        if (currentSettings != null)
+            currentSettings.MuteAll = a_toggle.isOn;
     }
 
     public void SetMasterVolumeSlider(Slider a_slider)
@@ -63,17 +64,20 @@ public class SettingsHelper : MonoBehaviour
 
     public void SetMusicVolumeSlider(Slider a_slider)
     {
-        currentSettings.Music = a_slider.value;
+        if (currentSettings != null)
+            currentSettings.Music = a_slider.value;
     }
 
     public void SetEffectsVolumeSlider(Slider a_slider)
     {
-        currentSettings.Effects = a_slider.value;
+        if (currentSettings != null)
+            currentSettings.Effects = a_slider.value;
     }
 
     public void SetDialougeVolumeSlider(Slider a_slider)
     {
-        currentSettings.Dialouge = a_slider.value;
+        if (currentSettings != null)
+            currentSettings.Dialouge = a_slider.value;
     }
 
     #endregion

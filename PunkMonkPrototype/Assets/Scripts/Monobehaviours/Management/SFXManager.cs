@@ -5,11 +5,11 @@ using UnityEngine;
 public class SFXManager : MonoBehaviour
 {
     [SerializeField] private AK.Wwise.Event rainOutside;
-    [SerializeField] private AK.Wwise.Event rainInside;
     [SerializeField] private AK.Wwise.Event footStepSFX;
     [SerializeField] private AK.Wwise.Event footStepOutsideSFX;
     [SerializeField] private AK.Wwise.Event basicEarthAttack;
-    [SerializeField] private AK.Wwise.Event specialEarthAttack;
+    [SerializeField] private AK.Wwise.Event specialEarthAttackLaunch;
+    [SerializeField] private AK.Wwise.Event specialEarthAttackImpact;
     [SerializeField] private AK.Wwise.Event basicLightingAttack;
     [SerializeField] private AK.Wwise.Event specialLightingAttack;
     [SerializeField] private AK.Wwise.Event enemyMeleeAttack;
@@ -70,8 +70,11 @@ public class SFXManager : MonoBehaviour
             case "EarthBasic":
                 basicEarthAttack.Post(a_orginalGO);
                 break;
-            case "EarthSpecial":
-                specialEarthAttack.Post(a_orginalGO);
+            case "EarthSpecialLaunch":
+                specialEarthAttackLaunch.Post(a_orginalGO);
+                break;
+            case "EarthSpecialImpact":
+                specialEarthAttackImpact.Post(a_orginalGO);
                 break;
             case "LightningBasic":
                 basicLightingAttack.Post(a_orginalGO);
@@ -86,11 +89,9 @@ public class SFXManager : MonoBehaviour
                 enemyMissileAttack.Post(a_orginalGO);
                 break;
             case "EnterInside":
-                rainInside.Post(a_orginalGO);
                 outside = false;
                 break;
             case "EnterOutside":
-                rainOutside.Post(a_orginalGO);
                 outside = true;
                 break;
             default:

@@ -320,7 +320,7 @@
 										</Reference>
 									</ReferenceList>
 									<ChildrenList>
-										<Sound Name="Attack_Clade_Special" ID="{56BC57AE-8A5B-4D5E-9904-6DFFA7B41AAE}" ShortID="861926406">
+										<Sound Name="Attack_Clade_Special_Launch" ID="{56BC57AE-8A5B-4D5E-9904-6DFFA7B41AAE}" ShortID="861926406">
 											<ReferenceList>
 												<Reference Name="Conversion">
 													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{D4C10CFF-54D1-43E8-9949-15A35C036BE6}"/>
@@ -330,13 +330,13 @@
 												</Reference>
 											</ReferenceList>
 											<ChildrenList>
-												<AudioFileSource Name="CladeAttack-heavy" ID="{A7118BC5-7ACC-4137-9CB4-8ACCF7C6B352}" ShortID="81000000">
+												<AudioFileSource Name="CladeAttack-heavy-windup" ID="{BF78E80B-67D8-4463-8886-4B5F0C2D304D}" ShortID="855387363">
 													<Language>SFX</Language>
-													<AudioFile>CladeAttack-heavy.wav</AudioFile>
+													<AudioFile>CladeAttack-heavy-windup.wav</AudioFile>
 												</AudioFileSource>
 											</ChildrenList>
 											<ActiveSourceList>
-												<ActiveSource Name="CladeAttack-heavy" ID="{A7118BC5-7ACC-4137-9CB4-8ACCF7C6B352}" Platform="Linked"/>
+												<ActiveSource Name="CladeAttack-heavy-windup" ID="{BF78E80B-67D8-4463-8886-4B5F0C2D304D}" Platform="Linked"/>
 											</ActiveSourceList>
 										</Sound>
 										<Sound Name="Attack_Clade_Basic" ID="{5B9D8F49-2043-4294-A60B-643394130EA7}" ShortID="237441496">
@@ -356,6 +356,25 @@
 											</ChildrenList>
 											<ActiveSourceList>
 												<ActiveSource Name="CladeAttack-normal" ID="{C9B00997-BA0F-4E4D-8117-93A0C1193843}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="Attack_Clade_Special_Impact" ID="{F93FEAF4-9250-4FF7-9897-A9A9FA436769}" ShortID="404099074">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{D4C10CFF-54D1-43E8-9949-15A35C036BE6}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{17B85F81-D4B6-4851-8C1E-9D808D7B1DC8}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="CladeAttack-heavy-impact" ID="{DDFD2501-4183-457A-8566-28FEC2E8F572}" ShortID="982413308">
+													<Language>SFX</Language>
+													<AudioFile>CladeAttack-heavy-impact.wav</AudioFile>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="CladeAttack-heavy-impact" ID="{DDFD2501-4183-457A-8566-28FEC2E8F572}" Platform="Linked"/>
 											</ActiveSourceList>
 										</Sound>
 									</ChildrenList>

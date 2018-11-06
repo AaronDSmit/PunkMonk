@@ -8,6 +8,7 @@
 						<State Name="None" ID="{CDDD3A8B-C33A-48CD-BFCB-B5E87B0F368D}"/>
 						<State Name="Combat" ID="{9C1B9EFA-FEA9-487A-8819-365D004C0B0F}"/>
 						<State Name="FreeRoam" ID="{ACDA889D-80EC-449B-945C-BB3F7100ACC5}"/>
+						<State Name="Inside" ID="{49A9B7F4-A6BE-431B-825E-70074F7A4AF6}"/>
 					</ChildrenList>
 					<TransitionList>
 						<Transition>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="11" SoundbankVersion="132">
 	<RootPaths>
-		<ProjectRoot>C:\Users\s163504\Documents\PunkMonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\</ProjectRoot>
-		<SourceFilesRoot>C:\Users\s163504\Documents\PunkMonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\</SourceFilesRoot>
-		<SoundBanksRoot>C:\Users\s163504\Documents\PunkMonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\GeneratedSoundBanks\Windows\</SoundBanksRoot>
+		<ProjectRoot>C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\</ProjectRoot>
+		<SourceFilesRoot>C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\</SourceFilesRoot>
+		<SoundBanksRoot>C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\GeneratedSoundBanks\Windows\</SoundBanksRoot>
 		<ExternalSourcesInputFile></ExternalSourcesInputFile>
-		<ExternalSourcesOutputRoot>C:\Users\s163504\Documents\PunkMonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
+		<ExternalSourcesOutputRoot>C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
 	</RootPaths>
 	<DialogueEvents/>
 	<StreamedFiles/>
@@ -21,10 +21,9 @@
 			<ShortName>Divide_SoundBank</ShortName>
 			<Path>Divide_SoundBank.bnk</Path>
 			<IncludedEvents>
-				<Event Id="1743658261" Name="Ambient_Inside_Enter" ObjectPath="\Events\Ambient\Ambient_Inside_Enter"/>
-				<Event Id="875726824" Name="Ambient_Outside_Enter" ObjectPath="\Events\Ambient\Ambient_Outside_Enter"/>
 				<Event Id="1941636804" Name="Attack_Clade_Basic" ObjectPath="\Events\SFX\Battle\Attack\Clade\Attack_Clade_Basic"/>
-				<Event Id="334189263" Name="Attack_Clade_Special" ObjectPath="\Events\SFX\Battle\Attack\Clade\Attack_Clade_Special"/>
+				<Event Id="2517987300" Name="Attack_Clade_Special_Impact" ObjectPath="\Events\SFX\Battle\Attack\Clade\Attack_Clade_Special_Impact"/>
+				<Event Id="2334192619" Name="Attack_Clade_Special_Launch" ObjectPath="\Events\SFX\Battle\Attack\Clade\Attack_Clade_Special_Launch"/>
 				<Event Id="1918548877" Name="Attack_Enemy_Melee" ObjectPath="\Events\SFX\Battle\Attack\Enemy\Attack_Enemy_Melee"/>
 				<Event Id="1242751957" Name="Attack_Enemy_Missile" ObjectPath="\Events\SFX\Battle\Attack\Enemy\Attack_Enemy_Missile"/>
 				<Event Id="2560478693" Name="Attack_Gen_Basic" ObjectPath="\Events\SFX\Battle\Attack\Gen\Attack_Gen_Basic"/>
@@ -37,6 +36,7 @@
 				<Event Id="797344207" Name="FreeRoam_Enter" ObjectPath="\Events\Music\FreeRoam_Enter"/>
 				<Event Id="3969013623" Name="MenuEnd" ObjectPath="\Events\Music\MenuEnd" MaxAttenuation="0.000000"/>
 				<Event Id="1447920996" Name="MenuStart" ObjectPath="\Events\Music\MenuStart"/>
+				<Event Id="2043403999" Name="Rain" ObjectPath="\Events\Ambient\Rain"/>
 			</IncludedEvents>
 			<IncludedMemoryFiles>
 				<File Id="2960415" Language="SFX">
@@ -54,10 +54,6 @@
 				<File Id="72898358" Language="SFX">
 					<ShortName>dryfootstep7.wav</ShortName>
 					<Path>SFX\dryfootstep7_56D34C19.wem</Path>
-				</File>
-				<File Id="81000000" Language="SFX">
-					<ShortName>CladeAttack-heavy.wav</ShortName>
-					<Path>SFX\CladeAttack-heavy_56D34C19.wem</Path>
 				</File>
 				<File Id="146746479" Language="SFX">
 					<ShortName>footstep5.wav</ShortName>
@@ -135,6 +131,10 @@
 					<ShortName>missileAttack1.wav</ShortName>
 					<Path>SFX\missileAttack1_56D34C19.wem</Path>
 				</File>
+				<File Id="727131690" Language="SFX">
+					<ShortName>Dummy_Audio.wav</ShortName>
+					<Path>SFX\Dummy_Audio_56D34C19.wem</Path>
+				</File>
 				<File Id="765782898" Language="SFX">
 					<ShortName>footstep4.wav</ShortName>
 					<Path>SFX\footstep4_56D34C19.wem</Path>
@@ -147,6 +147,10 @@
 					<ShortName>dryfootstep4.wav</ShortName>
 					<Path>SFX\dryfootstep4_56D34C19.wem</Path>
 				</File>
+				<File Id="855387363" Language="SFX">
+					<ShortName>CladeAttack-heavy-windup.wav</ShortName>
+					<Path>SFX\CladeAttack-heavy-windup_56D34C19.wem</Path>
+				</File>
 				<File Id="873129758" Language="SFX">
 					<ShortName>dryfootstep3.wav</ShortName>
 					<Path>SFX\dryfootstep3_56D34C19.wem</Path>
@@ -154,6 +158,10 @@
 				<File Id="980908635" Language="SFX">
 					<ShortName>footstep1.wav</ShortName>
 					<Path>SFX\footstep1_56D34C19.wem</Path>
+				</File>
+				<File Id="982413308" Language="SFX">
+					<ShortName>CladeAttack-heavy-impact.wav</ShortName>
+					<Path>SFX\CladeAttack-heavy-impact_56D34C19.wem</Path>
 				</File>
 				<File Id="1008118080" Language="SFX">
 					<ShortName>dryfootstep5.wav</ShortName>

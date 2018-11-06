@@ -20,16 +20,6 @@
 								</Reference>
 							</ReferenceList>
 						</Action>
-						<Action Name="" ID="{E260E49C-6037-4DEE-9596-1B59FC859C65}" ShortID="752324863">
-							<PropertyList>
-								<Property Name="ActionType" Type="int16" Value="41"/>
-							</PropertyList>
-							<ReferenceList>
-								<Reference Name="Target">
-									<ObjectRef Name="Ambient_Outside_Enter" ID="{F6BAA612-F3BD-485B-AABA-85FC468A5C59}" WorkUnitID="{39BFD4E9-6B27-4210-9595-772619309430}"/>
-								</Reference>
-							</ReferenceList>
-						</Action>
 						<Action Name="" ID="{D9EE6589-D729-4040-92EB-5547941FD7AC}" ShortID="675371322">
 							<PropertyList>
 								<Property Name="AbsoluteOrRelative" Type="int16" Value="1"/>

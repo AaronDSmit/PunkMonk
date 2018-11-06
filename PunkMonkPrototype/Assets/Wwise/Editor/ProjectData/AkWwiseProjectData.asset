@@ -47,31 +47,19 @@ MonoBehaviour:
         ObjectType: 7
   EventWwu:
   - Guid: '{39BFD4E9-6B27-4210-9595-772619309430}'
-    m_lastTimePart2: -1999225098
-    m_lastTimePsrt1: 821448205
+    m_lastTimePart2: -1999224118
+    m_lastTimePsrt1: -1742557751
     ParentPhysicalPath: 
     PhysicalPath: Events\Ambient.wwu
     List:
-    - Guid: 9373d5fb4a99b745bb38c412a4e1cc37
-      ID: 1743658261
-      Name: Ambient_Inside_Enter
-      Path: Ambient\Ambient_Inside_Enter
+    - Guid: 97029f2c3674e142aae79b329f6c5ccb
+      ID: 2043403999
+      Name: Rain
+      Path: Ambient\Rain
       PathAndIcons:
       - ElementName: Ambient
         ObjectType: 12
-      - ElementName: Ambient_Inside_Enter
-        ObjectType: 3
-      maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
-    - Guid: 12a6baf6bdf35b48aaba85fc468a5c59
-      ID: 875726824
-      Name: Ambient_Outside_Enter
-      Path: Ambient\Ambient_Outside_Enter
-      PathAndIcons:
-      - ElementName: Ambient
-        ObjectType: 12
-      - ElementName: Ambient_Outside_Enter
+      - ElementName: Rain
         ObjectType: 3
       maxAttenuation: 0
       maxDuration: 0
@@ -83,8 +71,8 @@ MonoBehaviour:
     PhysicalPath: Events\Default Work Unit.wwu
     List: []
   - Guid: '{19DB632E-BDAA-4DD2-8EA9-D61DFD814A2F}'
-    m_lastTimePart2: -1999225098
-    m_lastTimePsrt1: -301409091
+    m_lastTimePart2: -1999224119
+    m_lastTimePsrt1: -30663339
     ParentPhysicalPath: 
     PhysicalPath: Events\Music.wwu
     List:
@@ -161,8 +149,8 @@ MonoBehaviour:
       maxDuration: 0
       minDuration: 0
   - Guid: '{97043EB5-8AFD-479B-B7EC-1820B945D1D5}'
-    m_lastTimePart2: -1999225098
-    m_lastTimePsrt1: 821398205
+    m_lastTimePart2: -1999224152
+    m_lastTimePsrt1: 2081795054
     ParentPhysicalPath: 
     PhysicalPath: Events\SFX.wwu
     List:
@@ -184,10 +172,10 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
-    - Guid: 181d67deef774147ac84805e21320458
-      ID: 334189263
-      Name: Attack_Clade_Special
-      Path: SFX\Battle\Attack\Clade\Attack_Clade_Special
+    - Guid: c36df0ccb605b54e9ad130a9d9ae705e
+      ID: -1776979996
+      Name: Attack_Clade_Special_Impact
+      Path: SFX\Battle\Attack\Clade\Attack_Clade_Special_Impact
       PathAndIcons:
       - ElementName: SFX
         ObjectType: 12
@@ -197,7 +185,25 @@ MonoBehaviour:
         ObjectType: 4
       - ElementName: Clade
         ObjectType: 4
-      - ElementName: Attack_Clade_Special
+      - ElementName: Attack_Clade_Special_Impact
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - Guid: 181d67deef774147ac84805e21320458
+      ID: -1960774677
+      Name: Attack_Clade_Special_Launch
+      Path: SFX\Battle\Attack\Clade\Attack_Clade_Special_Launch
+      PathAndIcons:
+      - ElementName: SFX
+        ObjectType: 12
+      - ElementName: Battle
+        ObjectType: 4
+      - ElementName: Attack
+        ObjectType: 4
+      - ElementName: Clade
+        ObjectType: 4
+      - ElementName: Attack_Clade_Special_Launch
         ObjectType: 3
       maxAttenuation: 0
       maxDuration: 0
@@ -649,7 +655,7 @@ MonoBehaviour:
   ExpandedItems:
   - /PunkMonkPrototype_WwiseProject
   - /PunkMonkPrototype_WwiseProject/Events
-  - /PunkMonkPrototype_WwiseProject/Events/Music
+  - /PunkMonkPrototype_WwiseProject/Events/Ambient
   RtpcWwu:
   - Guid: '{0611EF02-C52F-4D22-840D-EF5CD7507B8B}'
     m_lastTimePart2: -1999225098
@@ -703,8 +709,8 @@ MonoBehaviour:
         ObjectType: 13
   StateWwu:
   - Guid: '{04CF6E00-4CA3-4424-9273-F0833B6CE0D5}'
-    m_lastTimePart2: -1999225098
-    m_lastTimePsrt1: -185969091
+    m_lastTimePart2: -1999224117
+    m_lastTimePsrt1: 1694378521
     ParentPhysicalPath: 
     PhysicalPath: States\Default Work Unit.wwu
     List:
@@ -720,18 +726,22 @@ MonoBehaviour:
       ValueGuids:
       - bytes: fa9e1b9ca9fe7a488819365d004c0b0f
       - bytes: 9d88daacec809b44945cbb3f7100acc5
+      - bytes: f4b7a949bea61b43825e70074f7a4af6
       - bytes: 8b3addcd3ac3cd48bfcbb5e87b0f368d
       ValueIcons:
       - ElementName: Combat
         ObjectType: 8
       - ElementName: FreeRoam
         ObjectType: 8
+      - ElementName: Inside
+        ObjectType: 8
       - ElementName: None
         ObjectType: 8
-      valueIDs: bdf6c2a4d8e28010db3ba32c
+      valueIDs: bdf6c2a4d8e2801095d0cbd3db3ba32c
       values:
       - Combat
       - FreeRoam
+      - Inside
       - None
   SwitchWwu:
   - Guid: '{B6FD7C61-6C9F-48A5-8B29-05A62B27072C}'

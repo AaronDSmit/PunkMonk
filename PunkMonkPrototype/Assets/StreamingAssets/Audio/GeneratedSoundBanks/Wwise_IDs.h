@@ -13,10 +13,9 @@ namespace AK
 {
     namespace EVENTS
     {
-        static const AkUniqueID AMBIENT_INSIDE_ENTER = 1743658261U;
-        static const AkUniqueID AMBIENT_OUTSIDE_ENTER = 875726824U;
         static const AkUniqueID ATTACK_CLADE_BASIC = 1941636804U;
-        static const AkUniqueID ATTACK_CLADE_SPECIAL = 334189263U;
+        static const AkUniqueID ATTACK_CLADE_SPECIAL_IMPACT = 2517987300U;
+        static const AkUniqueID ATTACK_CLADE_SPECIAL_LAUNCH = 2334192619U;
         static const AkUniqueID ATTACK_ENEMY_MELEE = 1918548877U;
         static const AkUniqueID ATTACK_ENEMY_MISSILE = 1242751957U;
         static const AkUniqueID ATTACK_GEN_BASIC = 2560478693U;
@@ -29,6 +28,7 @@ namespace AK
         static const AkUniqueID FREEROAM_ENTER = 797344207U;
         static const AkUniqueID MENUEND = 3969013623U;
         static const AkUniqueID MENUSTART = 1447920996U;
+        static const AkUniqueID RAIN = 2043403999U;
     } // namespace EVENTS
 
     namespace STATES
@@ -41,6 +41,7 @@ namespace AK
             {
                 static const AkUniqueID COMBAT = 2764240573U;
                 static const AkUniqueID FREEROAM = 276882136U;
+                static const AkUniqueID INSIDE = 3553349781U;
             } // namespace STATE
         } // namespace GAME_MUSIC
 

@@ -3,6 +3,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	702987074	Attack_Gen_Special			\SFX\Battle\Attack\Gen\Attack_Gen_Special	
 	797344207	FreeRoam_Enter			\Music\FreeRoam_Enter	
 	906289856	Battle_Enter			\Music\Battle_Enter	
+	1135171848	Button_Select			\SFX\UI\Button_Select	
 	1242751957	Attack_Enemy_Missile			\SFX\Battle\Attack\Enemy\Attack_Enemy_Missile	
 	1447920996	MenuStart			\Music\MenuStart	
 	1593864692	Defeat			\Ambient\Defeat	
@@ -14,6 +15,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	2517987300	Attack_Clade_Special_Impact			\SFX\Battle\Attack\Clade\Attack_Clade_Special_Impact	
 	2560478693	Attack_Gen_Basic			\SFX\Battle\Attack\Gen\Attack_Gen_Basic	
 	2878671079	FootstepsOutside			\SFX\World\FootstepsOutside	
+	3313580367	Button_Move			\SFX\UI\Button_Move	
 	3969013623	MenuEnd			\Music\MenuEnd	
 	4139651882	Battle_Exit			\Music\Battle_Exit	
 

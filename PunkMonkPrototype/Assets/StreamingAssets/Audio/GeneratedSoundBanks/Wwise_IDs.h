@@ -22,6 +22,8 @@ namespace AK
         static const AkUniqueID ATTACK_GEN_SPECIAL = 702987074U;
         static const AkUniqueID BATTLE_ENTER = 906289856U;
         static const AkUniqueID BATTLE_EXIT = 4139651882U;
+        static const AkUniqueID BUTTON_MOVE = 3313580367U;
+        static const AkUniqueID BUTTON_SELECT = 1135171848U;
         static const AkUniqueID DEFEAT = 1593864692U;
         static const AkUniqueID DIE_ENEMY = 312517388U;
         static const AkUniqueID FOOTSTEPS = 2385628198U;

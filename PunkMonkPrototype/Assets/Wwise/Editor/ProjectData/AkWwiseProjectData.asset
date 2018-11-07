@@ -161,8 +161,8 @@ MonoBehaviour:
       maxDuration: 0
       minDuration: 0
   - Guid: '{97043EB5-8AFD-479B-B7EC-1820B945D1D5}'
-    m_lastTimePart2: -1999224152
-    m_lastTimePsrt1: 2081795054
+    m_lastTimePart2: -1999223733
+    m_lastTimePsrt1: 1909406667
     ParentPhysicalPath: 
     PhysicalPath: Events\SFX.wwu
     List:
@@ -310,50 +310,30 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
-    - Guid: 53e7a7207ab8be48ac2f28261b3faa5d
-      ID: 814543256
-      Name: Button_Click
-      Path: SFX\UI\Menu\Button_Click
+    - Guid: 3a15315cbf97924ca81c928fc9901bac
+      ID: -981386929
+      Name: Button_Move
+      Path: SFX\UI\Button_Move
       PathAndIcons:
       - ElementName: SFX
         ObjectType: 12
       - ElementName: UI
         ObjectType: 4
-      - ElementName: Menu
-        ObjectType: 4
-      - ElementName: Button_Click
+      - ElementName: Button_Move
         ObjectType: 3
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
-    - Guid: f9589d13d518d74bb74e599b5a89abd8
-      ID: -2090674432
-      Name: Button_Confirm
-      Path: SFX\UI\Menu\Button_Confirm
+    - Guid: 55a35d9c9ca9ae4e96928ca65a2d327b
+      ID: 1135171848
+      Name: Button_Select
+      Path: SFX\UI\Button_Select
       PathAndIcons:
       - ElementName: SFX
         ObjectType: 12
       - ElementName: UI
         ObjectType: 4
-      - ElementName: Menu
-        ObjectType: 4
-      - ElementName: Button_Confirm
-        ObjectType: 3
-      maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
-    - Guid: 8dd8447b64de514096c778e32db946b0
-      ID: 1701177942
-      Name: Button_Hover
-      Path: SFX\UI\Menu\Button_Hover
-      PathAndIcons:
-      - ElementName: SFX
-        ObjectType: 12
-      - ElementName: UI
-        ObjectType: 4
-      - ElementName: Menu
-        ObjectType: 4
-      - ElementName: Button_Hover
+      - ElementName: Button_Select
         ObjectType: 3
       maxAttenuation: 0
       maxDuration: 0
@@ -632,45 +612,12 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
-    - Guid: f1ecf9602a954044b6dbeac5ce283199
-      ID: 1701828612
-      Name: Volt_Obtain
-      Path: SFX\UI\BattleHUD\Volt_Obtain
-      PathAndIcons:
-      - ElementName: SFX
-        ObjectType: 12
-      - ElementName: UI
-        ObjectType: 4
-      - ElementName: BattleHUD
-        ObjectType: 4
-      - ElementName: Volt_Obtain
-        ObjectType: 3
-      maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
-    - Guid: cbaa2ba36b4afb40b48a090841980a3b
-      ID: 896483856
-      Name: Volt_Use
-      Path: SFX\UI\BattleHUD\Volt_Use
-      PathAndIcons:
-      - ElementName: SFX
-        ObjectType: 12
-      - ElementName: UI
-        ObjectType: 4
-      - ElementName: BattleHUD
-        ObjectType: 4
-      - ElementName: Volt_Use
-        ObjectType: 3
-      maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
   ExpandedItems:
   - /PunkMonkPrototype_WwiseProject
   - /PunkMonkPrototype_WwiseProject/Events
   - /PunkMonkPrototype_WwiseProject/Events/Ambient
-  - /PunkMonkPrototype_WwiseProject/States
-  - /PunkMonkPrototype_WwiseProject/States/Default Work Unit
-  - /PunkMonkPrototype_WwiseProject/States/Default Work Unit/Game_Music
+  - /PunkMonkPrototype_WwiseProject/Events/SFX
+  - /PunkMonkPrototype_WwiseProject/Events/SFX/UI
   RtpcWwu:
   - Guid: '{0611EF02-C52F-4D22-840D-EF5CD7507B8B}'
     m_lastTimePart2: -1999225098

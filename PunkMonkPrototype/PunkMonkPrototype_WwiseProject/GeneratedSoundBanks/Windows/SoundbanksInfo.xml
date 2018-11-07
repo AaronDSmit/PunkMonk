@@ -30,6 +30,8 @@
 				<Event Id="702987074" Name="Attack_Gen_Special" ObjectPath="\Events\SFX\Battle\Attack\Gen\Attack_Gen_Special"/>
 				<Event Id="906289856" Name="Battle_Enter" ObjectPath="\Events\Music\Battle_Enter"/>
 				<Event Id="4139651882" Name="Battle_Exit" ObjectPath="\Events\Music\Battle_Exit"/>
+				<Event Id="3313580367" Name="Button_Move" ObjectPath="\Events\SFX\UI\Button_Move"/>
+				<Event Id="1135171848" Name="Button_Select" ObjectPath="\Events\SFX\UI\Button_Select"/>
 				<Event Id="1593864692" Name="Defeat" ObjectPath="\Events\Ambient\Defeat"/>
 				<Event Id="312517388" Name="Die_Enemy" ObjectPath="\Events\SFX\Battle\Die\Die_Enemy"/>
 				<Event Id="2385628198" Name="Footsteps" ObjectPath="\Events\SFX\World\Footsteps"/>

@@ -389,64 +389,34 @@
 				</Folder>
 				<Folder Name="UI" ID="{2CD57E96-6909-4654-A173-35F84DB68E43}" ShortID="771191676">
 					<ChildrenList>
-						<Folder Name="BattleHUD" ID="{D45DABDF-07F8-4C12-9D26-6FE608B0BE2B}" ShortID="238189529">
+						<Event Name="Button_Select" ID="{9C5DA355-A99C-4EAE-9692-8CA65A2D327B}">
 							<ChildrenList>
-								<Event Name="Volt_Obtain" ID="{60F9ECF1-952A-4440-B6DB-EAC5CE283199}">
-									<ChildrenList>
-										<Action Name="" ID="{23525A2D-6195-4150-9128-F712F74E2DBF}" ShortID="172830120">
-											<PropertyList>
-												<Property Name="ActionType" Type="int16" Value="1"/>
-											</PropertyList>
-											<ReferenceList/>
-										</Action>
-									</ChildrenList>
-								</Event>
-								<Event Name="Volt_Use" ID="{A32BAACB-4A6B-40FB-B48A-090841980A3B}">
-									<ChildrenList>
-										<Action Name="" ID="{F6A3265A-0152-480E-AE97-279639922EBB}" ShortID="798649357">
-											<PropertyList>
-												<Property Name="ActionType" Type="int16" Value="1"/>
-											</PropertyList>
-											<ReferenceList/>
-										</Action>
-									</ChildrenList>
-								</Event>
+								<Action Name="" ID="{C4F0331D-AEDE-4EAE-ADAB-5081FA7A4AEA}" ShortID="949881147">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Button Select" ID="{0FC88F6A-077B-4468-96FE-5D022E4183F4}" WorkUnitID="{BE193198-07FD-4919-8584-0C834CF482F7}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
 							</ChildrenList>
-						</Folder>
-						<Folder Name="Menu" ID="{A1E3324B-755F-4B1D-BF6D-49F41FE3B2FC}" ShortID="43019723">
+						</Event>
+						<Event Name="Button_Move" ID="{5C31153A-97BF-4C92-A81C-928FC9901BAC}">
 							<ChildrenList>
-								<Event Name="Button_Click" ID="{20A7E753-B87A-48BE-AC2F-28261B3FAA5D}">
-									<ChildrenList>
-										<Action Name="" ID="{09ECC984-84A5-4BAD-870A-0D804293452E}" ShortID="1061519910">
-											<PropertyList>
-												<Property Name="ActionType" Type="int16" Value="1"/>
-											</PropertyList>
-											<ReferenceList/>
-										</Action>
-									</ChildrenList>
-								</Event>
-								<Event Name="Button_Confirm" ID="{139D58F9-18D5-4BD7-B74E-599B5A89ABD8}">
-									<ChildrenList>
-										<Action Name="" ID="{46B54062-601B-4D66-BFFA-1918694D0A08}" ShortID="234775742">
-											<PropertyList>
-												<Property Name="ActionType" Type="int16" Value="1"/>
-											</PropertyList>
-											<ReferenceList/>
-										</Action>
-									</ChildrenList>
-								</Event>
-								<Event Name="Button_Hover" ID="{7B44D88D-DE64-4051-96C7-78E32DB946B0}">
-									<ChildrenList>
-										<Action Name="" ID="{A2CE9ED1-3A5C-4C88-BC77-6BB302AF3410}" ShortID="852110980">
-											<PropertyList>
-												<Property Name="ActionType" Type="int16" Value="1"/>
-											</PropertyList>
-											<ReferenceList/>
-										</Action>
-									</ChildrenList>
-								</Event>
+								<Action Name="" ID="{ADA1E798-26AA-4B25-A35A-4A04C62288A9}" ShortID="537532991">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="move" ID="{86B27289-D76A-4A34-A0E1-AB36AA574788}" WorkUnitID="{BE193198-07FD-4919-8584-0C834CF482F7}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
 							</ChildrenList>
-						</Folder>
+						</Event>
 					</ChildrenList>
 				</Folder>
 			</ChildrenList>

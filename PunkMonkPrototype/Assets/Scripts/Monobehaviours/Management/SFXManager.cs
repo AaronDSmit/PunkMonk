@@ -18,6 +18,9 @@ public class SFXManager : MonoBehaviour
     [SerializeField] private AK.Wwise.Event stopBattleMusic;
     [SerializeField] private AK.Wwise.Event freeRoamMusic;
     [SerializeField] private AK.Wwise.Event defeatTVSFX;
+    [SerializeField] private AK.Wwise.Event buttonSelect;
+    [SerializeField] private AK.Wwise.Event buttonMove;
+
 
     private bool outside = true;
 
@@ -98,6 +101,12 @@ public class SFXManager : MonoBehaviour
                 break;
             case "DefeatTV":
                 defeatTVSFX.Post(a_orginalGO);
+                break;
+            case "ButtonSelect":
+                buttonSelect.Post(a_orginalGO);
+                break;
+            case "ButtonMove":
+                buttonMove.Post(a_orginalGO);
                 break;
             default:
                 break;

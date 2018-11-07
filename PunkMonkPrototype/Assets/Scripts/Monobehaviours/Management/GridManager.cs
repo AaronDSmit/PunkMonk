@@ -153,7 +153,7 @@ public class GridManager : MonoBehaviour
                 {
                     if (addOccupiedTiles == true)
                     {
-                        if ((neighbour.IsTraversable && !returnList.Contains(neighbour)) || (neighbour.CurrentUnit != null && !returnList.Contains(neighbour)))
+                        if ((neighbour.IsTraversable && !returnList.Contains(neighbour)))
                         {
                             neighbour.GScore = HexUtility.Distance(currentTile, neighbour) + currentTile.GScore;
                             if (neighbour.GScore < range + 1)
@@ -162,6 +162,10 @@ public class GridManager : MonoBehaviour
                                 openList.Add(neighbour);
                                 returnList.Add(neighbour);
                             }
+                        }
+                        else if((neighbour.CurrentUnit != null && !returnList.Contains(neighbour)))
+                        {
+                            returnList.Add(neighbour);
                         }
                     }
                     else

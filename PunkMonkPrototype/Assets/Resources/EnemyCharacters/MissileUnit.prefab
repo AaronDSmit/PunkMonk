@@ -345,6 +345,7 @@ GameObject:
   - component: {fileID: 4374496523520810}
   - component: {fileID: 95861927602341558}
   - component: {fileID: 114238171146876384}
+  - component: {fileID: 114202781470456054}
   m_Layer: 0
   m_Name: mesh_EnemyMissile_v2.0
   m_TagString: Untagged
@@ -1744,7 +1745,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1976869441708334}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 25.87965, y: -0.24999999, z: 19.41432}
+  m_LocalPosition: {x: 23.046274, y: -0.25000003, z: 19.73405}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4374496523520810}
@@ -2259,6 +2260,17 @@ MonoBehaviour:
   friendlyFire: 0
   missilePrefab: {fileID: 1774984587406650, guid: c2613c03c9931ac4a8a53221163e68b1,
     type: 2}
+--- !u!114 &114202781470456054
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1242803548011076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49ff6f3c880c25940b03de1a09f96406, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114236286044303650
 MonoBehaviour:
   m_ObjectHideFlags: 1

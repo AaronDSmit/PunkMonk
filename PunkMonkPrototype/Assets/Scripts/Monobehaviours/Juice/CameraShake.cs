@@ -6,7 +6,7 @@ using UnityEngine.PostProcessing;
 public class CameraShake : MonoBehaviour
 {
 
-    void StartCameraShake(float duration, float magnutude)
+    public void StartCameraShake(float duration, float magnutude)
     {
         StartCoroutine(Shake(duration, magnutude));
     }
@@ -31,7 +31,7 @@ public class CameraShake : MonoBehaviour
 
             currentLerpPercent = elapsed / (a_duration / 2);
 
-            Mathf.Lerp(startCA, 1, Mathf.PingPong(currentLerpPercent, 1));
+            Mathf.Lerp(startCA, 1, Mathf.PingPong(currentLerpPercent, 0.5f));
 
             cam.transform.localPosition = new Vector3(x, y, ogCamPos.z);
 

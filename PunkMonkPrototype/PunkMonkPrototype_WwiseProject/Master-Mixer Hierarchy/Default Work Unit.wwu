@@ -104,7 +104,38 @@
 								</Property>
 							</PropertyList>
 						</Bus>
-						<Bus Name="Bus_Music" ID="{DB6CE080-4290-47A8-B8B7-B1E660F3F55C}"/>
+						<Bus Name="Bus_Music" ID="{DB6CE080-4290-47A8-B8B7-B1E660F3F55C}">
+							<PropertyList>
+								<Property Name="BusVolume" Type="Real64">
+									<RTPCList>
+										<RTPC Name="" ID="{74F63912-7011-4B56-8D94-6D800A51F793}" ShortID="473840474">
+											<ReferenceList>
+												<Reference Name="ControlInput">
+													<ObjectRef Name="MusicVolume" ID="{0C1833B7-2C39-400E-9893-B46799926B34}" WorkUnitID="{0611EF02-C52F-4D22-840D-EF5CD7507B8B}"/>
+												</Reference>
+											</ReferenceList>
+											<Curve Name="" ID="{AB4F450B-8C6D-45BF-BADA-518A2EAB5CAF}">
+												<PropertyList>
+													<Property Name="Flags" Type="int32" Value="3"/>
+												</PropertyList>
+												<PointList>
+													<Point>
+														<XPos>0</XPos>
+														<YPos>-200</YPos>
+														<Flags>5</Flags>
+													</Point>
+													<Point>
+														<XPos>100</XPos>
+														<YPos>0</YPos>
+														<Flags>37</Flags>
+													</Point>
+												</PointList>
+											</Curve>
+										</RTPC>
+									</RTPCList>
+								</Property>
+							</PropertyList>
+						</Bus>
 					</ChildrenList>
 				</Bus>
 			</ChildrenList>

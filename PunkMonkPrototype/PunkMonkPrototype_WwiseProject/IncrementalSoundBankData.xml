@@ -4,13 +4,13 @@
 		<Banks>
 			<Language ID="393239870">
 				<File Name="Divide_SoundBank" Hash="3373820980" Timestamp="1541559073"/>
-				<File Name="Init" Hash="2171111023" Timestamp="1541549207"/>
+				<File Name="Init" Hash="1254586158" Timestamp="1541560034"/>
 				<File Name="Music" Hash="3060248748" Timestamp="1539165968"/>
 			</Language>
 		</Banks>
 		<XMLInfo>
 			<Language ID="-1">
-				<File Name="" Hash="3503312948" Timestamp="1541559073"/>
+				<File Name="" Hash="3503312948" Timestamp="1541560034"/>
 			</Language>
 		</XMLInfo>
 	</Platform>

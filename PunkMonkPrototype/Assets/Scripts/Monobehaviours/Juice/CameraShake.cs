@@ -38,14 +38,14 @@ public class CameraShake : MonoBehaviour
 
             Mathf.Lerp(startCA, 1, Mathf.PingPong(currentLerpPercent, 1));
 
-            cam.transform.localPosition = new Vector3(x, ogCamPos.y, z);
+            cam.transform.position += new Vector3(x, 0, z);
 
             elapsed += Time.deltaTime;
 
             yield return null;
         }
         camRig.Cinemachine = false;
-        cam.transform.localPosition = ogCamPos;
+        cam.transform.position = ogCamPos;
 
     }
 }

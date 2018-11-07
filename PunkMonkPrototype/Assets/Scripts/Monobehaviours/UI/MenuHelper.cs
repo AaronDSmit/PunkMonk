@@ -183,6 +183,10 @@ public class MenuHelper : MonoBehaviour
         StartCoroutine(StopCutscene());
     }
 
+    public void PlayCinematicBars()
+    {
+        StartCoroutine(StartCinematicBars());
+    }
 
     private IEnumerator StopCutscene()
     {
@@ -190,6 +194,16 @@ public class MenuHelper : MonoBehaviour
         {
             topBar.sizeDelta -= new Vector2(0, Time.deltaTime * 100);
             botBar.sizeDelta -= new Vector2(0, Time.deltaTime * 100);
+            yield return null;
+        }
+    }
+
+    private IEnumerator StartCinematicBars()
+    {
+        while (topBar.sizeDelta.y <= cinematicBarDistance)
+        {
+            topBar.sizeDelta += new Vector2(0, Time.deltaTime * 100);
+            botBar.sizeDelta += new Vector2(0, Time.deltaTime * 100);
             yield return null;
         }
     }

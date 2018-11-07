@@ -390,6 +390,17 @@ public class UIManager : MonoBehaviour
             }
         }
 
+
+      // if(a_newstate == GameState.cinematic)
+      // {
+      //     menuHelper.PlayCinematicBars();
+      // }
+      //
+      // if(a_oldstate == GameState.cinematic)
+      // {
+      //     menuHelper.StopIntroCutscene();
+      // }
+
         
 
         if (a_oldstate != GameState.battle && a_newstate == GameState.battle)

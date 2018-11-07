@@ -140,6 +140,19 @@ public class CameraController : MonoBehaviour
         }
     }
 
+    public bool Cinemachine
+    {
+        get
+        {
+            return cinemachine;
+        }
+
+        set
+        {
+            cinemachine = value;
+        }
+    }
+
     private void Awake()
     {
         Manager.instance.StateController.OnGameStateChanged += GameStateChanged;

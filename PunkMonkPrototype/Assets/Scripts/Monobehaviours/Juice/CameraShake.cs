@@ -13,10 +13,13 @@ public class CameraShake : MonoBehaviour
         
     IEnumerator Shake (float a_magintude)
     {
-        GameObject cam = GameObject.FindGameObjectWithTag("MainCamera");
+        GameObject cam = GameObject.FindGameObjectWithTag("CameraRig");
+
+        CameraController camRig = cam.GetComponent<CameraController>();
+
         Vector3 ogCamPos = cam.transform.position;
 
-        var CASettings = cam.GetComponents<PostProcessingBehaviour>()[0].profile.chromaticAberration.settings;
+        var CASettings = cam.transform.GetChild(0).GetComponents<PostProcessingBehaviour>()[0].profile.chromaticAberration.settings;
 
         float startCA = CASettings.intensity;
 
@@ -24,22 +27,24 @@ public class CameraShake : MonoBehaviour
 
         float currentLerpPercent = 0.0f;
 
-        while(elapsed < 0.7f)
+        camRig.Cinemachine = true;
+
+        while (elapsed < 0.7f)
         {
             float x = Random.Range(-1f, 1f) * a_magintude;
-            float y = Random.Range(-1f, 1f) * a_magintude;
+            float z = Random.Range(-1f, 1f) * a_magintude;
 
-            currentLerpPercent = elapsed / (0.7f / 2);
+            currentLerpPercent = elapsed / (0.7f);
 
-            Mathf.Lerp(startCA, 1, Mathf.PingPong(currentLerpPercent, 0.5f));
+            Mathf.Lerp(startCA, 1, Mathf.PingPong(currentLerpPercent, 1));
 
-            cam.transform.localPosition = new Vector3(x, y, ogCamPos.z);
+            cam.transform.localPosition = new Vector3(x, ogCamPos.y, z);
 
             elapsed += Time.deltaTime;
 
             yield return null;
         }
-
+        camRig.Cinemachine = false;
         cam.transform.localPosition = ogCamPos;
 
     }

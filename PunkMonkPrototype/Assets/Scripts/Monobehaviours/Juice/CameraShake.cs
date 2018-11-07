@@ -6,12 +6,12 @@ using UnityEngine.PostProcessing;
 public class CameraShake : MonoBehaviour
 {
 
-    public void StartCameraShake(float duration, float magnutude)
+    public void StartCameraShake(float magnutude)
     {
-        StartCoroutine(Shake(duration, magnutude));
+        StartCoroutine(Shake(magnutude));
     }
         
-    IEnumerator Shake (float a_duration, float a_magintude)
+    IEnumerator Shake (float a_magintude)
     {
         GameObject cam = GameObject.FindGameObjectWithTag("MainCamera");
         Vector3 ogCamPos = cam.transform.position;
@@ -24,12 +24,12 @@ public class CameraShake : MonoBehaviour
 
         float currentLerpPercent = 0.0f;
 
-        while(elapsed < a_duration)
+        while(elapsed < 0.7f)
         {
             float x = Random.Range(-1f, 1f) * a_magintude;
             float y = Random.Range(-1f, 1f) * a_magintude;
 
-            currentLerpPercent = elapsed / (a_duration / 2);
+            currentLerpPercent = elapsed / (0.7f / 2);
 
             Mathf.Lerp(startCA, 1, Mathf.PingPong(currentLerpPercent, 0.5f));
 

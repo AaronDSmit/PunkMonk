@@ -52844,7 +52844,7 @@ AnimationClip:
     functionName: StartCameraShake
     data: 
     objectReferenceParameter: {fileID: 0}
-    floatParameter: 50
+    floatParameter: 0.4
     intParameter: 0
     messageOptions: 0
   - time: 2.4166667

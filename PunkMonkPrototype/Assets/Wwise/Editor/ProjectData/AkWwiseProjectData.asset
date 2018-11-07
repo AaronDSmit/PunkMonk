@@ -615,7 +615,6 @@ MonoBehaviour:
   ExpandedItems:
   - /PunkMonkPrototype_WwiseProject
   - /PunkMonkPrototype_WwiseProject/Events
-  - /PunkMonkPrototype_WwiseProject/Events/Ambient
   - /PunkMonkPrototype_WwiseProject/Events/SFX
   - /PunkMonkPrototype_WwiseProject/Events/SFX/UI
   RtpcWwu:

@@ -31,11 +31,7 @@ public class MenuHelper : MonoBehaviour
             currentSettings = SettingsLoader.Instance.CurrentSettings;
             defaultSettings = SettingsLoader.Instance.DefaultSettings;
         }
-        if (transform.GetChild(5).transform.GetChild(1).GetComponent<RectTransform>() != null)
-        {
-            botBar = transform.GetChild(5).transform.GetChild(1).GetComponent<RectTransform>();
-            topBar = transform.GetChild(5).transform.GetChild(0).GetComponent<RectTransform>();
-        }
+
     }
 
     void Update()

@@ -16,6 +16,12 @@ public class UIManager : MonoBehaviour
     private GameObject pauseMenu = null;
 
     [SerializeField]
+    private GameObject settingsMenu = null;
+
+    [SerializeField]
+    private GameObject pauseMenuMain = null;
+
+    [SerializeField]
     private FadingUI battleUI = null;
 
     [SerializeField]
@@ -29,6 +35,7 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     private Button specialAttack = null;
+
 
     [SerializeField]
     private Sprite hexIconFilled;
@@ -169,8 +176,11 @@ public class UIManager : MonoBehaviour
 
     public void MainMenu()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(0);
     }
+
+
 
     public void Quit()
     {
@@ -179,6 +189,11 @@ public class UIManager : MonoBehaviour
 
     public void PauseMenu(bool a_show)
     {
+        if (settingsMenu.activeInHierarchy == true)
+        {
+            settingsMenu.SetActive(false);
+            pauseMenuMain.SetActive(true);
+        }
         pauseMenu.SetActive(a_show);
     }
 

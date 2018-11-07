@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SFXManager : MonoBehaviour
 {
+
     [SerializeField] private AK.Wwise.Event rainOutside;
     [SerializeField] private AK.Wwise.Event footStepSFX;
     [SerializeField] private AK.Wwise.Event footStepOutsideSFX;
@@ -16,6 +17,7 @@ public class SFXManager : MonoBehaviour
     [SerializeField] private AK.Wwise.Event enemyMissileAttack;
     [SerializeField] private AK.Wwise.Event stopBattleMusic;
     [SerializeField] private AK.Wwise.Event freeRoamMusic;
+    [SerializeField] private AK.Wwise.Event defeatTVSFX;
 
     private bool outside = true;
 
@@ -93,6 +95,9 @@ public class SFXManager : MonoBehaviour
                 break;
             case "EnterOutside":
                 outside = true;
+                break;
+            case "DefeatTV":
+                defeatTVSFX.Post(a_orginalGO);
                 break;
             default:
                 break;

@@ -17,6 +17,20 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Defeat" ID="{A325CCE5-B2C1-4FD9-A73F-45C15108A432}">
+					<ChildrenList>
+						<Action Name="" ID="{4E217BEE-F988-41EC-8606-9151B8B486C5}" ShortID="551664040">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="1"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="defeat" ID="{BDA32D21-BE18-46C0-8D2A-46D1EAF0FF08}" WorkUnitID="{BE193198-07FD-4919-8584-0C834CF482F7}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

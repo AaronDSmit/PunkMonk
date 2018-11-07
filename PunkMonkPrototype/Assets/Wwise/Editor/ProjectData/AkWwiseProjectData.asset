@@ -47,11 +47,23 @@ MonoBehaviour:
         ObjectType: 7
   EventWwu:
   - Guid: '{39BFD4E9-6B27-4210-9595-772619309430}'
-    m_lastTimePart2: -1999224118
-    m_lastTimePsrt1: -1742557751
+    m_lastTimePart2: -1999223740
+    m_lastTimePsrt1: -440077223
     ParentPhysicalPath: 
     PhysicalPath: Events\Ambient.wwu
     List:
+    - Guid: e5cc25a3c1b2d94fa73f45c15108a432
+      ID: 1593864692
+      Name: Defeat
+      Path: Ambient\Defeat
+      PathAndIcons:
+      - ElementName: Ambient
+        ObjectType: 12
+      - ElementName: Defeat
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
     - Guid: 97029f2c3674e142aae79b329f6c5ccb
       ID: 2043403999
       Name: Rain
@@ -71,8 +83,8 @@ MonoBehaviour:
     PhysicalPath: Events\Default Work Unit.wwu
     List: []
   - Guid: '{19DB632E-BDAA-4DD2-8EA9-D61DFD814A2F}'
-    m_lastTimePart2: -1999224119
-    m_lastTimePsrt1: -30663339
+    m_lastTimePart2: -1999224103
+    m_lastTimePsrt1: -699090075
     ParentPhysicalPath: 
     PhysicalPath: Events\Music.wwu
     List:
@@ -656,6 +668,9 @@ MonoBehaviour:
   - /PunkMonkPrototype_WwiseProject
   - /PunkMonkPrototype_WwiseProject/Events
   - /PunkMonkPrototype_WwiseProject/Events/Ambient
+  - /PunkMonkPrototype_WwiseProject/States
+  - /PunkMonkPrototype_WwiseProject/States/Default Work Unit
+  - /PunkMonkPrototype_WwiseProject/States/Default Work Unit/Game_Music
   RtpcWwu:
   - Guid: '{0611EF02-C52F-4D22-840D-EF5CD7507B8B}'
     m_lastTimePart2: -1999225098
@@ -709,8 +724,8 @@ MonoBehaviour:
         ObjectType: 13
   StateWwu:
   - Guid: '{04CF6E00-4CA3-4424-9273-F0833B6CE0D5}'
-    m_lastTimePart2: -1999224117
-    m_lastTimePsrt1: 1694378521
+    m_lastTimePart2: -1999224103
+    m_lastTimePsrt1: -694160075
     ParentPhysicalPath: 
     PhysicalPath: States\Default Work Unit.wwu
     List:

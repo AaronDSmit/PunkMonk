@@ -5,47 +5,94 @@ using UnityEngine.PostProcessing;
 
 public class CameraShake : MonoBehaviour
 {
+    #region Inspector Fields
 
-    public void StartCameraShake(float magnutude)
+    [Tooltip("How long it takes for the trauma level to hit 0 from the maximum 1 in seconds")]
+    [Range(0.02f, 10.0f)]
+    [SerializeField]
+    private float traumaDecay = 2.0f;
+
+    [Range(0.02f, 100.0f)]
+    [SerializeField]
+    private float strength = 5.0f;
+
+    [SerializeField]
+    private float maxYaw = 5.0f;
+    [SerializeField]
+    private float maxPitch = 5.0f;
+    [SerializeField]
+    private float maxRoll = 5.0f;
+
+    #endregion
+
+    #region References
+
+    GameObject cam = null;
+
+    #endregion
+
+    #region Local Fields
+
+    private float shake = 0.0f;
+
+    private float trauma = 0.0f;
+
+    private float yaw = 0.0f;
+    private float pitch = 0.0f;
+    private float roll = 0.0f;
+
+    private int seed = 0;
+
+    #endregion
+
+    #region Properties
+
+    #endregion
+
+    public void StartCameraShake(float a_trauma)
     {
-        StartCoroutine(Shake(magnutude));
+        StartCoroutine(Shake(a_trauma));
     }
-        
-    IEnumerator Shake (float a_magintude)
+
+    private void Start()
     {
-        GameObject cam = GameObject.FindGameObjectWithTag("CameraRig");
+        seed = Random.Range(0, 2048);
+
+        cam = Camera.main.transform.parent.gameObject;
+    }
+
+    IEnumerator Shake (float a_trauma)
+    {
+        trauma += a_trauma;
+        trauma = Mathf.Clamp01(trauma);
 
         CameraController camRig = cam.GetComponent<CameraController>();
 
-        Vector3 ogCamPos = cam.transform.position;
-
-        var CASettings = cam.transform.GetChild(0).GetComponents<PostProcessingBehaviour>()[0].profile.chromaticAberration.settings;
-
-        float startCA = CASettings.intensity;
-
-        float elapsed = 0.0f;
-
-        float currentLerpPercent = 0.0f;
-
         camRig.Cinemachine = true;
 
-        while (elapsed < 0.7f)
+        Quaternion startRotation = cam.transform.rotation;
+
+        while (trauma > 0)
         {
-            float x = Random.Range(-1f, 1f) * a_magintude;
-            float z = Random.Range(-1f, 1f) * a_magintude;
+            shake = trauma * trauma;
 
-            currentLerpPercent = elapsed / (0.7f);
+            yaw = Mathf.Lerp(-maxYaw, maxYaw, Mathf.PerlinNoise(seed, Time.time * strength)) * shake;
+            pitch = Mathf.Lerp(-maxPitch, maxPitch, Mathf.PerlinNoise(seed * 2, Time.time * strength)) * shake;
+            roll = Mathf.Lerp(-maxRoll, maxRoll, Mathf.PerlinNoise(seed * 3, Time.time * strength)) * shake;
 
-            Mathf.Lerp(startCA, 1, Mathf.PingPong(currentLerpPercent, 1));
+            cam.transform.rotation = startRotation * Quaternion.Euler(pitch, yaw, roll);
 
-            cam.transform.position += new Vector3(x, 0, z);
-
-            elapsed += Time.deltaTime;
+            // Linearly decrease trauma
+            if (trauma > 0)
+                trauma -= Time.deltaTime / traumaDecay;
+            else
+                trauma = 0;
 
             yield return null;
         }
-        camRig.Cinemachine = false;
-        cam.transform.position = ogCamPos;
 
+        cam.transform.rotation = startRotation;
+
+        camRig.Cinemachine = false;
     }
 }

@@ -59,7 +59,8 @@
 								<StateRef Name="Inside" ID="{49A9B7F4-A6BE-431B-825E-70074F7A4AF6}"/>
 								<State Name="" ID="{6CC2D305-54E5-47B2-BB5A-DF13D0B2C841}" ShortID="592412928">
 									<PropertyList>
-										<Property Name="Lowpass" Type="int16" Value="87"/>
+										<Property Name="Lowpass" Type="int16" Value="58"/>
+										<Property Name="Volume" Type="Real64" Value="-2"/>
 									</PropertyList>
 								</State>
 							</CustomState>

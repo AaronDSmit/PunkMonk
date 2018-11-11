@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4194285517903328}
-  - component: {fileID: 119498565064875590}
+  - component: {fileID: 212966669505734344}
   m_Layer: 0
   m_Name: Decal_Graffiti_Tag2
   m_TagString: Untagged
@@ -35,26 +35,52 @@ Transform:
   m_GameObject: {fileID: 1655034027204668}
   m_LocalRotation: {x: -0, y: -0, z: -0.13541593, w: 0.9907889}
   m_LocalPosition: {x: 47.73, y: 0.74, z: 59.212}
-  m_LocalScale: {x: -0.59, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -15.565001}
---- !u!119 &119498565064875590
-Projector:
+--- !u!212 &212966669505734344
+SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1655034027204668}
   m_Enabled: 1
-  serializedVersion: 2
-  m_NearClipPlane: 0.01
-  m_FarClipPlane: 4.63
-  m_FieldOfView: 103.8
-  m_AspectRatio: 1
-  m_Orthographic: 1
-  m_OrthographicSize: 0.54
-  m_Material: {fileID: 2100000, guid: 1d92a99a484ed3e4c809366934fe5521, type: 2}
-  m_IgnoreLayers:
-    serializedVersion: 2
-    m_Bits: 4294966271
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 5aa07686bbdcdbc498c59655edd13be7, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.503}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 4.37, y: 3.4}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0

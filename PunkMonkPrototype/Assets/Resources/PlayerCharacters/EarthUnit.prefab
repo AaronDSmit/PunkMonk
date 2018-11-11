@@ -2482,7 +2482,7 @@ MonoBehaviour:
   specialDamage: 0400000002000000
   specialheight: 5
   specialJumpTime: 2
-  specialDamgeDelayTimer: 1.1
+  specialDamgeDelayTimer: 2
   specialDamageArea: 2
   YCurve:
     serializedVersion: 2
@@ -2494,22 +2494,28 @@ MonoBehaviour:
       outSlope: -0.005305027
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.5002762
-      value: 0.0003836525
-      inSlope: -0.0077411053
-      outSlope: -0.0077411053
+      time: 0.52268547
+      value: -0.0002294255
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.8177434
-      value: 0.2614026
-      inSlope: 2.5840998
-      outSlope: 2.5840998
+      time: 0.5436809
+      value: 0.08325985
+      inSlope: 11.389107
+      outSlope: 11.389107
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.9099188
-      value: 0.76576483
-      inSlope: -0.03175786
-      outSlope: -0.03175786
+      time: 0.62323415
+      value: 0.48545164
+      inSlope: 2.1537468
+      outSlope: 2.1537468
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.9319525
+      value: 0.7867762
+      inSlope: -0.76994133
+      outSlope: -0.76994133
       tangentMode: 0
     - serializedVersion: 2
       time: 1
@@ -2530,25 +2536,19 @@ MonoBehaviour:
       outSlope: -0.005305027
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.5002754
-      value: 0.0018484963
+      time: 0.524842
+      value: 0.0003836525
       inSlope: -0.0077411053
       outSlope: -0.0077411053
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.8177434
-      value: 0.2614026
-      inSlope: 2.2883067
-      outSlope: 2.2883067
+      time: 0.7642156
+      value: 0.58437014
+      inSlope: 2.7276711
+      outSlope: 2.7276711
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.9372015
-      value: 0.76698554
-      inSlope: 3.4740827
-      outSlope: 3.4740827
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 1.0001476
+      time: 0.9003551
       value: 1.0000393
       inSlope: 3.0938787
       outSlope: 3.0938787

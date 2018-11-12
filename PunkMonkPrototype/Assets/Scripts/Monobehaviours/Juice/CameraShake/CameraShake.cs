@@ -51,6 +51,7 @@ public class CameraShake : MonoBehaviour
 
     public void StartCameraShake(float a_trauma)
     {
+        StopAllCoroutines();
         StartCoroutine(Shake(a_trauma));
     }
 
@@ -58,10 +59,10 @@ public class CameraShake : MonoBehaviour
     {
         seed = Random.Range(0, 2048);
 
-        cam = Camera.main.transform.parent.gameObject;
+        cam = gameObject;
     }
 
-    IEnumerator Shake (float a_trauma)
+    IEnumerator Shake(float a_trauma)
     {
         trauma += a_trauma;
         trauma = Mathf.Clamp01(trauma);

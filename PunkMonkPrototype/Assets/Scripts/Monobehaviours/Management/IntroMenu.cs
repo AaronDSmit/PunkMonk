@@ -12,19 +12,22 @@ public class IntroMenu : MonoBehaviour
     #region Unity Inspector Fields
 
     [SerializeField]
-    private Image FadePlane;
+    private Image fadePlane = null;
 
     [SerializeField]
-    private TextMeshProUGUI loading;
+    private TextMeshProUGUI loadingText = null;
 
     [SerializeField]
-    private GameObject Credits;
+    private Image loadingProgress = null;
 
     [SerializeField]
-    private AK.Wwise.Event startMenuMusic;
+    private Image loadingImage = null;
 
     [SerializeField]
-    private AK.Wwise.Event endMenuMusic;
+    private AK.Wwise.Event startMenuMusic = null;
+
+    [SerializeField]
+    private AK.Wwise.Event endMenuMusic = null;
 
     #endregion
 
@@ -32,9 +35,11 @@ public class IntroMenu : MonoBehaviour
 
     private AsyncOperation async;
 
-    public float progress = 0f;
+    public float loadProgress = 0f;
 
-    public bool isDone = false;
+    private bool finishedLoading = false;
+
+    private bool loadingScene = false;
 
     #endregion
 
@@ -48,7 +53,7 @@ public class IntroMenu : MonoBehaviour
 
         endMenuMusic.Post(gameObject);
 
-        StartCoroutine(ChangeScenes());
+        StartCoroutine(ChangeScenes(1));
     }
 
     #endregion
@@ -66,7 +71,7 @@ public class IntroMenu : MonoBehaviour
     private void Start()
     {
         startMenuMusic.Post(gameObject);
-     //   StartCoroutine(LoadScene());
+        //StartCoroutine(LoadScene());
     }
 
     #endregion
@@ -74,30 +79,30 @@ public class IntroMenu : MonoBehaviour
     #region Local Methods
 
     // Fades the fadePlane image from a colour to another over x seconds.
-    private IEnumerator Fade(Color from, Color to, float time, Image _plane)
+    private IEnumerator Fade(Color a_from, Color a_to, float a_time, Image a_plane)
     {
-        float speed = 1 / time;
+        float speed = 1 / a_time;
         float percent = 0;
 
         while (percent < 1)
         {
             percent += Time.deltaTime * speed;
-            _plane.color = Color.Lerp(from, to, percent);
+            a_plane.color = Color.Lerp(a_from, a_to, percent);
 
             yield return null;
         }
     }
 
     // Fades the fadePlane image from a colour to another over x seconds.
-    private IEnumerator Fade(Color from, Color to, float time, TextMeshProUGUI _text)
+    private IEnumerator Fade(Color a_from, Color a_to, float a_time, TextMeshProUGUI a_text)
     {
-        float speed = 1 / time;
+        float speed = 1 / a_time;
         float percent = 0;
 
         while (percent < 1)
         {
             percent += Time.deltaTime * speed;
-            _text.color = Color.Lerp(from, to, percent);
+            a_text.color = Color.Lerp(a_from, a_to, percent);
 
             yield return null;
         }
@@ -107,23 +112,37 @@ public class IntroMenu : MonoBehaviour
     {
         async = SceneManager.LoadSceneAsync(1, LoadSceneMode.Single);
         async.allowSceneActivation = false;
+        finishedLoading = false;
+        loadingScene = true;
 
-        while (async.progress <= 0.89f)
+        while (async.isDone == false)
         {
-            progress = async.progress;
+            loadProgress = async.progress;
+            loadingProgress.fillAmount = loadProgress + 0.05f;
             yield return null;
         }
+
+        finishedLoading = true;
+        loadingScene = false;
     }
 
-    private IEnumerator ChangeScenes()
+    private IEnumerator ChangeScenes(float a_fadeTime)
     {
-        //StartCoroutine(Fade(Color.clear, Color.black, 1, FadePlane));
-        //StartCoroutine(Fade(Color.clear, Color.white, 1, loading));
+        if (fadePlane != null)
+            StartCoroutine(Fade(Color.clear, Color.black, a_fadeTime, fadePlane));
+        if (loadingText != null)
+            StartCoroutine(Fade(Color.clear, Color.white, a_fadeTime, loadingText));
+        if (loadingProgress != null)
+            StartCoroutine(Fade(Color.clear, Color.white, a_fadeTime, loadingProgress));
+        if (loadingImage != null)
+            StartCoroutine(Fade(Color.clear, Color.white, a_fadeTime, loadingImage));
 
-        yield return new WaitForSeconds(0);
+        yield return new WaitForSeconds(a_fadeTime);
 
-        SceneManager.LoadScene(1);
-       // async.allowSceneActivation = true;
+        if (loadingScene == false)
+            StartCoroutine(LoadScene());
+
+        async.allowSceneActivation = true;
     }
 
     #endregion

@@ -4,7 +4,6 @@ Event	ID	Name			Wwise Object Path	Notes
 	797344207	FreeRoam_Enter			\Music\FreeRoam_Enter	
 	906289856	Battle_Enter			\Music\Battle_Enter	
 	1135171848	Button_Select			\SFX\UI\Button_Select	
-	1242751957	Attack_Enemy_Missile			\SFX\Battle\Attack\Enemy\Attack_Enemy_Missile	
 	1447920996	MenuStart			\Music\MenuStart	
 	1593864692	Defeat			\Ambient\Defeat	
 	1918548877	Attack_Enemy_Melee			\SFX\Battle\Attack\Enemy\Attack_Enemy_Melee	
@@ -15,6 +14,8 @@ Event	ID	Name			Wwise Object Path	Notes
 	2517987300	Attack_Clade_Special_Impact			\SFX\Battle\Attack\Clade\Attack_Clade_Special_Impact	
 	2560478693	Attack_Gen_Basic			\SFX\Battle\Attack\Gen\Attack_Gen_Basic	
 	2878671079	FootstepsOutside			\SFX\World\FootstepsOutside	
+	3001822745	Attack_Enemy_MissileDown			\SFX\Battle\Attack\Enemy\Attack_Enemy_MissileDown	
+	3002913598	Attack_Enemy_MissileUp			\SFX\Battle\Attack\Enemy\Attack_Enemy_MissileUp	
 	3313580367	Button_Move			\SFX\UI\Button_Move	
 	3969013623	MenuEnd			\Music\MenuEnd	
 	4139651882	Battle_Exit			\Music\Battle_Exit	
@@ -36,14 +37,18 @@ Custom State	ID	Name	State Group	Owner		Notes
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	2960415	footstep2	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\footstep2_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\World\FootstepsOutside\footstep2		88264
 	19429705	Rain2	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\rainfall2_56D34C19.wem		\Actor-Mixer Hierarchy\Ambient\Rain\Rain2		7426112
+	19820259	alert	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\alert_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\Battle\Attack\Enemy\alert		430836
 	54080017	combat-start	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\combat-start_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\Battle\General\combat-start		768064
 	72898358	dryfootstep7	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\dryfootstep7_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\World\Footsteps\dryfootstep7		70272
+	136573447	launch	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\launch_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\Battle\Attack\Enemy\launch		430836
 	146746479	footstep5	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\footstep5_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\World\FootstepsOutside\footstep5		88264
 	148414472	Die_Enemy_03	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\Die_Enemy_03_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\Battle\Die\Die\Die_Enemy\Die_Enemy_03	Wilhelm Scream	197076
 	171387652	dryfootstep1	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\dryfootstep1_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\World\Footsteps\dryfootstep1		66688
 	177537079	Attack_Enemy_Melee_03	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\RunnerAttack4_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\Battle\Attack\Enemy\Attack_Enemy_Runner\Attack_Enemy_Melee_03		115264
+	178958781	hit	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\hit_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\Battle\Attack\Enemy\hit		574428
 	190340128	Attack_Enemy_Melee_02	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\RunnerAttack3_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\Battle\Attack\Enemy\Attack_Enemy_Runner\Attack_Enemy_Melee_02		192064
 	200744234	footstep3	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\footstep3_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\World\FootstepsOutside\footstep3		88264
+	318874730	travel	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\travel_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\Battle\Attack\Enemy\travel		550496
 	346333071	Attack_Enemy_Melee_00	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\RunnerAttack1_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\Battle\Attack\Enemy\Attack_Enemy_Runner\Attack_Enemy_Melee_00		153664
 	424389203	defeat	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\defeat_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\UI\defeat		984064
 	466976067	menu	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\menu_8956FC97.wem		\Actor-Mixer Hierarchy\Default Work Unit\menu		12567340
@@ -57,7 +62,6 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	602199033	Attack_Gen_Special	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\GenAttack-heavy_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\Battle\Attack\Gen\Attack_Gen_Special		682176
 	624930658	combat	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\combat_8956FC97.wem		\Actor-Mixer Hierarchy\Default Work Unit\combat		15574336
 	661323299	dryfootstep2	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\dryfootstep2_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\World\Footsteps\dryfootstep2		58212
-	666064885	Attack_Enemy_Missile	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\missileAttack1_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\Battle\Attack\Enemy\Attack_Enemy_Missile		1562948
 	727131690	Dummy_Audio	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\Dummy_Audio_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\Dummy_Audio		709184
 	765782898	footstep4	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\footstep4_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\World\FootstepsOutside\footstep4		88264
 	787045683	select	C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\SFX\select_56D34C19.wem		\Actor-Mixer Hierarchy\SFX\UI\Button Select\select		480064

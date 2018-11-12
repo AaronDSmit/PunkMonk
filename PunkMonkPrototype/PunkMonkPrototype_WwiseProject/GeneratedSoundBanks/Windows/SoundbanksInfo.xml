@@ -25,7 +25,8 @@
 				<Event Id="2517987300" Name="Attack_Clade_Special_Impact" ObjectPath="\Events\SFX\Battle\Attack\Clade\Attack_Clade_Special_Impact"/>
 				<Event Id="2334192619" Name="Attack_Clade_Special_Launch" ObjectPath="\Events\SFX\Battle\Attack\Clade\Attack_Clade_Special_Launch"/>
 				<Event Id="1918548877" Name="Attack_Enemy_Melee" ObjectPath="\Events\SFX\Battle\Attack\Enemy\Attack_Enemy_Melee"/>
-				<Event Id="1242751957" Name="Attack_Enemy_Missile" ObjectPath="\Events\SFX\Battle\Attack\Enemy\Attack_Enemy_Missile"/>
+				<Event Id="3001822745" Name="Attack_Enemy_MissileDown" ObjectPath="\Events\SFX\Battle\Attack\Enemy\Attack_Enemy_MissileDown"/>
+				<Event Id="3002913598" Name="Attack_Enemy_MissileUp" ObjectPath="\Events\SFX\Battle\Attack\Enemy\Attack_Enemy_MissileUp"/>
 				<Event Id="2560478693" Name="Attack_Gen_Basic" ObjectPath="\Events\SFX\Battle\Attack\Gen\Attack_Gen_Basic"/>
 				<Event Id="702987074" Name="Attack_Gen_Special" ObjectPath="\Events\SFX\Battle\Attack\Gen\Attack_Gen_Special"/>
 				<Event Id="906289856" Name="Battle_Enter" ObjectPath="\Events\Music\Battle_Enter"/>
@@ -50,6 +51,10 @@
 					<ShortName>rainfall2.wav</ShortName>
 					<Path>SFX\rainfall2_56D34C19.wem</Path>
 				</File>
+				<File Id="19820259" Language="SFX">
+					<ShortName>alert.wav</ShortName>
+					<Path>SFX\alert_56D34C19.wem</Path>
+				</File>
 				<File Id="54080017" Language="SFX">
 					<ShortName>combat-start.wav</ShortName>
 					<Path>SFX\combat-start_56D34C19.wem</Path>
@@ -57,6 +62,10 @@
 				<File Id="72898358" Language="SFX">
 					<ShortName>dryfootstep7.wav</ShortName>
 					<Path>SFX\dryfootstep7_56D34C19.wem</Path>
+				</File>
+				<File Id="136573447" Language="SFX">
+					<ShortName>launch.wav</ShortName>
+					<Path>SFX\launch_56D34C19.wem</Path>
 				</File>
 				<File Id="146746479" Language="SFX">
 					<ShortName>footstep5.wav</ShortName>
@@ -74,6 +83,10 @@
 					<ShortName>RunnerAttack4.wav</ShortName>
 					<Path>SFX\RunnerAttack4_56D34C19.wem</Path>
 				</File>
+				<File Id="178958781" Language="SFX">
+					<ShortName>hit.wav</ShortName>
+					<Path>SFX\hit_56D34C19.wem</Path>
+				</File>
 				<File Id="190340128" Language="SFX">
 					<ShortName>RunnerAttack3.wav</ShortName>
 					<Path>SFX\RunnerAttack3_56D34C19.wem</Path>
@@ -81,6 +94,10 @@
 				<File Id="200744234" Language="SFX">
 					<ShortName>footstep3.wav</ShortName>
 					<Path>SFX\footstep3_56D34C19.wem</Path>
+				</File>
+				<File Id="318874730" Language="SFX">
+					<ShortName>travel.wav</ShortName>
+					<Path>SFX\travel_56D34C19.wem</Path>
 				</File>
 				<File Id="346333071" Language="SFX">
 					<ShortName>RunnerAttack1.wav</ShortName>
@@ -133,10 +150,6 @@
 				<File Id="661323299" Language="SFX">
 					<ShortName>dryfootstep2.wav</ShortName>
 					<Path>SFX\dryfootstep2_56D34C19.wem</Path>
-				</File>
-				<File Id="666064885" Language="SFX">
-					<ShortName>missileAttack1.wav</ShortName>
-					<Path>SFX\missileAttack1_56D34C19.wem</Path>
 				</File>
 				<File Id="727131690" Language="SFX">
 					<ShortName>Dummy_Audio.wav</ShortName>

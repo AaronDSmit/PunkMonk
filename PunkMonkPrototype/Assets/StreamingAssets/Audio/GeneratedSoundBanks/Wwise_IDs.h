@@ -17,7 +17,8 @@ namespace AK
         static const AkUniqueID ATTACK_CLADE_SPECIAL_IMPACT = 2517987300U;
         static const AkUniqueID ATTACK_CLADE_SPECIAL_LAUNCH = 2334192619U;
         static const AkUniqueID ATTACK_ENEMY_MELEE = 1918548877U;
-        static const AkUniqueID ATTACK_ENEMY_MISSILE = 1242751957U;
+        static const AkUniqueID ATTACK_ENEMY_MISSILEDOWN = 3001822745U;
+        static const AkUniqueID ATTACK_ENEMY_MISSILEUP = 3002913598U;
         static const AkUniqueID ATTACK_GEN_BASIC = 2560478693U;
         static const AkUniqueID ATTACK_GEN_SPECIAL = 702987074U;
         static const AkUniqueID BATTLE_ENTER = 906289856U;

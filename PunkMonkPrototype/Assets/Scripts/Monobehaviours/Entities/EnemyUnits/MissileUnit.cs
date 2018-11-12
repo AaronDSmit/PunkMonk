@@ -25,6 +25,7 @@ public class MissileUnit : AI_Agent
     private bool running = false;
 
     private Hex runHex = null;
+    private SFXEvent sfx;
 
     public Hex RunHex { get { return runHex; } set { runHex = value; } }
 
@@ -33,6 +34,7 @@ public class MissileUnit : AI_Agent
         base.Start();
         turns = rechargeTurns;
         readyToAttack = false;
+        sfx = GetComponent<SFXEvent>();
     }
 
     protected override void Die()
@@ -65,6 +67,8 @@ public class MissileUnit : AI_Agent
 
             yield return new WaitUntil(() => doneMissiles == true);
 
+
+
             turns = rechargeTurns;
 
             readyToAttack = false;
@@ -91,6 +95,8 @@ public class MissileUnit : AI_Agent
         missile.TriggerUp();
         animator.SetTrigger("BasicAttack");
 
+
+
         yield return new WaitForSeconds(0.1f);
         yield return new WaitUntil(() => missile.Done);
 
@@ -102,12 +108,20 @@ public class MissileUnit : AI_Agent
             StartCoroutine(MissileDown(tile));
         }
 
+        yield return new WaitForSeconds(0.1f);
+
+        sfx.PlaySFX("MissileDown");
+
+
         yield return new WaitUntil(() => missileFallCount == 0);
+
+
+
 
         doneMissiles = true;
 
         yield return new WaitForSeconds(0.1f);
-        
+
         FinishedAction();
     }
 
@@ -121,7 +135,9 @@ public class MissileUnit : AI_Agent
         missile.TriggerDown();
 
         yield return new WaitForSeconds(0.001f);
+
         yield return new WaitUntil(() => missile.Done);
+
 
         missileGO.transform.position = Vector3.zero;
         Destroy(missileGO);

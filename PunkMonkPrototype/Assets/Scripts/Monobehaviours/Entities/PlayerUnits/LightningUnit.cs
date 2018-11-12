@@ -8,8 +8,10 @@ public class LightningUnit : Unit
     [Header("Special Attack")]
 
     [SerializeField]
+    private float particleLifetime = 1f;
+    [SerializeField]
     private int specialDamage = 1;
-    [SerializeField] private float specialDamgeDelayTimer = 3;
+    [SerializeField] private float specialDelayTime = 3;
     //[SerializeField] private float specialElectricityLifetime = 3;
 
     private System.Action specialFinishedFunction;
@@ -173,13 +175,13 @@ public class LightningUnit : Unit
 
 
         //call the basicAttackDamageDelay coroutine 
-        StartCoroutine(SpecialAttackDamageDelay(specialDamgeDelayTimer));
+        StartCoroutine(SpecialAttackDamageDelay(specialDelayTime, particleLifetime));
 
     }
 
-    private IEnumerator SpecialAttackDamageDelay(float a_timer, float glamCamDelay = 0)
+    private IEnumerator SpecialAttackDamageDelay(float startDelay ,float a_timer)
     {
-        yield return new WaitForSeconds(glamCamDelay);
+        yield return new WaitForSeconds(startDelay);
 
         yield return new WaitForEndOfFrame();
         specialLightningGameObject = Instantiate(lightningPrefab);
@@ -200,11 +202,8 @@ public class LightningUnit : Unit
         tempGameobject2.transform.GetChild(1).position += Vector3.up * 0.5f;
 
 
-        if (glamCamDelay == 0)
-        {
-            //wait for timer before runing code
-            yield return new WaitForSeconds(a_timer);
-        }
+         yield return new WaitForSeconds(a_timer);
+        
 
 
         foreach (var tile in specialTiles)

@@ -1711,29 +1711,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     path: All_Together_Now/nurbsCircle12
-  m_FloatCurves:
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 4
-        value: 1
-        inSlope: -0
-        outSlope: -0
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_Enabled
-    path: Root_Jnt/Base_Jnt/Pelvis_Jnt/Spine1_Jnt/Spine2_Jnt/Spine3_Jnt/ShoulderBase_Jnt/R_Shoulder_Jnt/R_Elbow_Jnt/R_Wrist_Jnt/GunAnimated/locator1/mesh_GensRifle_v1_0_fbx
-    classID: 25
-    script: {fileID: 0}
+  m_FloatCurves: []
   m_PPtrCurves: []
   m_SampleRate: 24
   m_WrapMode: 0
@@ -2190,13 +2168,6 @@ AnimationClip:
       typeID: 4
       customType: 0
       isPPtrCurve: 0
-    - serializedVersion: 2
-      path: 909099983
-      attribute: 3305885265
-      script: {fileID: 0}
-      typeID: 25
-      customType: 0
-      isPPtrCurve: 0
     pptrCurveMapping: []
   m_AnimationClipSettings:
     serializedVersion: 2
@@ -2219,28 +2190,6 @@ AnimationClip:
     m_HeightFromFeet: 0
     m_Mirror: 0
   m_EditorCurves:
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 4
-        value: 1
-        inSlope: -0
-        outSlope: -0
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_Enabled
-    path: Root_Jnt/Base_Jnt/Pelvis_Jnt/Spine1_Jnt/Spine2_Jnt/Spine3_Jnt/ShoulderBase_Jnt/R_Shoulder_Jnt/R_Elbow_Jnt/R_Wrist_Jnt/GunAnimated/locator1/mesh_GensRifle_v1_0_fbx
-    classID: 25
-    script: {fileID: 0}
   - curve:
       serializedVersion: 2
       m_Curve:

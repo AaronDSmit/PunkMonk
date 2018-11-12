@@ -449,7 +449,7 @@ public class PlayerController : MonoBehaviour
 
         currentRuleset = selectedUnit.GetAction(actionIndex).ruleset;
 
-        if(currentAttack == PlayerAttack.lightningSpecial && actionIndex != 2)
+        if (currentAttack == PlayerAttack.lightningSpecial && actionIndex != 2)
         {
             lightningAttackHex1 = null;
         }
@@ -674,18 +674,22 @@ public class PlayerController : MonoBehaviour
 
                     // get path from Navigation and set the points of the lineRenderer to match it
                     List<Hex> path = Navigation.FindPath(currentHex, tileUnderMouse);
+
                     if (lineRenderer == null)
                     {
                         lineRenderer = GetComponent<LineRenderer>();
                     }
-                    lineRenderer.positionCount = path.Count + 1;
-
-                    lineRenderer.SetPosition(0, currentHex.transform.position + Vector3.up * 0.5f);
-
-                    for (int i = 0; i < path.Count; i++)
+                    else
                     {
-                        lineRenderer.SetPosition(i + 1, path[i].transform.position + Vector3.up * 0.5f);
+                        lineRenderer.positionCount = path.Count + 1;
+                        lineRenderer.SetPosition(0, currentHex.transform.position + Vector3.up * 0.5f);
+
+                        for (int i = 0; i < path.Count; i++)
+                        {
+                            lineRenderer.SetPosition(i + 1, path[i].transform.position + Vector3.up * 0.5f);
+                        }
                     }
+
                 }
                 else
                 {

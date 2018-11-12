@@ -165,7 +165,13 @@ public class GridManager : MonoBehaviour
                         }
                         else if((neighbour.CurrentUnit != null && !returnList.Contains(neighbour)))
                         {
-                            returnList.Add(neighbour);
+                            neighbour.GScore = HexUtility.Distance(currentTile, neighbour) + currentTile.GScore;
+                            if (neighbour.GScore < range + 1)
+                            {
+
+                                //openList.Add(neighbour);
+                                returnList.Add(neighbour);
+                            }
                         }
                     }
                     else

@@ -126,6 +126,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4814036840382110}
   - component: {fileID: 114793322061015604}
+  - component: {fileID: 114962730889478844}
   m_Layer: 11
   m_Name: CameraRig
   m_TagString: CameraRig
@@ -285,7 +286,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1308568506850664}
   m_LocalRotation: {x: -0, y: -0.5, z: -0, w: 0.8660254}
-  m_LocalPosition: {x: -1.59, y: 13.87, z: -2.2}
+  m_LocalPosition: {x: -6.93, y: 13.87, z: 0.88}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4814036840382110}
@@ -577,6 +578,22 @@ MonoBehaviour:
   maxDistance: 30
   glamCamChance: 5
   cinemachineDefault: {fileID: 4625616178352372}
+--- !u!114 &114962730889478844
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1655999450581008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49ff6f3c880c25940b03de1a09f96406, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  traumaDecay: 2
+  strength: 5
+  maxYaw: 5
+  maxPitch: 5
+  maxRoll: 5
 --- !u!114 &114976620422524668
 MonoBehaviour:
   m_ObjectHideFlags: 1

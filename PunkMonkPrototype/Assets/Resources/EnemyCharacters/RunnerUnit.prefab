@@ -1079,7 +1079,6 @@ GameObject:
   - component: {fileID: 4134856668070610}
   - component: {fileID: 95632001175478020}
   - component: {fileID: 114645404542302584}
-  - component: {fileID: 114184483399149688}
   m_Layer: 0
   m_Name: mesh_EnemyMelee_v3.0
   m_TagString: Untagged
@@ -2305,17 +2304,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a3c9182d03ed0da488cd333a26ec05aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114184483399149688
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1861897630205960}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49ff6f3c880c25940b03de1a09f96406, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114201487927041256

@@ -40,6 +40,7 @@ public class MissileUnit : AI_Agent
         base.Die();
 
         Manager.instance.HexHighlighter.RemoveHighlights(this);
+        Manager.instance.UIController.UnlockUI();
     }
 
     public override void Spawn(Hex a_startingTile)
@@ -159,7 +160,7 @@ public class MissileUnit : AI_Agent
             // Attack the hex behind the furthest player
             Hex hexToAttack = furthestPlayerTile.GetNeighbour(HexUtility.VecToHexDirection(furthestPlayerTile.transform.position - CurrentTile.transform.position));
 
-            tilesToAttack = Manager.instance.Grid.GetTilesWithinDistance(hexToAttack, 2, true, true).ToArray();
+            tilesToAttack = Manager.instance.Grid.GetTilesWithinDistance(hexToAttack, 2, false, true).ToArray();
 
             // Rotate to the direction
             StartCoroutine(Rotate(hexToAttack.transform.position));
@@ -194,6 +195,7 @@ public class MissileUnit : AI_Agent
             }
             else
             {
+                Manager.instance.UIController.LockUI();
                 StartCoroutine(WalkToHex(RunHex, Die));
             }
 

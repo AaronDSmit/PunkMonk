@@ -101,7 +101,7 @@
 												</Action>
 											</ChildrenList>
 										</Event>
-										<Event Name="Attack_Enemy_MissileUp" ID="{D4D5AD90-ABDD-46B6-880B-CA832DC36B7D}">
+										<Event Name="Attack_Enemy_MissileUp_Prepare" ID="{D4D5AD90-ABDD-46B6-880B-CA832DC36B7D}">
 											<ChildrenList>
 												<Action Name="" ID="{ABB07AFF-12B6-494C-AA84-AF67FE77E1AF}" ShortID="665192995">
 													<PropertyList>
@@ -113,25 +113,25 @@
 														</Reference>
 													</ReferenceList>
 												</Action>
+												<Action Name="" ID="{FAACB2F8-3CC2-42EB-9FFC-2EF465D528CF}" ShortID="301388159">
+													<PropertyList>
+														<Property Name="ActionType" Type="int16" Value="2"/>
+														<Property Name="Delay" Type="Real64" Value="1.09"/>
+													</PropertyList>
+													<ReferenceList>
+														<Reference Name="Target">
+															<ObjectRef Name="alert" ID="{47D63ED4-CFA4-4022-89E9-654C00707CFE}" WorkUnitID="{BE193198-07FD-4919-8584-0C834CF482F7}"/>
+														</Reference>
+													</ReferenceList>
+												</Action>
 												<Action Name="" ID="{B82F64B5-57BB-48EC-B5CB-7667DBB08AE7}" ShortID="903051192">
 													<PropertyList>
 														<Property Name="ActionType" Type="int16" Value="1"/>
-														<Property Name="Delay" Type="Real64" Value="1.06"/>
+														<Property Name="Delay" Type="Real64" Value="1.09"/>
 													</PropertyList>
 													<ReferenceList>
 														<Reference Name="Target">
 															<ObjectRef Name="launch" ID="{6742F16D-462D-4A2D-BFCD-191971D6006D}" WorkUnitID="{BE193198-07FD-4919-8584-0C834CF482F7}"/>
-														</Reference>
-													</ReferenceList>
-												</Action>
-												<Action Name="" ID="{6B331FE2-8B5F-4179-A12D-39CF098C04C8}" ShortID="977142759">
-													<PropertyList>
-														<Property Name="ActionType" Type="int16" Value="1"/>
-														<Property Name="Delay" Type="Real64" Value="1.3"/>
-													</PropertyList>
-													<ReferenceList>
-														<Reference Name="Target">
-															<ObjectRef Name="travel" ID="{113A22D7-5620-4084-86BA-99064665BEAE}" WorkUnitID="{BE193198-07FD-4919-8584-0C834CF482F7}"/>
 														</Reference>
 													</ReferenceList>
 												</Action>
@@ -160,6 +160,20 @@
 													<ReferenceList>
 														<Reference Name="Target">
 															<ObjectRef Name="hit" ID="{549B3809-3387-461B-AEAA-CB82BD2FDE53}" WorkUnitID="{BE193198-07FD-4919-8584-0C834CF482F7}"/>
+														</Reference>
+													</ReferenceList>
+												</Action>
+											</ChildrenList>
+										</Event>
+										<Event Name="Attack_Enemy_MissileUp_Travel" ID="{21C75237-089A-4397-9C26-1CC414369A2C}">
+											<ChildrenList>
+												<Action Name="" ID="{4A1435BB-79B9-4565-B0C6-E0219CBE0A99}" ShortID="19414987">
+													<PropertyList>
+														<Property Name="ActionType" Type="int16" Value="1"/>
+													</PropertyList>
+													<ReferenceList>
+														<Reference Name="Target">
+															<ObjectRef Name="travel" ID="{113A22D7-5620-4084-86BA-99064665BEAE}" WorkUnitID="{BE193198-07FD-4919-8584-0C834CF482F7}"/>
 														</Reference>
 													</ReferenceList>
 												</Action>

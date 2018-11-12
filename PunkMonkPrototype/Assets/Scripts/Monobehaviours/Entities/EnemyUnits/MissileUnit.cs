@@ -14,7 +14,7 @@ public class MissileUnit : AI_Agent
     [SerializeField]
     private GameObject missilePrefab = null;
 
-    private float missileSpawnDelay = 1.09f;
+    [SerializeField] private float missileSpawnDelay;
 
     private int turns = 0;
 

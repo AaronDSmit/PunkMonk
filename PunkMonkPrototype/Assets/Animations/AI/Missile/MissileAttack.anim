@@ -27398,7 +27398,7 @@ AnimationClip:
   m_Events:
   - time: 0
     functionName: PlaySFX
-    data: MissileUp
+    data: MissileUpPrepare
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
@@ -27408,6 +27408,13 @@ AnimationClip:
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0.1
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.375
+    functionName: PlaySFX
+    data: MissileUpTravel
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 2.2916667

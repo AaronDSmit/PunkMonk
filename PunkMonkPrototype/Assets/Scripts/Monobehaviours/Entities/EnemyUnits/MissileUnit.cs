@@ -14,6 +14,8 @@ public class MissileUnit : AI_Agent
     [SerializeField]
     private GameObject missilePrefab = null;
 
+    private float missileSpawnDelay = 1.09f;
+
     private int turns = 0;
 
     private bool readyToAttack = false;
@@ -90,12 +92,12 @@ public class MissileUnit : AI_Agent
     {
         doneMissiles = false;
 
+        yield return new WaitForSeconds(missileSpawnDelay);
+
         GameObject missileGO = Instantiate(missilePrefab, projectilePosition.position, missilePrefab.transform.rotation);
         Missile missile = missileGO.transform.GetChild(0).GetComponent<Missile>();
         missile.TriggerUp();
         animator.SetTrigger("BasicAttack");
-
-
 
         yield return new WaitForSeconds(0.1f);
         yield return new WaitUntil(() => missile.Done);
@@ -112,11 +114,7 @@ public class MissileUnit : AI_Agent
 
         sfx.PlaySFX("MissileDown");
 
-
         yield return new WaitUntil(() => missileFallCount == 0);
-
-
-
 
         doneMissiles = true;
 

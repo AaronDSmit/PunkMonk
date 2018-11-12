@@ -7,22 +7,31 @@ public class SceneTransitionPoint : MonoBehaviour
     [SerializeField] private int nextLevelIndex;
 
     [HideInInspector]
-    [SerializeField] public bool drawText;
+    [SerializeField]
+    public bool drawText;
+
+    [SerializeField]
+    private float fadeOutTime = 1;
 
     public int NextLevelIndex
     {
         get { return nextLevelIndex; }
-        set
-        {
-            nextLevelIndex = value;
-        }
+        set { nextLevelIndex = value; }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (Manager.instance.StateController.CurrentGameState == GameState.overworld)
         {
-            Manager.instance.TransitionController.Transition(nextLevelIndex);
+            StartCoroutine(TransitionAfterFade());
         }
+    }
+
+    private IEnumerator TransitionAfterFade()
+    {
+        Manager.instance.UIController.FadeOut(fadeOutTime);
+        Manager.instance.PlayerController.GetComponent<OverworldController>().enabled = false;
+        yield return new WaitForSeconds(fadeOutTime);
+        Manager.instance.TransitionController.Transition(nextLevelIndex);
     }
 }

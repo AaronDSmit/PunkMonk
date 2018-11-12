@@ -180,8 +180,6 @@ public class UIManager : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
-
-
     public void Quit()
     {
         Application.Quit();
@@ -297,8 +295,15 @@ public class UIManager : MonoBehaviour
         Manager.instance.TurnController.EndTurn(TEAM.player);
     }
 
+    public void FadeIn(float a_time)
+    {
+        StartCoroutine(FadeImage(1, 0, a_time));
+    }
 
-
+    public void FadeOut(float a_time)
+    {
+        StartCoroutine(FadeImage(0, 1, a_time));
+    }
 
     #endregion
 
@@ -308,8 +313,6 @@ public class UIManager : MonoBehaviour
     {
         Transform canvas = GameObject.FindGameObjectWithTag("UI").transform;
 
-
-
         if (canvas)
         {
             profiles = battleUI.transform.GetChild(0).GetComponent<ProfileSwitcher>();
@@ -317,7 +320,6 @@ public class UIManager : MonoBehaviour
             lightningProfile = profiles.transform.GetChild(2).gameObject; ;
 
             //    profiles.SwitchAbilityButtons();
-
 
             if (fadePlane)
             {
@@ -353,7 +355,6 @@ public class UIManager : MonoBehaviour
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
-
 
     private void OnDestroy()
     {
@@ -439,15 +440,11 @@ public class UIManager : MonoBehaviour
         }
     }
 
-
-
     private void PlaySplashScreen(Animator a_anim)
     {
         a_anim.gameObject.SetActive(true);
         StartCoroutine(StopSplashScreen(a_anim));
     }
-
-
 
 
     #region Coroutines

@@ -60,6 +60,7 @@ public class CameraController : MonoBehaviour
     [Header("CutScene")]
     [SerializeField] private GameObject defaultCam;
     [SerializeField] private GameObject startingCam;
+    [SerializeField] private float fadeInTime = 1.0f;
 
 
     [Header("Game")]
@@ -193,7 +194,8 @@ public class CameraController : MonoBehaviour
 
     private IEnumerator StartCutscene()
     {
-        yield return new WaitForSeconds(2.0f);
+        //Manager.instance.UIController.FadeInFromBlack(fadeInTime);
+        yield return new WaitForSeconds(fadeInTime);
         startingCam.SetActive(false);
         defaultCam.SetActive(true);
         cinemachine = false;

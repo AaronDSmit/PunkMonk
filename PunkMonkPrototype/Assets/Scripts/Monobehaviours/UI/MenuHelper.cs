@@ -178,32 +178,37 @@ public class MenuHelper : MonoBehaviour
         cinematic = false;
     }
 
-    public void StopIntroCutscene()
+    public void StopIntroCutscene(float a_speed = 1)
     {
-        StartCoroutine(StopCutscene());
+        StartCoroutine(StopCutscene(a_speed));
     }
 
-    public void PlayCinematicBars()
+    public void PlayCinematicBars(float a_speed, float a_distance = 0)
     {
-        StartCoroutine(StartCinematicBars());
+        StartCoroutine(StartCinematicBars(a_speed, a_distance));
     }
 
-    private IEnumerator StopCutscene()
+    private IEnumerator StopCutscene(float a_speed = 1)
     {
         while (topBar.sizeDelta.y >= 0)
         {
-            topBar.sizeDelta -= new Vector2(0, Time.deltaTime * 100);
-            botBar.sizeDelta -= new Vector2(0, Time.deltaTime * 100);
+            topBar.sizeDelta -= new Vector2(0, Time.deltaTime * 100 * a_speed);
+            botBar.sizeDelta -= new Vector2(0, Time.deltaTime * 100 * a_speed);
             yield return null;
         }
     }
 
-    private IEnumerator StartCinematicBars()
+    private IEnumerator StartCinematicBars(float a_speed, float a_distance = 0)
     {
-        while (topBar.sizeDelta.y <= cinematicBarDistance)
+        if(a_distance == 0)
         {
-            topBar.sizeDelta += new Vector2(0, Time.deltaTime * 100);
-            botBar.sizeDelta += new Vector2(0, Time.deltaTime * 100);
+            a_distance = cinematicBarDistance;
+        }
+
+        while (topBar.sizeDelta.y <= a_distance)
+        {
+            topBar.sizeDelta += new Vector2(0, Time.deltaTime * 100 * a_speed);
+            botBar.sizeDelta += new Vector2(0, Time.deltaTime * 100 * a_speed);
             yield return null;
         }
     }

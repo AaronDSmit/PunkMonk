@@ -381,7 +381,7 @@ public class UIManager : MonoBehaviour
         if (a_oldstate == GameState.battle)
         {
             battleUI.FadeOut();
-            if(Manager.instance.PlayerController.EarthUnit == null && Manager.instance.PlayerController.LightningUnit == null)
+            if (Manager.instance.PlayerController.EarthUnit == null && Manager.instance.PlayerController.LightningUnit == null)
             {
                 PlaySplashScreen(defeatSplashScreen.GetComponent<Animator>());
             }
@@ -392,17 +392,17 @@ public class UIManager : MonoBehaviour
         }
 
 
-      // if(a_newstate == GameState.cinematic)
-      // {
-      //     menuHelper.PlayCinematicBars();
-      // }
-      //
-      // if(a_oldstate == GameState.cinematic)
-      // {
-      //     menuHelper.StopIntroCutscene();
-      // }
+        if (a_newstate == GameState.cinematic)
+        {
+            menuHelper.PlayCinematicBars(25, 480);
+        }
 
-        
+        if (a_oldstate == GameState.cinematic)
+        {
+            menuHelper.StopIntroCutscene(25);
+        }
+
+
 
         if (a_oldstate != GameState.battle && a_newstate == GameState.battle)
         {

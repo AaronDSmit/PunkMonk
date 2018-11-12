@@ -456,25 +456,6 @@
 												</Reference>
 											</ReferenceList>
 										</Sound>
-										<Sound Name="Attack_Enemy_Missile" ID="{E0C6D331-FCE5-4357-8799-5BE786CF48A7}" ShortID="11193736">
-											<ReferenceList>
-												<Reference Name="Conversion">
-													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{D4C10CFF-54D1-43E8-9949-15A35C036BE6}"/>
-												</Reference>
-												<Reference Name="OutputBus">
-													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{17B85F81-D4B6-4851-8C1E-9D808D7B1DC8}"/>
-												</Reference>
-											</ReferenceList>
-											<ChildrenList>
-												<AudioFileSource Name="missileAttack1" ID="{553CF131-E87C-4863-A96B-0F6D20EA3E8C}" ShortID="666064885">
-													<Language>SFX</Language>
-													<AudioFile>missileAttack1.wav</AudioFile>
-												</AudioFileSource>
-											</ChildrenList>
-											<ActiveSourceList>
-												<ActiveSource Name="missileAttack1" ID="{553CF131-E87C-4863-A96B-0F6D20EA3E8C}" Platform="Linked"/>
-											</ActiveSourceList>
-										</Sound>
 										<RandomSequenceContainer Name="Attack_Enemy_Runner" ID="{03A433A4-6523-4CBB-99EB-25A1AB362B32}" ShortID="678446096">
 											<PropertyList>
 												<Property Name="NormalOrShuffle" Type="int16" Value="0"/>
@@ -575,6 +556,82 @@
 												</Sound>
 											</ChildrenList>
 										</RandomSequenceContainer>
+										<Sound Name="alert" ID="{47D63ED4-CFA4-4022-89E9-654C00707CFE}" ShortID="476963600">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{D4C10CFF-54D1-43E8-9949-15A35C036BE6}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Bus_SFX" ID="{F5B70500-AE66-45F4-AE1A-09F85764E6E6}" WorkUnitID="{17B85F81-D4B6-4851-8C1E-9D808D7B1DC8}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="alert" ID="{37577D2E-69D2-4A73-BFA5-347A0CC2DAFC}" ShortID="19820259">
+													<Language>SFX</Language>
+													<AudioFile>alert.wav</AudioFile>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="alert" ID="{37577D2E-69D2-4A73-BFA5-347A0CC2DAFC}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="hit" ID="{549B3809-3387-461B-AEAA-CB82BD2FDE53}" ShortID="45022968">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{D4C10CFF-54D1-43E8-9949-15A35C036BE6}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Bus_SFX" ID="{F5B70500-AE66-45F4-AE1A-09F85764E6E6}" WorkUnitID="{17B85F81-D4B6-4851-8C1E-9D808D7B1DC8}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="hit" ID="{7246ADF1-359A-41F1-87B0-D1C9C081E0B9}" ShortID="178958781">
+													<Language>SFX</Language>
+													<AudioFile>hit.wav</AudioFile>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="hit" ID="{7246ADF1-359A-41F1-87B0-D1C9C081E0B9}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="launch" ID="{6742F16D-462D-4A2D-BFCD-191971D6006D}" ShortID="684142873">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{D4C10CFF-54D1-43E8-9949-15A35C036BE6}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Bus_SFX" ID="{F5B70500-AE66-45F4-AE1A-09F85764E6E6}" WorkUnitID="{17B85F81-D4B6-4851-8C1E-9D808D7B1DC8}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="launch" ID="{D668243E-7ED4-4F50-AFAC-9BA59DD18CF3}" ShortID="136573447">
+													<Language>SFX</Language>
+													<AudioFile>launch.wav</AudioFile>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="launch" ID="{D668243E-7ED4-4F50-AFAC-9BA59DD18CF3}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="travel" ID="{113A22D7-5620-4084-86BA-99064665BEAE}" ShortID="537822003">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{D4C10CFF-54D1-43E8-9949-15A35C036BE6}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Bus_SFX" ID="{F5B70500-AE66-45F4-AE1A-09F85764E6E6}" WorkUnitID="{17B85F81-D4B6-4851-8C1E-9D808D7B1DC8}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="travel" ID="{A885A7D7-180A-4A7A-9B77-FE591B0B9287}" ShortID="318874730">
+													<Language>SFX</Language>
+													<AudioFile>travel.wav</AudioFile>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="travel" ID="{A885A7D7-180A-4A7A-9B77-FE591B0B9287}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
 									</ChildrenList>
 								</ActorMixer>
 							</ChildrenList>

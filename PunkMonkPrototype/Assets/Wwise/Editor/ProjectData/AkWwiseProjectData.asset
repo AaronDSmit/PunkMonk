@@ -24,8 +24,8 @@ MonoBehaviour:
     List: []
   AuxBusWwu:
   - Guid: '{17B85F81-D4B6-4851-8C1E-9D808D7B1DC8}'
-    m_lastTimePart2: -1999225098
-    m_lastTimePsrt1: 821678205
+    m_lastTimePart2: -1999222702
+    m_lastTimePsrt1: 1033823814
     ParentPhysicalPath: 
     PhysicalPath: Master-Mixer Hierarchy\Default Work Unit.wwu
     List: []
@@ -161,8 +161,8 @@ MonoBehaviour:
       maxDuration: 0
       minDuration: 0
   - Guid: '{97043EB5-8AFD-479B-B7EC-1820B945D1D5}'
-    m_lastTimePart2: -1999223733
-    m_lastTimePsrt1: 1909406667
+    m_lastTimePart2: -1999222704
+    m_lastTimePsrt1: -1146108890
     ParentPhysicalPath: 
     PhysicalPath: Events\SFX.wwu
     List:
@@ -238,10 +238,10 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
-    - Guid: 90add5d4ddabb646880bca832dc36b7d
-      ID: 1242751957
-      Name: Attack_Enemy_Missile
-      Path: SFX\Battle\Attack\Enemy\Attack_Enemy_Missile
+    - Guid: 5b2d9e20c28d4d4f8dbbf07693a45593
+      ID: -1293144551
+      Name: Attack_Enemy_MissileDown
+      Path: SFX\Battle\Attack\Enemy\Attack_Enemy_MissileDown
       PathAndIcons:
       - ElementName: SFX
         ObjectType: 12
@@ -251,7 +251,25 @@ MonoBehaviour:
         ObjectType: 4
       - ElementName: Enemy
         ObjectType: 4
-      - ElementName: Attack_Enemy_Missile
+      - ElementName: Attack_Enemy_MissileDown
+        ObjectType: 3
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - Guid: 90add5d4ddabb646880bca832dc36b7d
+      ID: -1292053698
+      Name: Attack_Enemy_MissileUp
+      Path: SFX\Battle\Attack\Enemy\Attack_Enemy_MissileUp
+      PathAndIcons:
+      - ElementName: SFX
+        ObjectType: 12
+      - ElementName: Battle
+        ObjectType: 4
+      - ElementName: Attack
+        ObjectType: 4
+      - ElementName: Enemy
+        ObjectType: 4
+      - ElementName: Attack_Enemy_MissileUp
         ObjectType: 3
       maxAttenuation: 0
       maxDuration: 0

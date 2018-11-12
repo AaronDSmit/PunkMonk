@@ -20,6 +20,8 @@ public class SFXManager : MonoBehaviour
     [SerializeField] private AK.Wwise.Event defeatTVSFX;
     [SerializeField] private AK.Wwise.Event buttonSelect;
     [SerializeField] private AK.Wwise.Event buttonMove;
+    [SerializeField] private AK.Wwise.Event MissileUp;
+    [SerializeField] private AK.Wwise.Event MissileDown;
 
 
     private bool outside = true;
@@ -108,8 +110,15 @@ public class SFXManager : MonoBehaviour
             case "ButtonMove":
                 buttonMove.Post(a_orginalGO);
                 break;
+            case "MissileUp":
+                MissileUp.Post(a_orginalGO);
+                break;
+            case "MissileDown":
+                MissileDown.Post(a_orginalGO);
+                break;
             default:
                 break;
+
         }
     }
 

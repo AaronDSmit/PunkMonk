@@ -17,6 +17,9 @@ public class SceneTransitionPoint : MonoBehaviour
     [SerializeField]
     private Hex targetHex = null;
 
+    [SerializeField]
+    private AK.Wwise.Event sceneTransitionEvent = null;
+
     public int NextLevelIndex
     {
         get { return nextLevelIndex; }

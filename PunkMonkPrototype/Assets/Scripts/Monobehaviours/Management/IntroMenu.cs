@@ -49,6 +49,8 @@ public class IntroMenu : MonoBehaviour
     {
         Time.timeScale = 1.0f;
 
+        fadePlane.raycastTarget = true;
+
         StopAllCoroutines();
 
         endMenuMusic.Post(gameObject);
@@ -71,6 +73,11 @@ public class IntroMenu : MonoBehaviour
     private void Start()
     {
         startMenuMusic.Post(gameObject);
+        if (fadePlane != null)
+        {
+            StartCoroutine(Fade(Color.black, Color.clear, 1.0f, fadePlane));
+            StartCoroutine(DoFadePlaneRaycast(1.0f));
+        }
         //StartCoroutine(LoadScene());
     }
 
@@ -143,6 +150,16 @@ public class IntroMenu : MonoBehaviour
             StartCoroutine(LoadScene());
 
         async.allowSceneActivation = true;
+    }
+
+    private IEnumerator DoFadePlaneRaycast(float a_time)
+    {
+        fadePlane.raycastTarget = true;
+
+        yield return new WaitForSeconds(a_time);
+
+        fadePlane.raycastTarget = false;
+
     }
 
     #endregion

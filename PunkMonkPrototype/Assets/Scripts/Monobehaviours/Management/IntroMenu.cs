@@ -71,6 +71,9 @@ public class IntroMenu : MonoBehaviour
     private void Start()
     {
         startMenuMusic.Post(gameObject);
+        if (fadePlane != null)
+            StartCoroutine(Fade(Color.black, Color.clear, 1.0f, fadePlane));
+
         //StartCoroutine(LoadScene());
     }
 

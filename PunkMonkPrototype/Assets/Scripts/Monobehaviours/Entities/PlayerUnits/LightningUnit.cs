@@ -190,21 +190,12 @@ public class LightningUnit : Unit
         specialLightningGameObject.transform.GetChild(1).position = specialTiles[specialTiles.Count - 1].transform.position + (transform.up * 0.8f);
 
         yield return new WaitForEndOfFrame();
-        GameObject tempGameobject1 = Instantiate(specialLightningGameObject);
+        GameObject tempGameobject1 = Instantiate(lightningPrefab);
 
-        tempGameobject1.transform.GetChild(0).position += Vector3.up * -0.5f;
-        tempGameobject1.transform.GetChild(1).position += Vector3.up * 0.5f;
-
-        yield return new WaitForEndOfFrame();
-        GameObject tempGameobject2 = Instantiate(specialLightningGameObject);
-
-        tempGameobject2.transform.GetChild(0).position += Vector3.up * -0.5f;
-        tempGameobject2.transform.GetChild(1).position += Vector3.up * 0.5f;
-
+        tempGameobject1.transform.GetChild(1).position = specialLightningGameObject.transform.GetChild(0).position + Vector3.up * -0.5f;
+        tempGameobject1.transform.GetChild(0).position = specialLightningGameObject.transform.GetChild(1).position + Vector3.up * 0.5f;
 
          yield return new WaitForSeconds(a_timer);
-        
-
 
         foreach (var tile in specialTiles)
         {
@@ -220,17 +211,13 @@ public class LightningUnit : Unit
             }
         }
 
-
         specialTiles.Clear();
 
         Destroy(tempGameobject1);
-        Destroy(tempGameobject2);
         Destroy(specialLightningGameObject);
 
         //call the finished call back function
         specialFinishedFunction();
-
-
     }
 
     private IEnumerator BasicAttackDamageDelay(float a_timer, float a_lightningLifetime, float glamCamDelay = 0)

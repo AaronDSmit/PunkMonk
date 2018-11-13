@@ -8013,6 +8013,7 @@ GameObject:
   - component: {fileID: 372247612}
   - component: {fileID: 372247617}
   - component: {fileID: 372247616}
+  - component: {fileID: 372247618}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -8117,6 +8118,18 @@ MonoBehaviour:
     positionOffset: {x: 0, y: 0, z: 0}
   m_posOffsetData: {fileID: 0}
   listenerMask: 1
+--- !u!114 &372247618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 372247611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profile: {fileID: 11400000, guid: 1eda688f680bce14dad5e2bebe7e9243, type: 2}
 --- !u!1001 &375613838
 Prefab:
   m_ObjectHideFlags: 0
@@ -22136,6 +22149,11 @@ Prefab:
     - target: {fileID: 4362739320821912, guid: f0f7b6156c6a97b4c93873ce8707ef8f, type: 2}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 19.022001
+      objectReference: {fileID: 0}
+    - target: {fileID: 198102046359314230, guid: f0f7b6156c6a97b4c93873ce8707ef8f,
+        type: 2}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
       objectReference: {fileID: 0}
     - target: {fileID: 198102046359314230, guid: f0f7b6156c6a97b4c93873ce8707ef8f,
         type: 2}
@@ -54374,6 +54392,11 @@ Prefab:
     - target: {fileID: 4362739320821912, guid: f0f7b6156c6a97b4c93873ce8707ef8f, type: 2}
       propertyPath: m_LocalScale.z
       value: 2.38944
+      objectReference: {fileID: 0}
+    - target: {fileID: 198102046359314230, guid: f0f7b6156c6a97b4c93873ce8707ef8f,
+        type: 2}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
       objectReference: {fileID: 0}
     - target: {fileID: 198102046359314230, guid: f0f7b6156c6a97b4c93873ce8707ef8f,
         type: 2}

@@ -55,9 +55,20 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject victorySplashScreen;
 
+    [SerializeField]
+    private Sprite endTurnNoActions;
+
+
+
     #endregion
 
     #region Reference Fields
+
+
+
+    private Sprite normalEndTurnButton;
+
+    private Image endTurnButtonImage;
 
     private TextMeshProUGUI loadingText;
 
@@ -143,6 +154,8 @@ public class UIManager : MonoBehaviour
             lightningProfile.transform.GetChild(0).GetChild(2).GetComponent<Image>().sprite = hexIconEmpty;
         }
 
+        endTurnButtonImage.sprite = player.CheckActionsAvailable() ? normalEndTurnButton : endTurnNoActions;
+
     }
 
     public void Init()
@@ -204,6 +217,7 @@ public class UIManager : MonoBehaviour
                 profiles.SwitchAbilityButtons();
 
                 profiles.Switch(a_selectedUnit.CompareTag("EarthUnit"));
+
 
                 selectedUnit.OnCanMoveChanged -= CanMove;
                 selectedUnit.OnCanAttackChanged -= CanAttack;
@@ -308,6 +322,12 @@ public class UIManager : MonoBehaviour
     #endregion
 
     #region Unity Life-cycle Methods
+
+    private void Start()
+    {
+        endTurnButtonImage = endTurnButton.GetComponent<Image>();
+        normalEndTurnButton = endTurnButtonImage.sprite;
+    }
 
     private void Awake()
     {

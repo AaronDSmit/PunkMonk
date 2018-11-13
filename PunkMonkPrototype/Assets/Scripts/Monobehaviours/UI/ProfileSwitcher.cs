@@ -26,6 +26,16 @@ public class ProfileSwitcher : MonoBehaviour
     [SerializeField]
     private Sprite lightningUnitSpecial;
 
+    [SerializeField]
+    private Sprite selectedProfileEarth;
+
+    [SerializeField]
+    private Sprite selectedProfileLightning;
+
+
+
+
+
 
     #endregion
 
@@ -34,6 +44,7 @@ public class ProfileSwitcher : MonoBehaviour
     //private Vector2 primaryPos;
 
     //private Vector2 secondaryPos;
+    private Sprite normalProfileEarth, normalProfileLightning;
 
     private RectTransform earthProfile;
 
@@ -99,8 +110,15 @@ public class ProfileSwitcher : MonoBehaviour
             // StartCoroutine(MoveProfile(lightningProfile, primaryPos, secondaryPos));
             StartCoroutine(Scale(lightningProfile, primaryScale, secondaryScale));
 
-            earthProfileButton.GetComponent<Image>().raycastTarget = false;
-            lightningProfileButton.GetComponent<Image>().raycastTarget = true;
+            var earthImage = earthProfileButton.GetComponent<Image>();
+            var lightningImage = lightningProfileButton.GetComponent<Image>();
+
+            earthImage.raycastTarget = false;
+            lightningImage.raycastTarget = true;
+
+            earthImage.sprite = selectedProfileEarth;
+            lightningImage.sprite = normalProfileLightning;
+
         }
         else
         {
@@ -115,8 +133,16 @@ public class ProfileSwitcher : MonoBehaviour
             //StartCoroutine(MoveProfile(earthProfile, primaryPos, secondaryPos));
             StartCoroutine(Scale(earthProfile, primaryScale, secondaryScale));
 
-            earthProfileButton.GetComponent<Image>().raycastTarget = true;
-            lightningProfileButton.GetComponent<Image>().raycastTarget = false;
+
+            var earthImage = earthProfileButton.GetComponent<Image>();
+            var lightningImage = lightningProfileButton.GetComponent<Image>();
+
+            earthImage.raycastTarget = true;
+            lightningImage.raycastTarget = false;
+
+            earthImage.sprite = normalProfileEarth;
+            lightningImage.sprite = selectedProfileLightning;
+
         }
     }
 
@@ -149,17 +175,20 @@ public class ProfileSwitcher : MonoBehaviour
         earthUnitBasic = transform.parent.GetChild(1).GetChild(1).GetComponent<Image>().sprite;
         earthUnitSpecial = transform.parent.GetChild(5).GetChild(0).GetComponent<Image>().sprite;
 
+        normalProfileEarth = earthProfileButton.GetComponent<Image>().sprite;
+        normalProfileLightning = lightningProfileButton.GetComponent<Image>().sprite;
+
     }
 
     private void Start()
     {
         currentUnit = Manager.instance.PlayerController.EarthUnit;
     }
-        #endregion
+    #endregion
 
-        #region Local Methods
+    #region Local Methods
 
-        private IEnumerator MoveProfile(RectTransform a_rect, Vector2 a_from, Vector2 a_target)
+    private IEnumerator MoveProfile(RectTransform a_rect, Vector2 a_from, Vector2 a_target)
     {
         float currentLerpTime = 0;
         float t = 0;

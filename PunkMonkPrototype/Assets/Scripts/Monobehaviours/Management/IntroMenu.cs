@@ -49,6 +49,8 @@ public class IntroMenu : MonoBehaviour
     {
         Time.timeScale = 1.0f;
 
+        fadePlane.raycastTarget = true;
+
         StopAllCoroutines();
 
         endMenuMusic.Post(gameObject);

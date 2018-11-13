@@ -31,20 +31,25 @@ public class EndScene : MonoBehaviour
         fadeImage.gameObject.SetActive(true);
         fadeImage.enabled = true;
         StartCoroutine(Fade(Color.black, Color.clear, fadeInTime, fadeImage));
+        StartCoroutine(DoFadePlaneRaycast(fadeInTime));
     }
 
     public void Quit()
     {
+        fadeImage.raycastTarget = true;
         StartCoroutine(Fade(Color.clear, Color.black, fadeOutTime, fadeImage, Application.Quit));
+
     }
 
     public void PlayAgain()
     {
+        fadeImage.raycastTarget = true;
         StartCoroutine(ChangeSceneAfterFade(1));
     }
 
     public void MainMenu()
     {
+        fadeImage.raycastTarget = true;
         StartCoroutine(ChangeSceneAfterFade(0));
     }
 
@@ -77,5 +82,15 @@ public class EndScene : MonoBehaviour
             a_finishedAction();
 
         fading = false;
+    }
+
+    private IEnumerator DoFadePlaneRaycast(float a_time)
+    {
+        fadeImage.raycastTarget = true;
+
+        yield return new WaitForSeconds(a_time);
+
+        fadeImage.raycastTarget = false;
+
     }
 }

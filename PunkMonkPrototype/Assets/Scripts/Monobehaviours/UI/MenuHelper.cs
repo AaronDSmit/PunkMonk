@@ -198,7 +198,7 @@ public class MenuHelper : MonoBehaviour
         }
     }
 
-    private IEnumerator StartCinematicBars(float a_speed, float a_distance = 0)
+    private IEnumerator StartCinematicBars(float a_speed, float a_distance = 0, bool stop = false)
     {
         if(a_distance == 0)
         {
@@ -210,6 +210,10 @@ public class MenuHelper : MonoBehaviour
             topBar.sizeDelta += new Vector2(0, Time.deltaTime * 100 * a_speed);
             botBar.sizeDelta += new Vector2(0, Time.deltaTime * 100 * a_speed);
             yield return null;
+        }
+        if(stop == true)
+        {
+            StopIntroCutscene(a_speed);
         }
     }
 

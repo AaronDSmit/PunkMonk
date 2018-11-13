@@ -106,6 +106,8 @@ public class UIManager : MonoBehaviour
         get { return isReady; }
     }
 
+    public MenuHelper MenuHelper {  get { return menuHelper;  } }
+
     public Slider VoltBar { get { return voltBar; } }
 
     #endregion

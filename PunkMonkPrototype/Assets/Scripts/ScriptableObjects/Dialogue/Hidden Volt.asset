@@ -14,8 +14,8 @@ MonoBehaviour:
   name: Hidden Volt
   dialogue:
   - speaker: 1
-    text: Someone threw out some perfectly good volt.
+    text: 'GEN: Someone threw out some perfectly good volt.'
   - speaker: 0
-    text: Be a shame to let it go to waste.
+    text: 'CLADE: Be a shame to let it go to waste.'
   - speaker: 0
-    text: '[+1 Volt]'
+    text: '[YOU GAIN +1 VOLT]'

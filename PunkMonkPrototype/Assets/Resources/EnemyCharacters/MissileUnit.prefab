@@ -2261,7 +2261,7 @@ MonoBehaviour:
   friendlyFire: 0
   missilePrefab: {fileID: 1774984587406650, guid: c2613c03c9931ac4a8a53221163e68b1,
     type: 2}
-  missileSpawnDelay: 2.09
+  missileSpawnDelay: 1.09
 --- !u!114 &114185244310500342
 MonoBehaviour:
   m_ObjectHideFlags: 1

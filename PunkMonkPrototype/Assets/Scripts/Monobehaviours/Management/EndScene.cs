@@ -20,6 +20,11 @@ public class EndScene : MonoBehaviour
 
     public void PlayAgain()
     {
+        SceneManager.LoadScene(1);
+    }
+
+    public void MainMenu()
+    {
         SceneManager.LoadScene(0);
     }
 }

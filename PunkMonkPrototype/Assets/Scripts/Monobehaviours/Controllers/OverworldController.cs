@@ -40,6 +40,7 @@ public class OverworldController : MonoBehaviour
     private bool mouseInput = false;
     private bool keyboardInput = false;
     private bool canMove = false;
+    private bool movingToHex = false;
 
     public CharacterController Controller
     {
@@ -54,10 +55,15 @@ public class OverworldController : MonoBehaviour
         }
     }
 
-
-
     #endregion
 
+    public bool CanMove { get { return canMove; } set { canMove = value; } }
+
+    public void RunToHex(Hex a_hex)
+    {
+        movingToHex = true;
+        direction = (a_hex.transform.position - controller.transform.position).normalized;
+    }
 
     private void Awake()
     {
@@ -91,10 +97,13 @@ public class OverworldController : MonoBehaviour
         // Don't update if in any other game state
         if (inOverworld && canMove)
         {
-            if (useMouseInput)
-                ProcessMouseInput();
-            if (useKeyboardInput)
-                ProcessKeyboardInput();
+            if (movingToHex == false)
+            {
+                if (useMouseInput)
+                    ProcessMouseInput();
+                if (useKeyboardInput)
+                    ProcessKeyboardInput();
+            }
 
             Movement();
         }
@@ -102,7 +111,7 @@ public class OverworldController : MonoBehaviour
 
     private void Movement()
     {
-        if ((mouseInput || keyboardInput) && direction.sqrMagnitude != 0)
+        if ((mouseInput || keyboardInput || movingToHex) && direction.sqrMagnitude != 0)
         {
             if (animator)
                 animator.SetBool("Running", true);

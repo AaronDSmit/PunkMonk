@@ -62,6 +62,8 @@ public class ProfileSwitcher : MonoBehaviour
     private Sprite earthUnitBasic;
 
     private Sprite earthUnitSpecial;
+    private Image earthImage, lightningImage;
+
 
     #endregion
 
@@ -94,6 +96,20 @@ public class ProfileSwitcher : MonoBehaviour
 
     #region Public Methods
 
+    public void UnitProfileSelected(bool earthSelected)
+    {
+        if(earthSelected)
+        {
+            earthImage.sprite = selectedProfileEarth;
+            lightningImage.sprite = normalProfileLightning;
+        }
+        else
+        {
+            earthImage.sprite = normalProfileEarth;
+            lightningImage.sprite = selectedProfileLightning;
+        }
+    }
+
     public void Switch(bool a_earthSelected)
     {
         earthSelected = a_earthSelected;
@@ -110,15 +126,10 @@ public class ProfileSwitcher : MonoBehaviour
             // StartCoroutine(MoveProfile(lightningProfile, primaryPos, secondaryPos));
             StartCoroutine(Scale(lightningProfile, primaryScale, secondaryScale));
 
-            var earthImage = earthProfileButton.GetComponent<Image>();
-            var lightningImage = lightningProfileButton.GetComponent<Image>();
 
             earthImage.raycastTarget = false;
             lightningImage.raycastTarget = true;
-
-            earthImage.sprite = selectedProfileEarth;
-            lightningImage.sprite = normalProfileLightning;
-
+            UnitProfileSelected(true);
         }
         else
         {
@@ -134,21 +145,19 @@ public class ProfileSwitcher : MonoBehaviour
             StartCoroutine(Scale(earthProfile, primaryScale, secondaryScale));
 
 
-            var earthImage = earthProfileButton.GetComponent<Image>();
-            var lightningImage = lightningProfileButton.GetComponent<Image>();
-
             earthImage.raycastTarget = true;
             lightningImage.raycastTarget = false;
 
-            earthImage.sprite = normalProfileEarth;
-            lightningImage.sprite = selectedProfileLightning;
-
+            UnitProfileSelected(false);
         }
     }
 
     #endregion
 
     #region Unity Life-cycle Methods
+
+
+
 
     private void Awake()
     {
@@ -163,20 +172,25 @@ public class ProfileSwitcher : MonoBehaviour
 
         lightningProfile.localScale = secondaryScale;
 
-        earthProfileButton.GetComponent<Image>().raycastTarget = false;
-        lightningProfileButton.GetComponent<Image>().raycastTarget = true;
+        earthImage = earthProfileButton.GetComponent<Image>();
+        lightningImage = lightningProfileButton.GetComponent<Image>();
+
+        earthImage.raycastTarget = false;
+        lightningImage.raycastTarget = true;
 
         earthProfileButton.interactable = true;
         lightningProfileButton.interactable = true;
 
-        earthProfileButton.GetComponent<Image>().raycastTarget = false;
-        lightningProfileButton.GetComponent<Image>().raycastTarget = true;
+        earthImage.raycastTarget = false;
+        lightningImage.raycastTarget = true;
 
         earthUnitBasic = transform.parent.GetChild(1).GetChild(1).GetComponent<Image>().sprite;
         earthUnitSpecial = transform.parent.GetChild(5).GetChild(0).GetComponent<Image>().sprite;
 
-        normalProfileEarth = earthProfileButton.GetComponent<Image>().sprite;
-        normalProfileLightning = lightningProfileButton.GetComponent<Image>().sprite;
+    
+
+        normalProfileEarth = earthImage.sprite;
+        normalProfileLightning = lightningImage.sprite;
 
     }
 

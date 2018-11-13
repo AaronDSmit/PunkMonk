@@ -426,6 +426,7 @@ public class UIManager : MonoBehaviour
 
         if (a_oldstate != GameState.battle && a_newstate == GameState.battle)
         {
+            profiles.UnitProfileSelected(true);
             battleUI.SetButtonsInteractable();
         }
 

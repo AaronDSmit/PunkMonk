@@ -137,6 +137,22 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Stop_BattleMusic" ID="{000F35E5-E637-4DEB-9549-B1CE1CE88FD1}">
+					<ChildrenList>
+						<Action Name="" ID="{3B9F44E1-B75A-4EDA-AC3E-192E84A79A60}" ShortID="132823079">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="FadeTime" Type="Real64" Value="1"/>
+								<Property Name="Scope" Type="int16" Value="1"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="combat" ID="{8025F084-360F-44F0-A30C-392B6B5B1F08}" WorkUnitID="{4DB86490-E208-4AE5-878B-DD391FBC0583}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

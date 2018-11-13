@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="11" SoundbankVersion="132">
 	<RootPaths>
-		<ProjectRoot>C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\</ProjectRoot>
-		<SourceFilesRoot>C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\</SourceFilesRoot>
-		<SoundBanksRoot>C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\GeneratedSoundBanks\Windows\</SoundBanksRoot>
+		<ProjectRoot>C:\Users\s163504\Documents\PunkMonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\</ProjectRoot>
+		<SourceFilesRoot>C:\Users\s163504\Documents\PunkMonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\</SourceFilesRoot>
+		<SoundBanksRoot>C:\Users\s163504\Documents\PunkMonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\GeneratedSoundBanks\Windows\</SoundBanksRoot>
 		<ExternalSourcesInputFile></ExternalSourcesInputFile>
-		<ExternalSourcesOutputRoot>C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
+		<ExternalSourcesOutputRoot>C:\Users\s163504\Documents\PunkMonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
 	</RootPaths>
 	<DialogueEvents/>
 	<StreamedFiles/>
@@ -26,7 +26,8 @@
 				<Event Id="2334192619" Name="Attack_Clade_Special_Launch" ObjectPath="\Events\SFX\Battle\Attack\Clade\Attack_Clade_Special_Launch"/>
 				<Event Id="1918548877" Name="Attack_Enemy_Melee" ObjectPath="\Events\SFX\Battle\Attack\Enemy\Attack_Enemy_Melee"/>
 				<Event Id="3001822745" Name="Attack_Enemy_MissileDown" ObjectPath="\Events\SFX\Battle\Attack\Enemy\Attack_Enemy_MissileDown"/>
-				<Event Id="3002913598" Name="Attack_Enemy_MissileUp" ObjectPath="\Events\SFX\Battle\Attack\Enemy\Attack_Enemy_MissileUp"/>
+				<Event Id="2621254366" Name="Attack_Enemy_MissileUp_Prepare" ObjectPath="\Events\SFX\Battle\Attack\Enemy\Attack_Enemy_MissileUp_Prepare"/>
+				<Event Id="109984065" Name="Attack_Enemy_MissileUp_Travel" ObjectPath="\Events\SFX\Battle\Attack\Enemy\Attack_Enemy_MissileUp_Travel"/>
 				<Event Id="2560478693" Name="Attack_Gen_Basic" ObjectPath="\Events\SFX\Battle\Attack\Gen\Attack_Gen_Basic"/>
 				<Event Id="702987074" Name="Attack_Gen_Special" ObjectPath="\Events\SFX\Battle\Attack\Gen\Attack_Gen_Special"/>
 				<Event Id="906289856" Name="Battle_Enter" ObjectPath="\Events\Music\Battle_Enter"/>

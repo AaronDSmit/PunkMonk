@@ -89,8 +89,6 @@ public class EasyDesignEditor : EditorWindow
     [SerializeField]
     private int everyXTurns;
     [SerializeField]
-    private int loadLevel = 0;
-    [SerializeField]
     private GameState targetState = GameState.overworld;
     [SerializeField]
     private GameState currentState = GameState.battle;
@@ -115,7 +113,20 @@ public class EasyDesignEditor : EditorWindow
     [SerializeField]
     private Spawner[] selectedSpawners;
     [SerializeField]
-    private StateTransitionPoint[] selectedTransitionPoints;
+    private StateTransitionPoint[] selectedStateTransitionPoints;
+
+    #region Scene Transition Point
+
+    [SerializeField]
+    private SceneTransitionPoint[] selectedSceneTransitionPoints;
+    [SerializeField]
+    private int sceneT_loadLevel = 0;
+    [SerializeField]
+    private float sceneT_fadeOutTime = 0;
+    [SerializeField]
+    private Hex sceneT_targetHex = null;
+
+    #endregion
 
     [SerializeField]
     private HexDirection earthDirection;
@@ -319,6 +330,7 @@ public class EasyDesignEditor : EditorWindow
 
             if (previousTab != selectedTab)
             {
+                UpdateSelection();
                 previousTab = selectedTab;
                 GUI.FocusControl("");
             }
@@ -864,24 +876,24 @@ public class EasyDesignEditor : EditorWindow
                                 {
                                     Hex tile = Selection.gameObjects[0].GetComponent<Hex>();
 
-                                    GameObject transitionGO = new GameObject("stateTransition");
+                                    GameObject stateTransitionGO = new GameObject("stateTransition");
 
-                                    StateTransitionPoint sceneTransition = transitionGO.AddComponent<StateTransitionPoint>();
-                                    sceneTransition.TargetState = targetState;
-                                    sceneTransition.CurrentState = currentState;
-                                    sceneTransition.numberToKill = numberToKill;
-                                    sceneTransition.voltGiven = voltGiven;
+                                    StateTransitionPoint stateTransition = stateTransitionGO.AddComponent<StateTransitionPoint>();
+                                    stateTransition.TargetState = targetState;
+                                    stateTransition.CurrentState = currentState;
+                                    stateTransition.numberToKill = numberToKill;
+                                    stateTransition.voltGiven = voltGiven;
 
-                                    sceneTransition.Conversation = convo;
+                                    stateTransition.Conversation = convo;
 
-                                    sceneTransition.drawText = true;
-                                    sceneTransition.index = currentID;
+                                    stateTransition.drawText = true;
+                                    stateTransition.index = currentID;
 
-                                    BoxCollider trigger = transitionGO.AddComponent<BoxCollider>();
+                                    BoxCollider trigger = stateTransitionGO.AddComponent<BoxCollider>();
                                     trigger.isTrigger = true;
 
-                                    sceneTransition.transform.parent = tile.transform;
-                                    sceneTransition.transform.position = tile.transform.position;
+                                    stateTransition.transform.parent = tile.transform;
+                                    stateTransition.transform.position = tile.transform.position;
 
                                     currSelectionType = SelectionHexType.StateTransition;
                                 }
@@ -896,15 +908,17 @@ public class EasyDesignEditor : EditorWindow
 
                                     GameObject transitionGO = new GameObject("SceneTransition");
 
-                                    SceneTransitionPoint transition = transitionGO.AddComponent<SceneTransitionPoint>();
-                                    transition.NextLevelIndex = loadLevel;
-                                    transition.drawText = true;
+                                    SceneTransitionPoint sceneTransition = transitionGO.AddComponent<SceneTransitionPoint>();
+                                    sceneTransition.NextLevelIndex = sceneT_loadLevel;
+                                    sceneTransition.drawText = true;
+                                    sceneTransition.FadeOutTime = sceneT_fadeOutTime;
+                                    sceneTransition.TargetHex = sceneT_targetHex;
 
                                     BoxCollider trigger = transitionGO.AddComponent<BoxCollider>();
                                     trigger.isTrigger = true;
 
-                                    transition.transform.parent = tile.transform;
-                                    transition.transform.position = tile.transform.position;
+                                    sceneTransition.transform.parent = tile.transform;
+                                    sceneTransition.transform.position = tile.transform.position;
 
                                     currSelectionType = SelectionHexType.SceneTransition;
                                 }
@@ -1090,25 +1104,26 @@ public class EasyDesignEditor : EditorWindow
 
                             EditorGUILayout.BeginHorizontal();
 
-                            // if the selected tile has a scene transition change it rather than add a new one
-                            if (Selection.gameObjects.Length == 1 && Selection.gameObjects[0].GetComponentInChildren<StateTransitionPoint>())
+                            if (selectedStateTransitionPoints.Length > 0)
                             {
-                                if (ColouredButton("Change Transition", orangeColour))
+                                if (ColouredButton("Change State Transition", orangeColour))
                                 {
-                                    StateTransitionPoint newStateTransition = Selection.gameObjects[0].GetComponentInChildren<StateTransitionPoint>();
-                                    newStateTransition.TargetState = targetState;
-                                    newStateTransition.CurrentState = currentState;
-                                    newStateTransition.numberToKill = numberToKill;
-                                    newStateTransition.hasBoss = hasBoss;
-                                    newStateTransition.bossDamage = bossDamageGoal;
-                                    newStateTransition.voltGiven = voltGiven;
-                                    newStateTransition.EarthDirection = earthDirection;
-                                    newStateTransition.LightningDirection = lightningDirection;
-                                    newStateTransition.Conversation = convo;
-                                    newStateTransition.camBounds = camBounds;
-                                    newStateTransition.cameraTargetHex = cameraTargetHex;
+                                    foreach (StateTransitionPoint stateTransitionPoint in selectedStateTransitionPoints)
+                                    {
+                                        stateTransitionPoint.TargetState = targetState;
+                                        stateTransitionPoint.CurrentState = currentState;
+                                        stateTransitionPoint.numberToKill = numberToKill;
+                                        stateTransitionPoint.hasBoss = hasBoss;
+                                        stateTransitionPoint.bossDamage = bossDamageGoal;
+                                        stateTransitionPoint.voltGiven = voltGiven;
+                                        stateTransitionPoint.EarthDirection = earthDirection;
+                                        stateTransitionPoint.LightningDirection = lightningDirection;
+                                        stateTransitionPoint.Conversation = convo;
+                                        stateTransitionPoint.camBounds = camBounds;
+                                        stateTransitionPoint.cameraTargetHex = cameraTargetHex;
 
-                                    newStateTransition.index = currentID;
+                                        stateTransitionPoint.index = currentID;
+                                    }
                                 }
                             }
 
@@ -1183,7 +1198,7 @@ public class EasyDesignEditor : EditorWindow
                                     }
                                 }
 
-                                foreach (StateTransitionPoint point in selectedTransitionPoints)
+                                foreach (StateTransitionPoint point in selectedStateTransitionPoints)
                                     point.EarthHex = hex;
                             }
 
@@ -1206,7 +1221,7 @@ public class EasyDesignEditor : EditorWindow
                                     }
                                 }
 
-                                foreach (StateTransitionPoint point in selectedTransitionPoints)
+                                foreach (StateTransitionPoint point in selectedStateTransitionPoints)
                                     point.LightningHex = hex;
                             }
 
@@ -1229,7 +1244,7 @@ public class EasyDesignEditor : EditorWindow
                                         }
                                     }
 
-                                    foreach (StateTransitionPoint point in selectedTransitionPoints)
+                                    foreach (StateTransitionPoint point in selectedStateTransitionPoints)
                                         point.cameraTargetHex = hex;
                                 }
 
@@ -1274,7 +1289,7 @@ public class EasyDesignEditor : EditorWindow
                                     }
                                 }
 
-                                foreach (StateTransitionPoint point in selectedTransitionPoints)
+                                foreach (StateTransitionPoint point in selectedStateTransitionPoints)
                                     point.SetCheckPoint(hex);
                             }
 
@@ -1302,39 +1317,71 @@ public class EasyDesignEditor : EditorWindow
                             GUILayout.Label("Scene Transition:", centeredText);
 
                             EditorGUILayout.BeginHorizontal();
-
-                            // if the selected tile has a scene transition change it rather than add a new one
-                            if (Selection.gameObjects.Length == 1 && Selection.gameObjects[0].GetComponentInChildren<SceneTransitionPoint>())
                             {
-                                if (ColouredButton("Change Transition", orangeColour))
+                                if (selectedSceneTransitionPoints.Length > 0)
                                 {
-                                    SceneTransitionPoint transition = Selection.gameObjects[0].GetComponentInChildren<SceneTransitionPoint>();
-                                    transition.NextLevelIndex = loadLevel;
+                                    if (ColouredButton("Change Transition", orangeColour))
+                                    {
+                                        foreach (SceneTransitionPoint sceneTransitionPoint in selectedSceneTransitionPoints)
+                                        {
+                                            sceneTransitionPoint.NextLevelIndex = sceneT_loadLevel;
+                                            sceneTransitionPoint.FadeOutTime = sceneT_fadeOutTime;
+                                            sceneTransitionPoint.TargetHex = sceneT_targetHex;
+                                        }
+                                    }
                                 }
+
+                                GUILayout.Label("Load Level:");
+
+                                sceneT_loadLevel = EditorGUILayout.IntField(sceneT_loadLevel);
                             }
-
-                            GUILayout.Label("Load Level:");
-
-                            loadLevel = EditorGUILayout.IntField(loadLevel);
-
                             EditorGUILayout.EndHorizontal();
 
                             EditorGUILayout.Space();
 
                             EditorGUILayout.BeginHorizontal();
-
-                            if (ColouredButton("Remove Scene Transition", redColour))
                             {
-                                GameObject[] selectedObjects = Selection.gameObjects;
+                                GUILayout.Label("Fade Out Time:");
 
-                                SceneTransitionPoint transition = selectedObjects[0].GetComponentInChildren<SceneTransitionPoint>();
+                                sceneT_fadeOutTime = EditorGUILayout.FloatField(sceneT_fadeOutTime);
 
-                                DestroyImmediate(transition.gameObject);
+                                if (ColouredButton("Set Target Hex", blueColour))
+                                {
+                                    // Find a hex that isn't a State Transition
+                                    Hex hex = null;
+                                    foreach (GameObject go in Selection.gameObjects)
+                                    {
+                                        if (go.GetComponentInChildren<SceneTransitionPoint>() == false)
+                                        {
+                                            hex = go.GetComponent<Hex>();
+                                            break;
+                                        }
+                                    }
 
-                                UpdateSelection();
+                                    sceneT_targetHex = hex;
+
+                                    foreach (SceneTransitionPoint point in selectedSceneTransitionPoints)
+                                        point.TargetHex = hex;
+                                }
                             }
+                            EditorGUILayout.EndHorizontal();
 
+                            EditorGUILayout.Space();
 
+                            EditorGUILayout.BeginHorizontal();
+                            {
+                                if (ColouredButton("Remove Scene Transition", redColour))
+                                {
+                                    GameObject[] selectedObjects = Selection.gameObjects;
+
+                                    SceneTransitionPoint transition = selectedObjects[0].GetComponentInChildren<SceneTransitionPoint>();
+
+                                    DestroyImmediate(transition.gameObject);
+
+                                    UpdateSelection();
+                                }
+
+                            }
                             EditorGUILayout.EndHorizontal();
 
                             EditorGUILayout.Space();
@@ -1461,9 +1508,6 @@ public class EasyDesignEditor : EditorWindow
 
                 EditorGUILayout.Space();
 
-                #region Scene Transition
-
-                #endregion
             }
 
             #endregion
@@ -1716,13 +1760,13 @@ public class EasyDesignEditor : EditorWindow
 
     private void UpdateStateTransitionSelection()
     {
-        selectedTransitionPoints = Selection.GetFiltered<StateTransitionPoint>(SelectionMode.Deep);
+        selectedStateTransitionPoints = Selection.GetFiltered<StateTransitionPoint>(SelectionMode.Deep);
 
-        hasStateTransitionSelected = (selectedTransitionPoints.Length > 0);
+        hasStateTransitionSelected = (selectedStateTransitionPoints.Length > 0);
 
         if (hasStateTransitionSelected)
         {
-            StateTransitionPoint newStateTransition = selectedTransitionPoints[0];
+            StateTransitionPoint newStateTransition = selectedStateTransitionPoints[0];
 
             currentID = newStateTransition.index;
 
@@ -1740,6 +1784,21 @@ public class EasyDesignEditor : EditorWindow
         }
     }
 
+    private void UpdateSceneTransitionSelection()
+    {
+        selectedSceneTransitionPoints = Selection.GetFiltered<SceneTransitionPoint>(SelectionMode.Deep);
+
+        hasSceneTransitionSelected = (selectedSceneTransitionPoints.Length > 0);
+
+        if (hasSceneTransitionSelected)
+        {
+            SceneTransitionPoint newStateTransition = selectedSceneTransitionPoints[0];
+            sceneT_loadLevel = newStateTransition.NextLevelIndex;
+            sceneT_fadeOutTime = newStateTransition.FadeOutTime;
+            sceneT_targetHex = newStateTransition.TargetHex;
+        }
+    }
+
     private void OnSelectionChange()
     {
         UpdateSelection();
@@ -1752,7 +1811,7 @@ public class EasyDesignEditor : EditorWindow
         {
             hasTileSelected = (Selection.gameObjects[0].GetComponentsInChildren<Hex>().Length > 0);
 
-            hasSceneTransitionSelected = (Selection.gameObjects[0].GetComponentsInChildren<SceneTransitionPoint>().Length > 0);
+            UpdateSceneTransitionSelection();
 
             UpdateStateTransitionSelection();
 

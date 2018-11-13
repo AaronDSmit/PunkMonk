@@ -11,9 +11,9 @@ using UnityEditor;
 public class TransitionPointEditor : Editor
 {
     [DrawGizmo(GizmoType.InSelectionHierarchy | GizmoType.NotInSelectionHierarchy)]
-    static void DrawHandles(SceneTransitionPoint transitionPoint, GizmoType gizmoType)
+    static void DrawHandles(SceneTransitionPoint sceneTransitionPoint, GizmoType gizmoType)
     {
-        if (transitionPoint.drawText)
+        if (sceneTransitionPoint.drawText)
         {
             GUIStyle style = new GUIStyle(); // This is optional
             style.normal.textColor = Color.yellow;
@@ -22,7 +22,13 @@ public class TransitionPointEditor : Editor
 
             style.fontSize = 20;
 
-            Handles.Label(transitionPoint.transform.position, transitionPoint.NextLevelIndex.ToString(), style);
+            Handles.Label(sceneTransitionPoint.transform.position, sceneTransitionPoint.NextLevelIndex.ToString(), style);
+
+            if (sceneTransitionPoint.TargetHex)
+            {
+                Gizmos.color = Color.grey;
+                DrawArrow.ForGizmo(sceneTransitionPoint.transform.position, sceneTransitionPoint.TargetHex.transform.position - sceneTransitionPoint.transform.position);
+            }
         }
     }
 }

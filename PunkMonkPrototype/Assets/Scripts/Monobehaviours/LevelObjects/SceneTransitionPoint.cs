@@ -17,9 +17,6 @@ public class SceneTransitionPoint : MonoBehaviour
     [SerializeField]
     private Hex targetHex = null;
 
-    [SerializeField]
-    private AK.Wwise.Event sceneTransitionEvent = null;
-
     public int NextLevelIndex
     {
         get { return nextLevelIndex; }
@@ -54,6 +51,9 @@ public class SceneTransitionPoint : MonoBehaviour
         else
             Manager.instance.PlayerController.GetComponent<OverworldController>().CanMove = false;
         yield return new WaitForSeconds(fadeOutTime);
+
+        //sceneTransitionEvent.Post(gameObject);
+
         Manager.instance.TransitionController.Transition(nextLevelIndex);
     }
 }

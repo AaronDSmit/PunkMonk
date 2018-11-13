@@ -23,6 +23,8 @@ public class SFXManager : MonoBehaviour
     [SerializeField] private AK.Wwise.Event MissileUpPrepare;
     [SerializeField] private AK.Wwise.Event MissileUpTravel;
     [SerializeField] private AK.Wwise.Event MissileDown;
+    [SerializeField] private AK.Wwise.Event endBattleMusic;
+
 
 
     private bool outside = true;
@@ -119,6 +121,9 @@ public class SFXManager : MonoBehaviour
                 break;
             case "MissileDown":
                 MissileDown.Post(a_orginalGO);
+                break;
+            case "EndBattleMusic":
+                endBattleMusic.Post(a_orginalGO);
                 break;
             default:
                 break;

@@ -22,7 +22,6 @@ GameObject:
   - component: {fileID: 114181964515706148}
   - component: {fileID: 114752336446416580}
   - component: {fileID: 120541263066808342}
-  - component: {fileID: 114765109545479262}
   m_Layer: 0
   m_Name: PlayerController
   m_TagString: Player
@@ -76,25 +75,6 @@ MonoBehaviour:
   useKeyboardInput: 1
   useMouseInput: 1
   startWithClade: 0
---- !u!114 &114765109545479262
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1466322186341554}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82f975add6b5434438eae7b6b98000b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  triggerList: ae8d9d44
-  useOtherObject: 0
-  bankName: Divide_SoundBank
-  decodeBank: 0
-  loadAsynchronous: 0
-  saveDecodedBank: 0
-  unloadTriggerList: 958ca0ea
-  valueGuid: 2d8eac41a083714e8e60c923a62a251f
 --- !u!120 &120541263066808342
 LineRenderer:
   m_ObjectHideFlags: 1

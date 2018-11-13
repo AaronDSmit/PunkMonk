@@ -18,9 +18,12 @@ public class EndScene : MonoBehaviour
 
     private bool fading = false;
 
+    [SerializeField]
+    private AK.Wwise.Event stopMusicEvent = null;
+
     private void Awake()
     {
-        if(GameObject.FindGameObjectWithTag("Manager") != null)
+        if (GameObject.FindGameObjectWithTag("Manager") != null)
         {
             Destroy(GameObject.FindGameObjectWithTag("Manager"));
         }
@@ -36,6 +39,7 @@ public class EndScene : MonoBehaviour
 
     public void Quit()
     {
+        stopMusicEvent.Post(gameObject);
         fadeImage.raycastTarget = true;
         StartCoroutine(Fade(Color.clear, Color.black, fadeOutTime, fadeImage, Application.Quit));
 
@@ -43,12 +47,14 @@ public class EndScene : MonoBehaviour
 
     public void PlayAgain()
     {
+        stopMusicEvent.Post(gameObject);
         fadeImage.raycastTarget = true;
         StartCoroutine(ChangeSceneAfterFade(1));
     }
 
     public void MainMenu()
     {
+        stopMusicEvent.Post(gameObject);
         fadeImage.raycastTarget = true;
         StartCoroutine(ChangeSceneAfterFade(0));
     }

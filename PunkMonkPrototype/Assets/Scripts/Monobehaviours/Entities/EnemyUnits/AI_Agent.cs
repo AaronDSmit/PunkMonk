@@ -21,6 +21,9 @@ public class AI_Agent : Unit
     [SerializeField]
     private float bulletSpeed = 3;
 
+    [SerializeField]
+    private Transform gunTransform;
+
     #endregion
 
     #region Reference Fields
@@ -106,13 +109,22 @@ public class AI_Agent : Unit
     {
         tilesToAttack = a_targetTiles;
 
+
+        StartCoroutine(WaitToShoot(a_finished));
+
+
+    }
+
+    private IEnumerator WaitToShoot(System.Action a_finished)
+    {
         if (attackRange > 1 && bullet != null)
         {
-            GameObject bulletGO = Instantiate(bullet, transform.position + transform.forward, Quaternion.LookRotation(transform.forward, Vector3.up));
-            bulletGO.GetComponent<Rigidbody>().AddForce(transform.forward * bulletSpeed, ForceMode.VelocityChange);
+            yield return new WaitForSeconds(1.0f);
+            GameObject bulletGO = Instantiate(bullet, gunTransform.position + transform.forward, Quaternion.LookRotation(transform.right, Vector3.up));
+            bulletGO.GetComponentInChildren<Rigidbody>().AddForce(transform.forward * bulletSpeed, ForceMode.VelocityChange);
             Destroy(bulletGO, 0.5f);
         }
-
+        yield return null;
 
         StartCoroutine(BasicAttackDamageDelay(damageDelayTimer, a_finished));
     }

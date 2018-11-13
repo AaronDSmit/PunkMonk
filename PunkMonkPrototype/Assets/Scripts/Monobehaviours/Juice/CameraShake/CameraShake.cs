@@ -69,7 +69,7 @@ public class CameraShake : MonoBehaviour
 
         CameraController camRig = cam.GetComponent<CameraController>();
 
-        camRig.Cinemachine = true;
+        camRig.OverrideRot = true;
 
         Quaternion startRotation = cam.transform.rotation;
 
@@ -94,6 +94,6 @@ public class CameraShake : MonoBehaviour
 
         cam.transform.rotation = startRotation;
 
-        camRig.Cinemachine = false;
+        camRig.OverrideRot = false;
     }
 }

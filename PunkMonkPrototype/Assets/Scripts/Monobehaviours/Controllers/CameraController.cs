@@ -44,6 +44,7 @@ public class CameraController : MonoBehaviour
     private bool lookAtObject = false;
     private bool canMove = true;
     private bool earthUnitOverworldTarget = false;
+    private bool overrideRot = false;
 
     private GameSettings settings;
 
@@ -151,6 +152,19 @@ public class CameraController : MonoBehaviour
         set
         {
             cinemachine = value;
+        }
+    }
+
+    public bool OverrideRot
+    {
+        get
+        {
+            return overrideRot;
+        }
+
+        set
+        {
+            overrideRot = value;
         }
     }
 
@@ -314,8 +328,10 @@ public class CameraController : MonoBehaviour
                 rigTargetPos = transform.position;
             }
 
-            //transform.position = Vector3.Slerp(transform.position, new Vector3(transform.position.x, targetY, transform.position.z), Time.deltaTime * scrollSpeed);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.deltaTime * RotationalSpeed);
+            if (!overrideRot)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.deltaTime * RotationalSpeed);
+            }
         }
 
     }

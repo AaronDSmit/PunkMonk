@@ -34,6 +34,7 @@ namespace AK
         static const AkUniqueID MENUEND = 3969013623U;
         static const AkUniqueID MENUSTART = 1447920996U;
         static const AkUniqueID RAIN = 2043403999U;
+        static const AkUniqueID STOP_BATTLEMUSIC = 3329728603U;
     } // namespace EVENTS
 
     namespace STATES

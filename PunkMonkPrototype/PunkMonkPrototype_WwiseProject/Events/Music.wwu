@@ -151,6 +151,16 @@
 								</Reference>
 							</ReferenceList>
 						</Action>
+						<Action Name="" ID="{DDF143A7-CE97-43B7-BA7A-DF7AD418AEB7}" ShortID="827508225">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="1"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Dummy_Audio" ID="{E0A859C4-4E25-4836-A43B-038566B589B4}" WorkUnitID="{BE193198-07FD-4919-8584-0C834CF482F7}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
 					</ChildrenList>
 				</Event>
 			</ChildrenList>

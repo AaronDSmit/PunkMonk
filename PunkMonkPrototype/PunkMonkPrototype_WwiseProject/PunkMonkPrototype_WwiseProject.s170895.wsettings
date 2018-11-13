@@ -3,6 +3,7 @@
 	<UserProjectSettingsInfo>
 		<UserProjectSettings Name="" ID="{687A0763-3C92-4F8C-A423-6504AD295B36}">
 			<PropertyList>
+				<Property Name="Event Action List\{000F35E5-E637-4DEB-9549-B1CE1CE88FD1}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{070A3D7C-4C45-4151-BFF1-D181534466F0}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{139D58F9-18D5-4BD7-B74E-599B5A89ABD8}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{209E2D5B-8DC2-4F4D-8DBB-F07693A45593}\x64_Expand States" Type="string" Value=""/>
@@ -90,8 +91,8 @@
 				<Property Name="ProjectExplorer\x64_Expanded_1_1" Type="string" Value="2KQUFaYdKkGhfnXKDCFJ84FfuBe21FFIjB6dgI17Hcg="/>
 				<Property Name="ProjectExplorer\x64_Expanded_20_1" Type="string" Value=""/>
 				<Property Name="ProjectExplorer\x64_Expanded_21_1" Type="string" Value=""/>
-				<Property Name="ProjectExplorer\x64_Expanded_2_1" Type="string" Value="jDHvUKQ2tUK31R8c/UZjWWqPyA97B2hElv5dAi5Bg/QOMEF2LDgYRYBaVu9+U1yAmDEZvv0HGUmFhAyDTPSC95BkuE0I4uVKh4vdOR+8BYM="/>
-				<Property Name="ProjectExplorer\x64_Expanded_3_1" Type="string" Value="6lSmWnc8c0GZz6Gjh/WvlunUvzknaxBClZV3JhkwlDBnSqFq9VPeRInCDtuT12UvtT4El/2Km0e37BgguUXR1Z3YcZbr245Lh+4CKBVzLWwuY9sZqr3STY6p1h39gUov"/>
+				<Property Name="ProjectExplorer\x64_Expanded_2_1" Type="string" Value="jDHvUKQ2tUK31R8c/UZjWWqPyA97B2hElv5dAi5Bg/QOMEF2LDgYRYBaVu9+U1yA0yVmbzPlCUaLdQbI242CPy84G0gRZcNIqQJz1Vpv93WYMRm+/QcZSYWEDINM9IL3kGS4TQji5UqHi905H7wFg8p+qjC93bRPkXpUZ80jsD8="/>
+				<Property Name="ProjectExplorer\x64_Expanded_3_1" Type="string" Value="6lSmWnc8c0GZz6Gjh/WvlunUvzknaxBClZV3JhkwlDBnSqFq9VPeRInCDtuT12UvtT4El/2Km0e37BgguUXR1Z3YcZbr245Lh+4CKBVzLWwuY9sZqr3STY6p1h39gUovnPdXUyA3R06O6YOz8BvzEg=="/>
 				<Property Name="ProjectExplorer\x64_Expanded_4_1" Type="string" Value=""/>
 				<Property Name="ProjectExplorer\x64_Expanded_5_1" Type="string" Value=""/>
 				<Property Name="ProjectExplorer\x64_Expanded_6_1" Type="string" Value="93Ntp6NetUazjxb3kprH3w=="/>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="11" SoundbankVersion="132">
 	<RootPaths>
-		<ProjectRoot>C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\</ProjectRoot>
-		<SourceFilesRoot>C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\</SourceFilesRoot>
-		<SoundBanksRoot>C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\GeneratedSoundBanks\Windows\</SoundBanksRoot>
+		<ProjectRoot>D:\Documents\PunkMonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\</ProjectRoot>
+		<SourceFilesRoot>D:\Documents\PunkMonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\.cache\Windows\</SourceFilesRoot>
+		<SoundBanksRoot>D:\Documents\PunkMonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\GeneratedSoundBanks\Windows\</SoundBanksRoot>
 		<ExternalSourcesInputFile></ExternalSourcesInputFile>
-		<ExternalSourcesOutputRoot>C:\Users\s170895\Desktop\punkmonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
+		<ExternalSourcesOutputRoot>D:\Documents\PunkMonk\PunkMonkPrototype\PunkMonkPrototype_WwiseProject\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
 	</RootPaths>
 	<DialogueEvents/>
 	<StreamedFiles/>

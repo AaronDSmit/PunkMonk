@@ -40,7 +40,7 @@
 											<Language>SFX</Language>
 											<AudioFile>Combat_FullLoop_v1.wav</AudioFile>
 											<ConvertedFileIDList>
-												<File ID="683211502"/>
+												<File Platform="Windows" ID="683211502"/>
 											</ConvertedFileIDList>
 										</AudioFileSource>
 									</ChildrenList>
@@ -144,7 +144,8 @@
 											<Language>SFX</Language>
 											<AudioFile>Combat_FullLoop_v1.wav</AudioFile>
 											<ConvertedFileIDList>
-												<File ID="683211502"/>
+												<File Platform="Mac" ID="52566307"/>
+												<File Platform="Windows" ID="683211502"/>
 											</ConvertedFileIDList>
 										</AudioFileSource>
 									</ChildrenList>

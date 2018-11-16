@@ -483,7 +483,7 @@
 															<Language>SFX</Language>
 															<AudioFile>RunnerAttack1.wav</AudioFile>
 															<ConvertedFileIDList>
-																<File ID="346333071"/>
+																<File Platform="Windows" ID="346333071"/>
 															</ConvertedFileIDList>
 														</AudioFileSource>
 													</ChildrenList>
@@ -524,7 +524,7 @@
 															<Language>SFX</Language>
 															<AudioFile>RunnerAttack3.wav</AudioFile>
 															<ConvertedFileIDList>
-																<File ID="190340128"/>
+																<File Platform="Windows" ID="190340128"/>
 															</ConvertedFileIDList>
 														</AudioFileSource>
 													</ChildrenList>
@@ -546,7 +546,7 @@
 															<Language>SFX</Language>
 															<AudioFile>RunnerAttack4.wav</AudioFile>
 															<ConvertedFileIDList>
-																<File ID="177537079"/>
+																<File Platform="Windows" ID="177537079"/>
 															</ConvertedFileIDList>
 														</AudioFileSource>
 													</ChildrenList>
@@ -997,7 +997,7 @@
 											<Language>SFX</Language>
 											<AudioFile>footstep1.wav</AudioFile>
 											<ConvertedFileIDList>
-												<File ID="980908635"/>
+												<File Platform="Windows" ID="980908635"/>
 											</ConvertedFileIDList>
 										</AudioFileSource>
 									</ChildrenList>
@@ -1019,7 +1019,7 @@
 											<Language>SFX</Language>
 											<AudioFile>footstep2.wav</AudioFile>
 											<ConvertedFileIDList>
-												<File ID="2960415"/>
+												<File Platform="Windows" ID="2960415"/>
 											</ConvertedFileIDList>
 										</AudioFileSource>
 									</ChildrenList>
@@ -1041,7 +1041,7 @@
 											<Language>SFX</Language>
 											<AudioFile>footstep3.wav</AudioFile>
 											<ConvertedFileIDList>
-												<File ID="200744234"/>
+												<File Platform="Windows" ID="200744234"/>
 											</ConvertedFileIDList>
 										</AudioFileSource>
 									</ChildrenList>
@@ -1063,7 +1063,7 @@
 											<Language>SFX</Language>
 											<AudioFile>footstep4.wav</AudioFile>
 											<ConvertedFileIDList>
-												<File ID="765782898"/>
+												<File Platform="Windows" ID="765782898"/>
 											</ConvertedFileIDList>
 										</AudioFileSource>
 									</ChildrenList>
@@ -1085,7 +1085,7 @@
 											<Language>SFX</Language>
 											<AudioFile>footstep5.wav</AudioFile>
 											<ConvertedFileIDList>
-												<File ID="146746479"/>
+												<File Platform="Windows" ID="146746479"/>
 											</ConvertedFileIDList>
 										</AudioFileSource>
 									</ChildrenList>
@@ -1107,7 +1107,7 @@
 											<Language>SFX</Language>
 											<AudioFile>footstep6.wav</AudioFile>
 											<ConvertedFileIDList>
-												<File ID="789413211"/>
+												<File Platform="Windows" ID="789413211"/>
 											</ConvertedFileIDList>
 										</AudioFileSource>
 									</ChildrenList>
@@ -1129,7 +1129,7 @@
 											<Language>SFX</Language>
 											<AudioFile>footstep7.wav</AudioFile>
 											<ConvertedFileIDList>
-												<File ID="521172361"/>
+												<File Platform="Windows" ID="521172361"/>
 											</ConvertedFileIDList>
 										</AudioFileSource>
 									</ChildrenList>
@@ -1151,7 +1151,7 @@
 											<Language>SFX</Language>
 											<AudioFile>footstep8.wav</AudioFile>
 											<ConvertedFileIDList>
-												<File ID="537872262"/>
+												<File Platform="Windows" ID="537872262"/>
 											</ConvertedFileIDList>
 										</AudioFileSource>
 									</ChildrenList>

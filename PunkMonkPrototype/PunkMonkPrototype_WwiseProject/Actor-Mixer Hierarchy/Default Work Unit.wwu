@@ -24,6 +24,9 @@
 						<AudioFileSource Name="Combat_FullLoop_v1" ID="{CA88927E-9DF5-419C-9762-6350DFBCB03D}" ShortID="683211502">
 							<Language>SFX</Language>
 							<AudioFile>Combat_FullLoop_v1.wav</AudioFile>
+							<ConvertedFileIDList>
+								<File Platform="Mac" ID="52566307"/>
+							</ConvertedFileIDList>
 						</AudioFileSource>
 					</ChildrenList>
 					<ActiveSourceList>

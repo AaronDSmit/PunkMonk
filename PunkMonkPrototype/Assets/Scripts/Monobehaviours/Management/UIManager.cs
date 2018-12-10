@@ -523,6 +523,8 @@ public class UIManager : MonoBehaviour
 
             yield return null;
         }
+
+        fadePlane.color = new Color(fadePlane.color.r, fadePlane.color.g, fadePlane.color.b, to);
     }
 
     // Fades the fadePlane image from a colour to another over x seconds.

@@ -17,6 +17,8 @@ public class SceneTransitionPoint : MonoBehaviour
     [SerializeField]
     private Hex targetHex = null;
 
+    bool transitioning = false;
+
     public int NextLevelIndex
     {
         get { return nextLevelIndex; }
@@ -45,7 +47,14 @@ public class SceneTransitionPoint : MonoBehaviour
 
     private IEnumerator TransitionAfterFade()
     {
+        // Make sure this coroutine isn't going twice
+        if (transitioning == true)
+            yield break;
+
+        transitioning = true;
+
         Manager.instance.UIController.FadeOut(fadeOutTime);
+
         if (targetHex)
             Manager.instance.PlayerController.GetComponent<OverworldController>().RunToHex(targetHex);
         else
@@ -55,5 +64,7 @@ public class SceneTransitionPoint : MonoBehaviour
         //sceneTransitionEvent.Post(gameObject);
 
         Manager.instance.TransitionController.Transition(nextLevelIndex);
+
+        transitioning = false;
     }
 }

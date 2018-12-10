@@ -31,8 +31,9 @@ public class Unit : LivingEntity
     [Tooltip("The position that projectiles spawn from")]
     [SerializeField]
     protected Transform projectilePosition;
-    [Tooltip("Toggles on and off the glamCam")]
 
+    [SerializeField]
+    private ParticleSystem highlightEffect;
 
     [SerializeField]
     private GameObject voltEffect = null;
@@ -236,10 +237,14 @@ public class Unit : LivingEntity
             myRenderer.material.SetFloat("_UseHighlight", 1);
             myRenderer.material.SetFloat("_HighlightAmount", 0.04f);
             myRenderer.material.SetColor("_HighlightColour", a_outlineColour);
+            if (highlightEffect)
+                highlightEffect.Play();
         }
         else
         {
             myRenderer.material.SetFloat("_UseHighlight", 0);
+            if (highlightEffect)
+                highlightEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         }
     }
 

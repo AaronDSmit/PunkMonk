@@ -19,6 +19,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private InteractionRuleset selectionRuleset;
 
+    //[SerializeField]
+    //private Color selectedHexColour = Color.blue;
+
     [SerializeField]
     private Color enemyThreatColor = Color.red;
 
@@ -997,6 +1000,8 @@ public class PlayerController : MonoBehaviour
 
             selectedUnit = a_newSelectedUnit;
 
+            //Manager.instance.HexHighlighter.HighLightArea(new List<Hex> { selectedUnit.CurrentTile }, Color.clear, selectedHexColour, selectedUnit);
+
             Manager.instance.UIController.UpdateSelectedUnit(selectedUnit);
             selectedUnit.Select(true, currentRuleset.ValidHighlightColour);
         }
@@ -1009,8 +1014,10 @@ public class PlayerController : MonoBehaviour
     // Remove current selection, used when it's not the player's turn
     private void DeselectUnit()
     {
-        if (selectedUnit)
+        if (selectedUnit != null)
         {
+            //Manager.instance.HexHighlighter.RemoveHighlights(selectedUnit);
+
             selectedUnit.Select(false, currentRuleset.HighlightColour);
             selectedUnit = null;
         }

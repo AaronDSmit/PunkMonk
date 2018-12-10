@@ -107,6 +107,12 @@ public class Spawner : MonoBehaviour
 
         if (doorHex != null && targetHex != null)
         {
+            // Check if here is a unit at the target hex, if so get a new target around it
+            if (targetHex.CurrentUnit != null)
+            {
+                targetHex = targetHex.GetNeighbour(HexUtility.VecToHexDirection(currentHex.transform.position - targetHex.transform.position));
+            }
+
             newUnit.WalkDirectlyToTile(doorHex, targetHex);
 
             yield return new WaitUntil(() => newUnit.IsPerformingAction == false);

@@ -2463,6 +2463,7 @@ MonoBehaviour:
   dissolveMat: {fileID: 0}
   deathAnimationTime: 1
   maxHealth: 6
+  currentHealth: 6
   actions:
   - {fileID: 11400000, guid: 2f4429e83ae258647a203d36c3f14919, type: 2}
   - {fileID: 11400000, guid: bf99ef183f7535c4bb59f007aa0e16dd, type: 2}
@@ -2483,7 +2484,7 @@ MonoBehaviour:
   specialDamage: 0400000002000000
   specialheight: 5
   specialJumpTime: 2
-  specialDamgeDelayTimer: 2
+  specialDamgeDelayTimer: 0.1
   specialDamageArea: 2
   YCurve:
     serializedVersion: 2

@@ -2676,6 +2676,7 @@ MonoBehaviour:
   dissolveMat: {fileID: 0}
   deathAnimationTime: 1
   maxHealth: 5
+  currentHealth: 5
   actions:
   - {fileID: 11400000, guid: 2f4429e83ae258647a203d36c3f14919, type: 2}
   - {fileID: 11400000, guid: c8d6d920f1429604189ab5d760244910, type: 2}

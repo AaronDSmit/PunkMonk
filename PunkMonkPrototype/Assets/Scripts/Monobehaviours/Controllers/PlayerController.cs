@@ -1142,10 +1142,11 @@ public class PlayerController : MonoBehaviour
 
         }
 
-
-        // ensure this script knows it's in over-world state
         if (a_newstate == GameState.battle)
         {
+            earthUnit.CurrentHealth = earthUnit.MaxHealth;
+            lightningUnit.CurrentHealth = lightningUnit.MaxHealth;
+
             canInteract = true;
             SelectUnit(earthUnit, false);
         }

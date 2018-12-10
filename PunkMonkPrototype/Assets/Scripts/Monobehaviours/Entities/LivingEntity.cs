@@ -29,6 +29,7 @@ public class LivingEntity : Entity
 
     private bool hasVolt = false;
 
+    [SerializeField]
     private int currentHealth;
 
     private bool dead;
@@ -76,6 +77,7 @@ public class LivingEntity : Entity
     public int CurrentHealth
     {
         get { return currentHealth; }
+        set { currentHealth = value; }
     }
 
     public int MaxHealth

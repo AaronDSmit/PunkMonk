@@ -631,7 +631,7 @@ GameObject:
   - component: {fileID: 198064411670524108}
   - component: {fileID: 199973799563923462}
   m_Layer: 9
-  m_Name: Highlight_Gen
+  m_Name: HighlightParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

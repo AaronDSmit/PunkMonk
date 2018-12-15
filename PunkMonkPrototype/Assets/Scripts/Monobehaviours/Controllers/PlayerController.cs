@@ -58,6 +58,8 @@ public class PlayerController : MonoBehaviour
 
     private AI_Controller AI_controller;
 
+    private ParticleSystem HighlightPartical;
+
     #endregion
 
     #region Local Fields
@@ -829,6 +831,15 @@ public class PlayerController : MonoBehaviour
                     case ActionType.movement:
 
                         selectedUnit.MoveTo(tileUnderMouse, UnitFinishedWalking);
+                        foreach(var child in selectedUnit.transform.GetComponentsInChildren<ParticleSystem>())
+                        {
+                            if(child.gameObject.name == "HighlightParticle")
+                            {
+                                HighlightPartical = child;
+                            }
+                        }
+                        HighlightPartical.gameObject.SetActive(false);
+
                         RemoveHighlightedTiles();
                         currentRuleset = selectionRuleset;
 
@@ -979,6 +990,8 @@ public class PlayerController : MonoBehaviour
     // Callback called when a unit finishes walking to a tile
     private void UnitFinishedWalking()
     {
+        HighlightPartical.gameObject.SetActive(true);
+        HighlightPartical.Play();
         canInteract = true;
         Manager.instance.UIController.UnlockUI();
     }
